@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Developer FAQ/ja - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"08fce241f8119601791c5ed4","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Developer_FAQ/ja","wgTitle":"Developer FAQ/ja","wgCurRevisionId":22974,"wgRevisionId":22974,"wgArticleId":778,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["FAQ","Japanese"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Developer_FAQ/ja","wgRelevantArticleId":778,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Developer_FAQ_ja rootpage-Developer_FAQ skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Developer FAQ/ja</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ><span class="subpages">&lt; <a href="/wiki/Developer_FAQ" title="Developer FAQ">Developer FAQ</a></span></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#開発への参加"><span class="tocnumber">1</span> <span class="toctext">開発への参加</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#どのようにすれば_PostgreSQL_の開発に参加できますか?"><span class="tocnumber">1.1</span> <span class="toctext">どのようにすれば PostgreSQL の開発に参加できますか?</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#最新のソースツリーをダウンロードする方法、また最新のソースに追随する方法は？"><span class="tocnumber">1.2</span> <span class="toctext">最新のソースツリーをダウンロードする方法、また最新のソースに追随する方法は？</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#どのような開発環境が必要ですか?"><span class="tocnumber">1.3</span> <span class="toctext">どのような開発環境が必要ですか?</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#どの項目の開発が望まれていますか?"><span class="tocnumber">1.4</span> <span class="toctext">どの項目の開発が望まれていますか?</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#どのようにすれば_PostgreSQL_ウェブサイトの開発に参加できますか?"><span class="tocnumber">1.5</span> <span class="toctext">どのようにすれば PostgreSQL ウェブサイトの開発に参加できますか?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7"><a href="#開発ツールとヘルプ"><span class="tocnumber">2</span> <span class="toctext">開発ツールとヘルプ</span></a>
+<ul>
+<li class="toclevel-2 tocsection-8"><a href="#ソースコードの構成はどうなっていますか?"><span class="tocnumber">2.1</span> <span class="toctext">ソースコードの構成はどうなっていますか?</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#開発に利用できるツールには何がありますか?"><span class="tocnumber">2.2</span> <span class="toctext">開発に利用できるツールには何がありますか?</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#どんなスタイルが_PostgreSQL_ソースコードでは使われますか?"><span class="tocnumber">2.3</span> <span class="toctext">どんなスタイルが PostgreSQL ソースコードでは使われますか?</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#システムカタログのダイアグラムはありますか?"><span class="tocnumber">2.4</span> <span class="toctext">システムカタログのダイアグラムはありますか?</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#開発者向きの良書はありますか?"><span class="tocnumber">2.5</span> <span class="toctext">開発者向きの良書はありますか?</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#configure_とは何ですか?"><span class="tocnumber">2.6</span> <span class="toctext">configure とは何ですか?</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#新しい環境へ移植するためにはどうしたら良いですか?"><span class="tocnumber">2.7</span> <span class="toctext">新しい環境へ移植するためにはどうしたら良いですか?</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#なぜスレッド,_RAWデバイス,_非同期I/O_等の_&quot;イケてる&quot;_機能を使わないのですか?"><span class="tocnumber">2.8</span> <span class="toctext">なぜスレッド, RAWデバイス, 非同期I/O 等の "イケてる" 機能を使わないのですか?</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#ブランチはどのように管理されていますか?"><span class="tocnumber">2.9</span> <span class="toctext">ブランチはどのように管理されていますか?</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#どこでSQL標準のコピーが入手できますか?"><span class="tocnumber">2.10</span> <span class="toctext">どこでSQL標準のコピーが入手できますか?</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#技術的な質問の回答はどこで得られますか?"><span class="tocnumber">2.11</span> <span class="toctext">技術的な質問の回答はどこで得られますか?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-19"><a href="#開発プロセス"><span class="tocnumber">3</span> <span class="toctext">開発プロセス</span></a>
+<ul>
+<li class="toclevel-2 tocsection-20"><a href="#開発項目を選んだ後、何をすればよいですか?"><span class="tocnumber">3.1</span> <span class="toctext">開発項目を選んだ後、何をすればよいですか?</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#どのように変更箇所をテストすれば良いですか?"><span class="tocnumber">3.2</span> <span class="toctext">どのように変更箇所をテストすれば良いですか?</span></a>
+<ul>
+<li class="toclevel-3 tocsection-22"><a href="#基本システムテスト"><span class="tocnumber">3.2.1</span> <span class="toctext">基本システムテスト</span></a></li>
+<li class="toclevel-3 tocsection-23"><a href="#リグレッションテスト"><span class="tocnumber">3.2.2</span> <span class="toctext">リグレッションテスト</span></a></li>
+<li class="toclevel-3 tocsection-24"><a href="#その他の実行時テスト"><span class="tocnumber">3.2.3</span> <span class="toctext">その他の実行時テスト</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#ユニットテスト、統計的解析、モデルチェックなどはどうですか?"><span class="tocnumber">3.2.4</span> <span class="toctext">ユニットテスト、統計的解析、モデルチェックなどはどうですか?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-26"><a href="#パッチの開発後、次に何をすれば良いですか?"><span class="tocnumber">3.3</span> <span class="toctext">パッチの開発後、次に何をすれば良いですか?</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#パッチの投稿後には何がありますか?"><span class="tocnumber">3.4</span> <span class="toctext">パッチの投稿後には何がありますか?</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#どうすればパッチのレビューに参加できますか?"><span class="tocnumber">3.5</span> <span class="toctext">どうすればパッチのレビューに参加できますか?</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#著作権の譲渡に合意する必要がありますか？"><span class="tocnumber">3.6</span> <span class="toctext">著作権の譲渡に合意する必要がありますか？</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#私の著作権表示を適当な場所に追加しても良いですか？"><span class="tocnumber">3.7</span> <span class="toctext">私の著作権表示を適当な場所に追加しても良いですか？</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#PostgreSQLライセンス自身が著作権を完全な形で表示することを要求しているのではありませんか？"><span class="tocnumber">3.8</span> <span class="toctext">PostgreSQLライセンス自身が著作権を完全な形で表示することを要求しているのではありませんか？</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-32"><a href="#技術的な質問"><span class="tocnumber">4</span> <span class="toctext">技術的な質問</span></a>
+<ul>
+<li class="toclevel-2 tocsection-33"><a href="#どうすればバックエンドのコードからシステムカタログへ効率的なアクセスができますか?"><span class="tocnumber">4.1</span> <span class="toctext">どうすればバックエンドのコードからシステムカタログへ効率的なアクセスができますか?</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#なぜ表,_列,_型,_関数,_ビューの名前は_Name,_NameData,_char_*_といった異なる型として参照されるのですか?"><span class="tocnumber">4.2</span> <span class="toctext">なぜ表, 列, 型, 関数, ビューの名前は Name,  NameData, char * といった異なる型として参照されるのですか?</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#なぜデータ構造体を作成するために_Node_や_List_を使うのですか?"><span class="tocnumber">4.3</span> <span class="toctext">なぜデータ構造体を作成するために Node や List を使うのですか?</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#構造体にフィールドを追加する際、他に何をする必要がありますか?"><span class="tocnumber">4.4</span> <span class="toctext">構造体にフィールドを追加する際、他に何をする必要がありますか?</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#なぜメモリ確保に_palloc()_と_pfree()_を使うのですか?"><span class="tocnumber">4.5</span> <span class="toctext">なぜメモリ確保に palloc() と pfree() を使うのですか?</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#ereport()_とは何ですか?"><span class="tocnumber">4.6</span> <span class="toctext">ereport() とは何ですか?</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#CommandCounterIncrement()_とは何ですか?"><span class="tocnumber">4.7</span> <span class="toctext">CommandCounterIncrement() とは何ですか?</span></a></li>
+<li class="toclevel-2 tocsection-40"><a href="#問い合わせ処理に変更を加える必要が出てきました。パーサ関係のファイルについて手短に説明して下さい。"><span class="tocnumber">4.8</span> <span class="toctext">問い合わせ処理に変更を加える必要が出てきました。パーサ関係のファイルについて手短に説明して下さい。</span></a></li>
+<li class="toclevel-2 tocsection-41"><a href="#どのようなデバッグ機能を利用できますか?"><span class="tocnumber">4.9</span> <span class="toctext">どのようなデバッグ機能を利用できますか?</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span id=".E9.96.8B.E7.99.BA.E3.81.B8.E3.81.AE.E5.8F.82.E5.8A.A0"></span><span class="mw-headline" id="開発への参加">開発への参加</span></h2>
+<h3><span id=".E3.81.A9.E3.81.AE.E3.82.88.E3.81.86.E3.81.AB.E3.81.99.E3.82.8C.E3.81.B0_PostgreSQL_.E3.81.AE.E9.96.8B.E7.99.BA.E3.81.AB.E5.8F.82.E5.8A.A0.E3.81.A7.E3.81.8D.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="どのようにすれば_PostgreSQL_の開発に参加できますか?">どのようにすれば PostgreSQL の開発に参加できますか?</span></h3>
+<p>ソースコードをダウンロードして読んでください。 詳細は「<a href="#最新のソースツリーをダウンロードする方法、また最新のソースに追随する方法は？">最新のソースツリーをダウンロードする方法、また最新のソースに追随する方法は？</a>」を参照して下さい。
+</p><p><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/">pgsql-hackers メーリングリスト</a> ("hackers" と呼ばれます) に参加し、読んでください。ここはプロジェクトの主要開発者やコアメンバが開発について議論する場です。
+</p>
+<h3><span id=".E6.9C.80.E6.96.B0.E3.81.AE.E3.82.BD.E3.83.BC.E3.82.B9.E3.83.84.E3.83.AA.E3.83.BC.E3.82.92.E3.83.80.E3.82.A6.E3.83.B3.E3.83.AD.E3.83.BC.E3.83.89.E3.81.99.E3.82.8B.E6.96.B9.E6.B3.95.E3.80.81.E3.81.BE.E3.81.9F.E6.9C.80.E6.96.B0.E3.81.AE.E3.82.BD.E3.83.BC.E3.82.B9.E3.81.AB.E8.BF.BD.E9.9A.8F.E3.81.99.E3.82.8B.E6.96.B9.E6.B3.95.E3.81.AF.EF.BC.9F"></span><span class="mw-headline" id="最新のソースツリーをダウンロードする方法、また最新のソースに追随する方法は？">最新のソースツリーをダウンロードする方法、また最新のソースに追随する方法は？</span></h3>
+<p>ソースツリーを取得する方法は幾つかあります。たまに開発に参加するだけの人は最新のソースツリー・スナップショットを <a rel="nofollow" class="external free" href="ftp://ftp.postgresql.org/pub/snapshot/">ftp://ftp.postgresql.org/pub/snapshot/</a> から取得できます。
+</p><p>一般的な開発者はソースコード管理システムに anonymous でアクセスして取得しています。ソースツリーは現在 git で管理されています。git からのソースコード取得について、詳細は <a rel="nofollow" class="external free" href="http://developer.postgresql.org/pgdocs/postgres/git.html">http://developer.postgresql.org/pgdocs/postgres/git.html</a> と <a href="/wiki/Working_with_Git" title="Working with Git">Working with Git</a> を参考にしてください。
+</p>
+<h3><span id=".E3.81.A9.E3.81.AE.E3.82.88.E3.81.86.E3.81.AA.E9.96.8B.E7.99.BA.E7.92.B0.E5.A2.83.E3.81.8C.E5.BF.85.E8.A6.81.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="どのような開発環境が必要ですか?">どのような開発環境が必要ですか?</span></h3>
+<p>PostgreSQL は主にC言語で開発されています。ソースコードの対象は、主な UNIX プラットフォームと Windows (XP, 2000 以降) です。
+</p><p>多くの開発者は Unix ライクなOS上で、<a rel="nofollow" class="external text" href="http://gcc.gnu.org">GCC</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/make/make.html">GNU Make</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/gdb/gdb.html">GDB</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/autoconf/">Autoconf</a> などのオープンソースのツールを利用して開発しています。もしあなたがオープンソースソフトウェアに貢献した経験があれば、これらのツールは既に良くご存知でしょう。Windows これらのツールを使う開発者は <a rel="nofollow" class="external text" href="http://www.mingw.org/">MinGW</a> を使用します。
+もっとも、Windows上のほとんどの開発は、今のところマイクロソフトの Visual Studio 2005(version 8)開発環境と付属のツールで行われています。
+</p><p>PostgreSQL をビルドするために必要なソフトウェアの完全な一覧は「<a rel="nofollow" class="external text" href="http://www.postgresql.jp/document/current/html/install-requirements.html">必要条件</a>」を参照してください。
+</p><p>ソースコードを頻繁にリビルドする開発者は configure 時に --enable-depend フラグを指定することもできます。これを使うと、ヘッダファイルを修正した際に、それに依存する全てのソースファイルもリビルドされるようになります。
+</p><p>src/Makefile.custom で環境変数を設定することができます (例: CUSTOM_COPT)。これはすべてのコンパイルで使用されます。
+</p>
+<h3><span id=".E3.81.A9.E3.81.AE.E9.A0.85.E7.9B.AE.E3.81.AE.E9.96.8B.E7.99.BA.E3.81.8C.E6.9C.9B.E3.81.BE.E3.82.8C.E3.81.A6.E3.81.84.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="どの項目の開発が望まれていますか?">どの項目の開発が望まれていますか?</span></h3>
+<p>未解決の機能は <a href="/wiki/Todo" title="Todo">Todo</a> にまとまっています。
+</p><p>それぞれの項目については、ML の<a rel="nofollow" class="external text" href="http://archives.postgresql.org/">アーカイブ</a>、標準SQL、推奨書籍などを参考にしてください。参照: <a href="#開発者向きの良書はありますか?">開発者向けの書籍</a>)
+</p>
+<h3><span id=".E3.81.A9.E3.81.AE.E3.82.88.E3.81.86.E3.81.AB.E3.81.99.E3.82.8C.E3.81.B0_PostgreSQL_.E3.82.A6.E3.82.A7.E3.83.96.E3.82.B5.E3.82.A4.E3.83.88.E3.81.AE.E9.96.8B.E7.99.BA.E3.81.AB.E5.8F.82.E5.8A.A0.E3.81.A7.E3.81.8D.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="どのようにすれば_PostgreSQL_ウェブサイトの開発に参加できますか?">どのようにすれば PostgreSQL ウェブサイトの開発に参加できますか?</span></h3>
+<p>PostgreSQL ウェブサイトの開発は、<a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-www/">pgsql-www メーリングリスト</a>で議論され、インフラチームによって管理されています。postgresql.orgのウェブサイトのソースコードは Subversion のリポジトリに格納され、<a rel="nofollow" class="external text" href="http://pgweb.postgresql.org">Tracプロジェクト</a>の一部として提供されています。
+</p>
+<h2><span id=".E9.96.8B.E7.99.BA.E3.83.84.E3.83.BC.E3.83.AB.E3.81.A8.E3.83.98.E3.83.AB.E3.83.97"></span><span class="mw-headline" id="開発ツールとヘルプ">開発ツールとヘルプ</span></h2>
+<h3><span id=".E3.82.BD.E3.83.BC.E3.82.B9.E3.82.B3.E3.83.BC.E3.83.89.E3.81.AE.E6.A7.8B.E6.88.90.E3.81.AF.E3.81.A9.E3.81.86.E3.81.AA.E3.81.A3.E3.81.A6.E3.81.84.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="ソースコードの構成はどうなっていますか?">ソースコードの構成はどうなっていますか?</span></h3>
+<p>『<a rel="nofollow" class="external text" href="http://www.postgresql.org/developer/ext.backend.html">How PostgreSQL Processes a Query</a> (PostgreSQL のクエリ処理方式)』(これはソースコードの src/tools/backend/index.html にもあります) をブラウザで見てください。データフロー、フローチャートの中のバックエンド構成要素、共有メモリ内の構成について、簡単に記述されています。フローチャート内の矩形をクリックすると説明が表示されます。説明文の中のディレクトリ名をクリックすると、ソースディレクトリにジャンプし、実際のソースコードを読むことができます。他にも、ソースコード・ディレクトリの中に README ファイルが幾つかあり、モジュールの関数を説明しています。ブラウザからそれらのファイルを読むこともできます。
+</p><p>ソースツリーに含まれる文書以外には、コードについて記述されている論文や発表資料が <a rel="nofollow" class="external free" href="http://www.postgresql.org/developer/coding">http://www.postgresql.org/developer/coding</a> にあります。素晴らしい発表資料は <a rel="nofollow" class="external free" href="http://neilconway.org/talks/hacking/">http://neilconway.org/talks/hacking/</a> でも見つかります。
+</p>
+<h3><span id=".E9.96.8B.E7.99.BA.E3.81.AB.E5.88.A9.E7.94.A8.E3.81.A7.E3.81.8D.E3.82.8B.E3.83.84.E3.83.BC.E3.83.AB.E3.81.AB.E3.81.AF.E4.BD.95.E3.81.8C.E3.81.82.E3.82.8A.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="開発に利用できるツールには何がありますか?">開発に利用できるツールには何がありますか?</span></h3>
+<p>まず、src/tools ディレクトリ内にある全てのファイルは開発者のために用意されたものです。
+</p>
+<pre>RELEASE_CHANGES リリースのたびに変更が必要な項目
+backend         backend ディレクトリ内の説明と処理の流れ
+ccsym           使用中のコンパイラが作成する標準 define を見つける
+copyright       コピーライト
+</pre>
+<pre>entab           スペース文字をタブ文字に変換する (pgindent で使用される)
+find_static     static 関数に変更できる関数を見つける
+find_typedef    ソースコード中の typedef を見つける
+find_badmacros  括弧の使い方が不適切なマクロを見つける
+fsync           ファイル同期を行うシステムコールのコストを比較するスクリプト
+make_ctags      vi 用の 'tags' ファイルを各ディレクトリに作成する
+make_diff       *.orig とソースの差分を作成する
+make_etags      emacs 用の 'etags' ファイルを作成する
+make_keywords   キーワードを SQL'92 と比較する
+make_mkid       mkid ID ファイルを作成する
+pgcvslog        それぞれのリリースのための変更リストを作成する
+pginclude       インクルード・ファイルを追加 / 削除するスクリプト
+pgindent        ソースファイルのインデントを行う
+pgtest          半自動化されたビルドシステム
+thread          スレッドのテストをするスクリプト
+</pre>
+<p>src/include/catalog には以下のファイルもあります。
+</p>
+<pre>unused_oids     システムカタログ内で使われていないOIDを見つけるスクリプト
+duplicate_oids  システムカタログ内で重複しているOIDを見つけるスクリプト
+</pre>
+<p>tools/backend については既に他の Q&amp;A で説明済みです。
+</p><p>第2に、タグファイルを扱えるエディタが必要です。関数呼び出しから関数定義をタグ付けできます。さらに低いレベルの関数を手繰ることができ、その後元の関数へ戻ることができます。tag または etags をサポートしているエディタは数多くあります。
+</p><p>第3に、id-utils を <a rel="nofollow" class="external free" href="ftp://ftp.gnu.org/gnu/id-utils/">ftp://ftp.gnu.org/gnu/id-utils/</a> から取得してください。
+</p><p>tools/make_mkid を実行し、ソースのシンボルのアーカイブを作成することで、高速に検索できます。
+</p><p>cscope (<a rel="nofollow" class="external free" href="http://cscope.sf.net/">http://cscope.sf.net/</a>) を使う開発者もいます。その他には glimpse (<a rel="nofollow" class="external free" href="http://webglimpse.net/">http://webglimpse.net/</a>) も使われます。
+</p><p>tools/make_diff は差分パッチファイルを作成するツールです。パッチはコンテキスト形式になります。メーリングリストにパッチを投稿する場合はこのコンテキスト形式にしてください。
+</p><p>pgindent はソースコードのスタイルを標準の書式に修正するツールです。通常は、開発サイクルの最終段階で実行されます。ソースコードのスタイルについては<a href="#What.27s_the_formatting_style_used_in_PostgreSQL_source_code.3F">この質問</a>も参考にしてください。
+</p><p>pginclude は  #include を必要ならば追加、不要ならば削除するスクリプトです。
+</p><p>型や関数のようなビルトイン・オブジェクトを追加する場合、それらに対して OID を割り当てる必要があります。この際の規約は、1-9999 の範囲の OID を重複が無いように手作業で割り当てることです。(機構的にはそれぞれのシステムカタログ内で一意であれば問題ないのですが、分かりやすくするためシステム全体で一意になるようにしています。) unused_oids というスクリプトが src/include/catalog にあり、現在使用していない OID を表示します。新しい OID を割り当てる際には unused_oids を参照して未使用のものを使ってください。可能ならば、関連する機能を持つ既存のオブジェクトの近くの OID を選びます。また、OID の割り当てミスを検出する duplicate_oids スクリプトもあります。
+</p>
+<h3><span id=".E3.81.A9.E3.82.93.E3.81.AA.E3.82.B9.E3.82.BF.E3.82.A4.E3.83.AB.E3.81.8C_PostgreSQL_.E3.82.BD.E3.83.BC.E3.82.B9.E3.82.B3.E3.83.BC.E3.83.89.E3.81.A7.E3.81.AF.E4.BD.BF.E3.82.8F.E3.82.8C.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="どんなスタイルが_PostgreSQL_ソースコードでは使われますか?">どんなスタイルが PostgreSQL ソースコードでは使われますか?</span></h3>
+<p>私たちの標準スタイルは BSD 式です。コードのインデントにはタブを用い、タブはスペース4個分としています。使用するエディタやファイルビューアのタブ幅をスペース4個に設定しておいてください。
+</p><p><b>vi</b> の場合には <code>.exrc</code> か <code>.vimrc</code> で以下の設定をします:
+</p>
+<pre>set tabstop=4 shiftwidth=4 noexpandtab
+</pre>
+<p><b>less</b> や <b>more</b> では、<code>-x4</code> を指定すると適切にインデントされます。
+</p><p>tools/editors ディレクトリには emacs, xemacs, vim 用のサンプル設定ファイルがあります。これは PostgreSQL のコーディング・スタイルを維持するのに役立ちます。
+</p><p>pgindent は OS の indent ツールに適切なフラグを指定して実行し、コードを整形します。pgindent は全てのソースコード・ファイルに対して、ベータテストの時期に実行されます。全てのソースファイルは一貫性のある形式に自動で整形されます。記述したとおりに改行されることが必要なコメントは、ブロックコメント形式にする必要があります。コメントを /*------ から開始してください。ブロックコメントは勝手に整形されることはありません。
+</p><p>ドキュメントの『<a rel="nofollow" class="external text" href="http://www.postgresql.jp/document/current/html/source-format.html">書式</a>』も参照してください。また、<a rel="nofollow" class="external text" href="http://archives.postgresql.org/message-id/1221125165.5637.12.camel@abbas-laptop">この投稿</a>は変数や関数名の命名方針について述べています。
+</p><p>なぜ私たちがソースコード・スタイルにこれほど気にするのかについては、コーディングスタイルの価値が<a rel="nofollow" class="external text" href="http://ezine.daemonnews.org/200112/single_coding_style.html">この記事</a>で述べられています。
+</p>
+<h3><span id=".E3.82.B7.E3.82.B9.E3.83.86.E3.83.A0.E3.82.AB.E3.82.BF.E3.83.AD.E3.82.B0.E3.81.AE.E3.83.80.E3.82.A4.E3.82.A2.E3.82.B0.E3.83.A9.E3.83.A0.E3.81.AF.E3.81.82.E3.82.8A.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="システムカタログのダイアグラムはありますか?">システムカタログのダイアグラムはありますか?</span></h3>
+<p>はい。以下を参照してください
+</p>
+<ul><li><a rel="nofollow" class="external text" href="http://dalibo.org/_media/articles/catalog.png">PNG 形式</a></li>
+<li><a rel="nofollow" class="external text" href="http://svn.postgresql.fr/repos/materials/advocacy/trunk/posters/catalogs83.svg">SVG 形式</a></li></ul>
+<h3><span id=".E9.96.8B.E7.99.BA.E8.80.85.E5.90.91.E3.81.8D.E3.81.AE.E8.89.AF.E6.9B.B8.E3.81.AF.E3.81.82.E3.82.8A.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="開発者向きの良書はありますか?">開発者向きの良書はありますか?</span></h3>
+<p>5冊挙げておきます:
+</p>
+<ul><li>An Introduction to Database Systems, by C.J. Date, Addison, Wesley</li>
+<li>A Guide to the SQL Standard, by C.J. Date, et. al, Addison, Wesley</li>
+<li>Fundamentals of Database Systems, by Elmasri and Navathe</li>
+<li>Transaction Processing, by Jim Gray and Andreas Reuter, Morgan Kaufmann</li>
+<li>Transactional Information Systems, by Gerhard Weikum and Gottfried Vossen, Morgan Kaufmann</li></ul>
+<h3><span id="configure_.E3.81.A8.E3.81.AF.E4.BD.95.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="configure_とは何ですか?">configure とは何ですか?</span></h3>
+<p>configure と configure.in ファイルは GNU autoconf パッケージの一部です。configure を使うと、OS の様々な機能をチェックし、その結果をCプログラムと Makefile の変数に設定します。autoconf は PostgreSQL のメインサーバにインストールされています。configure にオプションを追加するには、configure.in を編集し、その後 autoconf を実行して configure ファイルを生成してください。
+</p><p>configure がユーザに実行される場合、OS の様々な機能をチェックし、その結果を config.status と config.cache に記録します。そして、複数の *.in ファイルを変更します。例えば、Makefile.in がありますが、configure はその中の全ての @var@ パラメータを設定して Makefile ファイルを生成します。
+</p><p>あなたがファイルを編集する必要が生じた場合、configure によって生成されるファイルを変更するのは時間の無駄になります。代わりに *.in ファイルを編集し、再度 configure を実行することでファイルを生成してください。トップディレクトリで make distclean を実行すると、configure が生成する全てのファイルが削除されます。ソースコードとして配布されるファイルだけが残ることになります。
+</p>
+<h3><span id=".E6.96.B0.E3.81.97.E3.81.84.E7.92.B0.E5.A2.83.E3.81.B8.E7.A7.BB.E6.A4.8D.E3.81.99.E3.82.8B.E3.81.9F.E3.82.81.E3.81.AB.E3.81.AF.E3.81.A9.E3.81.86.E3.81.97.E3.81.9F.E3.82.89.E8.89.AF.E3.81.84.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="新しい環境へ移植するためにはどうしたら良いですか?">新しい環境へ移植するためにはどうしたら良いですか?</span></h3>
+<p>新しい環境へ移植 (port) するためには多くの箇所を変更する必要があります。まず src/template から始めましょう。移植先の OS に対応する適切なエントリを追加します。また、src/config.guess を使ってそのOSを src/template/.similar に追加します。OS のバージョンを厳密に一致させてはいけません。configure テストは、最初に正確なOSバージョンを探し、もし見つからなければ、バージョン番号を除いて探そうとします。src/configure.in を編集し、新しいOSを追加します。(上記の configure に関する質問も参照) その後、autoconf を実行するか、src/configure にもパッチを当てます。
+</p><p>次に、src/include/port をチェックし、新しいOS用のファイルを適切に記述して追加します。願わくば、src/include/storage/s_lock.h に既に移植先のCPU用のロックコードがあることを祈りましょう。src/makefiles ディレクトリにも環境ごとの Makefile があります。専用のファイルが必要な場合には、backend/port ディレクトリへ追加します。
+</p>
+<h3><span id=".E3.81.AA.E3.81.9C.E3.82.B9.E3.83.AC.E3.83.83.E3.83.89.2C_RAW.E3.83.87.E3.83.90.E3.82.A4.E3.82.B9.2C_.E9.9D.9E.E5.90.8C.E6.9C.9FI.2FO_.E7.AD.89.E3.81.AE_.22.E3.82.A4.E3.82.B1.E3.81.A6.E3.82.8B.22_.E6.A9.9F.E8.83.BD.E3.82.92.E4.BD.BF.E3.82.8F.E3.81.AA.E3.81.84.E3.81.AE.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="なぜスレッド,_RAWデバイス,_非同期I/O_等の_&quot;イケてる&quot;_機能を使わないのですか?">なぜスレッド, RAWデバイス, 非同期I/O 等の "イケてる" 機能を使わないのですか?</span></h3>
+<p>OS はサポートしたばかりの最新機能は非常に魅力的ですが、そういった誘惑には抵抗しています。
+</p><p>1つ目に、我々は 15 以上の OS をサポートしているため、採用する前に新機能は広く採用されていいなければなりません。2つ目に、イケてる機能の多くは、実際には劇的な改善に繋がりません。3つ目に、新機能の中には悪い側面を持つものがあり、信頼性を犠牲にしたり、追加のコードを要求されることがあります。それゆえ、我々は新機能にすぐに飛びつきはせず、こなれるまで見送ります。, then ask for testing to show that a measurable improvement is possible.
+</p><p>例として、現在バックエンド・コードでスレッドが使われていない理由を挙げます:
+</p>
+<ul><li>歴史的に、スレッドはサポートしない環境とバグがありました。</li>
+<li>1つのバックエンドでエラーが生じると他のバックエンドにも悪影響が及びます。</li>
+<li>バックエンドのその他の初期化時間と比較して、スレッドの速度面の利点は微々たるものです。</li>
+<li>バックエンド・コードが複雑になります。</li>
+<li>バックエンドプロセスを終了させることにより、OSが完全に素早くリソースを開放でき、メモリーリークとファイルディスクリプタリークを防止することができます。</li>
+<li>スレッド化されたプログラムをデバッグするのは、プロセスをデバッグするのよりもずっと困難です。それに、コアダンプもスレッドではあまり役に立ちません。</li>
+<li>読み込み専用の実行形式マップと共有バッファを使用するのはプロセスをスレッドのように扱うことになり、非常にメモリ効率が良いです。</li>
+<li>頻繁にプロセスを生成、消滅させることによりメモリの断片化を防ぐことができます。これは、長い時間動き続けるプロセスでは管理が難しい問題です。</li></ul>
+<p>(一つのクエリを複数のコアで処理するために、個々のバックエンドプロセスが複数のスレッドを使うべきかどうかというのはまた別の問題で、ここでは取り扱いません)。
+</p><p>つまり、私たちは新機能を無視しているわけではありません。採用に慎重なだけなのです。TODO リストには、この分野に関する私たちの見解に関する議論がリンクされている場合があります。
+</p>
+<h3><span id=".E3.83.96.E3.83.A9.E3.83.B3.E3.83.81.E3.81.AF.E3.81.A9.E3.81.AE.E3.82.88.E3.81.86.E3.81.AB.E7.AE.A1.E7.90.86.E3.81.95.E3.82.8C.E3.81.A6.E3.81.84.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="ブランチはどのように管理されていますか?">ブランチはどのように管理されていますか?</span></h3>
+<p>ブランチの管理とバックポートに関しては、<a href="/wiki/Working_with_Git#Using_Back_Branches" title="Working with Git">Using Back Branches</a>と<a href="/wiki/Committing_with_Git" title="Committing with Git">Committing with Git</a>を参照して下さい。
+</p>
+<h3><span id=".E3.81.A9.E3.81.93.E3.81.A7SQL.E6.A8.99.E6.BA.96.E3.81.AE.E3.82.B3.E3.83.94.E3.83.BC.E3.81.8C.E5.85.A5.E6.89.8B.E3.81.A7.E3.81.8D.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="どこでSQL標準のコピーが入手できますか?">どこでSQL標準のコピーが入手できますか?</span></h3>
+<p><a rel="nofollow" class="external text" href="http://www.iso.ch/">ISO</a> や <a rel="nofollow" class="external text" href="http://www.ansi.org">ANSI</a> で購入してください。ISO/ANSI 9075 を探します。ANSI のほうが安価ですが、内容は同じです。
+</p><p>SQL標準の公式コピーは高価なので、開発者の多くはインターネット上にあるドラフト版を利用しています。そのいくつかを挙げます:
+</p>
+<ul><li>SQL-92 <a rel="nofollow" class="external free" href="http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt">http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt</a></li>
+<li>SQL:1999 <a rel="nofollow" class="external free" href="http://www.cse.iitb.ac.in/dbms/Data/Papers-Other/SQL1999/ansi-iso-9075-2-1999.pdf">http://www.cse.iitb.ac.in/dbms/Data/Papers-Other/SQL1999/ansi-iso-9075-2-1999.pdf</a></li>
+<li>SQL:2003 <a rel="nofollow" class="external free" href="http://www.wiscorp.com/sql_2003_standard.zip">http://www.wiscorp.com/sql_2003_standard.zip</a></li>
+<li>SQL:2008 (preliminary) <a rel="nofollow" class="external free" href="http://www.wiscorp.com/sql200n.zip">http://www.wiscorp.com/sql200n.zip</a></li></ul>
+<p>PostgreSQL 文書には PostgreSQL に関する情報と <a rel="nofollow" class="external text" href="http://www.postgresql.jp/document/current/html/features.html">SQL準拠</a> に関する記述があります。
+</p><p>SQL標準に関するウェブページを挙げます:
+</p>
+<ul><li><a rel="nofollow" class="external free" href="http://troels.arvin.dk/db/rdbms/links/#standards">http://troels.arvin.dk/db/rdbms/links/#standards</a></li>
+<li><a rel="nofollow" class="external free" href="http://www.wiscorp.com/SQLStandards.html">http://www.wiscorp.com/SQLStandards.html</a></li>
+<li><a rel="nofollow" class="external free" href="http://www.contrib.andrew.cmu.edu/~shadow/sql.html#syntax">http://www.contrib.andrew.cmu.edu/~shadow/sql.html#syntax</a> (SQL-92)</li>
+<li><a rel="nofollow" class="external free" href="http://dbs.uni-leipzig.de/en/lokal/standards.pdf">http://dbs.uni-leipzig.de/en/lokal/standards.pdf</a> (paper)</li></ul>
+<p>注意として、SQL標準のコピーを読むことは、PostgreSQL の開発者になるためには必ずしも必要ではありません。SQL標準の記述を理解することは難しく、長年の経験も必要です。そして、どのみち PostgreSQL の多くの機能は、SQL標準では規定されていないのです。
+</p><p><br />
+</p>
+<h3><span id=".E6.8A.80.E8.A1.93.E7.9A.84.E3.81.AA.E8.B3.AA.E5.95.8F.E3.81.AE.E5.9B.9E.E7.AD.94.E3.81.AF.E3.81.A9.E3.81.93.E3.81.A7.E5.BE.97.E3.82.89.E3.82.8C.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="技術的な質問の回答はどこで得られますか?">技術的な質問の回答はどこで得られますか?</span></h3>
+<p>技術的な質問の多くは pgsql-hackers メーリングリストで応えられています。過去のアーカイブは <a rel="nofollow" class="external free" href="http://archives.postgresql.org/pgsql-hackers/">http://archives.postgresql.org/pgsql-hackers/</a> にあります。
+</p><p>もし過去の議論や回答が見つからない場合には、気軽にメーリングリストに投稿してください。
+</p><p>IRC (irc.freenode.net #postgresql チャネル) でも、新機能の開発に関する質問も含め、主要開発者 (Major contributors) が技術的な質問に答えてくれるでしょう。
+</p>
+<h2><span id=".E9.96.8B.E7.99.BA.E3.83.97.E3.83.AD.E3.82.BB.E3.82.B9"></span><span class="mw-headline" id="開発プロセス">開発プロセス</span></h2>
+<h3><span id=".E9.96.8B.E7.99.BA.E9.A0.85.E7.9B.AE.E3.82.92.E9.81.B8.E3.82.93.E3.81.A0.E5.BE.8C.E3.80.81.E4.BD.95.E3.82.92.E3.81.99.E3.82.8C.E3.81.B0.E3.82.88.E3.81.84.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="開発項目を選んだ後、何をすればよいですか?">開発項目を選んだ後、何をすればよいですか?</span></h3>
+<p>あなたがやりたいことの提案書を添えて、email を pgsql-hackers に送ってください (即採用とはいかないことを覚悟してください)。あなた1人だけで考えて開発することはお勧めしません。別の人が同じ TODO 項目に取り組んでいるかもしれませんし、あなたが TODO 項目を誤解しているかもしれないからです。email では、あなたが採用するつもりの内部実装と、ユーザから見える変更 (新しい文法など) の両方を議論してください。複雑なパッチの場合には、実際に開発を始める前にコミュニティのフィードバックを受けることが重要です。そのような手順を踏まなければ、パッチは却下されてしまうでしょう。もしあなたの開発が企業にスポンサーされている場合には、より効率的に行えるよう<a rel="nofollow" class="external text" href="http://momjian.us/main/writings/pgsql/company_contributions/">この記事</a>を読んでください。
+</p><p>レビュー待ちのパッチ・キューは wiki の <a href="/wiki/CommitFest" class="mw-redirect" title="CommitFest">CommitFest</a> で管理されています。
+</p>
+<h3><span id=".E3.81.A9.E3.81.AE.E3.82.88.E3.81.86.E3.81.AB.E5.A4.89.E6.9B.B4.E7.AE.87.E6.89.80.E3.82.92.E3.83.86.E3.82.B9.E3.83.88.E3.81.99.E3.82.8C.E3.81.B0.E8.89.AF.E3.81.84.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="どのように変更箇所をテストすれば良いですか?">どのように変更箇所をテストすれば良いですか?</span></h3>
+<h4><span id=".E5.9F.BA.E6.9C.AC.E3.82.B7.E3.82.B9.E3.83.86.E3.83.A0.E3.83.86.E3.82.B9.E3.83.88"></span><span class="mw-headline" id="基本システムテスト">基本システムテスト</span></h4>
+<p>あなたのコードをテストする最も簡単な方法は、最新バージョンのコードでビルドし、コンパイラの警告が出ないことを確認することです。
+</p><p>configure の際に --enable-cassert オプションを指定してビルドするのも良いでしょう。これはソースコード中のアサーションを有効にし、データ破壊やアクセス違反をより多く検知できるようになります。多くの場合、デバッグが容易になります。
+</p><p>その後、psql を使って性能をテストしてください。
+</p>
+<h4><span id=".E3.83.AA.E3.82.B0.E3.83.AC.E3.83.83.E3.82.B7.E3.83.A7.E3.83.B3.E3.83.86.E3.82.B9.E3.83.88"></span><span class="mw-headline" id="リグレッションテスト">リグレッションテスト</span></h4>
+<p>次のステップは、あなたが行った変更に対して既存のリグレッションテスト (回帰テスト) を行うことです。テストするには、ソースツリーのルート・ディレクトリで "make check" を入力してください。失敗した場合には、調査する必要があります。
+</p><p>もしあなたが既存の動作を意図的に変更した場合には、リグレッションテストには失敗するでしょうが、それは実際には間違った動作ではありません。その場合、リグレッションテストを変更するパッチも作成してください。
+</p>
+<h4><span id=".E3.81.9D.E3.81.AE.E4.BB.96.E3.81.AE.E5.AE.9F.E8.A1.8C.E6.99.82.E3.83.86.E3.82.B9.E3.83.88"></span><span class="mw-headline" id="その他の実行時テスト">その他の実行時テスト</span></h4>
+<p>開発には以下のようなツールもよく利用されています。
+</p>
+<ul><li>valgrind (<a rel="nofollow" class="external free" href="http://valgrind.kde.org">http://valgrind.kde.org</a>)&#160;: メモリテスト</li>
+<li>gprof (GNU binutils に含まれます), oprofile (<a rel="nofollow" class="external free" href="http://oprofile.sourceforge.net/">http://oprofile.sourceforge.net/</a>)&#160;: プロファイリング</li></ul>
+<h4><span id=".E3.83.A6.E3.83.8B.E3.83.83.E3.83.88.E3.83.86.E3.82.B9.E3.83.88.E3.80.81.E7.B5.B1.E8.A8.88.E7.9A.84.E8.A7.A3.E6.9E.90.E3.80.81.E3.83.A2.E3.83.87.E3.83.AB.E3.83.81.E3.82.A7.E3.83.83.E3.82.AF.E3.81.AA.E3.81.A9.E3.81.AF.E3.81.A9.E3.81.86.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="ユニットテスト、統計的解析、モデルチェックなどはどうですか?">ユニットテスト、統計的解析、モデルチェックなどはどうですか?</span></h4>
+<p>テスト用フレームワークについては既に多くの議論があり、れらのアイデアを採用している開発者もいます。
+</p><p>Makefile はインクルードファイルに対して依存性を持たないように注意してください。make clean の後でも make が動作する必要があります。もし GCC を使っているのであれば、--enable-depend オプションを configure 時に指定することで、コンパイラに依存性を自動計算させることができます。
+</p>
+<h3><span id=".E3.83.91.E3.83.83.E3.83.81.E3.81.AE.E9.96.8B.E7.99.BA.E5.BE.8C.E3.80.81.E6.AC.A1.E3.81.AB.E4.BD.95.E3.82.92.E3.81.99.E3.82.8C.E3.81.B0.E8.89.AF.E3.81.84.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="パッチの開発後、次に何をすれば良いですか?">パッチの開発後、次に何をすれば良いですか?</span></h3>
+<p>パッチを pgsql-hackers@postgresql.org へ投稿してください。あなたのパッチが迅速にレビューされ、採用されるようにするため、「<a href="/wiki/Submitting_a_Patch" title="Submitting a Patch">パッチの投稿</a>」にあるガイドラインに従うよう努めてください。
+</p>
+<h3><span id=".E3.83.91.E3.83.83.E3.83.81.E3.81.AE.E6.8A.95.E7.A8.BF.E5.BE.8C.E3.81.AB.E3.81.AF.E4.BD.95.E3.81.8C.E3.81.82.E3.82.8A.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="パッチの投稿後には何がありますか?">パッチの投稿後には何がありますか?</span></h3>
+<p>パッチは他の開発者のレビューを受けることになります。採用されることもあれば、追加開発が必要だとして送り返されることもあります。このプロセスの詳しい解説は、『<a href="/wiki/Submitting_a_Patch#Patch_review_and_commit" title="Submitting a Patch">パッチを投稿するには</a>』にあります。
+</p>
+<h3><span id=".E3.81.A9.E3.81.86.E3.81.99.E3.82.8C.E3.81.B0.E3.83.91.E3.83.83.E3.83.81.E3.81.AE.E3.83.AC.E3.83.93.E3.83.A5.E3.83.BC.E3.81.AB.E5.8F.82.E5.8A.A0.E3.81.A7.E3.81.8D.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="どうすればパッチのレビューに参加できますか?">どうすればパッチのレビューに参加できますか?</span></h3>
+<p>あなたが <a href="/wiki/CommitFestInProgress" class="mw-redirect" title="CommitFestInProgress">CommitFest</a> に登録されているパッチのレビューに参加することは大歓迎です。詳細は、「<a href="/wiki/Reviewing_a_Patch" title="Reviewing a Patch">パッチのレビュー</a>」を参考にしてください。
+</p>
+<h3><span id=".E8.91.97.E4.BD.9C.E6.A8.A9.E3.81.AE.E8.AD.B2.E6.B8.A1.E3.81.AB.E5.90.88.E6.84.8F.E3.81.99.E3.82.8B.E5.BF.85.E8.A6.81.E3.81.8C.E3.81.82.E3.82.8A.E3.81.BE.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="著作権の譲渡に合意する必要がありますか？">著作権の譲渡に合意する必要がありますか？</span></h3>
+<p>いいえ。貢献者は自分の著作権を保持します(ヨーロッパの国々ではどちらにせよそうなります)。貢献者は、PostgreSQL Global Development Groupの成員であると見なされます(PGDGに著作権を与えることはできません。なぜなら、PGDGは法的な実体がないからです)。これは、Linuxカーネルや、他の多くのオープンソースプロジェクトで採用されている方法です。
+</p>
+<h3><span id=".E7.A7.81.E3.81.AE.E8.91.97.E4.BD.9C.E6.A8.A9.E8.A1.A8.E7.A4.BA.E3.82.92.E9.81.A9.E5.BD.93.E3.81.AA.E5.A0.B4.E6.89.80.E3.81.AB.E8.BF.BD.E5.8A.A0.E3.81.97.E3.81.A6.E3.82.82.E8.89.AF.E3.81.84.E3.81.A7.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="私の著作権表示を適当な場所に追加しても良いですか？">私の著作権表示を適当な場所に追加しても良いですか？</span></h3>
+<p>いいえ、そうしないでください。私達は法律的な事項に関する表示は、短く明快にしておきたいと考えています。また、営利企業のユーザにはこれが問題になることがあると聞いています。
+</p>
+<h3><span id="PostgreSQL.E3.83.A9.E3.82.A4.E3.82.BB.E3.83.B3.E3.82.B9.E8.87.AA.E8.BA.AB.E3.81.8C.E8.91.97.E4.BD.9C.E6.A8.A9.E3.82.92.E5.AE.8C.E5.85.A8.E3.81.AA.E5.BD.A2.E3.81.A7.E8.A1.A8.E7.A4.BA.E3.81.99.E3.82.8B.E3.81.93.E3.81.A8.E3.82.92.E8.A6.81.E6.B1.82.E3.81.97.E3.81.A6.E3.81.84.E3.82.8B.E3.81.AE.E3.81.A7.E3.81.AF.E3.81.82.E3.82.8A.E3.81.BE.E3.81.9B.E3.82.93.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="PostgreSQLライセンス自身が著作権を完全な形で表示することを要求しているのではありませんか？">PostgreSQLライセンス自身が著作権を完全な形で表示することを要求しているのではありませんか？</span></h3>
+<p>その通りです。また、これがPostgreSQL Global Development Groupがすべての著作権を保持している理由です。ちなみに、合衆国の法律では著作権が認められるために著作権表示をする必要はありません。ヨーロッパの国々の法律でも同様です。
+</p>
+<h2><span id=".E6.8A.80.E8.A1.93.E7.9A.84.E3.81.AA.E8.B3.AA.E5.95.8F"></span><span class="mw-headline" id="技術的な質問">技術的な質問</span></h2>
+<h3><span id=".E3.81.A9.E3.81.86.E3.81.99.E3.82.8C.E3.81.B0.E3.83.90.E3.83.83.E3.82.AF.E3.82.A8.E3.83.B3.E3.83.89.E3.81.AE.E3.82.B3.E3.83.BC.E3.83.89.E3.81.8B.E3.82.89.E3.82.B7.E3.82.B9.E3.83.86.E3.83.A0.E3.82.AB.E3.82.BF.E3.83.AD.E3.82.B0.E3.81.B8.E5.8A.B9.E7.8E.87.E7.9A.84.E3.81.AA.E3.82.A2.E3.82.AF.E3.82.BB.E3.82.B9.E3.81.8C.E3.81.A7.E3.81.8D.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="どうすればバックエンドのコードからシステムカタログへ効率的なアクセスができますか?">どうすればバックエンドのコードからシステムカタログへ効率的なアクセスができますか?</span></h3>
+<p>最初にあなたが必要とするタプル (行) を見つける必要があります。それには2つの方法があります。1つは SearchSysCache() やその類似関数を呼び、既知のカタログ用インデックスを使ってシステムカタログを取得する方法です。これはシステムカタログにアクセスする方法として推奨されています。なぜなら、初回の呼び出して必要な行がキャッシュにロードされ、それ以降の呼び出しでは元の表にアクセスする必要が無くなるためです。利用可能なキャッシュの一覧は、src/backend/utils/cache/syscache.c に記載されています。src/backend/utils/cache/lsyscache.c は数多くの特定の列を取得するためのキャッシュ検索関数が定義されています。
+</p><p>返却される行はキャッシュで管理されています。そのため、SearchSysCache() から返された行を変更や削除してはいけません。使用後には ReleaseSysCache() で行を解放する必要があります。解放されたキャッシュは必要に応じて破棄されます。もし ReleaseSysCache() を呼ばなかった場合、キャッシュのエントリはトランザクションの終了までロックされます。開発時には良いかもしれませんが、実際にリリースされるコードでは許されません。
+</p><p>もしシステムキャッシュが利用できない場合には、全てのバックエンドで共有されるバッファキャッシュを介して、表から直接データを取得する必要があります。バックエンドは行を自動的にバッファキャッシュに読み込みます。これを行うには、heap_open() で表を開いた後に、その表のスキャンを heap_beginscan() で開始し、heap_getnext() を HeapTupleIsValid() が true を返す限り繰り返し呼び出します。最後に heap_endscan() を呼びます。スキャンの際にはキーも指定できますが、インデックスは使われません。全ての行がキーと比較され、適合する行のみが返却されます。
+</p><p>ブロック番号とオフセット番号が分かっている場合には heap_fetch() で行を取得することもできます。heap_fetch() では、バッファキャッシュ上の行のロック / アンロックは自動的に行われますが、利用後には Buffer ポインタを渡して ReleaseBuffer() を呼び出す必要があります。
+</p><p>行が得られた後、全ての行タイプで共通のデータを取得することができます。t_self と t_oid は、単に HeapTuple 構造体のエントリにアクセスするだけで読み取れます。表ごとに異なる列を取得する場合には、HeapTuple ポインタ を GETSTRUCT() マクロに渡します。返却されるポインタは構造体のポインタにキャストして使います。例えば pg_proc ならば Form_pg_proc ポインタ、pg_type ならば Form_pg_type ポインタです。その後は構造体ポインタを介してフィールドにアクセスできます:
+</p>
+<pre>((Form_pg_class) GETSTRUCT(tuple))-&gt;relnatts
+</pre>
+<p>注意としては、この方法は、固定長かつ非NULLであり、そのフィールドよりも前方の列も固定長かつ非NULLの列でのみ利用可能なことです。さもなければ列の位置は不定になるため、heap_getattr() やその類似関数を使って行から値を取り出す必要があります。
+</p><p>また、有効な行に対して構造体のフィールドを直接書き換えることは避けてください。最も良い方法は、heap_modifytuple() に変更前の行と変更内容を渡すことです。palloc された新しい行が返却され、heap_update() に渡すことができます。削除の場合は、行の t_self を heap_delete() に渡します。t_self は heap_update() でも使うことができます。覚えておく必要があるのは、行は、ReleaseSysCache() の呼び出しで解放されるシステムキャッシュにあるコピーでも、eap_getnext(), heap_endscan(), heap_fetch() の場合は ReleaseBuffer() で解放されるディスクバッファから直接読み取った行でも、構わないということです。もしくは、palloc された行であれば、使用後には pfree() で解放する必要があります。
+</p>
+<h3><span id=".E3.81.AA.E3.81.9C.E8.A1.A8.2C_.E5.88.97.2C_.E5.9E.8B.2C_.E9.96.A2.E6.95.B0.2C_.E3.83.93.E3.83.A5.E3.83.BC.E3.81.AE.E5.90.8D.E5.89.8D.E3.81.AF_Name.2C_NameData.2C_char_.2A_.E3.81.A8.E3.81.84.E3.81.A3.E3.81.9F.E7.95.B0.E3.81.AA.E3.82.8B.E5.9E.8B.E3.81.A8.E3.81.97.E3.81.A6.E5.8F.82.E7.85.A7.E3.81.95.E3.82.8C.E3.82.8B.E3.81.AE.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="なぜ表,_列,_型,_関数,_ビューの名前は_Name,_NameData,_char_*_といった異なる型として参照されるのですか?">なぜ表, 列, 型, 関数, ビューの名前は Name,  NameData, char * といった異なる型として参照されるのですか?</span></h3>
+<p>表, 列, 型, 関数, ビューの名前はシステムテーブルに Name 型の列として保持されています。Name は固定長でヌル終端の文字列です。サイズは NAMEDATALEN バイトです (デフォルト64バイト)。
+</p>
+<pre>typedef struct nameData
+{
+    char        data[NAMEDATALEN];
+} NameData;
+typedef NameData *Name;
+</pre>
+<p>表, 列, 型, 関数, ビューの名前はユーザクエリを経由して、可変長のヌル終端された文字列としてバックエンドに渡されます。
+</p><p>heap_open() などの多くの関数は、両方の名前型で呼び出れます。Name 型は NULL 終端されているため、char * 型を引数に取る関数に渡しても大丈夫です。ディスク上の名前 (Name) がユーザから渡された名前 (char *) と比較される機会は多く、Name と char * を入れ替えて使える場合も頻繁にあります。
+</p>
+<h3><span id=".E3.81.AA.E3.81.9C.E3.83.87.E3.83.BC.E3.82.BF.E6.A7.8B.E9.80.A0.E4.BD.93.E3.82.92.E4.BD.9C.E6.88.90.E3.81.99.E3.82.8B.E3.81.9F.E3.82.81.E3.81.AB_Node_.E3.82.84_List_.E3.82.92.E4.BD.BF.E3.81.86.E3.81.AE.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="なぜデータ構造体を作成するために_Node_や_List_を使うのですか?">なぜデータ構造体を作成するために Node や List を使うのですか?</span></h3>
+<p>バックエンドの中で柔軟にデータをやり取りする一貫性のある方法だからです。全ての Node はその型を表す NodeTag フィールド持っています。List は複数の Node を保持する単方向リンクリストです。List 内に要素の順序が意味を持つか否かは用途によります。
+</p><p>以下に List 操作コマンドの一部を示します:
+</p>
+<dl><dt>lfirst(i)</dt>
+<dt>lfirst_int(i)</dt>
+<dt>lfirst_oid(i)</dt>
+<dd>データを返します。(それぞれセル i を ポインタ, 整数, OID として)</dd></dl>
+<dl><dt>lnext(i)</dt>
+<dd>i の次のセルを返します。</dd></dl>
+<dl><dt>foreach(i, list)</dt>
+<dd>list をループし、それぞれのセルを i に格納します。</dd></dl>
+<p>重要なのは、i が ListCell * 型であることです。セルに格納されたデータではありません。lfirst 関数のいずれかを使ってセルのデータを取得する必要があります。
+</p><p>以下はループ処理を行う典型的なコードです。List 型は Var * 型のデータを格納しており、要素それぞれを処理したい場合です:
+</p>
+<pre>List        *list;
+ListCell    *i;
+...
+foreach(i, list)
+{
+    Var *var = (Var *) lfirst(i);
+    ...
+    /* ここで var を使う */
+}
+</pre>
+<dl><dt>lcons(node, list)</dt>
+<dd>node を list の先頭に追加します。list が NIL ならばリストを新規作成します。</dd></dl>
+<dl><dt>lappend(list, node)</dt>
+<dd>node を list の末尾に追加します。</dd></dl>
+<dl><dt>list_concat(list1, list2)</dt>
+<dd>list1 の末尾に list2 を追加します。</dd></dl>
+<dl><dt>list_length(list)</dt>
+<dd>list の長さを返します。</dd></dl>
+<dl><dt>list_nth(list, i)</dt>
+<dd>list の i 番目の要素を返します。番号は 0 から数えます。</dd></dl>
+<dl><dt>lcons_int, ...</dt>
+<dd>整数版の lcons_int, lappend_int や、OID 版の lcons_oid, lappend_oid もあります。</dd></dl>
+<p>gdb を使って、ノードを簡単に表示することができます。最初に gdb の表示切り詰めを無効化してください。
+</p>
+<pre>(gdb) set print elements 0
+</pre>
+<p>List, Node, 構造体の内容を表示するには、gdb 形式で値を表示する代わりに次の2つのコマンドを使うと、詳しい情報を得ることができます。List の中の Node は展開され、Node はその詳細が出力されます。1番目の関数は短い形式、2番目の関数は長い形式で表示します:
+</p>
+<pre>(gdb) call print(any_pointer)
+(gdb) call pprint(any_pointer)
+</pre>
+<p>出力はサーバログに行われますが、postmaster を使わずバックエンドを直接起動していた場合には画面に表示されます。
+</p>
+<h3><span id=".E6.A7.8B.E9.80.A0.E4.BD.93.E3.81.AB.E3.83.95.E3.82.A3.E3.83.BC.E3.83.AB.E3.83.89.E3.82.92.E8.BF.BD.E5.8A.A0.E3.81.99.E3.82.8B.E9.9A.9B.E3.80.81.E4.BB.96.E3.81.AB.E4.BD.95.E3.82.92.E3.81.99.E3.82.8B.E5.BF.85.E8.A6.81.E3.81.8C.E3.81.82.E3.82.8A.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="構造体にフィールドを追加する際、他に何をする必要がありますか?">構造体にフィールドを追加する際、他に何をする必要がありますか?</span></h3>
+<p>パーサ、リライタ、オプティマイザ、エグゼキュータ (parser, rewriter, optimizer, executor) に渡す構造体の場合には、処理の追加が必要です。構造体の多くは src/backend/nodes で定義されるルーチンをサポートしており、構造体の作成、コピー、読み取り、書き出しを行うことができます。特に、ほとんどのノード型は copyfuncs.c と equalfuncs.c への対応が必須であり、一部は outfuncs.c や readfuncs.c もサポートする必要があります。新しいフィールドをこれらのファイルでもサポートするよう変更してください。そのほかにも追加したフィールドに対応するコードが無いかを探してください。これには既存のフィールドがどのように扱われているかを参考にするのが良いでしょう。mkid が役に立ちます。(<a href="#What_tools_are_available_for_developers.3F">利用可能なツール</a> 参照)
+</p>
+<h3><span id=".E3.81.AA.E3.81.9C.E3.83.A1.E3.83.A2.E3.83.AA.E7.A2.BA.E4.BF.9D.E3.81.AB_palloc.28.29_.E3.81.A8_pfree.28.29_.E3.82.92.E4.BD.BF.E3.81.86.E3.81.AE.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="なぜメモリ確保に_palloc()_と_pfree()_を使うのですか?">なぜメモリ確保に palloc() と pfree() を使うのですか?</span></h3>
+<p>palloc() と pfree() は malloc() と free() の代わりに使われます。その理由は、クエリの完了時に確保した全てのメモリを容易に解放するためです。たとえどこでメモリを確保したのかが分らなくなっても、全てのメモリを解放することが可能になります。クエリ単位ではないメモリ領域もありますが、バックエンドが定義解放します。
+</p>
+<h3><span id="ereport.28.29_.E3.81.A8.E3.81.AF.E4.BD.95.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="ereport()_とは何ですか?">ereport() とは何ですか?</span></h3>
+<p>ereport() はフロントエンドにメッセージを送信します。また、実行中のクエリを終了することもできます。使い方の詳細は「<a rel="nofollow" class="external text" href="http://www.postgresql.jp/document/current/html/error-message-reporting.html">サーバ内部からのエラーの報告</a>」を参照してください。
+</p>
+<h3><span id="CommandCounterIncrement.28.29_.E3.81.A8.E3.81.AF.E4.BD.95.E3.81.A7.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="CommandCounterIncrement()_とは何ですか?">CommandCounterIncrement() とは何ですか?</span></h3>
+<p>通常は、コマンド文は自身が変更した行を見ることはできません。これは「UPDATE foo SET x = x + 1」が正常に動作するために必要です。
+</p><p>しかしながら、トランザクションの中で、そのトランザクションが直前に行った変更結果が必要になる場合もあります。これはコマンド・カウンタ (Command Counter) を利用することで実現できます。カウンタを増加させることでトランザクションを断片に分割し、それぞれの断片はそれ以前に実行した断片の結果を読み取ることができるようになります。CommandCounterIncrement() はコマンド・カウンタを増加させ、トランザクションに新しい断片を追加する処理です。
+</p>
+<h3><span id=".E5.95.8F.E3.81.84.E5.90.88.E3.82.8F.E3.81.9B.E5.87.A6.E7.90.86.E3.81.AB.E5.A4.89.E6.9B.B4.E3.82.92.E5.8A.A0.E3.81.88.E3.82.8B.E5.BF.85.E8.A6.81.E3.81.8C.E5.87.BA.E3.81.A6.E3.81.8D.E3.81.BE.E3.81.97.E3.81.9F.E3.80.82.E3.83.91.E3.83.BC.E3.82.B5.E9.96.A2.E4.BF.82.E3.81.AE.E3.83.95.E3.82.A1.E3.82.A4.E3.83.AB.E3.81.AB.E3.81.A4.E3.81.84.E3.81.A6.E6.89.8B.E7.9F.AD.E3.81.AB.E8.AA.AC.E6.98.8E.E3.81.97.E3.81.A6.E4.B8.8B.E3.81.95.E3.81.84.E3.80.82"></span><span class="mw-headline" id="問い合わせ処理に変更を加える必要が出てきました。パーサ関係のファイルについて手短に説明して下さい。">問い合わせ処理に変更を加える必要が出てきました。パーサ関係のファイルについて手短に説明して下さい。</span></h3>
+<p>パーサ関係のファイルは 「src/backend/parser」ディレクトリにあります。
+</p><p>scan.lは、字句解析器(lexer)を定義します。字句解析機は、SQL文を含む文字列を一連のトークンに分解します。トークンは通常は一個の単語(空白を含まず、空白によって区切られているもの)ですが、単一引用符、二重引用符で囲まれている場合は、文字列全体になり得ます。字句解析機は基本的に正規表現を使って定義されており、様々なトークンのタイプが記述できます。
+</p><p>gram.yは、字句解析器が生成したトークンを基本構成要素として使ってSQL文の文法(構文構造)を定義します。文法は、BNF記法で定義されています。BNFは正規表現に似ていますが、文字ではなく、トークン上で動きます。また、パターン(ルール、あるいはBNFにおける生成規則)には名前が付けられており、再帰的に定義できます。よって、自分自身をパターンとして呼び出すことができます。
+</p><p>実際の字句解析器は、flexというツールを使ってscan.lから生成されます。flexのマニュアルは <a rel="nofollow" class="external free" href="http://flex.sourceforge.net/manual/">http://flex.sourceforge.net/manual/</a> で参照できます。
+</p><p>実際のパーサは、bisonというツールを使ってgram.yから生成されます。bisonのマニュアルは <a rel="nofollow" class="external free" href="http://www.gnu.org/s/bison/">http://www.gnu.org/s/bison/</a> で参照できます。
+</p><p>一つ注意しておくと、もし以前にflexやbisonを使ったことがない場合、学習曲線はかなり急なものになるでしょう。
+</p>
+<h3><span id=".E3.81.A9.E3.81.AE.E3.82.88.E3.81.86.E3.81.AA.E3.83.87.E3.83.90.E3.83.83.E3.82.B0.E6.A9.9F.E8.83.BD.E3.82.92.E5.88.A9.E7.94.A8.E3.81.A7.E3.81.8D.E3.81.BE.E3.81.99.E3.81.8B.3F"></span><span class="mw-headline" id="どのようなデバッグ機能を利用できますか?">どのようなデバッグ機能を利用できますか?</span></h3>
+<p>まず、もしあなたがC言語で開発しているならば、<b>必ず</b> --enable-cassert と --enable-debug オプションを有効にして configure を行った状態で動作することを確認してください。アサーションを有効にすると多くの正常性確認処理が有効になります。デバッグシンボルはデバッガ (例えば gdb) を使って期待通りに動作しないコードを追うのに役立ちます。
+</p><p>PostgreSQL サーバには -d オプションがあり、これは詳細メッセージをログに記録します (elog または ereport で DEBUGn の情報を出力します)。-d オプションはデバッグレベルの数値を1つ引数に取ります。高いデバッグレベルを指定するとログファイルのサイズが大きくなるので注意してください。
+</p><p>postmaster が実行中ならば、ウィンドウ (コンソール) を1つ開いて psql を開始します。その後、その psql が接続している postgres プロセスの PID を、SELECT pg_backend_pid() を使って取得します。デバッガをその postgres の PID にアタッチします。デバッガからブレークポイントを設定し、その後 psql セッションからクエリを発行します。もしエラーやログメッセージを出力している場所を探しているのであれば、errfinish にブレークポイントを設定するのが良いでしょう。もしセッションの開始処理をデバッグしたいのであれば、環境変数 PGOPTIONS="-W n" を指定してから psql を開始してください。開始処理に n 秒の遅延を行うため、その間に postgres プロセスにデバッガをアタッチすることができます。ブレークポイントを適切に設定した後に開始処理を継続することになります。
+</p><p>もし postmaster が実行されていないならば、postgres バックエンドをコマンドラインから開始し、SQL 文を直接入力することもできます。しかしながら、これはあまり良い方法ではありません。psql ほど使いやすい環境ではなく (例えばコマンド履歴がありません)、並行処理をテストすることもできないためです。initdb が正常に動作しなくなってしまった場合には役立つかもしれませんが、それ以外の状況ではお勧めしません。
+</p><p>どの関数の実行に時間がかかっているかを知るためにプロファイリングを有効にしてコンパイルすることもできます。configure の際に --enable-profiling を指定してください (この時、性能を測定したいのであれば --enable-casserts は使わないでください。アサーションのチェックは無視できるほど軽量ではないためです)。
+サーバプロセスからのプロファイル・ファイルは pgsql/data ディレクトリに出力されます。psql 等のクライアントからのプロファイル・ファイルは、クライアントのカレントディレクトリに置かれます。
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408063233
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.082 seconds
+Real time usage: 0.094 seconds
+Preprocessor visited node count: 139/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    9.745      1 Template:Languages
+100.00%    9.745      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:778-0!canonical and timestamp 20260408063233 and revision id 22974.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Developer_FAQ/ja&amp;oldid=22974">https://wiki.postgresql.org/index.php?title=Developer_FAQ/ja&amp;oldid=22974</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:FAQ" title="Category:FAQ">FAQ</a></li><li><a href="/wiki/Category:Japanese" title="Category:Japanese">Japanese</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Developer_FAQ/ja" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Developer_FAQ/ja&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Developer_FAQ/ja">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/ja&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/ja&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Developer_FAQ/ja" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Developer_FAQ/ja&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Developer+FAQ%2Fja" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Developer_FAQ/ja" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Developer_FAQ/ja" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/ja&amp;oldid=22974" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/ja&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 10 August 2014, at 04:39.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.082","walltime":"0.094","ppvisitednodes":{"value":139,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    9.745      1 Template:Languages","100.00%    9.745      1 -total"]},"cachereport":{"timestamp":"20260408063233","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":254});});</script>
+</body>
+</html>

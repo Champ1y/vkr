@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Community Guide to PostgreSQL GUI Tools - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"db18971050c50965936d925f","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Community_Guide_to_PostgreSQL_GUI_Tools","wgTitle":"Community Guide to PostgreSQL GUI Tools","wgCurRevisionId":43125,"wgRevisionId":43125,"wgArticleId":108,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Community_Guide_to_PostgreSQL_GUI_Tools","wgRelevantArticleId":108,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Community_Guide_to_PostgreSQL_GUI_Tools rootpage-Community_Guide_to_PostgreSQL_GUI_Tools skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Community Guide to PostgreSQL GUI Tools</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+</p><p>This page is a list of miscellaneous utilities that work with Postgres (ex: data loaders, comparators etc.).  Things that don't do queries' "enter SQL and get it back out again."
+</p><p>If you'd like to find clients that allows you to "enter SQL and get it back out again" see <a href="/wiki/PostgreSQL_Clients" title="PostgreSQL Clients">PostgreSQL Clients</a>.
+</p><p>If you'd like to find DB visualization or design tools see <a href="/wiki/Design_Tools" title="Design Tools">Design Tools</a>.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Open_Source_/_Free_Software"><span class="tocnumber">1</span> <span class="toctext">Open Source / Free Software</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Libre_Office"><span class="tocnumber">1.1</span> <span class="toctext">Libre Office</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#SmartXML"><span class="tocnumber">1.2</span> <span class="toctext">SmartXML</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#PASH-Viewer:_PostgreSQL_Active_Session_History_Viewer"><span class="tocnumber">1.3</span> <span class="toctext">PASH-Viewer: PostgreSQL Active Session History Viewer</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#pgrights:_GUI_for_PostgreSQL_roles,_privileges_and_policies"><span class="tocnumber">1.4</span> <span class="toctext">pgrights: GUI for PostgreSQL roles, privileges and policies</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Sohag_Developer"><span class="tocnumber">1.5</span> <span class="toctext">Sohag Developer</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Beekeeper_Studio"><span class="tocnumber">1.6</span> <span class="toctext">Beekeeper Studio</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Execsql.py"><span class="tocnumber">1.7</span> <span class="toctext">Execsql.py</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Mathesar"><span class="tocnumber">1.8</span> <span class="toctext">Mathesar</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Paul"><span class="tocnumber">1.9</span> <span class="toctext">Paul</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-11"><a href="#Proprietary"><span class="tocnumber">2</span> <span class="toctext">Proprietary</span></a>
+<ul>
+<li class="toclevel-2 tocsection-12"><a href="#DbVisualizer"><span class="tocnumber">2.1</span> <span class="toctext">DbVisualizer</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#QueryGlow"><span class="tocnumber">2.2</span> <span class="toctext">QueryGlow</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Access"><span class="tocnumber">2.3</span> <span class="toctext">Access</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Five"><span class="tocnumber">2.4</span> <span class="toctext">Five</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#dbForge_Studio_for_PostgreSQL"><span class="tocnumber">2.5</span> <span class="toctext">dbForge Studio for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#dbForge_Edge"><span class="tocnumber">2.6</span> <span class="toctext">dbForge Edge</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#dbForge_Data_Compare_for_PostgreSQL"><span class="tocnumber">2.7</span> <span class="toctext">dbForge Data Compare for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#dbForge_Schema_Compare_for_PostgreSQL"><span class="tocnumber">2.8</span> <span class="toctext">dbForge Schema Compare for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Database_Workbench_(for_PostgreSQL)"><span class="tocnumber">2.9</span> <span class="toctext">Database Workbench (for PostgreSQL)</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#TablePlus"><span class="tocnumber">2.10</span> <span class="toctext">TablePlus</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#Ultorg"><span class="tocnumber">2.11</span> <span class="toctext">Ultorg</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#WaveMaker_Ajax_GUI_Design_Tool"><span class="tocnumber">2.12</span> <span class="toctext">WaveMaker Ajax GUI Design Tool</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#Postgres_Compare"><span class="tocnumber">2.13</span> <span class="toctext">Postgres Compare</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#Full_Convert"><span class="tocnumber">2.14</span> <span class="toctext">Full Convert</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#Abris_Platform"><span class="tocnumber">2.15</span> <span class="toctext">Abris Platform</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#Replicator_Pro"><span class="tocnumber">2.16</span> <span class="toctext">Replicator Pro</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#DBTools_Manager"><span class="tocnumber">2.17</span> <span class="toctext">DBTools Manager</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#PostgreSQL_PHP_Generator"><span class="tocnumber">2.18</span> <span class="toctext">PostgreSQL PHP Generator</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#ConvertDB_for_PostgreSQL"><span class="tocnumber">2.19</span> <span class="toctext">ConvertDB for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#dotConnect_for_PostgreSQL"><span class="tocnumber">2.20</span> <span class="toctext">dotConnect for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#Devart_PostgreSQL_Data_Access_Components"><span class="tocnumber">2.21</span> <span class="toctext">Devart PostgreSQL Data Access Components</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#Devart_ODBC_Driver_for_PostgreSQL"><span class="tocnumber">2.22</span> <span class="toctext">Devart ODBC Driver for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#Devart_Excel_Add-in_for_PostgreSQL"><span class="tocnumber">2.23</span> <span class="toctext">Devart Excel Add-in for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#EMS_Database_Management_Tools_for_PostgreSQL"><span class="tocnumber">2.24</span> <span class="toctext">EMS Database Management Tools for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#SQL_Maestro_Group_products_for_PostgreSQL"><span class="tocnumber">2.25</span> <span class="toctext">SQL Maestro Group products for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#Datanamic_DataDiff_for_PostgreSQL"><span class="tocnumber">2.26</span> <span class="toctext">Datanamic DataDiff for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#Datanamic_SchemaDiff_for_PostgreSQL"><span class="tocnumber">2.27</span> <span class="toctext">Datanamic SchemaDiff for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#DB_MultiRun_PostgreSQL_Edition"><span class="tocnumber">2.28</span> <span class="toctext">DB MultiRun PostgreSQL Edition</span></a></li>
+<li class="toclevel-2 tocsection-40"><a href="#DB_Doc_for_PostgreSQL"><span class="tocnumber">2.29</span> <span class="toctext">DB Doc for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-41"><a href="#SQL_Blob_Export"><span class="tocnumber">2.30</span> <span class="toctext">SQL Blob Export</span></a></li>
+<li class="toclevel-2 tocsection-42"><a href="#SQL_File_Import"><span class="tocnumber">2.31</span> <span class="toctext">SQL File Import</span></a></li>
+<li class="toclevel-2 tocsection-43"><a href="#SQL_Image_Viewer"><span class="tocnumber">2.32</span> <span class="toctext">SQL Image Viewer</span></a></li>
+<li class="toclevel-2 tocsection-44"><a href="#SQL_Multi_Select"><span class="tocnumber">2.33</span> <span class="toctext">SQL Multi Select</span></a></li>
+<li class="toclevel-2 tocsection-45"><a href="#Devart_SSIS_Data_Flow_Components_for_PostgreSQL"><span class="tocnumber">2.34</span> <span class="toctext">Devart SSIS Data Flow Components for PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-46"><a href="#EDB_Postgres_Enterprise_Manager"><span class="tocnumber">2.35</span> <span class="toctext">EDB Postgres Enterprise Manager</span></a></li>
+<li class="toclevel-2 tocsection-47"><a href="#ClusterControl_by_Severalnines"><span class="tocnumber">2.36</span> <span class="toctext">ClusterControl by Severalnines</span></a></li>
+<li class="toclevel-2 tocsection-48"><a href="#Reportizer"><span class="tocnumber">2.37</span> <span class="toctext">Reportizer</span></a></li>
+<li class="toclevel-2 tocsection-49"><a href="#Exportizer_Enterprise"><span class="tocnumber">2.38</span> <span class="toctext">Exportizer Enterprise</span></a></li>
+<li class="toclevel-2 tocsection-50"><a href="#TiCodeX_SQL_Schema_Compare"><span class="tocnumber">2.39</span> <span class="toctext">TiCodeX SQL Schema Compare</span></a></li>
+<li class="toclevel-2 tocsection-51"><a href="#pgMustard"><span class="tocnumber">2.40</span> <span class="toctext">pgMustard</span></a></li>
+<li class="toclevel-2 tocsection-52"><a href="#ODBC_Driver_for_PostgreSQL_by_CData"><span class="tocnumber">2.41</span> <span class="toctext">ODBC Driver for PostgreSQL by CData</span></a></li>
+<li class="toclevel-2 tocsection-53"><a href="#JDBC_Driver_for_PostgreSQL_by_CData"><span class="tocnumber">2.42</span> <span class="toctext">JDBC Driver for PostgreSQL by CData</span></a></li>
+<li class="toclevel-2 tocsection-54"><a href="#ADO.NET_Provider_for_PostgreSQL_by_CData"><span class="tocnumber">2.43</span> <span class="toctext">ADO.NET Provider for PostgreSQL by CData</span></a></li>
+<li class="toclevel-2 tocsection-55"><a href="#Excel_Add-In_for_PostgreSQL_by_CData"><span class="tocnumber">2.44</span> <span class="toctext">Excel Add-In  for PostgreSQL by CData</span></a></li>
+<li class="toclevel-2 tocsection-56"><a href="#SSIS_Components_for_PostgreSQL_by_CData"><span class="tocnumber">2.45</span> <span class="toctext">SSIS Components for PostgreSQL by CData</span></a></li>
+<li class="toclevel-2 tocsection-57"><a href="#Power_BI_Connector_for_PostgreSQL_by_CData"><span class="tocnumber">2.46</span> <span class="toctext">Power BI Connector for PostgreSQL by CData</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-58"><a href="#Other_Resources"><span class="tocnumber">3</span> <span class="toctext">Other Resources</span></a></li>
+</ul>
+</div>
+
+<h2><span id="Open_Source_.2F_Free_Software"></span><span class="mw-headline" id="Open_Source_/_Free_Software">Open Source / Free Software</span></h2>
+<p>This is the list of "open source and free" miscellaneous utilities:
+</p>
+<h3><span class="mw-headline" id="Libre_Office">Libre Office</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.libreoffice.org/discover/base/">http://www.libreoffice.org/discover/base/</a>
+</p><p>Supports MySQL/MariaDB, Adabas D, MS Access and PostgreSQL, as well as other JDBC/ODBC databases.
+</p>
+<h3><span class="mw-headline" id="SmartXML">SmartXML</span></h3>
+<p><a rel="nofollow" class="external free" href="http://redata.dev/smartxml">http://redata.dev/smartxml</a>
+</p><p>The application allows you to extract data from XML of any complexity and load it into PostgreSQL. It does not require installation. Does not require XSD schema. Supports Windows. There is an alpha version of the build for Linux.
+</p>
+<h3><span class="mw-headline" id="PASH-Viewer:_PostgreSQL_Active_Session_History_Viewer">PASH-Viewer: PostgreSQL Active Session History Viewer</span></h3>
+<p><a rel="nofollow" class="external free" href="https://github.com/dbacvetkov/PASH-Viewer">https://github.com/dbacvetkov/PASH-Viewer</a>
+</p><p>Java (multi-platform).
+</p><p>Open-source software which provides graphical view of active session history and help you to answer questions like "What wait events were taking most time?", "Which sessions were taking most time?", "Which queries were taking most time and what were they doing?". It also supports Active Session History extension by pgsentinel.  Does not do DB inserts, modifications, etc.
+</p>
+<h3><span id="pgrights:_GUI_for_PostgreSQL_roles.2C_privileges_and_policies"></span><span class="mw-headline" id="pgrights:_GUI_for_PostgreSQL_roles,_privileges_and_policies">pgrights: GUI for PostgreSQL roles, privileges and policies</span></h3>
+<p><a rel="nofollow" class="external free" href="https://github.com/apsavin/pgrights">https://github.com/apsavin/pgrights</a>
+</p><p>MacOS (based on Electron, so versions for other OS can be build from source code).
+</p><p>Open-source software which allows you to easily understand what can do (and what can't) a PostgreSQL user with a table's data. In other words, it's a viewer of results of GRANT commands and row-level security rules applied for a particular table and for a particular role.  Only modifies user rights, no other capability.
+</p>
+<h3><span class="mw-headline" id="Sohag_Developer">Sohag Developer</span></h3>
+<p><a rel="nofollow" class="external text" href="https://sourceforge.net/projects/sohag-developer/">Sohag Developer</a>
+</p><p>Gnu/Linux Windows (Other OS can compile from source code).
+</p><p>Build a powerful database applications following few steps using Sohag Developer .
+Sohag Developer currently supports PostgreSQL database and has a set of CRUD generators that generates (Qt/C++ code and ui forms - PHP web applications uses web forms and bootstrap framework ) to manipulate the data in the database tables or views.
+</p>
+<h3><span class="mw-headline" id="Beekeeper_Studio">Beekeeper Studio</span></h3>
+<p><a rel="nofollow" class="external free" href="https://beekeeperstudio.io/">https://beekeeperstudio.io/</a>
+</p><p>Beekeeper Studio is a modern cross-platform SQL editor and database manager available for Linux, Mac, and Windows. Some of its features include:
+</p>
+<ul><li>Clean, smooth, usable UI with dark and light themes</li>
+<li>Tabbed Interface</li>
+<li>Multiple connections at the same time</li>
+<li>Saved queries and run history</li>
+<li>Auto-complete</li></ul>
+<h3><span class="mw-headline" id="Execsql.py">Execsql.py</span></h3>
+<p><a rel="nofollow" class="external free" href="https://pypi.org/project/execsql/">https://pypi.org/project/execsql/</a>
+</p><p>Execsql.py is a SQL scripting client that reads SQL statements from a text file and sends them to the PostgreSQL server.  The script file can also contain special metacommands that are interpreted by execsql.py and that can be used to import and export data, copy data between databases, conditionally execute script blocks, display data in GUI dialogs, and perform other functions.  Data can be exported in 19 different tabular formats or using any of three different template processors.  Default and custom logging features can be used to document script actions.
+</p>
+<h3><span class="mw-headline" id="Mathesar">Mathesar</span></h3>
+<p><a rel="nofollow" class="external free" href="https://github.com/mathesar-foundation/mathesar">https://github.com/mathesar-foundation/mathesar</a>
+</p><p>Mathesar is a web-based UI for PostgreSQL that allows users to view, edit, query, and collaborate on data without writing SQL. It provides a spreadsheet-like interface while working directly with PostgreSQL schemas and tables, and roles. Key features include:
+</p>
+<ul><li>Easily create and update Postgres schemas and tables.</li>
+<li>spreadsheet-like interface to view, create, update, and delete table records.</li>
+<li>Filter, sort, and group: Quickly slice your data in different ways.</li>
+<li>Import and export data into Mathesar easily to work with your data elsewhere.</li></ul>
+<p><br />
+</p>
+<h3><span class="mw-headline" id="Paul">Paul</span></h3>
+<p><a rel="nofollow" class="external free" href="https://guillim.github.io/products/paul">https://guillim.github.io/products/paul</a>
+</p><p>Paul is a fast, read-only macOS app to investigate a single user’s data in Postgres without writing SQL. It’s built for on-call engineers, support, and developers who need to answer, "What does the database say for user X?"
+</p>
+<ul><li>Trace one user across related tables — follow foreign keys row-by-row.</li>
+<li>Keep context while you navigate — split-view UI so you don’t lose your place.</li>
+<li>Read-only by design — no accidental edits in production.</li>
+<li>Focused workflow — purpose-built for user investigations, not full DB admin (no migrations, schema design, or CRUD).</li>
+<li>Table mode — browse tables with filters and follow foreign keys.</li>
+<li>SQL mode — raw SQL editor (SELECT-only) for when you need it.</li>
+<li>Agent mode — natural-language questions about your connected Postgres DB via an LLM, with a ChatGPT-like UI and read-only tool access.</li></ul>
+<p>Perfect for: “Can you check what we have for user X?”, debugging user-related issues, quick data investigations, and tracing relationships across tables.  
+Not for: database administration, writing complex queries, editing data, or schema design.
+</p>
+<h2><span class="mw-headline" id="Proprietary">Proprietary</span></h2>
+<p>This is a list of "closed source" projects, some might have some manner of free version.
+</p>
+<h4><span class="mw-headline" id="DbVisualizer">DbVisualizer</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.dbvis.com/">https://www.dbvis.com/</a>
+</p><p>Windows, Linux, macOS
+</p><p>DbVisualizer is a universal database tool that supports PostgreSQL along with many other database systems. It is celebrated for its high reliability and a well-designed user experience that simplifies complex database operations.
+</p><p><b>Key features:</b>
+</p>
+<ul><li>Engineered for stable, robust performance across diverse database environments.</li>
+<li>Clean, modern design that streamlines navigation, SQL editing, and database exploration.</li>
+<li>Has a modern SQL editor with auto-completion and syntax highlighting, variables, templates plus a visual query builder.</li>
+<li>Has advanced tools such as visual explain plan, monitoring, DBA tools and much more</li>
+<li>Available in both free and commercial editions.</li></ul>
+<h4><span class="mw-headline" id="QueryGlow">QueryGlow</span></h4>
+<p><a rel="nofollow" class="external free" href="https://queryglow.com/">https://queryglow.com/</a>
+</p><p>QueryGlow is a self-hosted, web-based database GUI that you deploy with a single Docker command. Your data never leaves your network. It supports PostgreSQL, MySQL, MariaDB, SQLite, CockroachDB, and TimescaleDB through a unified interface.
+</p><p>Features:
+</p>
+<ul><li>AI SQL Generation — type plain English, get production-ready SQL (bring your own API key)</li>
+<li>Schema-aware SQL autocomplete — context-aware suggestions for tables, columns, and joins</li>
+<li>Visual EXPLAIN Analyzer with color-coded query plans and index suggestions</li>
+<li>Safe Mode — blocks DROP TABLE, DELETE without WHERE, and other destructive queries</li>
+<li>SSH tunnel support and AES-256-GCM encryption for stored credentials</li>
+<li>CSV import/export with formula protection</li>
+<li>Saved query libraries and automatic query history</li>
+<li>Zero telemetry, zero external data transmission</li></ul>
+<p>Commercial, $79 one-time payment. Unlimited users and servers.
+</p><p><a rel="nofollow" class="external text" href="https://demo.queryglow.com/">Live Demo</a>
+</p><p><br />
+</p>
+<h4><span class="mw-headline" id="Access">Access</span></h4>
+<p><a rel="nofollow" class="external free" href="https://products.office.com/en-us/access">https://products.office.com/en-us/access</a>
+</p><p>Windows
+</p><p>Yes, you can use MS Access as a PostgreSQL database interface. Supports data access to PostgreSQL tables and views; many ODBC-based limitations and errors.
+</p>
+<h3><span class="mw-headline" id="Five">Five</span></h3>
+<p><a rel="nofollow" class="external free" href="https://five.co/">https://five.co/</a>
+</p><p>Rapidly develop and deliver modern business software to internal or external users. 
+</p><p>Five is free to use. Develop and test applications locally free of charge. Only subscribe when you build something production worthy.
+</p><p>Features:
+</p>
+<ul><li>Store, retrieve and process data from any data source (such as a PostgreSQL DB)</li>
+<li>Rapidly implement business logic using SQL, JavaScript or TypeScript</li>
+<li>Cut down the time you spent on front-end development</li>
+<li>Scalable, secure and affordable: deploy apps in one click</li>
+<li>Keep your data secure on Five’s managed infrastructure</li>
+<li>Build password-protected multi-user applications</li>
+<li>Useful developer tools to accelerate your development</li></ul>
+<p>Free download available for Windows &amp; MacOS
+</p>
+<h3><span class="mw-headline" id="dbForge_Studio_for_PostgreSQL">dbForge Studio for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.devart.com/dbforge/postgresql/studio/">http://www.devart.com/dbforge/postgresql/studio/</a>
+</p><p>Microsoft Windows, Linux, macOS
+</p><p><b>dbForge Studio for PostgreSQL</b> is a feature-rich IDE designed for database development and management. The tasks that can be handled with its help include completion-aided SQL coding, comparison and synchronization of databases, data management, data analysis and reporting, query optimization, and customizable generation of realistic test data.
+</p><p><b>Key features:</b>
+</p>
+<ul><li>SQL Development: Smart code completion and formatting</li>
+<li>Database Explorer: Object tree navigation and operations from the context menu</li>
+<li>Database Comparison: Detection of differences in schemas and table data and generation of synchronization scripts</li>
+<li>Data Import &amp; Export: 10+ most widely used data formats</li>
+<li>Query Profiler: SQL query performance tuning</li>
+<li>Data Generator: Creation of meaningful dummy data for testing</li>
+<li>Pivot Tables: Grouping and summarization of data for analysis</li>
+<li>Master-Detail Browser: Review and analysis of data in related tables</li>
+<li>Reporting: Visual data reports in 9 different formats</li>
+<li>Command-Line Interface: CLI-powered automation of recurring operations</li></ul>
+<h3><span class="mw-headline" id="dbForge_Edge">dbForge Edge</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.devart.com/dbforge/edge/">https://www.devart.com/dbforge/edge/</a> 
+</p><p>Microsoft Windows, Linux, macOS 
+</p><p><b>dbForge Edge</b> is a multidatabase solution supporting PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, and a wide range of cloud services. It covers a variety of database development, design, management, and administration tasks with a rich set of features. 
+</p><p><b>Key Features:</b>
+</p>
+<ul><li>SQL Coding Assistance: Intelligent code completion, syntax validation, context-aware suggestions, debugging, and refactoring</li>
+<li>Query Profiling: Analysis of query execution plans and performance optimization</li>
+<li>Database Comparison &amp; Synchronization: Detection of schema and data differences between a source and a target with subsequent synchronization options</li>
+<li>Data Management: Editing, sorting, filtering, and export of data, as well as generation of INSERT queries</li>
+<li>Data Import/Export: Support for 10+ data formats, custom templates, and CLI-powered automation of recurring operations</li>
+<li>Data Analysis: Pivot tables, Master-Detail Browser, and customizable data reports</li>
+<li>Task Automation: Automation of backup, synchronization, and import operations using command-line scripts and templates</li></ul>
+<h3><span class="mw-headline" id="dbForge_Data_Compare_for_PostgreSQL">dbForge Data Compare for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.devart.com/dbforge/postgresql/datacompare/">http://www.devart.com/dbforge/postgresql/datacompare/</a>
+</p><p>Microsoft Windows, Linux, macOS
+</p><p><b>dbForge Data Compare for PostgreSQL</b> is an effective tool for table data comparison, which makes it easy to detect differences in data, analyze them, and generate SQL scripts for data synchronization.
+</p><p><b>Key features:</b>
+</p>
+<ul><li>Identify the differences between two databases</li>
+<li>Compare separate tables or table groups by table name mask</li>
+<li>Compare tables with different structures</li>
+<li>Compare custom query execution results</li>
+<li>Generate detailed comparison reports</li>
+<li>Synchronize data in tables and views fully or partially using scripts</li>
+<li>Schedule data synchronization with Windows Task Scheduler</li></ul>
+<h3><span class="mw-headline" id="dbForge_Schema_Compare_for_PostgreSQL">dbForge Schema Compare for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.devart.com/dbforge/postgresql/schemacompare/">http://www.devart.com/dbforge/postgresql/schemacompare/</a>
+</p><p>Microsoft Windows, Linux, macOS
+</p><p>dbForge Schema Compare for PostgreSQL and Amazon Redshift is a free tool for easy and effective comparison of database structure differences. Additionally, it generates and runs SQL scripts for synchronization of source and target schemas.
+</p><p><b>Key features:</b>
+</p>
+<ul><li>Find differences in Redshift and PostgreSQL database schemas</li>
+<li>Generate SQL scripts to update one database with the contents of another</li>
+<li>Migrate PostgreSQL schemas to Amazon Redshift</li>
+<li>Apply updates from development databases to staging or production</li>
+<li>Compare and synchronize pre-object security permissions</li>
+<li>Compare PL/pgSQL and Python code</li></ul>
+<h3><span id="Database_Workbench_.28for_PostgreSQL.29"></span><span class="mw-headline" id="Database_Workbench_(for_PostgreSQL)">Database Workbench (for PostgreSQL)</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.upscene.com/database_workbench/">https://www.upscene.com/database_workbench/</a>
+</p><p><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/database-development-tool-for-postgresql/postgresql">Database Workbench</a> is a complete database development GUI tool for PostgreSQL, from design, to implementation to testing and debugging. It comes with numerous productivity tools and is available in 3 different editions to suit your needs.
+</p><p><b>Key features</b>:
+</p>
+<ul><li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/database_design">Database Design</a>: design your database using a conceptual entity-relationship diagram, of create a physical design directly.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/object_editors">Database Development</a>: create database objects using the GUI editors, browse existing databases, create queries using the Visual Query Builder, use the powerful code editors.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/stored_procedure_debugging">Testing &amp; Debugging</a>: create test data, profile queries or debug stored procedures and triggers.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/data_editing#blobs">Data Operations</a>: view and edit data, view binary data like images, PDFs and documents. Import and export data via files or transfer directly from one database to another.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/data_compare">Data Compare</a>: compare data from one database to another and create synchronization scripts.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/reporting">Reporting</a>: create custom reports, including images, bar and QR codes, and pivot tables.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/database_migration">Database Migration</a>: migrate database meta data from one system to another, compare meta data between databases.</li></ul>
+<p>Database Workbench supports the following database systems:
+</p>
+<ul><li>PostgreSQL</li>
+<li>MySQL and MariaDB</li>
+<li>SQLite</li>
+<li>Firebird</li>
+<li>SQL Server</li>
+<li>Oracle</li>
+<li>InterBase</li>
+<li>NexusDB</li></ul>
+<p>Works on Linux via Wine as well.
+</p>
+<h3><span class="mw-headline" id="TablePlus">TablePlus</span></h3>
+<p><a rel="nofollow" class="external free" href="https://tableplus.com/">https://tableplus.com/</a>
+</p><p>macOS, Windows, iOS
+</p><p>TablePlus is a modern, native tool with elegant UI that allows you to simultaneously manage multiple databases such as MySQL, PostgreSQL, SQLite, Microsoft SQL Server and more.
+</p>
+<ul><li>True native built.</li>
+<li>Workspace supports multiple tabs, multiple windows</li>
+<li>Powerful SQL editor with full features: auto syntax highlight, auto-suggestion, split pane, favorite and history.</li>
+<li>Data Filter &amp; Sorting, import &amp; export</li>
+<li>Full-dark theme &amp; modern shortcut</li>
+<li>With plugin system, you can be able to write your own new features to work with database per your needs (export charts, pretty json…).</li></ul>
+<h3><span class="mw-headline" id="Ultorg">Ultorg</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.ultorg.com">https://www.ultorg.com</a>
+</p><p>Ultorg is a general-purpose user interface and visual query system that works with any existing PostgreSQL database.
+</p><p>Windows, MacOS, Linux
+</p><p><b>Key features:</b>
+</p>
+<ul><li>Quickly show data across many tables and one-to-many relationships.</li>
+<li>See data in continuously auto-formatted table, form, or crosstab layouts.</li>
+<li>Build the equivalent of any SQL-92 SELECT query by interacting directly with the data (choose fields, joins, filters, calculations etc.).</li>
+<li>Edit data and commit changes back to the database. Insert/delete/dropdown rows from FK relationships etc.</li>
+<li>Join PostgreSQL tables with tables from other data sources (CSV files, Google Sheets, and others).</li>
+<li>Avoid typing long SQL queries and associated formatting code.</li></ul>
+<h3><span class="mw-headline" id="WaveMaker_Ajax_GUI_Design_Tool">WaveMaker Ajax GUI Design Tool</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.wavemaker.com/">http://www.wavemaker.com/</a>
+</p><p>Windows, Macintosh, Linux
+</p><p>WaveMaker is an Ajax-based GUI design tool for Postgres. WaveMaker is built using itself! WaveMaker generates a standard Java WAR file based on Spring, Hibernate and Dojo. WaveMaker supports Postgres schema creation and import and includes a visual query editor.
+</p>
+<h3><span class="mw-headline" id="Postgres_Compare">Postgres Compare</span></h3>
+<div class="thumb tleft"><div class="thumbinner" style="width:130px;"><a href="/wiki/File:Postgres_compare.png" class="image"><img alt="" src="/images/3/3c/Postgres_compare.png" decoding="async" width="128" height="128" class="thumbimage" /></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:Postgres_compare.png" class="internal" title="Enlarge"></a></div>frameless</div></div></div>
+<p><a rel="nofollow" class="external free" href="https://www.postgrescompare.com/">https://www.postgrescompare.com/</a>
+</p><p>Windows, Mac &amp; Linux
+</p><p>A comprehensive tool for identifying the differences between databases and generating an update script to synchronize them. Postgres Compare reads the system catalogs to determine the structure of the database and compares it to another to find the changes. Generate SQL and deploy the alterations, save snapshots for later. Automate the process via the command line.
+</p>
+<h3><span class="mw-headline" id="Full_Convert">Full Convert</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.spectralcore.com/fullconvert">https://www.spectralcore.com/fullconvert</a>
+</p><p>Database conversion and synchronization between PostgreSQL and Microsoft Access, dBase, FoxPro, Microsoft Excel, Firebird, Interbase, MySQL, Oracle, Paradox, Microsoft SQL Server, SQL Server, SQL Server Azure, SQL Server Compact(SQLCE), SQLite, Delimited text files (CSV), XML and many more via ODBC.
+</p>
+<h3><span class="mw-headline" id="Abris_Platform">Abris Platform</span></h3>
+<p><a rel="nofollow" class="external free" href="https://abrisplatform.com">https://abrisplatform.com</a>
+</p><p>Web Application for Linux/Windows, requires Apache+PHP or Docker
+</p><p><b>Abris Platform</b> is an application development platform for creating Web-based front-ends for PostgreSQL databases. Can be used to quickly create applications with convenient forms via SQL declarative description.
+</p><p><b>Key features:</b>
+</p>
+<ul><li>Quick setup - Abris Platform provides built-in means for flexible data structures configuration (tables, fields and relations). This can be done during system initialization as well as during system expluatation.</li>
+<li>Single page application - Related entities and tables are instantly accessible for view and edit on the same screen.</li>
+<li>Search - Use general in-table search and complex column filters.</li>
+<li>Charts - Data can be represented via charts of different types: bar charts, pie charts, lines any many others.</li>
+<li>Maps - Build-in support for geo data. Abris platform allow to vizualize geo-data event in real-time using OpenStreet Map package.</li>
+<li>Reporting - Filter settings can be saved as a report description and data can be exported in the following formats: HTML, PDF, Excel.</li>
+<li>Data import - Insert data in the current open list view from the computer clipboard.</li>
+<li>Notifications - Notification pool, that can be filled in PostgreSQL functions.</li>
+<li>Administrative tool - Built in administrative tools take care of user management, activity monitoring and auditing and allow to configure user/group access policy on the table and field database level.</li></ul>
+<h3><span class="mw-headline" id="Replicator_Pro">Replicator Pro</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.spectralcore.com/replicator">https://www.spectralcore.com/replicator</a>
+</p><p>Replicator allows table data comparison and sync - even with heterogeneous databases. It is unique in the fact it can replicate changes only even if source is non-relational (CSV, DBF, Excel documents, Paradox...). Replicator has a built-in scheduler for easy periodic change replication.
+</p>
+<h3><span class="mw-headline" id="DBTools_Manager">DBTools Manager</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.dbtools.com.br">http://www.dbtools.com.br</a>
+</p><p>Windows
+</p><p>Admin
+</p><p>Freeware, available for PostgreSQL and MySQL, allows managing all aspects of the database: db, table, triggers, functions, etc. Includes import/export wizards to migrate data and structure to/from other database engines. Developed by DBTools Software.
+</p>
+<h3><span class="mw-headline" id="PostgreSQL_PHP_Generator">PostgreSQL PHP Generator</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.sqlmaestro.com/products/postgresql/phpgenerator/">http://www.sqlmaestro.com/products/postgresql/phpgenerator/</a>
+</p><p>Windows
+</p><p>PostgreSQL PHP Generator is a freeware but powerful PostgreSQL GUI frontend that allows you to generate high-quality PHP scripts for the selected tables, views and queries for the further working with these objects through the web.
+</p>
+<h3><span class="mw-headline" id="ConvertDB_for_PostgreSQL">ConvertDB for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="http://convertdb.com/postgresql">http://convertdb.com/postgresql</a> has PostgreSQL export/ import tools
+</p><p>Windows
+</p><p>The software is able to connect to remote PostgreSQL 9.x/7.4 located on Linux, Solaris, Mac OS X, and Windows.
+</p><p>ConvertDB cross-database migration tools assist in data conversion and synchronization among PostgreSQL, MySQL, MS SQL Server, MS Windows SQL Azure,  and MS Access databases
+</p>
+<ul><li>1 Million of records can be transferred in 5-10 minutes.</li>
+<li>Bi-directional synchronization between PostgreSQL, MS SQL, MySQL and Oracle</li>
+<li>Scheduling migration and synchronization jobs.</li></ul>
+<h3><span class="mw-headline" id="dotConnect_for_PostgreSQL">dotConnect for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.devart.com/dotconnect/postgresql/">https://www.devart.com/dotconnect/postgresql/</a>
+</p><p>Windows
+</p><p><b>dotConnect for PostgreSQL</b>, formerly known as PostgreSQLDirect .NET, is an enhanced ORM enabled data provider for PostgreSQL that builds on ADO.NET technology to present a complete solution for developing PostgreSQL-based database applications. It introduces new approaches for designing application architecture, boosts productivity, and leverages database applications.
+</p><p><b>Key features:</b>
+</p>
+<ul><li>Direct Mode</li>
+<li>Database Application Development Extension</li>
+<li>PostgreSQL Advanced Features Support</li>
+<li>Optimized Code</li>
+<li>ORM Support</li>
+<li>BIS Support</li></ul>
+<h3><span class="mw-headline" id="Devart_PostgreSQL_Data_Access_Components">Devart PostgreSQL Data Access Components</span></h3>
+<p>Windows
+</p><p><a rel="nofollow" class="external free" href="https://www.devart.com/pgdac/">https://www.devart.com/pgdac/</a>
+</p><p>PostgreSQL Data Access Components (PgDAC) is a library of components that provides native connectivity to PostgreSQL from Delphi, C++Builder, Lazarus (and Free Pascal) on Windows, Mac OS X, iOS, Android, Linux, and FreeBSD for both 32-bit and 64-bit platforms. PgDAC is designed to help programmers develop really lightweight, faster and cleaner PostgreSQL database applications without deploying any additional libraries.
+</p><p>Native Connectivity to PostgreSQL
+PgDAC is a complete replacement for standard PostgreSQL connectivity solutions and presents an efficient alternative to the Borland Database Engine (BDE) and standard dbExpress driver for access to PostgreSQL. It provides direct access to PostgreSQL without PostgreSQL Client.
+</p>
+<h3><span class="mw-headline" id="Devart_ODBC_Driver_for_PostgreSQL">Devart ODBC Driver for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.devart.com/odbc/postgresql/">https://www.devart.com/odbc/postgresql/</a>
+</p><p>Windows
+</p><p>Devart ODBC Driver for PostgreSQL provides high-performance and feature-rich connectivity solution for ODBC-based applications to access PostgreSQL databases from Windows, both 32-bit and 64-bit. Full support for standard ODBC API functions and data types implemented in our driver makes the interaction of your database applications with PostgreSQL fast, easy and extremely handy.
+</p>
+<h3><span class="mw-headline" id="Devart_Excel_Add-in_for_PostgreSQL">Devart Excel Add-in for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.devart.com/excel-addins/postgresql.html">https://www.devart.com/excel-addins/postgresql.html</a>
+</p><p>Windows
+</p><p>Devart Excel Add-in for PostgreSQL allows you to quickly and easily connect Microsoft Excel to PostgreSQL, load data from PostgreSQL to Excel, instantly refresh data in an Excel workbook from the database, edit these data, and save them back to PostgreSQL. It enables you to work with PostgreSQL data like with usual Excel worksheets, easily perform data cleansing and de-duplication, and apply all the Excel's powerful data processing and analysis capabilities to these data.
+</p>
+<h3><span class="mw-headline" id="EMS_Database_Management_Tools_for_PostgreSQL">EMS Database Management Tools for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.sqlmanager.net/en/products/postgresql">http://www.sqlmanager.net/en/products/postgresql</a>
+</p><p>Windows
+</p><p>PostgreSQL Tools Products Family:
+</p>
+<ul><li>EMS SQL Manager for PostgreSQL see <a href="/wiki/PostgreSQL_Clients" title="PostgreSQL Clients">PostgreSQL Clients</a>.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmanager.net/en/products/studio/postgresql">SQL Management Studio for PostgreSQL</a> - a single workbench for administering PostgreSQL databases, managing database schema and objects as well as for database design, migration, extraction, query building, data import, export, and database comparison.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmanager.net/en/products/postgresql/manager">SQL Manager for PostgreSQL</a> - high performance graphical tool for PostgreSQL database administration and development. It makes creating and editing PostgreSQL database objects easy and fast, and allows you to run SQL scripts, visually design databases, build SQL queries, extract, print and search metadata, import and export PostgreSQL database data and much more.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmanager.net/en/products/postgresql/dataexport">Data Export for PostgreSQL</a> - tool to export PostgreSQL database data quickly to any of 19 available formats, including MS Access, MS Excel, MS Word, RTF, HTML, TXT, ODF and more. Data Export for PostgreSQL has a <span class="plainlinks"><a rel="nofollow" class="external text" href="http://aurora-ndut.blogspot.fr/2013/10/kata-kata-lucu.html"><span style="color:black;font-weight:normal; text-decoration:none!important; background:none!important; text-decoration:none;">kata kata lucu</span></a></span> friendly wizard, which allows you to set various options of PostgreSQL export process visually and a command-line utility to automate your PostgreSQL export jobs using the configuration file.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmanager.net/en/products/postgresql/dataimport">Data Import for PostgreSQL</a> - tool to import data to PostgreSQL tables from MS Excel 97-2007, MS Access, DBF, TXT, CSV, MS Word 2007, RTF, ODF and HTML files. This utility allows you to quickly import data to one or several PostgreSQL tables or views at once, save all PostgreSQL import parameters set on current wizard session, use special batch insert mode to import PostgreSQL data at the maximum possible speed and much more.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmanager.net/en/products/postgresql/datapump">Data Pump for PostgreSQL</a> - migration tool for converting databases and importing table data from an ADO-compatible source (e.g. MS Access, MS SQL database or any other database with ADO support) to PostgreSQL databases.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmanager.net/en/products/postgresql/datagenerator">Data Generator for PostgreSQL</a> - tool for generating test data to PostgreSQL database tables. The utility can help you to simulate the database production environment and allows you to populate several PostgreSQL database tables with test data simultaneously, define tables for generating data, set value ranges, control a wide variety of generation parameters for each field type and much more.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmanager.net/en/products/postgresql/dbcomparer">DB Comparer for PostgreSQL</a> - a tool for comparing PostgreSQL database schemas and discovering differences in their structures. You can view all the differences in compared database objects and execute an automatically generated script to synchronize structure of PostgreSQL databases and eliminate these differences.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmanager.net/en/products/postgresql/extract">DB Extract for PostgreSQL</a> - easy-to-use tool for creating PostgreSQL database backups in a form of SQL scripts. This database script utility allows you to save metadata of all PostgreSQL database objects as well as PostgreSQL table data as database snapshots.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmanager.net/en/products/postgresql/query">SQL Query for PostgreSQL</a> - a useful tool that lets you quickly and simply build SQL queries to PostgreSQL databases. Visual PostgreSQL query building, as well as direct editing of a query text, is available.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmanager.net/en/products/postgresql/datacomparer">Data Comparer for PostgreSQL</a> - tool for PostgreSQL data comparison and synchronization. Using this utility you can view all the differences in compared PostgreSQL tables and execute an automatically generated script to eliminate these differences.</li></ul>
+<h3><span class="mw-headline" id="SQL_Maestro_Group_products_for_PostgreSQL">SQL Maestro Group products for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.sqlmaestro.com/products/postgresql/">http://www.sqlmaestro.com/products/postgresql/</a>
+</p><p>Windows
+</p><p><a rel="nofollow" class="external text" href="http://www.sqlmaestro.com">SQL Maestro Group</a> offers a number of tools for PostgreSQL.
+</p>
+<ul><li>Maestro for PostgreSQL see <a href="/wiki/PostgreSQL_Clients" title="PostgreSQL Clients">PostgreSQL Clients</a>.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmaestro.com/products/postgresql/datawizard/">PostgreSQL Data Wizard</a> provides you with a number of easy-to-use wizards to transfer any database to PostgreSQL, export data from PostgreSQL tables, views and queries to most popular formats, and import data from various sources into PostgreSQL tables.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmaestro.com/products/postgresql/codefactory/">PostgreSQL Code Factory</a> is a  GUI tool aimed at the SQL queries and scripts development.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmaestro.com/products/postgresql/datasync/">PostgreSQL Data Sync</a> is a powerful and easy-to-use tool for database contents comparison and synchronization.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sqlmaestro.com/products/postgresql/phpgenerator/">PostgreSQL PHP Generator Professional</a> is a frontend that allows you to generate high-quality PHP applications for your database in a few mouse clicks.</li></ul>
+<p>SQL Maestro Group also produces similar tools for MySQL, Oracle, MS SQL Server, SQLite, Firebird, DB2, SQL Anywhere, and MaxDB.
+</p>
+<h3><span class="mw-headline" id="Datanamic_DataDiff_for_PostgreSQL">Datanamic DataDiff for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.datanamic.com/datadiff-for-postgresql/">http://www.datanamic.com/datadiff-for-postgresql/</a>
+</p><p>Windows
+</p><p>Datanamic DataDiff for PostgreSQL is a utility for data comparison and synchronization. Compare data for selected tables in two databases, view differences and publish changes quickly and safely. Flexible comparison and synchronization settings will enable you to set up a customized comparison key and to select tables and fields for comparison and for synchronization.
+DB Data Difftective can be used for data migrations, verification of (corrupt) data, data auditing etc.
+</p>
+<h3><span class="mw-headline" id="Datanamic_SchemaDiff_for_PostgreSQL">Datanamic SchemaDiff for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.datanamic.com/schemadiff-for-postgresql/index.html">http://www.datanamic.com/schemadiff-for-postgresql/index.html</a>
+</p><p>Windows
+</p><p>Datanamic SchemaDiff for PostgreSQL is a tool for comparison and synchronization of database schemas. It allows you to compare and synchronize tables, views, functions, sequences (generators), stored procedures, triggers and constraints between two databases.
+</p>
+<h3><span class="mw-headline" id="DB_MultiRun_PostgreSQL_Edition">DB MultiRun PostgreSQL Edition</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.datanamic.com/multirun/index.html">http://www.datanamic.com/multirun/index.html</a>
+</p><p>Windows
+</p><p>DB MultiRun is a simple tool to execute multiple SQL scripts on multiple databases quickly.
+Define a list of databases, add SQL scripts to execute on these databases and click "execute" to run those scripts on the databases in the list. The multi-threaded execution of the SQL scripts makes it complete the task fast. After execution of the scripts, you can examine the results of the executed scripts on each database.
+</p>
+<h3><span class="mw-headline" id="DB_Doc_for_PostgreSQL">DB Doc for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.yohz.com/dbdoc_details.htm">https://www.yohz.com/dbdoc_details.htm</a>
+</p><p>Windows
+</p><p>DB Doc helps you document your database schema and generate shareable PDF, HTML, XML, and Microsoft Word document in only 5 steps.  Furthermore, the layout of the generated documents are customizable.
+</p>
+<h3><span class="mw-headline" id="SQL_Blob_Export">SQL Blob Export</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.yohz.com/sbe_details.htm">http://www.yohz.com/sbe_details.htm</a>
+</p><p>Windows
+</p><p>SQL Blob Export exports unlimited images and files from your tables or queries in 5 simple steps.
+</p>
+<h3><span class="mw-headline" id="SQL_File_Import">SQL File Import</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.yohz.com/sfi_overview.htm">http://www.yohz.com/sfi_overview.htm</a>
+</p><p>Windows
+</p><p>SQL File Import allows you to upload files, images, and other data into your database, without having to write any SQL statements.  SQL File Import supports PostgreSQL, Firebird, MySQL, Oracle, SQLite, SQL Server, and various ODBC-supported databases (e.g. DB2 and PostgreSQL).
+</p><p>A scripting engine allows you to transform data before importing them into your database.  A command line version is also included to allow you to perform unattended upload/import tasks.
+</p>
+<h3><span class="mw-headline" id="SQL_Image_Viewer">SQL Image Viewer</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.yohz.com/siv_details.htm">http://www.yohz.com/siv_details.htm</a>
+</p><p>Windows
+</p><p>SQL Image Viewer allows you to retrieve, view, convert and export images stored in Firebird, MySQL, Oracle, SQLite, SQL Server, and various ODBC-supported databases (e.g. DB2 and PostgreSQL). It supports the following image formats: BMP, GIF, JPG, PNG, PSD, and TIFF.
+</p><p>It also allows you to export binary data and recognises the following binary file types: PDF, MP3, WAV, 7Z, BZ2, GZ, RAR, ZIP, and has experimental support for DOC, PPT and XLS file types.
+</p><p>A command line version is also included to allow you to perform unattended scheduled exports of binary data.
+</p>
+<h3><span class="mw-headline" id="SQL_Multi_Select">SQL Multi Select</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.yohz.com/sms_details.htm">http://www.yohz.com/sms_details.htm</a>
+</p><p>Windows
+</p><p>SQL Multi Select is a query tool that allows you to run multiple scripts on multiple servers with a single click.  Result sets from different servers are consolidated into a single view, allowing for easy comparison and analysis.
+</p>
+<h3><span class="mw-headline" id="Devart_SSIS_Data_Flow_Components_for_PostgreSQL">Devart SSIS Data Flow Components for PostgreSQL</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.devart.com/ssis/">https://www.devart.com/ssis/</a>
+</p><p>Windows
+</p><p><b>Devart SSIS Data Flow Components for PostgreSQL</b> allow you to integrate database and cloud data via SQL Server Integration Services (SSIS).
+</p><p>Devart SSIS Data Flow Components provide easy to set up cost-effective data integration using SSIS ETL engine. They provide high performance data loading, convenient component editors, SQL support for cloud data sources and lots of data source specific features.
+</p>
+<h3><span class="mw-headline" id="EDB_Postgres_Enterprise_Manager">EDB Postgres Enterprise Manager</span></h3>
+<p><a rel="nofollow" class="external free" href="http://www.enterprisedb.com/products/postgres-enterprise-manager">http://www.enterprisedb.com/products/postgres-enterprise-manager</a>
+</p><p>Windows, Mac OS X, Linux
+</p><p>Postgres Enterprise Manager is the only solution available today that allows you to intelligently manage, monitor, and tune large scale Postgres installations from a single GUI console.
+</p><p>Monitoring features include: server auto-discovery, over 225 pre-configured ready to run probes, custom probes, alert management, personalized alerts, remote monitoring, versatile charting, custom dashboards and web client.
+</p><p>DBA tools include: database objects management, Postgres Expert (best practice configuration settings), Audit Manager, Log Manager, Log Analysis Expert, Capacity Manager and Team Support.
+</p><p>Developer tools include: Query Tool, Data Grid, SQL Profiler, SQL Debugger and Import tools.
+</p><p>Tuning tools include: At-A-Glance performance dashboards, Tuning Wizard, Performance Diagnostics and Index Advisor.
+</p>
+<h3><span class="mw-headline" id="ClusterControl_by_Severalnines">ClusterControl by Severalnines</span></h3>
+<p><a rel="nofollow" class="external free" href="https://severalnines.com/product/clustercontrol/for_postgresql">https://severalnines.com/product/clustercontrol/for_postgresql</a>
+</p><p>ClusterControl is an all-inclusive open source database management system that allows you to deplore, monitor, manage and scale your database environments. ClusterControl provides the basic functionality you need to get PostgreSQL up-and-running using our deployment wizard, monitoring and basic management abilities like automatic failover, backups, and restores.
+</p>
+<ul><li>Point and Click Replication Deployments - ClusterControl allows you to easily deploy and configure master/slave replication PostgreSQL instances.</li>
+<li>Advanced Performance Monitoring - ClusterControl monitors queries and detects anomalies with built-in alerts.</li>
+<li>Automated Failover Handling - ClusterControl detects master failures and automatically promotes a new master</li>
+<li>Database Automation - ClusterControl lets you manage configurations, schedule, and restore backups.</li></ul>
+<h3><span class="mw-headline" id="Reportizer">Reportizer</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.reportizer.net">https://www.reportizer.net</a>
+</p><p>Reportizer is a database reporting tool, which allows easy creating, modifying, and printing database reports from different types of databases, including PostgreSQL. Reports can be edited in convenient visual report builder or in text mode. It supports calculating fields, multi-column reports, expressions, grouping, displaying images etc. Reportizer can export reports to HTML, XLSX, image, or internal format. There is an ability to load and print reports from command line. Reportizer allows to manage report collections, which can be held either in files or in database tables.
+</p>
+<h3><span class="mw-headline" id="Exportizer_Enterprise">Exportizer Enterprise</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.vlsoftware.net/exportizer/">https://www.vlsoftware.net/exportizer/</a>
+</p><p>Exportizer Enterprise is a database export tool, which can work with PostgreSQL database either as source or destination. It allows to export data to database, file, clipboard, or printer.
+</p>
+<ul><li>Possible sources: ODBC data sources, files of DB (Paradox), DBF (dBase, FoxPro), MDB, ACCDB, XLS, XLSX, GDB, IB, FDB, HTML, UDL, DBC, TXT, CSV types, databases specified by ADO connection strings, and databases like Oracle, SQL Server, PostgreSql, DB2, Informix, SQLite, Interbase etc.</li>
+<li>Possible destinations: file formats like text, CSV, XLS, XLSX, RTF, XML, HTML, PDF, DBF, SLK, SQL script, and relational database of any supported type including PostgreSQL.</li>
+<li>It is possible to export all or selected tables from an open database at once.</li>
+<li>The data migration can be done in super-fast batch mode.</li>
+<li>Exportizer Enterprise can automatically detect the most known image types (JPEG, PNG, GIF, BMP, ICO) in BLOB fields and export them, for example, to HTML or XLSX.</li>
+<li>Images and other BLOB data can be exported to multiple separate files during a single export operation.</li>
+<li>There is an ability to specify the source-to-target field mappings.</li>
+<li>Export operations can be performed either via the program interface or via command line.</li></ul>
+<h3><span class="mw-headline" id="TiCodeX_SQL_Schema_Compare">TiCodeX SQL Schema Compare</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.ticodex.com/">https://www.ticodex.com/</a>
+</p><p>TiCodeX SQL Schema Compare is a tools that allows database administrators to compare multiple database schema in order to manage versioning.<br />
+The software runs on Windows, Linux and Mac and supports Microsoft SQL (MS-SQL), MySQL, PostgreSQL, Azure SQL and MS-SQL on Amazon RDS.
+</p><p><b>Key Features:</b>
+</p>
+<ul><li>Runs on Windows, Linux and MacOS</li>
+<li>Localized in English, German and Italian</li>
+<li>Compare changes between two SQL Database schemas (as example from development to test to production)</li>
+<li>View database differences and explore schema changes to see what's going on</li>
+<li>Automatically create full database migration scripts</li>
+<li>Securely save database and server login details</li></ul>
+<h3><span class="mw-headline" id="pgMustard">pgMustard</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.pgmustard.com/">https://www.pgmustard.com/</a>
+</p><p>pgMustard is a performance tool for PostgreSQL that provides a user interface for your <code>explain analyze</code> output, as well as tips on what to do to speed up your query.
+</p><p>Features:
+</p>
+<ul><li>Performance advice – scored by estimated time-saving potential</li>
+<li>Per-operation timings¹</li>
+<li>The number of rows¹ returned by each operation</li>
+<li>A timing bar – that pins to keep it in context</li>
+<li>Collapsible subtrees – with fast ones collapsed by default</li>
+<li>Descriptions of operations</li>
+<li>Links to blog posts for further reading</li></ul>
+<p>¹ Taking loops, threads, subplans, and CTEs into account.
+</p><p>Requirements:
+</p>
+<ul><li>TEXT or JSON format query plans, from PostgreSQL 9.6 or newer</li>
+<li>The interface and advice are in English</li>
+<li>A GitHub or Google account, for signing in</li>
+<li>Web application, no installation required</li></ul>
+<h3><span class="mw-headline" id="ODBC_Driver_for_PostgreSQL_by_CData">ODBC Driver for PostgreSQL by CData</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.cdata.com/drivers/postgresql/odbc/">https://www.cdata.com/drivers/postgresql/odbc/</a>
+</p><p>The CData ODBC Driver for PostgreSQL enables real-time access to PostgreSQL data, directly from any applications that support ODBC connectivity, the most widely supported interface for connecting applications with data. The driver wraps the complexity of accessing PostgreSQL data in a standard ODBC driver compliant with ODBC 3.8. The driver hides the complexity of accessing data and provides additional powerful security features, smart caching, batching, socket management, and more.
+</p>
+<h3><span class="mw-headline" id="JDBC_Driver_for_PostgreSQL_by_CData">JDBC Driver for PostgreSQL by CData</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.cdata.com/drivers/postgresql/jdbc/">https://www.cdata.com/drivers/postgresql/jdbc/</a>
+</p><p>The CData JDBC Driver for PostgreSQL offers the most natural way to connect to PostgreSQL data from Java-based applications and developer technologies. The driver wraps the complexity of accessing PostgreSQL data in an easy-to-integrate, 100%-Java JDBC driver. 
+The driver hides the complexity of accessing data and provides additional powerful security features, smart caching, batching, socket management, and more.
+</p>
+<h3><span class="mw-headline" id="ADO.NET_Provider_for_PostgreSQL_by_CData">ADO.NET Provider for PostgreSQL by CData</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.cdata.com/drivers/postgresql/ado/">https://www.cdata.com/drivers/postgresql/ado/</a>
+</p><p>The CData ADO.NET Provider for PostgreSQL offers the most natural way to access PostgreSQL data from .NET applications. The provider wraps the complexity of accessing PostgreSQL data in an easy-to-integrate, fully managed ADO.NET Data Provider.
+The provider hides the complexity of accessing data and provides additional powerful security features, smart caching, batching, socket management, and more.
+</p>
+<h3><span class="mw-headline" id="Excel_Add-In_for_PostgreSQL_by_CData">Excel Add-In  for PostgreSQL by CData</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.cdata.com/drivers/postgresql/excel/">https://www.cdata.com/drivers/postgresql/excel/</a>
+</p><p>The CData Excel Add-In provides the easiest way to connect to PostgreSQL data from Excel. From the CData ribbon, you can select PostgreSQL data as tables and columns into the spreadsheet. The spreadsheet is then linked with the remote data. To update the data, edit the spreadsheet.
+</p>
+<h3><span class="mw-headline" id="SSIS_Components_for_PostgreSQL_by_CData">SSIS Components for PostgreSQL by CData</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.cdata.com/drivers/postgresql/ssis/">https://www.cdata.com/drivers/postgresql/ssis/</a>
+</p><p>The CData SSIS Components for PostgreSQL enable you to connect SQL Server with PostgreSQL data through SSIS Workflows. The components wrap the complexity of accessing PostgreSQL data in standard SSIS data flow components. You can then connect and synchronize PostgreSQL tables with SQL Server tables.
+The components hide the complexity of accessing data and provide additional security features, smart caching, batching, socket management, and more.
+</p>
+<h3><span class="mw-headline" id="Power_BI_Connector_for_PostgreSQL_by_CData">Power BI Connector for PostgreSQL by CData</span></h3>
+<p><a rel="nofollow" class="external free" href="https://www.cdata.com/drivers/postgresql/powerbi/">https://www.cdata.com/drivers/postgresql/powerbi/</a>
+</p><p>The CData Power BI Connector for PostgreSQL offers self-service integration with Microsoft Power BI. The connector facilitates live access to PostgreSQL data in Power BI from the Get Data window. The connector also provides direct querying to visualize and analyze PostgreSQL data.
+</p>
+<h2><span class="mw-headline" id="Other_Resources">Other Resources</span></h2>
+<p><a href="/wiki/PostgreSQL_Clients" title="PostgreSQL Clients">PostgreSQL Clients</a> - list of UI's for accessing your db contents (enter sql, get back the results)
+</p><p><a href="/wiki/Design_Tools" title="Design Tools">Design Tools</a> - tools for designing and visualizing database schemas
+</p><p>Old possibly abandoned projects, see <a href="/wiki/Community_Guide_to_PostgreSQL_Tools_Abandoned" title="Community Guide to PostgreSQL Tools Abandoned">Community_Guide_to_PostgreSQL_Tools_Abandoned</a>
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408083917
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.116 seconds
+Real time usage: 0.135 seconds
+Preprocessor visited node count: 186/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    9.942      1 Template:Languages
+100.00%    9.942      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:108-0!canonical and timestamp 20260408083917 and revision id 43125.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Community_Guide_to_PostgreSQL_GUI_Tools&amp;oldid=43125">https://wiki.postgresql.org/index.php?title=Community_Guide_to_PostgreSQL_GUI_Tools&amp;oldid=43125</a>"</div></div>
+				<div id="catlinks" class="catlinks catlinks-allhidden" data-mw="interface"></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Community_Guide_to_PostgreSQL_GUI_Tools" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Community_Guide_to_PostgreSQL_GUI_Tools&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Community_Guide_to_PostgreSQL_GUI_Tools">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Community_Guide_to_PostgreSQL_GUI_Tools&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Community_Guide_to_PostgreSQL_GUI_Tools&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Community_Guide_to_PostgreSQL_GUI_Tools" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Community_Guide_to_PostgreSQL_GUI_Tools&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Community+Guide+to+PostgreSQL+GUI+Tools" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Community_Guide_to_PostgreSQL_GUI_Tools" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Community_Guide_to_PostgreSQL_GUI_Tools" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Community_Guide_to_PostgreSQL_GUI_Tools&amp;oldid=43125" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Community_Guide_to_PostgreSQL_GUI_Tools&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 1 April 2026, at 13:45.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.116","walltime":"0.135","ppvisitednodes":{"value":186,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    9.942      1 Template:Languages","100.00%    9.942      1 -total"]},"cachereport":{"timestamp":"20260408083917","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":172});});</script>
+</body>
+</html>

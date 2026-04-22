@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../../lib/codemirror/lib/codemirror.css" rel="stylesheet">
+    <link href="../../lib/perfect-scrollbar/min/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="../../lib/splitter/splitter.css" rel="stylesheet">
+    <link href="../../css/jquery/jquery-ui-1.10.3.custom.min.css " rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <!-- temporary downgrade to 1.10.2 due to popup drag bugs with 1.10.3-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="../../lib/codemirror/lib/codemirror.js"></script>
+    <script src="../../lib/perfect-scrollbar/min/perfect-scrollbar.with-mousewheel.min.js"></script>
+    <script src="../../lib/codemirror/mode/sql/sql.js"></script>
+    <script src="../../js/browser.js"></script>
+    <script src="../../lib/splitter/splitter.js"></script>
+    <script src="../../js/site.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+    <!-- Navbar
+      ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+
+    <div class="container">
+
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="case.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">String</a> <span class="divider">/</span></li>
+            <li class="active">Reg</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="pad.html">Next Exercise</a></p></div>
+      </div>
+
+
+    <!-- Typography
+    ================================================== -->
+    <section id="typography">
+      <div class="page-header">
+        <h1>
+	<span style="float:left">
+Find telephone numbers with parentheses        </span>
+	<span style="float:right">
+	<img src="../../assets/tick2.svg" class="headertick"></img>
+
+	</span>
+        <div style="clear:both"></div>
+        </h1>
+      </div>
+
+      <div class="row" style="margin-bottom:10px">
+        <div class="span8">
+          <h3>Question</h3>
+You've noticed that the club's member table has telephone numbers with very inconsistent formatting.  You'd like to find all the telephone numbers that contain parentheses, returning the member ID and telephone number sorted by member ID.        </div>
+      </div>
+      <div class="row">
+      <div class="span12">
+      <div id=splittercontainerouter>
+        <div id="schemareminder" class="btn btn-primary" onClick="schema();">
+          <div>Schema reminder <span id="schemareminderarrow">&#x25BC;</span></div>
+        </div>
+        <div id="schemaremindercontents">
+          <img id="schemareminderimage" src="../../img/schema-horizontal.svg" alt="DB schema" width="840"></img>
+        </div>
+        <div id=splittercontainer>
+          <div id="expres" ondblclick="setOptimalExpectedResultsSize()">
+            <div style="overflow-x:hidden;">
+              <div style="display: inline-block; min-width:1000px;">
+                <h3>Expected Results</h3>
+                <div style="width:auto; display:inline-block">
+                  <table id="exprestable" class="demo table table-bordered table-striped" style="width:auto;">
+<thead><tr>
+<th>memid</th>
+<th>telephone</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>(000) 000-0000</td>
+</tr>
+<tr>
+<td>3</td>
+<td>(844) 693-0723</td>
+</tr>
+<tr>
+<td>4</td>
+<td>(833) 942-4710</td>
+</tr>
+<tr>
+<td>5</td>
+<td>(844) 078-4130</td>
+</tr>
+<tr>
+<td>6</td>
+<td>(822) 354-9973</td>
+</tr>
+<tr>
+<td>7</td>
+<td>(833) 776-4001</td>
+</tr>
+<tr>
+<td>8</td>
+<td>(811) 433-2547</td>
+</tr>
+<tr>
+<td>9</td>
+<td>(833) 160-3900</td>
+</tr>
+<tr>
+<td>10</td>
+<td>(855) 542-5251</td>
+</tr>
+<tr>
+<td>11</td>
+<td>(844) 536-8036</td>
+</tr>
+<tr>
+<td>13</td>
+<td>(855) 016-0163</td>
+</tr>
+<tr>
+<td>14</td>
+<td>(822) 163-3254</td>
+</tr>
+<tr>
+<td>15</td>
+<td>(833) 499-3527</td>
+</tr>
+<tr>
+<td>20</td>
+<td>(811) 972-1377</td>
+</tr>
+<tr>
+<td>21</td>
+<td>(822) 661-2898</td>
+</tr>
+<tr>
+<td>22</td>
+<td>(822) 499-2232</td>
+</tr>
+<tr>
+<td>24</td>
+<td>(822) 413-1470</td>
+</tr>
+<tr>
+<td>27</td>
+<td>(822) 989-8876</td>
+</tr>
+<tr>
+<td>28</td>
+<td>(855) 755-9876</td>
+</tr>
+<tr>
+<td>29</td>
+<td>(855) 894-3758</td>
+</tr>
+<tr>
+<td>30</td>
+<td>(855) 941-9786</td>
+</tr>
+<tr>
+<td>33</td>
+<td>(822) 665-5327</td>
+</tr>
+<tr>
+<td>35</td>
+<td>(899) 720-6978</td>
+</tr>
+<tr>
+<td>36</td>
+<td>(811) 732-4816</td>
+</tr>
+<tr>
+<td>37</td>
+<td>(822) 577-3541</td>
+</tr>
+</tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div id="codediv">
+            <div id="youranswerdiv" ondblclick="setOptimalYourAnswerSize()">
+                    <h3 style="min-width:200px;">Your Answer<span id="youranswertickspan"><img src="../../assets/cross.svg" class="youranswertick"></img></span>
+                <span id="youranswerbuttons">
+                  <a id="hintbtn" class="youranswerbutton btn btn-primary btn-small" onClick="hint();">Hint</a>
+                  <a id="helpbtn" class="youranswerbutton btn btn-primary btn-small" onClick="help();" title="[Alt-h]">Help</a>
+                  <a id="querybtn" class="youranswerbutton btn btn-primary btn-small" onClick="save();">Save</a>
+                  <a id="savebtn" class="youranswerbutton btn btn-primary btn-small" onClick="query();" title="[Alt-r]">Run Query</a>
+                </span>
+              </h3>
+              <div style="clear:both;">
+  	      <div id="codewrapper">
+                  <form>
+                    <textarea id="code" name="code"></textarea>
+                  </form>
+                </div>
+  	    </div>
+            </div>
+            <div id="yourresultsdiv" ondblclick="setOptimalYourResultsSize()">
+              <div>
+                <table id="yourresultstable" class="demo table table-bordered table-striped"></table>
+                <pre id="yourresultserror"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span12">
+          <h3>Answers and Discussion <a id="answerbtn" class="inactive btn btn-primary btn-small" style="margin: 5px" onClick="toggleAnswers();">Show</a></h3>
+          <pre id="querydiv" class="answerdiv prettyprint lang-sql">
+select memid, telephone from cd.members where telephone ~ '[()]';          </pre>
+          <div class="row">
+            <div class="span8 answerdiv">
+We've chosen to answer this using regular expressions, although Postgres does provide other string functions like <span class="code">POSITION</span> that would do the job at least as well.  Postgres implements POSIX regular expression matching via the <span class="code">~</span> operator. If you've used regular expressions before, the functionality of the operator will be very familiar to you.</p>
+
+<p>As an alternative, you can use the SQL standard <span class="code">SIMILAR TO</span> operator.  The regular expressions for this have similarities to the POSIX standard, but a lot of differences as well. Some of the most notable differences are:</p>
+
+<ul>
+<li>As in the <span class="code">LIKE</span> operator, <span class="code">SIMILAR TO</span> uses the '_' character to mean 'any character', and the '%' character to mean 'any string'.
+<li>A <span class="code">SIMILAR TO</span> expression must match the whole string, not just a substring as in posix regular expressions.  This means that you'll typically end up bracketing an expression in '%' characters.
+<li>The '.' character does not mean 'any character' in <span class="code">SIMILAR TO</span> regexes: it's just a plain character.
+</ul>
+
+<p>The <span class="code">SIMILAR TO</span> equivalent of the given answer is shown below:</p>
+
+</div></div><div class="row"><div class="span12 answerdiv" style="opacity:0;"><div><pre class="secondaryanswerdiv prettyprint lang-sql">select memid, telephone from cd.members where telephone similar to '%[()]%';</pre></div></div></div><div class="row"><div class="span8 answerdiv" style="opacity:0;">
+
+<p>Finally, it's worth noting that regular expressions usually don't use indexes.  Generally you don't want your regex to be responsible for doing heavy lifting in your query, because it will be slow.  If you need fuzzy matching that works fast, consider working out if your needs can be met by <a href="http://www.postgresql.org/docs/current/static/textsearch.html">full text search</a>.</p>            </div>
+          </div>
+        </div>
+      </div>
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="case.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">String</a> <span class="divider">/</span></li>
+            <li class="active">Reg</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="pad.html">Next Exercise</a></p></div>
+      </div>
+    </div><!-- /container -->
+      <div id="hint" title="Hint">
+Look up the ~ or <span class="code">SIMILAR TO</span> operators in the Postgres docs.
+      </div>
+      <div id="help" title="Help">
+        <div id="helpcontent">
+	  <h4>Keyboard shortcuts:</h4>
+	  <ul>
+	    <li><b>Alt-h</b>: Show/Hide Help menu
+	    <li><b>Alt-r</b>: Run query
+	    <li><b>Alt-x</b>: Run selected text as query
+	    <li><b>Alt-s</b>: Run query by cursor (delimited by whitespace/semi-colon)
+	  </ul>
+	  <hr />
+	  <h4>Other hints:</h4>
+	    <ul>
+	      <li>You can double click on each of the panes of Expected Result/Your answer to quickly resize them.
+	      <li>If you have trouble remembering the database schema, you can leave this popup open while you work on your answer.
+	      <li>Don't forget to use the hint button if you're stuck!
+	    </ul>
+	  <hr />
+	</div>
+      </div>
+
+
+    <script>
+        var App = {};
+	App.sorted = 1;
+	App.pageID = "9df31ff6-3f20-11e3-8372-0023df7f7ec4";
+        App.writeable = 0;
+        App.tableToReturn = "";
+	App.jsonResults = sortJSONResults([["0","(000) 000-0000"],["3","(844) 693-0723"],["4","(833) 942-4710"],["5","(844) 078-4130"],["6","(822) 354-9973"],["7","(833) 776-4001"],["8","(811) 433-2547"],["9","(833) 160-3900"],["10","(855) 542-5251"],["11","(844) 536-8036"],["13","(855) 016-0163"],["14","(822) 163-3254"],["15","(833) 499-3527"],["20","(811) 972-1377"],["21","(822) 661-2898"],["22","(822) 499-2232"],["24","(822) 413-1470"],["27","(822) 989-8876"],["28","(855) 755-9876"],["29","(855) 894-3758"],["30","(855) 941-9786"],["33","(822) 665-5327"],["35","(899) 720-6978"],["36","(811) 732-4816"],["37","(822) 577-3541"]]);
+    </script>
+
+    <script src="../../js/prettify/run_prettify.js?lang=sql"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+</html>

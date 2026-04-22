@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Streaming Replication - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"f8df5b9c3eadb69bc67e5d2c","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Streaming_Replication","wgTitle":"Streaming Replication","wgCurRevisionId":37324,"wgRevisionId":37324,"wgArticleId":1116,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Replication"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Streaming_Replication","wgRelevantArticleId":1116,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Streaming_Replication rootpage-Streaming_Replication skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Streaming Replication</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><b>Streaming Replication</b> (SR) provides the capability to continuously ship and
+apply the <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/wal.html">WAL XLOG</a> records to some number of standby servers in order to keep them current.
+</p><p>This feature was added to PostgreSQL 9.0.  The discussion below is a developer oriented one that contains some out of date information, particularly for PostgreSQL 10 and later.  Users of this feature should refer to the current <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/warm-standby.html#STREAMING-REPLICATION">PostgreSQL Streaming Replication Documentation</a>.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Developer_and_historical_details_on_the_project"><span class="tocnumber">1</span> <span class="toctext">Developer and historical details on the project</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Usage"><span class="tocnumber">2</span> <span class="toctext">Usage</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#Users_Overview"><span class="tocnumber">2.1</span> <span class="toctext">Users Overview</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Restrictions"><span class="tocnumber">2.2</span> <span class="toctext">Restrictions</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#How_to_Use"><span class="tocnumber">2.3</span> <span class="toctext">How to Use</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-6"><a href="#Todo"><span class="tocnumber">3</span> <span class="toctext">Todo</span></a>
+<ul>
+<li class="toclevel-2 tocsection-7"><a href="#v9.0"><span class="tocnumber">3.1</span> <span class="toctext">v9.0</span></a>
+<ul>
+<li class="toclevel-3 tocsection-8"><a href="#Committed"><span class="tocnumber">3.1.1</span> <span class="toctext">Committed</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-9"><a href="#v9.1"><span class="tocnumber">3.2</span> <span class="toctext">v9.1</span></a>
+<ul>
+<li class="toclevel-3 tocsection-10"><a href="#Synchronization_capability"><span class="tocnumber">3.2.1</span> <span class="toctext">Synchronization capability</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-11"><a href="#Future_release"><span class="tocnumber">3.3</span> <span class="toctext">Future release</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h1><span class="mw-headline" id="Developer_and_historical_details_on_the_project">Developer and historical details on the project</span></h1>
+<p>SR was developed for inclusion in PostgreSQL 9.0 by NTT OSS Center. The lead developer is <a rel="nofollow" class="external text" href="mailto:masao.fujii@gmail.com">Masao Fujii</a>.  <a rel="nofollow" class="external text" href="http://www.pgcon.org/2008/schedule/events/76.en.html">Synchronous Log Shipping Replication Presentation</a> introduces the early design of the feature.
+</p>
+<h1><span class="mw-headline" id="Usage">Usage</span></h1>
+<h2><span class="mw-headline" id="Users_Overview">Users Overview</span></h2>
+<ul><li><b>Log-shipping</b>
+<ul><li>XLOG records generated in the primary are periodically shipped to the standby via the network.</li>
+<li>In the existing warm standby, only records in a filled file are shipped, what's referred to as file-based log-shipping.  In SR, XLOG records in partially-filled XLOG file are shipped too, implementing record-based log-shipping.  This means the window for data loss in SR is usually smaller than in warm standby, unless the warm standby was also configured for record-based shipping (which is complicated to setup).</li>
+<li>The content of XLOG files written to the standby are exactly the same as those on the primary. XLOG files shipped can be used for a normal recovery and PITR.</li></ul></li>
+<li><b>Multiple standbys</b>
+<ul><li>More than one standby can establish a connection to the primary for SR. XLOG records are concurrently shipped to all these standbys. The delay/death of a standby does not harm log-shipping to other standbys.</li>
+<li>The maximum number of standbys can be specified as a GUC variable.</li></ul></li>
+<li><b>Continuous recovery</b>
+<ul><li>The standby continuously replays XLOG records shipped without using pg_standby.</li>
+<li>XLOG records shipped are replayed as soon as possible without waiting until XLOG file has been filled. The combination of <a href="/wiki/Hot_Standby" title="Hot Standby">Hot Standby</a> and SR would make the latest data inserted into the primary visible in the standby almost immediately.</li>
+<li>The standby periodically removes old XLOG files which are no longer needed for recovery, to prevent excessive disk usage.</li></ul></li>
+<li><b>Setup</b>
+<ul><li>The start of log-shipping does not interfere with any query processing on the primary.</li>
+<li>The standby can be started in various conditions.
+<ul><li>If there are XLOG files in archive directory and restore_command is supplied, at first those files are replayed. Then the standby requests XLOG records following the last applied one to the primary. This prevents XLOG files already present in the standby from being shipped again. Similarly, XLOG files in pg_xlog are also replayed before starting log-shipping.</li>
+<li>If there is no XLOG files on the standby, the standby requests XLOG records following the starting XLOG location of recovery (the redo starting location).</li></ul></li></ul></li>
+<li><b>Connection settings and authentication</b>
+<ul><li>A user can configure the same settings as a normal connection to a connection for SR (e.g., keepalive, pg_hba.conf).</li></ul></li>
+<li><b>Activation</b>
+<ul><li>The standby can keep waiting for activation as long as a user likes. This prevents the standby from being automatically brought up by failure of recovery or network outage.</li></ul></li>
+<li><b>Progress report</b>
+<ul><li>The primary and standby report the progress of log-shipping in PS display.</li></ul></li>
+<li><b>Graceful shutdown</b>
+<ul><li>When smart/fast shutdown is requested, the primary waits to exit until XLOG records have been sent to the standby, up to the shutdown checkpoint record.</li></ul></li></ul>
+<h2><span class="mw-headline" id="Restrictions">Restrictions</span></h2>
+<ul><li><b>Synchronous log-shipping</b>
+<ul><li>By default, SR supports operates in asynchronous manner, so the commit command might return a "success" to a client before the corresponding XLOG records are shipped to the standby. To enable synchronous replication, see <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/warm-standby.html#SYNCHRONOUS-REPLICATION">Synchronous Replication</a></li></ul></li>
+<li><b>Replication beyond timeline</b>
+<ul><li>A user has to get a fresh backup whenever making the old standby catch up.</li></ul></li>
+<li><b>Clustering</b>
+<ul><li>Postgres doesn't provide any clustering feature.</li></ul></li></ul>
+<h2><span class="mw-headline" id="How_to_Use">How to Use</span></h2>
+<p>NB: there is overlap between this section and <a href="/wiki/Binary_Replication_Tutorial" title="Binary Replication Tutorial">Binary Replication Tutorial</a>
+</p>
+<ul><li><b>1.</b> Install postgres in the primary and standby server as usual.  This requires only <i>configure</i>, <i>make</i> and <i>make install</i>.</li>
+<li><b>2.</b> Create the initial database cluster in the primary server as usual, using <i>initdb</i>.</li>
+<li><b>3.</b> Create an user named replication with REPLICATION privileges.</li></ul>
+<pre>$ CREATE ROLE replication WITH REPLICATION PASSWORD 'password' LOGIN;
+</pre>
+<ul><li><b>4.</b> Set up connections and authentication on the primary so that the standby server can successfully connect to the <i>replication</i> pseudo-database on the primary.</li></ul>
+<pre>$ $EDITOR postgresql.conf
+
+listen_addresses = '192.168.0.10'
+</pre>
+<pre>$ $EDITOR pg_hba.conf
+
+# The standby server must connect with a user that has replication privileges.
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+  host  replication     replication     192.168.0.20/32         md5
+</pre>
+<ul><li><b>5.</b> Set up the streaming replication related parameters on the primary server.</li></ul>
+<pre>$ $EDITOR postgresql.conf
+
+# To enable read-only queries on a standby server, wal_level must be set to
+# "hot_standby". But you can choose "archive" if you never connect to the
+# server in standby mode.
+wal_level = hot_standby
+
+# Set the maximum number of concurrent connections from the standby servers.
+max_wal_senders = 5
+
+# To prevent the primary server from removing the WAL segments required for
+# the standby server before shipping them, set the minimum number of segments
+# retained in the pg_xlog directory. At least wal_keep_segments should be
+# larger than the number of segments generated between the beginning of
+# online-backup and the startup of streaming replication. If you enable WAL
+# archiving to an archive directory accessible from the standby, this may
+# not be necessary.
+wal_keep_segments = 32
+
+# Enable WAL archiving on the primary to an archive directory accessible from
+# the standby. If wal_keep_segments is a high enough number to retain the WAL
+# segments required for the standby server, this is not necessary.
+archive_mode    = on
+archive_command = 'cp %p /path_to/archive/%f'
+</pre>
+<ul><li><b>6.</b> Start postgres on the primary server.</li>
+<li><b>7.</b> Make a base backup by copying the primary server's data directory to the standby server.</li></ul>
+<ul><li><ul><li><b>7.1.</b> Do it with pg_(start|stop)_backup and rsync on the primary</li></ul></li></ul>
+<pre>$ psql -c "SELECT pg_start_backup('label', true)"
+$ rsync -ac ${PGDATA}/ standby:/srv/pgsql/standby/ --exclude postmaster.pid
+$ psql -c "SELECT pg_stop_backup()"
+</pre>
+<ul><li><ul><li><b>7.2.</b> Do it with pg_basebackup on the standby</li></ul></li></ul>
+<p>In version 9.1+, pg_basebackup can do the dirty work of fetching the entire data directory of your PostgreSQL installation from the primary and placing it onto the standby server.
+</p><p>The prerequisite is that you make sure the standby's data directory is empty.
+</p><p>Make sure to remove any tablespace directories as well. You can find those directories with:
+</p>
+<pre>$ psql -c '\db'
+</pre>
+<p>If you keep your postgresql.conf and other config files in PGDATA, you need a backup of postgresql.conf, to restore after pg_basebackup.
+</p><p>After you've cleared all the directories, you can use the following command to directly stream the data from the primary onto your standby server.
+Run it as the database superuser, typically 'postgres', to make sure the permissions are preserved (use su, sudo or whatever other tool to make sure you're not root).
+</p>
+<pre>$ pg_basebackup -h 192.168.0.10 -D /srv/pgsql/standby -P -U replication --xlog-method=stream
+</pre>
+<p>In version 9.3+, you can also add the -R option so it creates a minimal recovery command file for step 9 below.
+</p><p>If you backed up postgresql.conf, now restore it.
+</p>
+<ul><li><b>8.</b> Set up replication-related parameters, connections and authentication in the standby server like the primary, so that the standby might work as a primary after failover.</li>
+<li><b>9.</b> Enable read-only queries on the standby server. But if wal_level is <i>archive</i> on the primary, leave hot_standby unchanged (i.e., off).</li></ul>
+<pre>$ $EDITOR postgresql.conf
+
+hot_standby = on
+</pre>
+<ul><li><b>10.</b> Create a recovery command file in the standby server; the following parameters are required for streaming replication.</li></ul>
+<pre>$ $EDITOR recovery.conf
+# Note that recovery.conf must be in the $PGDATA directory, even if the
+# main postgresql.conf file is located elsewhere.
+
+# Specifies whether to start the server as a standby. In streaming replication,
+# this parameter must to be set to on.
+standby_mode          = 'on'
+
+# Specifies a connection string which is used for the standby server to connect
+# with the primary.
+primary_conninfo      = 'host=192.168.0.10 port=5432 user=replication password=password'
+
+# Specifies a trigger file whose presence should cause streaming replication to
+# end (i.e., failover).
+trigger_file = '/path_to/trigger'
+
+# Specifies a command to load archive segments from the WAL archive. If
+# wal_keep_segments is a high enough number to retain the WAL segments
+# required for the standby server, this may not be necessary. But
+# a large workload can cause segments to be recycled before the standby
+# is fully synchronized, requiring you to start again from a new base backup.
+restore_command = 'cp /path_to/archive/%f "%p"'
+</pre>
+<ul><li><b>11.</b> Start postgres in the standby server. It will start streaming replication.</li>
+<li><b>12.</b> You can calculate the replication lag by comparing the current WAL write location on the primary with the last WAL location received/replayed by the standby. They can be retrieved using <i>pg_current_xlog_location</i> on the primary and the <i>pg_last_xlog_receive_location</i>/<i>pg_last_xlog_replay_location</i> on the standby, respectively.</li></ul>
+<pre>$ psql -c "SELECT pg_current_xlog_location()" -h192.168.0.10 (primary host)
+ pg_current_xlog_location 
+--------------------------
+ 0/2000000
+(1 row)
+
+$ psql -c "select pg_last_xlog_receive_location()" -h192.168.0.20 (standby host)
+ pg_last_xlog_receive_location 
+-------------------------------
+ 0/2000000
+(1 row)
+
+$ psql -c "select pg_last_xlog_replay_location()" -h192.168.0.20 (standby host)
+ pg_last_xlog_replay_location 
+------------------------------
+ 0/2000000
+(1 row)
+</pre>
+<ul><li><b>13.</b> You can also check the progress of streaming replication by using <i>ps</i> command.</li></ul>
+<pre># The displayed LSNs indicate the byte position that the standby server has
+# written up to in the xlogs.
+[primary] $ ps -ef | grep sender
+postgres  6879  6831  0 10:31&#160;?        00:00:00 postgres: wal sender process postgres 127.0.0.1(44663) streaming 0/2000000
+
+[standby] $ ps -ef | grep receiver
+postgres  6878  6872  1 10:31&#160;?        00:00:01 postgres: wal receiver process   streaming 0/2000000
+</pre>
+<ul><li>How to do failover
+<ul><li>Create the trigger file in the standby after the primary fails.</li></ul></li>
+<li>How to stop the primary or the standby server
+<ul><li>Shut down it as usual (<i>pg_ctl stop</i>).</li></ul></li>
+<li>How to restart streaming replication after failover
+<ul><li>Repeat the operations from <b>6th</b>; making a fresh backup, some configurations and starting the original primary as the standby. The primary server doesn't need to be stopped during these operations.</li></ul></li>
+<li>How to restart streaming replication after the standby fails
+<ul><li>Restart postgres in the standby server after eliminating the cause of failure.</li></ul></li>
+<li>How to disconnect the standby from the primary
+<ul><li>Create the trigger file in the standby while the primary is running. Then the standby would be brought up.</li></ul></li>
+<li>How to re-synchronize the stand-alone standby after isolation
+<ul><li>Shut down the standby as usual. And repeat the operations from <b>6th</b>.</li></ul></li>
+<li>If you have more than one standby, promoting one will break the other(s). Update their recovery.conf settings to point to the new master, set recovery_target_timeline to 'latest', scp/rsync the pg_xlog directory, and restart the standby.</li></ul>
+<h1><span class="mw-headline" id="Todo">Todo</span></h1>
+<h2><span class="mw-headline" id="v9.0">v9.0</span></h2>
+<p>Moved to <a href="/wiki/PostgreSQL_9.0_Open_Items" title="PostgreSQL 9.0 Open Items">PostgreSQL_9.0_Open_Items</a>
+</p>
+<h3><span class="mw-headline" id="Committed">Committed</span></h3>
+<ul><li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-01/msg01455.php">Retrying from archive and some refactoring around Read/FetchRecord().</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-01/msg00395.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-01/msg02601.php">SR wrongly treats the WAL-boundary.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-01/msg00396.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-01/msg01715.php">Adjust SR for some later changes about wal-skipping.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-01/msg00399.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-02/msg00024.php">VACUUM FULL unexpectedly writes an XLOG UNLOGGED record.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-02/msg00038.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-01/msg01754.php">Add a message type header.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-02/msg00037.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-01/msg01536.php">Documentation: Add a new "Replication" chapter.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-02/msg00115.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-02/msg00350.php">Failed assertion during recovery of partial WAL file.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-02/msg00124.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-02/msg00712.php">A PANIC error might occur in the standby because of a partially-filled archived WAL file.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-02/msg00137.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-02/msg00330.php">Improve the standby messages.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-02/msg00140.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-01/msg01672.php">pq_getbyte_if_available() is not working because the win32 socket emulation layer simply wasn't designed to deal with non-blocking sockets.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-02/msg00198.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-02/msg01488.php">Walsender might emit unfit messages.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-02/msg00239.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-02/msg01236.php">Streaming replication on win32, still broken.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-02/msg00270.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-02/msg00992.php">Create new section for recovery.conf.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-02/msg00295.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-02/msg01824.php">Assertion failure in walreceiver.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-02/msg00356.php">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-01/msg01717.php">Forbid a startup of walsender during recovery, and emit a suitable message? Or allow walsender to be started also during recovery?</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/message-id/20100316090955.9A5107541D0@cvs.postgresql.org">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-02/msg01003.php">How do we clean down the archive without using pg_standby?</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/message-id/20100318091718.BC14D7541D0@cvs.postgresql.org">commit</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2010-02/msg01510.php">File-based log shipping without pg_standby doesn't replay the WAL files in pg_xlog.</a> - <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-committers/2010-03/msg00356.php">commit</a></li></ul>
+<h2><span class="mw-headline" id="v9.1">v9.1</span></h2>
+<h3><span class="mw-headline" id="Synchronization_capability">Synchronization capability</span></h3>
+<ul><li>Introduce the replication mode which can control how long transaction commit waits for replication before the commit command returns a "success" to a client. The valid modes are <i>async</i>, <i>recv</i> and <i>fsync</i>.
+<ul><li><i>async</i> doesn't make transaction commit wait for replication, i.e., asynchronous replication.</li>
+<li><i>recv</i> or <i>fsync</i> makes transaction commit wait for XLOG to be received or fsynced by the standby, respectively.</li>
+<li>(<i>apply</i> makes transaction commit wait for XLOG to be replayed by the standby. This mode will be supported in v9.2 or later)</li>
+<li>The replication mode is specified in recovery.conf of the standby as well as other parameters for replication.
+<ul><li>The startup process reads the replication mode from recovery.conf and shares it to walreceiver via new shared-memory variable.</li>
+<li>Walreceiver also shares it to walsender by using the replication handshake message (existing protocol needs to be extended).</li></ul></li>
+<li>Based on the replication mode, walreceiver sends the reply meaning that replication is done up to the specified location to the primary.
+<ul><li>In async, walreceiver doesn't need to send any reply other than end-of-replication message.</li>
+<li>In recv or fsync, walreceiver sends the reply just after receiving or flushing XLOG, respectively.</li>
+<li>New message type for the reply needs to be defined. The reply is sent as CopyData message.</li></ul></li>
+<li>Walreceiver writes all the outstanding XLOG to disk before shutting down.</li>
+<li>Walsender receives the reply from the standby, updates the location of the last record replicated, and announces completion of replication.
+<ul><li>New shared-memory variable to keep that location is required.</li></ul></li>
+<li>When processing the commit command, backend waits for XLOG to be replicated to only the standbys which are in the recv or fsync replication mode.
+<ul><li>Also smart shutdown waits for XLOG of shutdown checkpoint to be replicated.</li></ul></li></ul></li>
+<li>Required optimization
+<ul><li>Walsender should send outstanding XLOG without waiting wal_sender_delay.
+<ul><li>When processing the commit command, backend signals walsender to send outstanding XLOG immediately.</li></ul></li>
+<li>Backend should exit the wait loop as soon as the reply arrives at the primary.
+<ul><li>When receiving the reply, walsender signals backends to get up from the sleep and determine whether to exit the wait loop by checking the location of the last XLOG replicated.</li>
+<li>Only backends waiting for XLOG to be replicated up to the location contained in the reply are sent the signal.</li></ul></li>
+<li>Walsender waits for the signal from backends and the reply from the standby at the same time, by using select/poll.</li>
+<li>Walsender reads XLOG from not only disk but also shared memory (wal buffers).</li>
+<li>Walreceiver should flush XLOG file only when XLOG file is switched or the related page is flushed.
+<ul><li>When startup process or bgwriter flushes the buffer page, it checks whether the related XLOG has already been flushed via shared memory (location of the last XLOG flushed).</li>
+<li>It flushes the buffer page, if XLOG file has already been flushed.</li>
+<li>It signals walreceiver to flush XLOG file immediately and waits for the flush to complete, if XLOG file has not been flushed yet.</li></ul></li>
+<li>While the standby is catching up with the primary, those servers should ignore the replication mode and perform asynchronous replication.
+<ul><li>After those servers have almost gotten into synchronization, they perform replication based on the specified replication mode.</li>
+<li>New replication states like 'catching-up', 'sync', etc need to be defined, and the state machine for them is required on both servers.</li>
+<li>Current replication state can be monitored on both servers via SQL.</li></ul></li></ul></li>
+<li>Required timeout
+<ul><li>Add new parameter replication_timeout which is the maximum time to wait until XLOG is replicated to the standby. (does this match <a rel="nofollow" class="external free" href="http://www.postgresql.org/docs/current/interactive/runtime-config-replication.html">http://www.postgresql.org/docs/current/interactive/runtime-config-replication.html</a>&#160;?)</li>
+<li>Add new parameter (replication_timeout_action) to specify the reaction to replication_timeout.</li></ul></li></ul>
+<h2><span class="mw-headline" id="Future_release">Future release</span></h2>
+<ul><li><b>Synchronization capability</b>
+<ul><li>Introduce the synchronization mode which can control how long transaction commit waits for replication before the commit command returns a "success" to a client. The valid modes are <i>async</i>, <i>recv</i>, <i>fsync</i> and <i>apply</i>.
+<ul><li><i>async</i> doesn't make transaction commit wait for replication, i.e., asynchronous replication.</li>
+<li><i>recv</i>, <i>fsync</i> and <i>apply</i> makes transaction commit wait for XLOG records to be received, fsynced and applied on the standby, respectively.</li></ul></li>
+<li>Change walsender to be able to read XLOG from not only the disk but also shared memory.</li>
+<li>Add new parameter replication_timeout which is the maximum time to wait until XLOG records are replicated to the standby. (does this match <a rel="nofollow" class="external free" href="http://www.postgresql.org/docs/current/interactive/runtime-config-replication.html">http://www.postgresql.org/docs/current/interactive/runtime-config-replication.html</a>&#160;?)</li>
+<li>Add new parameter (replication_timeout_action) to specify the reaction to replication_timeout.</li></ul></li>
+<li><b>Monitoring</b>
+<ul><li>Provide the capability to check the progress and gap of streaming replication via one query. A collaboration of HS and SR is necessary to provide that capability on the standby side.</li>
+<li>Provide the capability to check if the specified repliation is in progress via a query. Also more detailed status information might be necessary, e.g, the standby is catching up now, has already gotten into sync, and so on.</li>
+<li>Change the stats collector to collect the statistics information about replication, e.g., average delay of replication time.</li>
+<li>Develop the tool to calculate the latest XLOG position from XLOG files. This is necessary to check the gap of replication after the server fails.</li>
+<li>Also develop the tool to extract the user-readable contents from XLOG files. This is necessary to see the contents of the gap, and manually restore them.</li></ul></li>
+<li><b>Easy to Use</b>
+<ul><li>Introduce the parameters like:
+<ul><li>replication_halt_timeout - replication will halt if no data has been sent for this much time.</li>
+<li>replication_halt_segments - replication will halt if number of WAL files in pg_xlog exceeds this threshold.</li>
+<li>These parameters allow us to avoid disk overflow.</li></ul></li>
+<li>Add new feature which transfers also base backup via the direct connection between the primary and the standby.</li>
+<li>Add new hooks like walsender_hook and walreceiver_hook to cooperate with the add-on program for compression like pglesslog.</li>
+<li>Provide a graceful termination of replication via a query on the primary. On the standby, a trigger file mechanism already provides that capability.</li>
+<li>Support replication beyond timeline. The timeline history files need to be shipped from the primary to the standby.</li></ul></li>
+<li><b>Robustness</b>
+<ul><li>Support keepalive in libpq. This is useful for a client and the standby to detect a failure of the primary immediately.</li></ul></li>
+<li><b>Miscellaneous</b>
+<ul><li>Standalone walreceiver tool, which connects to the primary, continuously receives and writes XLOG records, independently from postgres server.</li>
+<li>Cascade streaming replication. Allow walsender to send XLOG to another standby during recovery.</li>
+<li>WAL archiving during recovery.</li></ul></li></ul>
+<!-- 
+NewPP limit report
+Cached time: 20260408134712
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.050 seconds
+Real time usage: 0.054 seconds
+Preprocessor visited node count: 36/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:1116-0!canonical and timestamp 20260408134712 and revision id 37324.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Streaming_Replication&amp;oldid=37324">https://wiki.postgresql.org/index.php?title=Streaming_Replication&amp;oldid=37324</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:Replication" title="Category:Replication">Replication</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Streaming_Replication" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/Talk:Streaming_Replication" rel="discussion" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Streaming_Replication">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Streaming_Replication&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Streaming_Replication&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Streaming_Replication" title="Page">Page</a></li><li id="talk-mobile" class="mw-list-item"><a href="/wiki/Talk:Streaming_Replication" title="Discussion">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Streaming+Replication" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Streaming_Replication" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Streaming_Replication" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Streaming_Replication&amp;oldid=37324" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Streaming_Replication&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 5 November 2022, at 01:26.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.050","walltime":"0.054","ppvisitednodes":{"value":36,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260408134712","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":321});});</script>
+</body>
+</html>

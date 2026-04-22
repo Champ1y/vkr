@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest tests/ -x -q)",
+      "Bash(wc -l /home/arz/Desktop/RAG_postgres/app/**/*.py)"
+    ]
+  }
+}

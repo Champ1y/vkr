@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>VACUUM FULL/ja - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"f8d7fff6887c92861c23e580","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"VACUUM_FULL/ja","wgTitle":"VACUUM FULL/ja","wgCurRevisionId":14642,"wgRevisionId":14642,"wgArticleId":1413,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["FAQ","Vacuuming","Administration","Performance","Japanese"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"VACUUM_FULL/ja","wgRelevantArticleId":1413,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-VACUUM_FULL_ja rootpage-VACUUM_FULL skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">VACUUM FULL/ja</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ><span class="subpages">&lt; <a href="/wiki/VACUUM_FULL" title="VACUUM FULL">VACUUM FULL</a></span></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#VACUUMとVACUUM_FULL"><span class="tocnumber">1</span> <span class="toctext">VACUUMとVACUUM FULL</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#VACUUM_FULLを使用する(しない)タイミング"><span class="tocnumber">1.1</span> <span class="toctext">VACUUM FULLを使用する(しない)タイミング</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#代替品"><span class="tocnumber">1.2</span> <span class="toctext">代替品</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#Autovacuum"><span class="tocnumber">1.2.1</span> <span class="toctext">Autovacuum</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#VACUUM"><span class="tocnumber">1.2.2</span> <span class="toctext">VACUUM</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#CLUSTER"><span class="tocnumber">1.2.3</span> <span class="toctext">CLUSTER</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#ALTER_TABLE_.._SET_DATA_TYPE"><span class="tocnumber">1.2.4</span> <span class="toctext">ALTER TABLE .. SET DATA TYPE</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#SELECT_..._INTO"><span class="tocnumber">1.2.5</span> <span class="toctext">SELECT ... INTO</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#TRUNCATE_TABLE"><span class="tocnumber">1.2.6</span> <span class="toctext">TRUNCATE TABLE</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-10"><a href="#VACUUM_FULLによるインデックス膨張の復旧"><span class="tocnumber">1.3</span> <span class="toctext">VACUUM FULLによるインデックス膨張の復旧</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#ではなぜVACUUM_FULLがあるのでしょう?"><span class="tocnumber">1.4</span> <span class="toctext">ではなぜVACUUM FULLがあるのでしょう?</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h1><span id="VACUUM.E3.81.A8VACUUM_FULL"></span><span class="mw-headline" id="VACUUMとVACUUM_FULL">VACUUMとVACUUM FULL</span></h1>
+<p><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-vacuum.html">VACUUM</a></code>コマンドと関連する自動バキュームプロセスはPostgreSQLのMVCCの膨張化を制御する手段です。
+<code>VACUUM</code>には大きく2つの形式があります。通常の<code>VACUUM</code>と<code>VACUUM FULL</code>です。
+これらの2コマンドは実際には大きく異なるものですので、混乱してはいけません。
+</p><p><code>VACUUM</code>はテーブルをスキャンし、新しく挿入または更新されるデータで上書きすることができるように、不要となったタプルに空き領域印を付けます。
+この詳細については<a href="/wiki/Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT" title="Introduction to VACUUM, ANALYZE, EXPLAIN, and COUNT">Introduction to VACUUM, ANALYZE, EXPLAIN, and COUNT</a>とPostgreSQLの文書<a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/mvcc.html">MVCC</a>を参照してください。
+適切に設定されていれば<a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/routine-vacuuming.html#AUTOVACUUM">autovacuum</a>が代わりに面倒をみますので、最近のPostgreSQLデータベースでは直接<code>VACUUM</code>コマンドの使用が必要になることはまれであることに注意してください。
+</p><p><code>VACUUM FULL</code>は<code>VACUUM</code>とは異なり、削除されていないタプルデータをファイル内で前方にある解放済みの場所に移動します。
+ファイルの終わりに空き領域が作られると、領域が解放されたことをOSが理解し、他の用途に再利用できるようにそのファイルを切り詰めます。
+この方法、特に<code>VACUUM FULL</code>が行う方法により使用中のデータを移動することには何らかの大きな欠点と副作用があります。
+必要な領域を解放する方法やテーブルを最適化する方法には他に優れた方法があります(後述)ので、基本的には<code>VACUUM FULL</code>を使用してはなりません。
+</p><p><b>9.0ではVACUUM FULLを変更します。</b>
+<a rel="nofollow" class="external text" href="http://developer.postgresql.org/pgdocs/postgres/sql-vacuum.html">documentation</a>で説明するように、VACUUM FULLの実装は過去のバージョンでCLUSTERを使用した場合の方式に似たものに変わりました。
+このため、ここで説明する古めのVACUUM FULLに対するトレードオフの集合はかなり異なってきます。
+インデックスの膨張が原因のデータベースの低速化の可能性はこの変更により減少しましたが、VACUUM FULLのロックと一般的な性能に対するオーバーヘッドがありますので、行うことを避けるべき何かがまだ存在します。
+</p>
+<h2><span id="VACUUM_FULL.E3.82.92.E4.BD.BF.E7.94.A8.E3.81.99.E3.82.8B.28.E3.81.97.E3.81.AA.E3.81.84.29.E3.82.BF.E3.82.A4.E3.83.9F.E3.83.B3.E3.82.B0"></span><span class="mw-headline" id="VACUUM_FULLを使用する(しない)タイミング"><code>VACUUM FULL</code>を使用する(しない)タイミング</span></h2>
+<p>ネットワーク上の間違ったアドバイスや「優れている」に違いないという仮定に基づき、多くの人は定期的に自身のテーブルに対して<code>VACUUM FULL</code>を実行しています。
+これは一般的に<i>本当に間違った考え</i>であり、自身のデータベースを高速にではなく<i>低速に</i>しています。
+</p><p><code>VACUUM FULL</code>はほとんどの行が不要となった、つまり、その膨大な内容のほとんどが削除されているテーブルがある場合のみ必要なものです。
+そうであっても、緊急に他の目的のためにディスク容量の空きを確保する、または、そのテーブルが今後そのサイズまで増えることがないと想定する場合でない限り、<code>VACUUM FULL</code>を使用する意味はありません。
+逆効果ですので、テーブルの最適化や定期保守として使用してはいけません。
+</p><p>テーブルに対して<code>VACUUM FULL</code>を実行する時、その操作の間テーブルはロックされます。
+このためそのテーブルに対する作業を行うことはできません。
+<code>VACUUM FULL</code>は通常の<i>VACUUM</i>より<i>非常に</i>低速ですので、そのテーブルはしばらく利用できなくなるかもしれません。
+もっと重要な点は、<code>VACUUM FULL</code>はテーブルを小さくしますが、インデックスは小さくしないことです。
+実際にはインデックスのサイズは大きくなる可能性があり、低速化、インデックスの使用時のより多くのディスクI/Oの発生、必要とするメモリ量の増加が起こります。
+<code>VACUUM FULL</code>の後に<code>REINDEX</code>が必要になるかもしれません。
+PostgreSQLの文書<a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/routine-vacuuming.html#VACUUM-BASICS">notes on VACUUM vs VACUUM FULL</a>を参照してください。
+</p>
+<h2><span id=".E4.BB.A3.E6.9B.BF.E5.93.81"></span><span class="mw-headline" id="代替品">代替品</span></h2>
+<p><code>VACUUM FULL</code>を使用してはならないのであれば、何を使用すべきでしょうか?
+</p>
+<h3><span class="mw-headline" id="Autovacuum"><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/routine-vacuuming.html#AUTOVACUUM">Autovacuum</a></span></h3>
+<p><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/routine-vacuuming.html#AUTOVACUUM">autovacuum</a>を十分な頻度で積極的に実行しているのであれば、テーブルが不要行が回収されないことが原因で、増大(膨張)することは決してないはずです。
+このため、OSに不要な領域を返却する必要性は決してないはずです。
+</p><p>自動バキュームはすべてのPostgreSQLのバージョン劇的に改良されています。
+また、これが最新版を実行していることを勧める非常に良い理由です。
+例えば、8.4では空き領域マップは自動的に管理されるようになり、もはや必要なくなった調整用パラメータを削除し、テーブル膨張の主な原因を取り除きました。
+</p><p>もし自動バキュームがテーブルとインデックスが膨張しないように十分維持できないのであれば、チューニングを行ってください。
+手作業のバキュームとインデックスの再構築で置き換えないでください。
+(8.4より前では)空き領域マップの設定を増加させる必要があるかもしれません。
+より頻繁に自動バキュームを実行するようにチューニングしてください。
+または、自動バキュームに対し特定の更新頻度が多いテーブルを他より積極的にバキュームするように設定してください。
+あるいは、この両方を行ってください。
+</p>
+<h3><span class="mw-headline" id="VACUUM"><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-vacuum.html">VACUUM</a></code></span></h3>
+<p>他のテーブルやシステムの他の部分で領域が利用できるようにするためにOSに領域を戻す必要がない限り、<code>VACUUM FULL</code>ではなく<code>VACUUM</code>を使用すべきです。
+</p><p>テーブルの多くの部分の書き換えを伴う大きな管理作業や更新作業を実行する場合以外で、手作業でテーブルを<code>VACUUM</code>しなければならないのであれば、おそらく自動バキュームを十分良く設定していません。
+</p>
+<h3><span class="mw-headline" id="CLUSTER"><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-cluster.html">CLUSTER</a></code></span></h3>
+<p>テーブルを詰め込み、(例えば)積極性が不十分な自動バキュームのために累積したテーブルの膨張を取り除くことで、テーブルを最適化しようとしている場合、または、オペレーティングシステムにテーブル内の不要領域を戻そうとしている場合、通常<code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-cluster.html">CLUSTER</a></code>が最善の方法です。
+これは<code>VACUUM FULL</code>より<i>大きく</i>高速に行われ、テーブルそのものと同様にインデックスのサイズも減り、最適化されます。
+しかし、<code>CLUSTER</code>を実行している間、テーブル内の使用中のデータすべてを保持するのに十分な空き領域が必要です。
+</p>
+<h3><span class="mw-headline" id="ALTER_TABLE_.._SET_DATA_TYPE"><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-altertable.html">ALTER TABLE .. SET DATA TYPE</a></code></span></h3>
+<p><code>CLUSTER</code>に伴う問題は、それがインデックスにしたがってテーブルの順序を変えることです。
+テーブルがまだインデックスの順序に近づいていない場合は、各タプルの検索時に散財するテーブルページの読み取りを何度も行わなければならないため、長時間かかります。
+より高速な代替方法は、特定の順序を要求しないテーブル全体の書き換えを要求することです。
+PostgreSQLバージョン9.0より以前では、こうした操作を呼び出す直接的な方法を提供しません。
+しかし次の回避方法を使用することができます。
+任意のテーブル列を対象に<code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-altertable.html">ALTER TABLE</a></code>を用いて<i>同じデータ型に</i>その型を変更してください。
+これはテーブルの論理的な変更が伴わないことは明確ですが、サーバはテーブルを書き換える必要があり、その時に不要なタプルを取り除きます。
+</p><p>例えば、<code>an_integer_column</code>が<code>INTEGER</code>型とすると
+</p>
+<pre>ALTER TABLE your_table ALTER an_integer_column SET DATA TYPE integer;
+</pre>
+<h3><span class="mw-headline" id="SELECT_..._INTO"><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-selectinto.html">SELECT ... INTO</a></code></span></h3>
+<p><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-selectinto.html">SELECT ... INTO</a></code>コマンドを使用して膨張したテーブルから新しいテーブルにデータをコピーし、インデックスを再作成し、最終的にはテーブルの名前を変えて古いテーブルを新しいテーブルで置き換えるする方が高速になる場合もあります。
+しかし<code>CLUSTER</code>の代わりにこれを使用する価値はほぼありません。
+<code>CLUSTER</code>はほぼ同じことを自動的に行い、かつ並行してインデックスを再構築できるからです。
+<code>CLUSTER</code>の代わりに<code>SELECT ... INTO</code>を使用したいと考える主な理由は、テーブルのソートを行いたくない場合です。
+</p>
+<h3><span class="mw-headline" id="TRUNCATE_TABLE"><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-truncate.html">TRUNCATE TABLE</a></code></span></h3>
+<p>(<code>WHERE</code>句のない)<code>DELETE FROM tablename;</code>を用いて定期的に完全に消去されるテーブルから<code>VACUUM FULL</code>を使用して領域を解放しているのであれば、<code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-truncate.html">TRUNCATE TABLE</a></code>を用いることで、2つの手順をまとめ、かつ、<i>非常に</i>高速に行うことができます。
+</p><p>以下の代わりに
+</p>
+<pre>DELETE FROM tablename;
+VACUUM FULL tablename;
+</pre>
+<p>以下を記述してください。
+</p>
+<pre>TRUNCATE TABLE tablename;
+</pre>
+<p>確実に<code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-truncate.html">TRUNCATE TABLE</a></code>文書の注記における警告を読んでください。
+<code>TRUNCATE TABLE</code>が目的に適していなければ、代わりに<code>CLUSTER</code>を付けた<code>DELETE</code>を使用してください。
+</p><p>外部キー参照の対象となるテーブルに対して<code>DELETE</code>を使用する場合、参照列にインデックスを付けることを検討してください。
+外部キー制約の検査における参照テーブル上でのシーケンシャルスキャンを防止することができ、被参照テーブルの<code>DELETE</code>が高速になります。
+</p>
+<h2><span id="VACUUM_FULL.E3.81.AB.E3.82.88.E3.82.8B.E3.82.A4.E3.83.B3.E3.83.87.E3.83.83.E3.82.AF.E3.82.B9.E8.86.A8.E5.BC.B5.E3.81.AE.E5.BE.A9.E6.97.A7"></span><span class="mw-headline" id="VACUUM_FULLによるインデックス膨張の復旧"><code>VACUUM FULL</code>によるインデックス膨張の復旧</span></h2>
+<p>定常的に<code>VACUUM FULL</code>を使用することで膨張してしまったインデックスがある場合、通常 <code>CLUSTER</code>を使用してテーブルとインデックスを書き換えることが最善です。
+</p><p>長期間テーブルをロック状態とするゆとりがなければ、テーブル上で問い合わせを実行させ続けながら各インデックスを個別に再構築することができます。
+残念ながらPostgreSQLには<code>REINDEX CONCURRENTLY</code>コマンドはありません。
+しかし、<a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-reindex.html">CREATE INDEX ... CONCURRENTLY</a>、<a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-alterindex.html">ALTER INDEX ... RENAME</a>および<a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-dropindex.html">DROP INDEX</a>を用いて、新しいインデックスの作成、古いインデックスと新しいインデックスの名前を置き換え、古いインデックスを削除することをおおよそ模擬することができます。
+プライマリキーなどインデックスの一部は削除することができませんので、これはすべてのインデックスを整理する手法にならないかもしれません。
+</p>
+<h2><span id=".E3.81.A7.E3.81.AF.E3.81.AA.E3.81.9CVACUUM_FULL.E3.81.8C.E3.81.82.E3.82.8B.E3.81.AE.E3.81.A7.E3.81.97.E3.82.87.E3.81.86.3F"></span><span class="mw-headline" id="ではなぜVACUUM_FULLがあるのでしょう?">ではなぜ<code>VACUUM FULL</code>があるのでしょう?</span></h2>
+<p>理由のほぼ歴史的なものです。
+具体的には、完全にMVCCで安全な<code>CLUSTER</code>が利用できる用になる前はもっと有用なものでした。
+また、自動バキュームが導入され、かつデフォルトで有効になる前では、深刻なテーブル膨張は良く起こりました。
+</p><p>他に優れた代替方法がない、<code>VACUUM FULL</code>が有用となる使用方法が1つあります。
+それはディスクフル状態からの復旧です。
+<code>VACUUM FULL</code>は<code>CLUSTER</code>よりもテーブルを小さくするために必要とする空き領域がかなり少なく済みます。
+このため容量を(ほぼ)完全に使い切った場合でも有用です。
+</p><p>VACUUM FULLは<a rel="nofollow" class="external text" href="http://it.toolbox.com/blogs/database-soup/getting-rid-of-vacuum-full-feedback-needed-33959">removal from PostgreSQL 8.5</a>(この後PostgreSQL 9.0に名前が変わりました)のように提案されています。
+この記事ではここで示した提言に対していくつか追加サポートを提供しています。
+そこで提案された変更は実装されませんでした。
+少ないディスク領域からの復旧などの古いVACUUM FULLが有用となる数少ない状況は、古いコードの問題よりも重要だとされていません。
+古いコードの問題には、9.0リリースの新しいレプリケーション機能との非互換性が含まれています。
+</p><p>元原稿 --<a href="/wiki/User:Ringerc" title="User:Ringerc">Ringerc</a> 03:48, 26 November 2009 (UTC)
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408050709
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.042 seconds
+Real time usage: 0.056 seconds
+Preprocessor visited node count: 52/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 178/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   11.972      1 Template:Languages
+100.00%   11.972      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:1413-0!canonical and timestamp 20260408050709 and revision id 14642.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=VACUUM_FULL/ja&amp;oldid=14642">https://wiki.postgresql.org/index.php?title=VACUUM_FULL/ja&amp;oldid=14642</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:FAQ" title="Category:FAQ">FAQ</a></li><li><a href="/wiki/Category:Vacuuming" title="Category:Vacuuming">Vacuuming</a></li><li><a href="/wiki/Category:Administration" title="Category:Administration">Administration</a></li><li><a href="/wiki/Category:Performance" title="Category:Performance">Performance</a></li><li><a href="/wiki/Category:Japanese" title="Category:Japanese">Japanese</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/VACUUM_FULL/ja" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:VACUUM_FULL/ja&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/VACUUM_FULL/ja">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=VACUUM_FULL/ja&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=VACUUM_FULL/ja&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/VACUUM_FULL/ja" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:VACUUM_FULL/ja&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=VACUUM+FULL%2Fja" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/VACUUM_FULL/ja" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/VACUUM_FULL/ja" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=VACUUM_FULL/ja&amp;oldid=14642" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=VACUUM_FULL/ja&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 17 June 2011, at 12:36.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.042","walltime":"0.056","ppvisitednodes":{"value":52,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":178,"limit":5000000},"timingprofile":["100.00%   11.972      1 Template:Languages","100.00%   11.972      1 -total"]},"cachereport":{"timestamp":"20260408050709","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":377});});</script>
+</body>
+</html>

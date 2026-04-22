@@ -1,0 +1,2 @@
+[47.4. Logical Decoding SQL Interface #] See Section 9.28.6 for detailed documentation on the SQL-level API for interacting with logical decoding.
+[47.4. Logical Decoding SQL Interface #] Synchronous replication (see Section 26.2.8 ) is only supported on replication slots used over the streaming replication interface. The function interface and additional, non-core interfaces do not support synchronous replication.

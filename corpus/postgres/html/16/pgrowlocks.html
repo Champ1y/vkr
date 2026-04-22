@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 16: F.31. pgrowlocks — show a table&#x27;s row locking information</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/16/pgrowlocks.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:06:59" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.31. pgrowlocks — show a table&#x27;s row locking information" />
+  <meta property="og:description" content="F.31.&amp;nbsp;pgrowlocks — show a table&#x27;s row locking information # F.31.1. Overview F.31.2. Sample Output F.31.3. Author The pgrowlocks module provides …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?290b0238" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?290b0238">
+
+  <script src="/media/js/theme.js?290b0238"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/pgrowlocks.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/16/index.html">PostgreSQL 16</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/pgrowlocks.html" title="PostgreSQL 18 - F.31. pgrowlocks — show a table&#x27;s row locking information" >Current</a>
+                          (<a href="/docs/18/pgrowlocks.html" title="PostgreSQL 18 - F.31. pgrowlocks — show a table&#x27;s row locking information" >18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/pgrowlocks.html" title="PostgreSQL 17 - F.31. pgrowlocks — show a table&#x27;s row locking information" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/pgrowlocks.html" title="PostgreSQL 16 - F.31. pgrowlocks — show a table&#x27;s row locking information" class="docs-version-selected">16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/pgrowlocks.html" title="PostgreSQL 15 - F.31. pgrowlocks — show a table&#x27;s row locking information" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/pgrowlocks.html" title="PostgreSQL 14 - F.31. pgrowlocks — show a table&#x27;s row locking information" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/pgrowlocks.html" title="PostgreSQL devel - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/pgrowlocks.html" title="PostgreSQL 13 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/pgrowlocks.html" title="PostgreSQL 12 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/pgrowlocks.html" title="PostgreSQL 11 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/pgrowlocks.html" title="PostgreSQL 10 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/pgrowlocks.html" title="PostgreSQL 9.6 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/pgrowlocks.html" title="PostgreSQL 9.5 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/pgrowlocks.html" title="PostgreSQL 9.4 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/pgrowlocks.html" title="PostgreSQL 9.3 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/pgrowlocks.html" title="PostgreSQL 9.2 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/pgrowlocks.html" title="PostgreSQL 9.1 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/pgrowlocks.html" title="PostgreSQL 9.0 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/pgrowlocks.html" title="PostgreSQL 8.4 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/pgrowlocks.html" title="PostgreSQL 8.3 - F.31. pgrowlocks — show a table&#x27;s row locking information"  rel="nofollow">8.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/16/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.31.&nbsp;pgrowlocks — show a table's row locking information</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="pgprewarm.html" title="F.30.&nbsp;pg_prewarm — preload relation data into buffer caches">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules and Extensions">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules and Extensions</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 16.13 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="pgstatstatements.html" title="F.32.&nbsp;pg_stat_statements — track statistics of SQL planning and execution">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="PGROWLOCKS">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.31.&nbsp;pgrowlocks — show a table's row locking information <a href="#PGROWLOCKS" class="id_link">#</a></h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="pgrowlocks.html#PGROWLOCKS-OVERVIEW">F.31.1. Overview</a></span></dt>
+      <dt><span class="sect2"><a href="pgrowlocks.html#PGROWLOCKS-SAMPLE-OUTPUT">F.31.2. Sample Output</a></span></dt>
+      <dt><span class="sect2"><a href="pgrowlocks.html#PGROWLOCKS-AUTHOR">F.31.3. Author</a></span></dt>
+    </dl>
+  </div><a id="id-1.11.7.41.2" class="indexterm" name="id-1.11.7.41.2"></a>
+  <p>The <code class="filename">pgrowlocks</code> module provides a function to show row locking information for a specified table.</p>
+  <p>By default use is restricted to superusers, roles with privileges of the <code class="literal">pg_stat_scan_tables</code> role, and users with <code class="literal">SELECT</code> permissions on the table.</p>
+  <div class="sect2" id="PGROWLOCKS-OVERVIEW">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.31.1.&nbsp;Overview <a href="#PGROWLOCKS-OVERVIEW" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div><a id="id-1.11.7.41.5.2" class="indexterm" name="id-1.11.7.41.5.2"></a>
+    <pre class="synopsis">
+pgrowlocks(text) returns setof record
+</pre>
+    <p>The parameter is the name of a table. The result is a set of records, with one row for each locked row within the table. The output columns are shown in <a class="xref" href="pgrowlocks.html#PGROWLOCKS-COLUMNS" title="Table&nbsp;F.21.&nbsp;pgrowlocks Output Columns">Table&nbsp;F.21</a>.</p>
+    <div class="table" id="PGROWLOCKS-COLUMNS">
+      <p class="title"><strong>Table&nbsp;F.21.&nbsp;<code class="function">pgrowlocks</code> Output Columns</strong></p>
+      <div class="table-contents">
+        <table class="table" summary="pgrowlocks Output Columns" border="1">
+          <colgroup>
+            <col />
+            <col />
+            <col />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code class="structfield">locked_row</code></td>
+              <td><code class="type">tid</code></td>
+              <td>Tuple ID (TID) of locked row</td>
+            </tr>
+            <tr>
+              <td><code class="structfield">locker</code></td>
+              <td><code class="type">xid</code></td>
+              <td>Transaction ID of locker, or multixact ID if multitransaction; see <a class="xref" href="transaction-id.html" title="74.1.&nbsp;Transactions and Identifiers">Section&nbsp;74.1</a></td>
+            </tr>
+            <tr>
+              <td><code class="structfield">multi</code></td>
+              <td><code class="type">boolean</code></td>
+              <td>True if locker is a multitransaction</td>
+            </tr>
+            <tr>
+              <td><code class="structfield">xids</code></td>
+              <td><code class="type">xid[]</code></td>
+              <td>Transaction IDs of lockers (more than one if multitransaction)</td>
+            </tr>
+            <tr>
+              <td><code class="structfield">modes</code></td>
+              <td><code class="type">text[]</code></td>
+              <td>Lock mode of lockers (more than one if multitransaction), an array of <code class="literal">Key Share</code>, <code class="literal">Share</code>, <code class="literal">For No Key Update</code>, <code class="literal">No Key Update</code>, <code class="literal">For Update</code>, <code class="literal">Update</code>.</td>
+            </tr>
+            <tr>
+              <td><code class="structfield">pids</code></td>
+              <td><code class="type">integer[]</code></td>
+              <td>Process IDs of locking backends (more than one if multitransaction)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div><br class="table-break" />
+    <p><code class="function">pgrowlocks</code> takes <code class="literal">AccessShareLock</code> for the target table and reads each row one by one to collect the row locking information. This is not very speedy for a large table. Note that:</p>
+    <div class="orderedlist">
+      <ol class="orderedlist" type="1">
+        <li class="listitem">
+          <p>If an <code class="literal">ACCESS EXCLUSIVE</code> lock is taken on the table, <code class="function">pgrowlocks</code> will be blocked.</p>
+        </li>
+        <li class="listitem">
+          <p><code class="function">pgrowlocks</code> is not guaranteed to produce a self-consistent snapshot. It is possible that a new row lock is taken, or an old lock is freed, during its execution.</p>
+        </li>
+      </ol>
+    </div>
+    <p><code class="function">pgrowlocks</code> does not show the contents of locked rows. If you want to take a look at the row contents at the same time, you could do something like this:</p>
+    <pre class="programlisting">
+SELECT * FROM accounts AS a, pgrowlocks('accounts') AS p
+  WHERE p.locked_row = a.ctid;
+</pre>
+    <p>Be aware however that such a query will be very inefficient.</p>
+  </div>
+  <div class="sect2" id="PGROWLOCKS-SAMPLE-OUTPUT">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.31.2.&nbsp;Sample Output <a href="#PGROWLOCKS-SAMPLE-OUTPUT" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <pre class="screen">
+=# SELECT * FROM pgrowlocks('t1');
+ locked_row | locker | multi | xids  |     modes      |  pids
+------------+--------+-------+-------+----------------+--------
+ (0,1)      |    609 | f     | {609} | {"For Share"}  | {3161}
+ (0,2)      |    609 | f     | {609} | {"For Share"}  | {3161}
+ (0,3)      |    607 | f     | {607} | {"For Update"} | {3107}
+ (0,4)      |    607 | f     | {607} | {"For Update"} | {3107}
+(4 rows)
+</pre>
+  </div>
+  <div class="sect2" id="PGROWLOCKS-AUTHOR">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.31.3.&nbsp;Author <a href="#PGROWLOCKS-AUTHOR" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <p>Tatsuo Ishii</p>
+  </div>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="pgprewarm.html" title="F.30.&nbsp;pg_prewarm — preload relation data into buffer caches">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules and Extensions">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="pgstatstatements.html" title="F.32.&nbsp;pg_stat_statements — track statistics of SQL planning and execution">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">F.30.&nbsp;pg_prewarm — preload relation data into buffer caches&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 16.13 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.32.&nbsp;pg_stat_statements — track statistics of SQL planning and execution</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/16/pgrowlocks.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?290b0238"></script>
+
+  </body>
+</html>

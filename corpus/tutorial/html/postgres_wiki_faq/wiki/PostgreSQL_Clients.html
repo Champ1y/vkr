@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>PostgreSQL Clients - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"4daa5ed44b86db9f8add87d1","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"PostgreSQL_Clients","wgTitle":"PostgreSQL Clients","wgCurRevisionId":43141,"wgRevisionId":43141,"wgArticleId":3438,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"PostgreSQL_Clients","wgRelevantArticleId":3438,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-PostgreSQL_Clients rootpage-PostgreSQL_Clients skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">PostgreSQL Clients</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+This page is a partial list of interactive SQL clients (GUI or otherwise) - that doesn't include <a href="/wiki/Community_Guide_to_PostgreSQL_GUI_Tools" title="Community Guide to PostgreSQL GUI Tools">reporting engines, ETL data loaders, or visual design tools</a>, just interactive clients that you can type SQL in to and get results from them.  This includes web based or desktop apps.
+</p><p>If you are looking for <a href="/wiki/List_of_drivers" title="List of drivers">language interfaces</a> / <a href="/wiki/List_of_drivers" title="List of drivers">drivers</a>, please see <a href="/wiki/List_of_drivers" title="List of drivers">List of drivers</a>.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Cross-platform_GUI_Clients"><span class="tocnumber">1</span> <span class="toctext">Cross-platform GUI Clients</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Open_Source"><span class="tocnumber">1.1</span> <span class="toctext">Open Source</span></a>
+<ul>
+<li class="toclevel-3 tocsection-3"><a href="#Beekeeper_Studio"><span class="tocnumber">1.1.1</span> <span class="toctext">Beekeeper Studio</span></a></li>
+<li class="toclevel-3 tocsection-4"><a href="#pgAdmin_4"><span class="tocnumber">1.1.2</span> <span class="toctext">pgAdmin 4</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#Postbird"><span class="tocnumber">1.1.3</span> <span class="toctext">Postbird</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#Sqlectron"><span class="tocnumber">1.1.4</span> <span class="toctext">Sqlectron</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#SQuirrel"><span class="tocnumber">1.1.5</span> <span class="toctext">SQuirrel</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#pgAdmin_3"><span class="tocnumber">1.1.6</span> <span class="toctext">pgAdmin 3</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#Tora"><span class="tocnumber">1.1.7</span> <span class="toctext">Tora</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#SQL_Workbench/J"><span class="tocnumber">1.1.8</span> <span class="toctext">SQL Workbench/J</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#DBeaver"><span class="tocnumber">1.1.9</span> <span class="toctext">DBeaver</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#PgManage"><span class="tocnumber">1.1.10</span> <span class="toctext">PgManage</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-13"><a href="#Proprietary"><span class="tocnumber">1.2</span> <span class="toctext">Proprietary</span></a>
+<ul>
+<li class="toclevel-3 tocsection-14"><a href="#DbVisualizer"><span class="tocnumber">1.2.1</span> <span class="toctext">DbVisualizer</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#DB_Pro"><span class="tocnumber">1.2.2</span> <span class="toctext">DB Pro</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="#PG_Orbit"><span class="tocnumber">1.2.3</span> <span class="toctext">PG Orbit</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#dbForge_Edge"><span class="tocnumber">1.2.4</span> <span class="toctext">dbForge Edge</span></a></li>
+<li class="toclevel-3 tocsection-18"><a href="#DBX"><span class="tocnumber">1.2.5</span> <span class="toctext">DBX</span></a></li>
+<li class="toclevel-3 tocsection-19"><a href="#Zing_Data"><span class="tocnumber">1.2.6</span> <span class="toctext">Zing Data</span></a></li>
+<li class="toclevel-3 tocsection-20"><a href="#PgManager"><span class="tocnumber">1.2.7</span> <span class="toctext">PgManager</span></a></li>
+<li class="toclevel-3 tocsection-21"><a href="#Valentina_Studio_(Free)"><span class="tocnumber">1.2.8</span> <span class="toctext">Valentina Studio (Free)</span></a></li>
+<li class="toclevel-3 tocsection-22"><a href="#RazorSQL"><span class="tocnumber">1.2.9</span> <span class="toctext">RazorSQL</span></a></li>
+<li class="toclevel-3 tocsection-23"><a href="#JetBrains_IDEs_-_DataGrip,_IntelliJ_IDEA,_PHPStorm,_PyCharm,_RubyMine,_etc_..."><span class="tocnumber">1.2.10</span> <span class="toctext">JetBrains IDEs - DataGrip, IntelliJ IDEA, PHPStorm, PyCharm, RubyMine, etc ...</span></a></li>
+<li class="toclevel-3 tocsection-24"><a href="#Aqua_Data_Studio"><span class="tocnumber">1.2.11</span> <span class="toctext">Aqua Data Studio</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#Navicat"><span class="tocnumber">1.2.12</span> <span class="toctext">Navicat</span></a></li>
+<li class="toclevel-3 tocsection-26"><a href="#Datazenit"><span class="tocnumber">1.2.13</span> <span class="toctext">Datazenit</span></a></li>
+<li class="toclevel-3 tocsection-27"><a href="#QueryGlow"><span class="tocnumber">1.2.14</span> <span class="toctext">QueryGlow</span></a></li>
+<li class="toclevel-3 tocsection-28"><a href="#Quest_Toad_Edge"><span class="tocnumber">1.2.15</span> <span class="toctext">Quest Toad Edge</span></a></li>
+<li class="toclevel-3 tocsection-29"><a href="#Kangaroo"><span class="tocnumber">1.2.16</span> <span class="toctext">Kangaroo</span></a></li>
+<li class="toclevel-3 tocsection-30"><a href="#DbSchema"><span class="tocnumber">1.2.17</span> <span class="toctext">DbSchema</span></a></li>
+<li class="toclevel-3 tocsection-31"><a href="#WebDB_(free)"><span class="tocnumber">1.2.18</span> <span class="toctext">WebDB (free)</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-32"><a href="#macOS_GUI_Clients"><span class="tocnumber">2</span> <span class="toctext">macOS GUI Clients</span></a>
+<ul>
+<li class="toclevel-2 tocsection-33"><a href="#Open_Source_and_Completely_Free_Software"><span class="tocnumber">2.1</span> <span class="toctext">Open Source and Completely Free Software</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#Proprietary_2"><span class="tocnumber">2.2</span> <span class="toctext">Proprietary</span></a>
+<ul>
+<li class="toclevel-3 tocsection-35"><a href="#Paul"><span class="tocnumber">2.2.1</span> <span class="toctext">Paul</span></a></li>
+<li class="toclevel-3 tocsection-36"><a href="#SQLPro_for_Postgres"><span class="tocnumber">2.2.2</span> <span class="toctext">SQLPro for Postgres</span></a></li>
+<li class="toclevel-3 tocsection-37"><a href="#TablePlus"><span class="tocnumber">2.2.3</span> <span class="toctext">TablePlus</span></a></li>
+<li class="toclevel-3 tocsection-38"><a href="#Postico"><span class="tocnumber">2.2.4</span> <span class="toctext">Postico</span></a></li>
+<li class="toclevel-3 tocsection-39"><a href="#PSequel_(free)"><span class="tocnumber">2.2.5</span> <span class="toctext">PSequel (free)</span></a></li>
+<li class="toclevel-3 tocsection-40"><a href="#SEQUEL_for_PostgreSQL"><span class="tocnumber">2.2.6</span> <span class="toctext">SEQUEL for PostgreSQL</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-41"><a href="#Windows_GUI_Clients"><span class="tocnumber">3</span> <span class="toctext">Windows GUI Clients</span></a>
+<ul>
+<li class="toclevel-2 tocsection-42"><a href="#Open_Source_/_Free_Software"><span class="tocnumber">3.1</span> <span class="toctext">Open Source / Free Software</span></a>
+<ul>
+<li class="toclevel-3 tocsection-43"><a href="#HeidiSQL"><span class="tocnumber">3.1.1</span> <span class="toctext">HeidiSQL</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-44"><a href="#Proprietary_3"><span class="tocnumber">3.2</span> <span class="toctext">Proprietary</span></a>
+<ul>
+<li class="toclevel-3 tocsection-45"><a href="#dbForge_Studio_for_PostgreSQL"><span class="tocnumber">3.2.1</span> <span class="toctext">dbForge Studio for PostgreSQL</span></a></li>
+<li class="toclevel-3 tocsection-46"><a href="#Database_Workbench"><span class="tocnumber">3.2.2</span> <span class="toctext">Database Workbench</span></a></li>
+<li class="toclevel-3 tocsection-47"><a href="#Database_Tour_Pro"><span class="tocnumber">3.2.3</span> <span class="toctext">Database Tour Pro</span></a></li>
+<li class="toclevel-3 tocsection-48"><a href="#SQLGate"><span class="tocnumber">3.2.4</span> <span class="toctext">SQLGate</span></a></li>
+<li class="toclevel-3 tocsection-49"><a href="#Datazenit_2"><span class="tocnumber">3.2.5</span> <span class="toctext">Datazenit</span></a></li>
+<li class="toclevel-3 tocsection-50"><a href="#EMS_SQL_Manager_for_PostgreSQL_Freeware"><span class="tocnumber">3.2.6</span> <span class="toctext">EMS SQL Manager for PostgreSQL Freeware</span></a></li>
+<li class="toclevel-3 tocsection-51"><a href="#PostgreSQL_Maestro"><span class="tocnumber">3.2.7</span> <span class="toctext">PostgreSQL Maestro</span></a></li>
+<li class="toclevel-3 tocsection-52"><a href="#Nucleon_Database_Master"><span class="tocnumber">3.2.8</span> <span class="toctext">Nucleon Database Master</span></a></li>
+<li class="toclevel-3 tocsection-53"><a href="#SQLPro"><span class="tocnumber">3.2.9</span> <span class="toctext">SQLPro</span></a></li>
+<li class="toclevel-3 tocsection-54"><a href="#SQL_Data_Analysis"><span class="tocnumber">3.2.10</span> <span class="toctext">SQL Data Analysis</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-55"><a href="#Web_Clients"><span class="tocnumber">4</span> <span class="toctext">Web Clients</span></a>
+<ul>
+<li class="toclevel-2 tocsection-56"><a href="#Open_Source_2"><span class="tocnumber">4.1</span> <span class="toctext">Open Source</span></a>
+<ul>
+<li class="toclevel-3 tocsection-57"><a href="#phpPgAdmin"><span class="tocnumber">4.1.1</span> <span class="toctext">phpPgAdmin</span></a></li>
+<li class="toclevel-3 tocsection-58"><a href="#franchise"><span class="tocnumber">4.1.2</span> <span class="toctext">franchise</span></a></li>
+<li class="toclevel-3 tocsection-59"><a href="#pgAdmin_4_2"><span class="tocnumber">4.1.3</span> <span class="toctext">pgAdmin 4</span></a></li>
+<li class="toclevel-3 tocsection-60"><a href="#Adminer"><span class="tocnumber">4.1.4</span> <span class="toctext">Adminer</span></a></li>
+<li class="toclevel-3 tocsection-61"><a href="#OmniDB"><span class="tocnumber">4.1.5</span> <span class="toctext">OmniDB</span></a></li>
+<li class="toclevel-3 tocsection-62"><a href="#SIDU"><span class="tocnumber">4.1.6</span> <span class="toctext">SIDU</span></a></li>
+<li class="toclevel-3 tocsection-63"><a href="#Hisha"><span class="tocnumber">4.1.7</span> <span class="toctext">Hisha</span></a></li>
+<li class="toclevel-3 tocsection-64"><a href="#Tadpole_DB_Hub"><span class="tocnumber">4.1.8</span> <span class="toctext">Tadpole DB Hub</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-65"><a href="#Proprietary_4"><span class="tocnumber">4.2</span> <span class="toctext">Proprietary</span></a>
+<ul>
+<li class="toclevel-3 tocsection-66"><a href="#Five"><span class="tocnumber">4.2.1</span> <span class="toctext">Five</span></a></li>
+<li class="toclevel-3 tocsection-67"><a href="#TeamPostgreSQL"><span class="tocnumber">4.2.2</span> <span class="toctext">TeamPostgreSQL</span></a></li>
+<li class="toclevel-3 tocsection-68"><a href="#JackDB"><span class="tocnumber">4.2.3</span> <span class="toctext">JackDB</span></a></li>
+<li class="toclevel-3 tocsection-69"><a href="#DBHawk"><span class="tocnumber">4.2.4</span> <span class="toctext">DBHawk</span></a></li>
+<li class="toclevel-3 tocsection-70"><a href="#Datazenit_3"><span class="tocnumber">4.2.5</span> <span class="toctext">Datazenit</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-71"><a href="#CLI_Clients"><span class="tocnumber">5</span> <span class="toctext">CLI Clients</span></a>
+<ul>
+<li class="toclevel-2 tocsection-72"><a href="#Open_Source_/_Free_Software_2"><span class="tocnumber">5.1</span> <span class="toctext">Open Source / Free Software</span></a>
+<ul>
+<li class="toclevel-3 tocsection-73"><a href="#psql"><span class="tocnumber">5.1.1</span> <span class="toctext">psql</span></a></li>
+<li class="toclevel-3 tocsection-74"><a href="#pgcli"><span class="tocnumber">5.1.2</span> <span class="toctext">pgcli</span></a></li>
+<li class="toclevel-3 tocsection-75"><a href="#jaqy"><span class="tocnumber">5.1.3</span> <span class="toctext">jaqy</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-76"><a href="#Other_Resources"><span class="tocnumber">6</span> <span class="toctext">Other Resources</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Cross-platform_GUI_Clients">Cross-platform GUI Clients</span></h2>
+<h3><span class="mw-headline" id="Open_Source">Open Source</span></h3>
+<p>These clients are both "free" and "open source"
+</p>
+<h4><span class="mw-headline" id="Beekeeper_Studio">Beekeeper Studio</span></h4>
+<p><a rel="nofollow" class="external free" href="https://beekeeperstudio.io/">https://beekeeperstudio.io/</a>
+</p><p>Beekeeper Studio is a modern cross-platform SQL editor and database manager available for Linux, Mac, and Windows. Some of its features include:
+</p>
+<ul><li>Clean, smooth, usable UI with dark and light themes</li>
+<li>Tabbed Interface</li>
+<li>Multiple connections at the same time</li>
+<li>Saved queries and run history</li>
+<li>Auto-complete</li></ul>
+<h4><span class="mw-headline" id="pgAdmin_4">pgAdmin 4</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.pgadmin.org/">http://www.pgadmin.org/</a>
+</p><p>pgAdmin 4 is a ground-up rewrite of pgAdmin 3. Rather than being a native application it's primarily a web application that's also packaged as desktop web shell. But runs locally.
+</p>
+<h4><span class="mw-headline" id="Postbird">Postbird</span></h4>
+<p>Open source, desktop application to manage your local or remote PostgreSQL databases.
+</p><p><a rel="nofollow" class="external free" href="https://github.com/paxa/postbird">https://github.com/paxa/postbird</a>
+</p>
+<h4><span class="mw-headline" id="Sqlectron">Sqlectron</span></h4>
+<p>windows/linux/OS X
+</p><p>A simple and lightweight SQL client desktop/terminal
+with cross database and platform support.  GUI or term.
+</p><p><a rel="nofollow" class="external free" href="https://sqlectron.github.io/">https://sqlectron.github.io/</a>
+</p>
+<h4><span class="mw-headline" id="SQuirrel">SQuirrel</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.squirrelsql.org/">http://www.squirrelsql.org/</a>
+</p><p>Platforms that support Java
+</p><p>SQuirreL SQL Client is a graphical Java program that will allow you to view the structure of a JDBC compliant database, browse the data in tables, issue SQL commands etc. The minimum version of Java supported is 1.8.x as of SQuirreL version 3.8.1.
+</p><p>Commentor 1: If it doesn't start in OS X (like nothing appears) see <a rel="nofollow" class="external free" href="https://sourceforge.net/p/squirrel-sql/bugs/1398/">https://sourceforge.net/p/squirrel-sql/bugs/1398/</a>
+</p>
+<h4><span class="mw-headline" id="pgAdmin_3">pgAdmin 3</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.pgadmin.org/">http://www.pgadmin.org/</a>
+</p><p>Windows, Linux, FreeBSD, macOS, OpenBSD, Solaris
+</p><p>For many years the "standard" freely available GUI client for Postgresql, and so is bundled in many packaged installers. It provides a SQL query tool, an editor for procedural languages and a CRUD interface. It's also one of the few clients to provide a GUI front end to the plpgsql debugger.
+</p><p>Free Administration Centre for the PostgreSQL database. Includes a graphical administration interface, an SQL query tool, a procedural code editor and much more. pgAdmin III is designed to answer the needs of most users, from writing simple SQL queries to developing complex databases. The graphical interface supports all PostgreSQL features and makes administration easy. Available in more than 30 languages and for several operating systems.
+</p><p>pgAdmin III is an Open Source management tool for PostgreSQL databases. Features full Unicode support, fast, multithreaded query and data editing tools and support for all PostgreSQL object types.
+</p><p>pgAdmin III is bundled with the Windows installer on older versions of Postgres, and you can use that as a client to administer a remote server on another OS.  Note that binary packages for platforms like RPM don't show up in every point release, you currently have to go back to v1.8.0 to get the last full set of packages.
+</p><p>Development has been discontinued by pgadmin.org,  but is still being maintained by BigSQL who are doing basic maintenance to support newer versions of PostgreSQL and packaging it for current OS releases [<a rel="nofollow" class="external text" href="https://www.bigsql.org/pgadmin3/">here</a>].
+</p>
+<h4><span class="mw-headline" id="Tora">Tora</span></h4>
+<p><a rel="nofollow" class="external free" href="http://tora.sf.net/">http://tora.sf.net/</a>
+</p><p>Linux, Windows, macOS
+</p><p>Oracle, MySQL, and PostgreSQL, as well as limited support for ODBC targets.  Inspired by the proprietary Toad client.
+</p>
+<h4><span id="SQL_Workbench.2FJ"></span><span class="mw-headline" id="SQL_Workbench/J">SQL Workbench/J</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.sql-workbench.net">http://www.sql-workbench.net</a>
+</p><p>Java
+</p><p>An OpenSource (though it prohibits usage by government agencies from USA, UK, Canada, China, Russia, North Korea, Syria, Saudi Arabia, Turkey and the Chechen Republic) SQL GUI tool similar to Squirrel. Data can be edited directly in the result set. It has strong support for exporting and importing data between databases using its own SQL command extension. It can be used in GUI mode or as a console application. All SQL Workbench specific commands can also be run in batch mode to automate export and import task. It supports schema comparison ("diff") and copying data between databases.
+</p><p>It has some <a rel="nofollow" class="external text" href="http://sql-workbench.net/manual/license.html#license-restrictions">restrictions</a> on use by government employees.
+</p>
+<h4><span class="mw-headline" id="DBeaver">DBeaver</span></h4>
+<p><a rel="nofollow" class="external free" href="https://dbeaver.io">https://dbeaver.io</a>
+</p><p>Java
+</p><p>Supports many SQL databases from different vendors, as well as few NoSQL ones (Cassandra, etc).
+Good query editor with syntax highlighting, completion and autosave.
+Editing of query results.  SSH tunneling support. Tons of other cool features.
+Quite good, but not 100% perfect PostgreSQL support (yet?).
+</p><p>Has a free community and also "pro" version available.
+</p>
+<h4><span class="mw-headline" id="PgManage">PgManage</span></h4>
+<p><a rel="nofollow" class="external free" href="https://github.com/commandprompt/pgmanage">https://github.com/commandprompt/pgmanage</a>
+</p><p>Modern multi-platform database administration tool/database client primarily focused on PostgreSQL
+</p><p>Supported platforms: Linux X86_64; Windows 10 X86_64; Mac OS X
+</p><p>PgManage features:
+</p>
+<ul><li>Multi-workspace, multi-tabbed user interface</li>
+<li>SQL code auto-completion and formatting</li>
+<li>Database Entity-relationship Diagrams</li>
+<li>Postgres back-up/restore, configuration management, role management, performance metric dashboards etc</li>
+<li>Query history</li>
+<li>Reusable code snippets</li>
+<li>SSH connection tunneling</li>
+<li>PSQL-like Database console</li>
+<li>and more</li></ul>
+<h3><span class="mw-headline" id="Proprietary">Proprietary</span></h3>
+<p>These are "closed source" apps, some offer free demo's.
+</p>
+<h4><span class="mw-headline" id="DbVisualizer">DbVisualizer</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.dbvis.com/">https://www.dbvis.com/</a>
+<a rel="nofollow" class="external free" href="https://www.dbvis.com/database/postgresql/">https://www.dbvis.com/database/postgresql/</a>
+</p><p>Windows, MacOS, Linux, Unix
+</p><p>DbVisualizer is the a universal database tool that connects to all major databases and JDBC drivers including PostgreSQL. It has the <a rel="nofollow" class="external text" href="https://www.g2.com/categories/sql-integrated-development-environments-ide">top rated SQL IDE on G2.com</a>. It provides features to write SQL to query and visualize your data, design and development features to manage your databases, tables, relations, indexes, triggers, users and much more. Free and Pro edition available. 
+</p>
+<ul><li>High user satsifaction on G2</li>
+<li>Versioning of scripts with Git</li>
+<li>Visual query builder using drag and drop</li>
+<li>Query optimization with an explain plan feature</li>
+<li>Table data editing in spreadsheet</li>
+<li>Visual rendering of primary/foreign keys</li>
+<li>Simple navigation of database objects and their properties</li>
+<li>Flexible user interface in light and dark themes</li>
+<li>SQL formatting</li>
+<li>Command-line interface for headless execution</li>
+<li>Flexible SQL scripts execution with parameter support</li>
+<li>and more...</li></ul>
+<h4><span class="mw-headline" id="DB_Pro">DB Pro</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.dbpro.app/">https://www.dbpro.app/</a>
+</p><p>macOS, Windows, Linux
+</p><p>DB Pro is a modern, cross-platform PostgreSQL client focused on interactive SQL workflows and team collaboration. It provides a desktop-first experience for writing, executing, and managing SQL queries against PostgreSQL databases.
+</p><p>Features include:
+</p>
+<ul><li>SQL editor with syntax highlighting and auto-completion</li>
+<li>Multiple result sets and tabbed query execution</li>
+<li>Saved queries and query history</li>
+<li>Schema and table browsing</li>
+<li>Secure connections (SSL and SSH tunnelling)</li>
+<li>Team-oriented features for sharing queries and workflows</li>
+<li>Optional AI-assisted query and data exploration features</li></ul>
+<p>DB Pro is a proprietary application with free and paid plans available.
+</p>
+<h4><span class="mw-headline" id="PG_Orbit">PG Orbit</span></h4>
+<p><a rel="nofollow" class="external free" href="https://pgorbit.com">https://pgorbit.com</a>
+</p><p>iOS, Android
+</p><p>Desktop-Class Database Management in Your Pocket - a mobile-first PostgreSQL client for developers, DBAs, and data professionals, offering secure, touch-optimized database management. Its freemium model supports querying and browsing, with premium features for advanced tasks.
+</p>
+<ul><li>Touch-optimized data browsing and query execution</li>
+<li>Advanced filtering with AND/OR logic and custom operators</li>
+<li>Comprehensive SSH key management (RSA, Ed25519, OpenSSH)</li>
+<li>Secure SSL/TLS and SSH tunnel connections</li>
+<li>SQL editor with syntax highlighting</li>
+<li>Schema explorer for databases, tables, views, and functions</li>
+<li>Freemium model: read operations free, write operations premium</li>
+<li>Compatible with PostgreSQL 9.6+ and cloud services</li></ul>
+<h4><span class="mw-headline" id="dbForge_Edge">dbForge Edge</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.devart.com/dbforge/edge/">https://www.devart.com/dbforge/edge/</a> 
+</p><p>Microsoft Windows, Linux, macOS 
+</p><p><b>dbForge Edge</b> is a multidatabase solution supporting PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, and a wide range of cloud services. It covers a variety of database development, design, management, and administration tasks with a rich set of features: 
+</p>
+<ul><li>Database Development: SQL code completion, debugging, and schema design for various database systems</li>
+<li>Data Management: Viewing, editing, import, export, and migration of data between databases and cloud platforms</li>
+<li>Database Operations: Comparison, analysis of differences, and synchronization of database schemas and table data</li>
+<li>Reporting and Data Analysis: Generation of detailed data reports, analysis of data trends, and aggregation of data in pivot tables</li>
+<li>Automation: CLI-powered automation of backup, synchronization, and migration operations</li></ul>
+<h4><span class="mw-headline" id="DBX">DBX</span></h4>
+<p><a rel="nofollow" class="external free" href="https://getdbx.com">https://getdbx.com</a>
+</p><p>MacOS, Linux, Windows (Coming Soon)
+</p><p>DBX is a lightweight database client with the following features:
+</p>
+<ul><li>AI Chat (BYO API Keys)</li>
+<li>Query Editor</li>
+<li>Schema Visualisation</li>
+<li>Table Viewer</li>
+<li>Command Palette + Hotkeys</li></ul>
+<h4><span class="mw-headline" id="Zing_Data">Zing Data</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.getzingdata.com/">https://www.getzingdata.com/</a>
+</p><p>iOS, Android, Web
+</p><p>A native mobile app to visually query PostgreSQL databases (without having to write SQL), visualize results, view data tables, and collaborate with team mates using mentions and shared questions. 
+Supports:
+</p>
+<ul><li>SmartGraphs which automatically apply a visualization based on your query result (or can be changed)</li>
+<li>Exporting graphs and CSVs of data tables on a mobile device</li>
+<li>Collaboration tools, such as chat, @mentions, and shared dashboards</li>
+<li>Support for long-running queries, where a user will get a push notification when the query is complete</li>
+<li>Multiple data sources at one</li></ul>
+<p>Zing Data is available for free for the first ten users in an organization.
+</p>
+<h4><span class="mw-headline" id="PgManager">PgManager</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.ems-hitech.com/pgmanager">http://www.ems-hitech.com/pgmanager</a>
+</p><p>Windows, Linux
+</p><p>Basically a proprietary, more powerful version of PGAdmin II or PGAccess. Adds support for trigger and constraint editing, metadata logging, and query monitoring. Also includes multiple-format data import/export tools, which are also available on their own for Linux. Developed by EMS Hitech. (JMB 4.2003).
+</p>
+<h4><span id="Valentina_Studio_.28Free.29"></span><span class="mw-headline" id="Valentina_Studio_(Free)">Valentina Studio (Free)</span></h4>
+<p>Windows/OS X/Linux/
+</p><p>Valentina Studio is a powerful PostgreSQL Database Server administration and development tool. It offers for free many advanced editors:
+</p>
+<ul><li>Schema Editor with Tree and Column views</li>
+<li>Diagram Editor with reverse engineering</li>
+<li>SQL Editor with auto-completion, syntax-highlighting, recent and favorite queries, templates of commands, many result tab-panels, ...</li>
+<li>Data Editor with easy sorting and filtering of records without SQL, in-cell editing.</li>
+<li>Related Data Editor that allow s you to learn related records in different modes.</li>
+<li>Import/Export</li>
+<li>SQL dumps</li>
+<li>and so on ...</li></ul>
+<p>Valentina Studio PRO - adds additional advanced features as:
+</p>
+<ul><li>Report Editor to developer reports based on Valentina Report Engine with datasources from PostgreSQL and other databases.</li>
+<li>Diagrams forward engineering</li>
+<li>SQL DIFF</li>
+<li>Data Transfer</li></ul>
+<h4><span class="mw-headline" id="RazorSQL">RazorSQL</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.razorsql.com/">http://www.razorsql.com/</a>
+</p><p>Macintosh/Windows/Linux/Solaris
+</p><p>RazorSQL is an SQL query tool, database browser, SQL editor, and database administration tool that supports PostgreSQL and any other JDBC or ODBC compliant database. Some of the major features are tools for creating, dropping, and altering objects such as tables, views, indexes, triggers, functions, users, and databases; a programming editor that supports 20 different programming languages; import and export tools; auto column and table lookup; and a query builder, query scheduler, and SQL formatter.
+</p>
+<h4><span id="JetBrains_IDEs_-_DataGrip.2C_IntelliJ_IDEA.2C_PHPStorm.2C_PyCharm.2C_RubyMine.2C_etc_..."></span><span class="mw-headline" id="JetBrains_IDEs_-_DataGrip,_IntelliJ_IDEA,_PHPStorm,_PyCharm,_RubyMine,_etc_...">JetBrains IDEs - DataGrip, IntelliJ IDEA, PHPStorm, PyCharm, RubyMine, etc ...</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.jetbrains.com/">http://www.jetbrains.com/</a>
+</p><p>Windows, Mac OS X, Linux
+</p><p>JetBrains has a dedicated SQL IDE — DataGrip which can connect to PostgreSQL as well. It provides code completion, multi cursors, local query history, navigation, refactorings and language injection support.
+<a rel="nofollow" class="external free" href="https://www.jetbrains.com/datagrip/">https://www.jetbrains.com/datagrip/</a>
+</p><p>Other JetBrains Products, for example, PHPStorm, IDEA, have built-in database plugin, and it has the same functionality as DataGrip.
+</p><p>After you configured the data sources of your project, you can easily create tables, foreign keys, indexes much easier than usual, because the IDE is very smart; for example by foreign keys it automatically sets the name of the key and the related columns. For me, it is so far the best experience by creating a basic database schema. Even with editable EER models was it slower...
+By the settings of your data source you can configure the SQL dialect of your database. After that, if you want to add stored procedures or triggers, you will have code completion which is favorable too. So I think JetBrains products speed up your work if you exactly know what you want, and how can you make it.
+</p><p>For any JetBrains IDE, there is a free license for open source projects. For enterprise usage there is a 30 days trial, after that, you can buy a personal or proprietary license which is very cheap compared to other products.
+</p>
+<h4><span class="mw-headline" id="Aqua_Data_Studio">Aqua Data Studio</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.aquafold.com/aquadatastudio">https://www.aquafold.com/aquadatastudio</a>
+</p><p>Java: Windows/Linux/macOS/Solaris
+</p><p>Aqua Data Studio is a management tool for the PostgreSQL relational database w/ administration capabilities and a database query tool. The visual administration features provide users the ability to browse and modify database structures, including schema objects, database storage and maintain database security. An integrated query tool allows users to quickly create, edit and execute SQL queries and scripts. Aqua Data Studio also provides an import and export tool to allow users to easily move data in and out of the PostgreSQL database in and from different data formats.
+</p>
+<h4><span class="mw-headline" id="Navicat">Navicat</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.navicat.com/en/products/navicat-for-postgresql">https://www.navicat.com/en/products/navicat-for-postgresql</a>
+</p><p>Windows, macOS, iOS, Linux
+</p><p>Navicat is a powerful PostgreSQL Database Server administration and development tool. It works with PostgreSQL 8.0 version or above and supports most of the PostgreSQL features including Trigger, Function, View, Manage User, and so on. It is also not only sophisticated enough for professional developers, but also easy to learn for new users. With its well-designed GUI, Navicat lets you quickly and easily create, organize, access and share information in a secure and easy way.
+</p><p>Version 15 introduces Smart Charts, a more powerful Data Transfer, Query Builder, New Data Modeling Tool, Dark Mode, and Native Linux support.
+</p>
+<h4><span class="mw-headline" id="Datazenit">Datazenit</span></h4>
+<p><a rel="nofollow" class="external free" href="https://datazenit.com/">https://datazenit.com/</a>
+</p><p>Windows, Mac OS X, Linux
+</p><p>Datazenit is a cross-platform PostgreSQL and MySQL GUI with data grid, schema builder and interactive charts.
+It also has query builder, raw query editor with auto-complete, team collaboration features like connection, query and chart sharing among team members.
+</p><p>Available packaged as a desktop app.
+</p>
+<h4><span class="mw-headline" id="QueryGlow">QueryGlow</span></h4>
+<p><a rel="nofollow" class="external free" href="https://queryglow.com/">https://queryglow.com/</a>
+</p><p>QueryGlow is a self-hosted, web-based database GUI that you deploy with a single Docker command. Your data never leaves your network. It supports PostgreSQL, MySQL, MariaDB, SQLite, CockroachDB, and TimescaleDB through a unified interface.
+</p><p>Features:
+</p>
+<ul><li>AI SQL Generation — type plain English, get production-ready SQL (bring your own API key)</li>
+<li>Schema-aware SQL autocomplete — context-aware suggestions for tables, columns, and joins</li>
+<li>Visual EXPLAIN Analyzer with color-coded query plans and index suggestions</li>
+<li>Safe Mode — blocks DROP TABLE, DELETE without WHERE, and other destructive queries</li>
+<li>SSH tunnel support and AES-256-GCM encryption for stored credentials</li>
+<li>CSV import/export with formula protection</li>
+<li>Saved query libraries and automatic query history</li>
+<li>Zero telemetry, zero external data transmission</li></ul>
+<p>Commercial, $79 one-time payment. Unlimited users and servers.
+</p><p><a rel="nofollow" class="external text" href="https://demo.queryglow.com/">Live Demo</a>
+</p><p><br />
+</p>
+<h4><span class="mw-headline" id="Quest_Toad_Edge">Quest Toad Edge</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.quest.com/products/toad-edge/">https://www.quest.com/products/toad-edge/</a>
+</p><p>Windows &amp; Mac OS X
+</p><p>PostgreSQL, MySQL and MariaDB support.
+</p>
+<ul><li>Object and user management</li>
+<li>Code quality checks</li>
+<li>Database devops: Jenkins plug-in</li>
+<li>SQL query monitor</li>
+<li>Shema compare and sync</li>
+<li>Advanced JSON editor</li>
+<li>SQL worksheet</li>
+<li>Import/Export</li>
+<li>Database snapshot</li>
+<li>24/7 support</li></ul>
+<h4><span class="mw-headline" id="Kangaroo">Kangaroo</span></h4>
+<p><a rel="nofollow" class="external free" href="https://dbkangaroo.github.io/">https://dbkangaroo.github.io/</a>
+</p><p>Supports SQLite 3.x, MySQL 8.0, MariaDB 10, PostgreSQL 11.
+Query, Editing, Designer, Export+Import = Full support. Hint, modeling and DB sync are on the roadmap.
+Windows, Linux, MacOS X
+</p>
+<h4><span class="mw-headline" id="DbSchema">DbSchema</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.dbschema.com/">https://www.dbschema.com/</a>
+</p><p>windows/linux/OS X
+</p><p>A visual PostgreSQL designer and GUI client, featuring diagrams, schema design in a team, deployment on multiple databases, HTML5 documentation, and more.
+</p>
+<ul><li>The schema structure is saved to a model file, which can be deployed on other databases or shared in a team</li>
+<li>HTML5 documentation with the diagram vector image</li>
+<li>Relational Data Explorer, with related data views from multiple tables</li>
+<li>Visual Query Builder</li>
+<li>Virtual foreign keys</li>
+<li>SQL Editor featuring text-autocompletion</li>
+<li>Random Data Generator, Data Loader, CSV Editor</li>
+<li>Support for multiple databases</li></ul>
+<p>DbSchema has a free and Pro version, which you can evaluate for 30 days.
+</p>
+<h4><span id="WebDB_.28free.29"></span><span class="mw-headline" id="WebDB_(free)">WebDB (free)</span></h4>
+<p><a rel="nofollow" class="external free" href="https://webdb.app">https://webdb.app</a>
+</p><p>Free and efficient database IDE built with exclusive features like
+</p>
+<ul><li>Easy Server Connection</li>
+<li>ERD Generator</li>
+<li>Intelligent data generator</li>
+<li>IA integration</li>
+<li>NoSQL structure inferring/editor</li></ul>
+<p>And Other features at the top of the market
+</p>
+<ul><li>Many databases supported (MySQL, Postgre, MongoDB, etc)</li>
+<li>Powerful queries editor</li></ul>
+<p>Available on docker and all popular platform/arch
+</p>
+<h2><span class="mw-headline" id="macOS_GUI_Clients">macOS GUI Clients</span></h2>
+<p>Clients compatible with only OS X.
+</p>
+<h3><span class="mw-headline" id="Open_Source_and_Completely_Free_Software">Open Source and Completely Free Software</span></h3>
+<p>(empty list)
+</p>
+<h3><span class="mw-headline" id="Proprietary_2">Proprietary</span></h3>
+<p>Some of these have a "free" tier (typically somewhat crippled).  Some are fully free.
+</p>
+<h4><span class="mw-headline" id="Paul">Paul</span></h4>
+<p><a rel="nofollow" class="external free" href="https://guillim.github.io/products/paul">https://guillim.github.io/products/paul</a>
+</p><p>Free, AI-first PostgreSQL client for macOS. Opens in 2 seconds, read-only by default. Works out of the box for anyone who is not a DBA expert.
+</p>
+<ul><li>100% free native macOS app</li>
+<li>Most Simple interface</li>
+<li>Edit mode protected in the settings</li>
+<li>Agent chats to let LLMs do the work</li></ul>
+<h4><span class="mw-headline" id="SQLPro_for_Postgres">SQLPro for Postgres</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.macpostgresclient.com/SQLProPostgres">http://www.macpostgresclient.com/SQLProPostgres</a>
+</p><p>macOS 10.8 and above
+</p><p>Features:
+</p>
+<ul><li>100% native OS X app with a clean and simple to use interface.</li>
+<li>Query editor with syntax highlighting and autocomplete.</li>
+<li>Support for multiple result set execution.</li>
+<li>History feature, displaying your last ten executed queries.</li>
+<li>Primary key detection for inline result set modifications.</li>
+<li>Custom theme support allowing developers to work with style.</li></ul>
+<h4><span class="mw-headline" id="TablePlus">TablePlus</span></h4>
+<p><a rel="nofollow" class="external free" href="https://tableplus.com/">https://tableplus.com/</a>
+</p><p>A modern, native tool with an elegant UI that allows you to simultaneously manage multiple databases, including PostgreSQL. Available on macOS, Windows, and iOS.
+</p>
+<ul><li>True native built.</li></ul>
+<ul><li>Workspace supports multiple tabs, multiple windows</li></ul>
+<ul><li>Powerful SQL editor with full features: auto syntax highlight, auto-suggestion, split pane, favorite and history.</li></ul>
+<ul><li>Data Filter &amp; Sorting, import &amp; export</li></ul>
+<ul><li>Full-dark theme &amp; modern shortcut</li></ul>
+<p>With plugin system, you can be able to write your own new features to work with database per your needs (export charts, pretty json…).
+</p>
+<h4><span class="mw-headline" id="Postico">Postico</span></h4>
+<p><a rel="nofollow" class="external free" href="https://eggerapps.at/postico/">https://eggerapps.at/postico/</a>
+</p><p>A nice native client by the developers of <a rel="nofollow" class="external text" href="http://postgresapp.com">Postgres.app</a>.  A free "demo" version of an inexpensive proprietary app, but it has very reasonable limits ("only one tab") and no time limit.
+</p><p>Postico is a fully native Mac app for connecting to your PostgreSQL server. It supports encrypted connections via SSL and SSH to PostgreSQL 8.0 and later, including Amazon Redshift.
+</p><p>Postico has a powerful table content editor with in-cell editing and form-based row editing in a sidebar. You can quickly filter tables by keywords or even complex SQL expressions.
+</p><p>There's also a table structure editor for editing columns, types, default values, foreign keys, check constraints etc.
+</p><p>Finally, there's a convenient SQL Query Editor with support for query history and syntax highlighting. It also has convenience features like auto-indent and shortcuts for comment line etc.
+</p>
+<h4><span id="PSequel_.28free.29"></span><span class="mw-headline" id="PSequel_(free)">PSequel (free)</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.psequel.com/">http://www.psequel.com/</a>
+</p><p>OS X Yosemite+, free not crippled.  Last update: 2018.  Seems abandoned.  Native OS X
+</p>
+<h4><span class="mw-headline" id="SEQUEL_for_PostgreSQL">SEQUEL for PostgreSQL</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.sequel.tech">http://www.sequel.tech</a>
+</p><p>SEQUEL for PostgreSQL is a professional DB administration and management tool, with extremely intuitive and feature-rich GUI that makes it the best assistant tool for developers and admins. SEQUEL is lightweight, fast and powerful that it can significantly simplify the DB management process. For those who cannot live without a CLI, SEQUEL offers a powerful Query Editor with syntax highlight, autocomplete and a Console log view that is always visible, so you can monitor the communication with your databases. It includes:
+</p>
+<ul><li>Database management forms for Schema, Table, Index, Foreign key, Trigger, Rule, Sequence, Collation, Domain, Enum type, Tablespace and Language objects with full parameters support</li>
+<li>Assistant info views for Object information, Actions, Help, and Documentation</li>
+<li>Jump bar for quick objects selection and navigation</li>
+<li>Taskbar with multi-task monitoring support</li>
+<li>Console log view</li>
+<li>Syntax highlight, autocomplete, current and selection query execution and explain, line numbering and working statement detection</li>
+<li>Direct editing in the results view, query results explanation</li>
+<li>Powerful Field editor</li>
+<li>Transaction based database updates</li>
+<li>Code preview and Content editing</li></ul>
+<h2><span class="mw-headline" id="Windows_GUI_Clients">Windows GUI Clients</span></h2>
+<p>Clients compatible with only windows.
+</p>
+<h3><span id="Open_Source_.2F_Free_Software"></span><span class="mw-headline" id="Open_Source_/_Free_Software">Open Source / Free Software</span></h3>
+<h4><span class="mw-headline" id="HeidiSQL">HeidiSQL</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.heidisql.com/">https://www.heidisql.com/</a>
+<a rel="nofollow" class="external free" href="https://github.com/HeidiSQL/HeidiSQL">https://github.com/HeidiSQL/HeidiSQL</a>
+</p><p>HeidiSQL is a lightweight Windows desktop application with support for PostgreSQL since 2015. Also supports MySQL, MariaDB, MS SQL Server and SQLite. HeidiSQL focuses on simple structure editing and grid based data editing, but also has some advanced features:
+</p>
+<ul><li>Session management with folder support</li>
+<li>Multiple connections per window</li>
+<li>Browse through databases and tables, views, procedures and triggers</li>
+<li>Edit columns, indexes and foreign keys of tables</li>
+<li>Provides special editors for fields with various data types: text, date/time, enum, set, binary.</li>
+<li>Query tabs for running custom queries</li>
+<li>Completion proposal</li>
+<li>Displays multiple results per tab</li>
+<li>Keeps a history of executed queries</li>
+<li>SQL export directly to .sql file, another database, or to a different server</li>
+<li>Quick grid export for Excel, CSV, HTML, XML, LaTeX, Wiki markup, PHP, Markdown, JSON</li>
+<li>Search for text in a database, or on a whole server</li>
+<li>Import textfiles</li>
+<li>Reformat custom SQL queries</li></ul>
+<h3><span class="mw-headline" id="Proprietary_3">Proprietary</span></h3>
+<h4><span class="mw-headline" id="dbForge_Studio_for_PostgreSQL">dbForge Studio for PostgreSQL</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.devart.com/dbforge/postgresql/studio/download.html">https://www.devart.com/dbforge/postgresql/studio/download.html</a>
+</p><p><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/studio/">dbForge Studio for PostgreSQL</a> is all-in-one IDE designed for effective database development and management. The tasks that can be handled with its help include completion-aided SQL coding, comparison and synchronization of databases, data management, data analysis and reporting, query optimization, and test data generation.
+</p><p><b>Key features:</b>
+</p>
+<ul><li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/studio/postgresql-formatter.html">SQL Development</a>: Increase the speed and quality of your coding with context-aware SQL completion, formatting, and syntax validation.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/studio/database-synchronization.html">Database Comparison</a>: Compare database structures and table data; generate scripts to synchronize source and target databases.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/studio/data-editor.html">Data Management</a>: View, edit, group, sort, filter, import, and export your data with convenience.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/studio/data-generator.html">Test Data Generation</a>: Populate your databases with newly generated test data in a matter of moments.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/studio/query-profiler.html">Query Profiling</a>: Identify and eliminate performance bottlenecks in slow queries.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/studio/postgresql-reporting-tools.html">Data Analysis &amp; Reporting</a>: Create pivot tables, visualize data trends and dependencies, and generate visual data reports.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/studio/getting-started.html#start-using">Availability</a>: Run dbForge Studio on Windows, Linux, or macOS (the latter two options are enabled via a compatibility solution called CodeWeavers CrossOver).</li></ul>
+<h4><span class="mw-headline" id="Database_Workbench">Database Workbench</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.upscene.com/database_workbench/">https://www.upscene.com/database_workbench/</a>
+</p><p><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/database-development-tool-for-postgresql/postgresql">Database Workbench</a> is a complete database development GUI tool for PostgreSQL, from design, to implementation to testing and debugging. It comes with numerous productivity tools and is available in 3 different editions to suit your needs.
+</p><p><b>Key features</b>:
+</p>
+<ul><li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/database_design">Database Design</a>: design your database using a conceptual entity-relationship diagram, of create a physical design directly.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/object_editors">Database Development</a>: create database objects using the GUI editors, browse existing databases, create queries using the Visual Query Builder, use the powerful code editors.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/stored_procedure_debugging">Testing &amp; Debugging</a>: create test data, profile queries or debug stored procedures and triggers.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/data_editing#blobs">Data Operations</a>: view and edit data, view binary data like images, PDFs and documents. Import and export data via files or transfer directly from one database to another.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/data_compare">Data Compare</a>: compare data from one database to another and create synchronization scripts.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/reporting">Reporting</a>: create custom reports, including images, bar and QR codes, and pivot tables.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/database_migration">Database Migration</a>: migrate database meta data from one system to another, compare meta data between databases.</li></ul>
+<p>Database Workbench supports the following database systems:
+</p>
+<ul><li>PostgreSQL</li>
+<li>MySQL and MariaDB</li>
+<li>SQLite</li>
+<li>Firebird</li>
+<li>SQL Server</li>
+<li>Oracle</li>
+<li>InterBase</li>
+<li>NexusDB</li></ul>
+<p>Works on Linux via Wine as well.
+</p>
+<h4><span class="mw-headline" id="Database_Tour_Pro">Database Tour Pro</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.databasetour.net">https://www.databasetour.net</a>
+</p><p>Database Tour Pro is a database tool with built-in report builder for Windows. It works with different types of relational databases including PostgreSQL.
+</p><p>Key features:
+</p>
+<ul><li>Creating tables.</li>
+<li>Viewing and editing data.</li>
+<li>Several ways to print data.</li>
+<li>Built-in report engine and visual report designer with templates, expressions, preview etc.</li>
+<li>Expression builder for report and export expressions.</li>
+<li>Building and executing SQL queries. Support for execution of multi statement SQL scripts. Syntax highlighting in SQL editor. Support for parameterized SQL queries.</li>
+<li>Enhanced database grids, which allow to view and manipulate the data in the most convenient way, including sorting by clicking column header, changing row heights, resizing columns etc.</li>
+<li>Command line support for executing queries, opening tables, export-import operations, loading reports etc. with logging the performed operations.</li>
+<li>Searching and replacing text in database with ability to choose fields, record range etc.</li>
+<li>Importing data to table from another table or a query.</li>
+<li>Exporting data from open table or query to file(s) like text, CSV, HTML, XLSX, XML, RTF, DBF or to another relational database of any supported type (i.e. ODBC, PostgreSQL, Oracle, SQL Server, dBase, Interbase, SQLite, MS Access, Firebird etc).</li>
+<li>Copying data to clipboard.</li>
+<li>Viewing and editing Blob data, such as large text and graphics.</li>
+<li>Tools for editing text fields (trimming, changing case of symbols, replacing text).</li>
+<li>Customized data view (font, background).</li>
+<li>Conditional formatting data in database grids and reports.</li>
+<li>Ability to control transactions.</li></ul>
+<h4><span class="mw-headline" id="SQLGate">SQLGate</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.sqlgate.com/product/download">https://www.sqlgate.com/product/download</a>
+</p><p>Windows
+</p><p>SQLGate is a simple but powerful IDE for multiple Database including PostgreSQL.
+</p>
+<ul><li>Powerful Data Grid and ERD</li>
+<li>Multiple SQL Execution</li>
+<li>Auto-Complete</li>
+<li>Intuitive UI/UX</li>
+<li>Multiple Themes</li>
+<li>Fast processing speed</li></ul>
+<p>Use SQLGate to maximize your productivity!
+</p>
+<h4><span class="mw-headline" id="Datazenit_2">Datazenit</span></h4>
+<p><a rel="nofollow" class="external free" href="https://datazenit.com/">https://datazenit.com/</a>
+</p><p>Java
+</p><p>Datazenit is a cross-platform PostgreSQL and MySQL GUI with data grid, schema builder and interactive charts.
+It also has query builder, raw query editor with auto-complete, team collaboration features like connection, query and chart sharing among team members.
+</p><p>Web-based, but available packaged as a desktop app (linux, Mac, windows)
+</p>
+<h4><span class="mw-headline" id="EMS_SQL_Manager_for_PostgreSQL_Freeware">EMS SQL Manager for PostgreSQL Freeware</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.sqlmanager.net/en/tools/free">http://www.sqlmanager.net/en/tools/free</a>
+</p><p>EMS SQL Manager for PostgreSQL Freeware (EMS SQL Manager Lite for PostgreSQL) is an excellent and easy-to-use freeware graphical tool for PostgreSQL database administration. It has the minimal required set of tools for those users who are new to PostgreSQL server and need only its basic functionality.
+EMS SQL Manager for PostgreSQL Freeware allows you to work with servers, databases and schemas, view, edit, search, group, sort and filter any data stored in a database, create and execute SQL queries with powerful SQL editor, handle multiple selected objects at a time and much more.
+</p><p>There is a proprietary version available with significantly more functionality.
+</p>
+<h4><span class="mw-headline" id="PostgreSQL_Maestro">PostgreSQL Maestro</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.sqlmaestro.com/products/postgresql/maestro/">https://www.sqlmaestro.com/products/postgresql/maestro/</a>
+</p><p>Allows you to create, edit, copy, drop and dump database objects easy and fast. You can also design your database as ER diagram, build queries visually, execute SQL queries and scripts, debug PL/pgSQL functions, view and edit data including BLOBs, represent data as diagrams, export and import data to/from most popular file formats, analyze your data summarized into multidimensional views and hierarchies (OLAP cubes), manage PostgreSQL roles, users, groups and privileges, and use a lot of other admin tools designed for making your work with PostgreSQL database server comfortable and efficient.
+</p>
+<h4><span class="mw-headline" id="Nucleon_Database_Master">Nucleon Database Master</span></h4>
+<p><a rel="nofollow" class="external free" href="http://nucleonsoftware.com/products/database-master">http://nucleonsoftware.com/products/database-master</a>
+</p><p>Nucleon Database Master is a modern, powerful, intuitive, easy to use and all in one PostgreSQL MongoDB, Oracle, DB2, Informix, Ingres, SQL Server, SQL Azure, MySQL, FireBird, SQLite client application with a consistent interface that simplifies managing, querying, editing, visualizing, designing and reporting relational and schema-free (NoSQL) database systems. You can connect any database system via ODBC and OleDB connections.Using Database Master, you can execute SQL, LINQ, JSON queries or you can create, edit and delete all database objects such as tables, views, procedures, columns, indexes, collections, and triggers. You can execute SQL queries and scripts, view and edit table data including BLOBs (Image, Text or any file), represent tables and its relations as an ER(Entity Relationship) diagram.
+</p>
+<h4><span class="mw-headline" id="SQLPro">SQLPro</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.vive.net/products/sqlpro.htm">http://www.vive.net/products/sqlpro.htm</a>
+</p><p>SqlPro is an easy to use database GUI tool for six popular databases (Oracle, MySQL, PostgreSQL, SQL Server, SQLite, and Access). One IDE makes database administration and development faster and error free.
+SQLPro Key Features: color-coding of the SQL, drag-and-drop of objects into the editor pane to save you from typing their names, retrieval of SQL code for things like stored procedures and triggers from the underlying database, and one-click creation of SELECT and INSERT statements. You can open, save and print SQL scripts.
+SQLPro uses native drivers to connect to the databases (no ODBC or third party engines to install).
+</p>
+<h4><span class="mw-headline" id="SQL_Data_Analysis">SQL Data Analysis</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.yohz.com/sda_details.htm">https://www.yohz.com/sda_details.htm</a>
+</p><p>Windows
+</p><p>SQL Data Analysis is a business intelligence tool that helps you see and understand your PostgreSQL data.
+</p>
+<ul><li>Connect to your PostgreSQL database, run your query, and visualize your data in seconds.</li>
+<li>Analyze your data with intuitive drag &amp; drop interface.  No programming, just insights.</li>
+<li>Cross database queries allow you to join a PostgreSQL data set with another database's data set (SQL Server, Oracle, MySQL, etc).</li>
+<li>Flexible layouts allow you to combine multiple data views to best visualize your data.</li>
+<li>Share and export your discoveries and insights to PDF, Excel, and HTML files.</li>
+<li>Multi database engine support - connect to SQL Server, Oracle, MySQL, MariaDB, SQLite, Access, and any ODBC-supported database</li></ul>
+<p>SQL Data Analysis helps you transform data into actionable insights.  Free trial available at <a rel="nofollow" class="external free" href="https://www.yohz.com/sda_details.htm">https://www.yohz.com/sda_details.htm</a>
+</p>
+<h2><span class="mw-headline" id="Web_Clients">Web Clients</span></h2>
+<p>Web clients run as a server on your desktop and you connect to them via a web browser.  This also allows things like coworkers to connect as well.  You can run SQL against servers and back the results (in your browser).
+</p>
+<h3><span class="mw-headline" id="Open_Source_2">Open Source</span></h3>
+<p>These are open source and free:
+</p>
+<h4><span class="mw-headline" id="phpPgAdmin">phpPgAdmin</span></h4>
+<p>phpPgAdmin is a web-based administration tool for PostgreSQL. It is perfect for PostgreSQL DBAs, newbies, and hosting services.
+</p><p><a rel="nofollow" class="external free" href="http://phppgadmin.sourceforge.net/doku.php">http://phppgadmin.sourceforge.net/doku.php</a>
+</p>
+<h4><span class="mw-headline" id="franchise">franchise</span></h4>
+<p><a rel="nofollow" class="external free" href="https://franchise.cloud/">https://franchise.cloud/</a>
+</p><p>Web client, either hosted (free) or running locally, connects to a local postgresql instance via a small bridge application.
+</p><p>Can share the interface with others, rather like sqlfiddle.com, but accessing your database.
+</p>
+<h4><span class="mw-headline" id="pgAdmin_4_2">pgAdmin 4</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.pgadmin.org/">http://www.pgadmin.org/</a>
+</p><p>pgAdmin 4 is a ground-up rewrite of pgAdmin 3. Rather than being a native application it's primarily a web application that's also packaged as desktop web shell.
+</p>
+<h4><span class="mw-headline" id="Adminer">Adminer</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.adminer.org">http://www.adminer.org</a>
+</p><p>PHP
+</p><p>Adminer (formerly phpMinAdmin) is a full-featured database management tool written in PHP. A single PHP file ready to deploy to the target server. Adminer is available for MySQL, PostgreSQL, SQLite, MS SQL and Oracle.
+</p>
+<h4><span class="mw-headline" id="OmniDB">OmniDB</span></h4>
+<p><a rel="nofollow" class="external free" href="https://github.com/OmniDB/OmniDB">https://github.com/OmniDB/OmniDB</a>
+</p><p>Django/Python on Linux, Windows and macOS.
+</p><p>Open source full-featured tool for database management. Currently supports PostgreSQL (9.3 - 13), Oracle (11g - 18c), MySQL (5.6 - 8.0) and MariaDB (10.1 - 10.3). More RDBMS support coming soon, including the ability of converting databases from any supported RDBMS to PostgreSQL and back.
+</p>
+<h4><span class="mw-headline" id="SIDU">SIDU</span></h4>
+<p><a rel="nofollow" class="external free" href="http://topnew.net/sidu/">http://topnew.net/sidu/</a>
+</p><p>PHP
+</p><p>Schema and data browser and editor.
+</p>
+<h4><span class="mw-headline" id="Hisha">Hisha</span></h4>
+<p><a rel="nofollow" class="external free" href="https://github.com/xshogi/hisha">https://github.com/xshogi/hisha</a>
+</p><p>Node.js
+</p><p>Hisha is cross-platform and web-based Postgre SQL Database client inspired by Adminium. You can edit and save result by clicking the cell you want and press enter when you finish.
+</p>
+<h4><span class="mw-headline" id="Tadpole_DB_Hub">Tadpole DB Hub</span></h4>
+<p><a rel="nofollow" class="external free" href="https://github.com/hangum/TadpoleForDBTools/wiki">https://github.com/hangum/TadpoleForDBTools/wiki</a>
+</p><p>Tadpole DB Hub is Unified infrastructure tool, a various environment based interface for managing Apache Hive, Amazon RDS, CUBRID, MariaDB, MySQL, Oracle, SQLite, MSSQL, PostgreSQL and MongoDB databases. It enables you to handle typical DB over the World Wide Web.
+</p><p>Features:
+</p>
+<ul><li>Intuitive web interface (Safari, Chrome, IE 10, Firefox)</li>
+<li>User Management (Admin, Manager, User)</li>
+<li>Select, Insert, Update, Delete</li>
+<li>Download query result</li>
+<li>SQL Syntax Highlighting</li>
+<li>SQL Formatting</li>
+<li>SQL Statement &lt;-&gt; Java, PHP String Literal Each Convert</li>
+<li>SQL Assist</li>
+<li>Execute SQL Statement</li>
+<li>SQL Result Set to CSV</li>
+<li>SQL History And Export text</li>
+<li>Generate SQL Statement (Select, Insert, Update, Delete, Table, View, Index, Procedure, Function, Trigger)</li>
+<li>Generate ER Diagram (Auto Layout)</li></ul>
+<h3><span class="mw-headline" id="Proprietary_4">Proprietary</span></h3>
+<p>Some may be pay, some may have free demo.
+</p>
+<h4><span class="mw-headline" id="Five">Five</span></h4>
+<p><a rel="nofollow" class="external free" href="https://five.co/">https://five.co/</a>
+</p><p>Rapidly develop and deliver modern business software to internal or external users. 
+</p><p>Five is free to use. Develop and test applications locally free of charge. Only subscribe when you build something production worthy.
+</p><p>Features:
+</p>
+<ul><li>Store, retrieve and process data from any data source (such as a PostgreSQL DB)</li>
+<li>Rapidly implement business logic using SQL, JavaScript or TypeScript</li>
+<li>Cut down the time you spent on front-end development</li>
+<li>Scalable, secure and affordable: deploy apps in one click</li>
+<li>Keep your data secure on Five’s managed infrastructure</li>
+<li>Build password-protected multi-user applications</li>
+<li>Useful developer tools to accelerate your development</li></ul>
+<p>Free download available for Windows &amp; MacOS
+</p>
+<h4><span class="mw-headline" id="TeamPostgreSQL">TeamPostgreSQL</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.teampostgresql.com">http://www.teampostgresql.com</a>
+</p><p>browser-based, webserver included
+</p><p>AJAX/JavaScript-powered web interface for PostgreSQL administration. Browse, maintain and create data and database objects from anywhere, in the web browser. Supports SSH for both the web interface and the database connections. Rich interface with tabbed SQL editor with auto-completion, inline row-editing widgets, click-through foreign key navigation between rows and tables, 'favorites' management for commonly used scripts, and more.
+</p><p>Installers available for Windows, Mac and Linux, alternatively download a simple cross-platform archive that runs anywhere with simple script.
+Wasn't clear where source code is.
+</p>
+<h4><span class="mw-headline" id="JackDB">JackDB</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.jackdb.com/">http://www.jackdb.com/</a>
+</p><p>Html5 Web Browser (Linux/Mac OS X/Windows)
+</p><p>JackDB is a database client that runs entirely in your web browser. There's no software to install locally so you can use it on Mac OS X, Linux, and Windows and it works on all major modern browsers (eg. Chrome, Firefox, IE, Safari, and Opera). It supports connecting to PostgreSQL, as well as MySQL, Oracle, and SQL Server databases.
+</p><p>Features:
+</p>
+<ul><li>Html5 interface with no client installation</li>
+<li>Query editor with syntax highlighting</li>
+<li>Scrolling result sets</li>
+<li>Schema/Object browser</li>
+<li>SSL connections with certificate pinning</li>
+<li>Eliminates password sharing</li>
+<li>Two-factor authentication</li>
+<li>BLOB display (images and Html5 audio/video)</li></ul>
+<h4><span class="mw-headline" id="DBHawk">DBHawk</span></h4>
+<p><a rel="nofollow" class="external free" href="http://www.datasparc.com/">http://www.datasparc.com/</a>
+</p><p>Web Browser (Linux/Mac OS X/Windows)
+</p><p>DBHawk is a web based SQL tool and reporting software designed for PostgreSQL, Oracle, SQL Server and other databases. Its easy to deploy and use.
+</p><p>Features:
+</p>
+<ul><li>Web based interface with no client installation</li>
+<li>Advanced Query editor with syntax highlighting and multi tabs results</li>
+<li>Online visual query builder</li>
+<li>Online SQL Report Builder</li>
+<li>Online SQL Job Scheduler</li>
+<li>Export results to html, csv, pdf, google docs, amazon s3</li>
+<li>SQL Auditing and Security</li>
+<li>Schema/Object browser</li>
+<li>SQL and data snippet sharing</li>
+<li>Blob data viewer and editor</li></ul>
+<h4><span class="mw-headline" id="Datazenit_3">Datazenit</span></h4>
+<p><a rel="nofollow" class="external free" href="https://datazenit.com/">https://datazenit.com/</a>
+</p><p>Datazenit is a cross-platform PostgreSQL and MySQL GUI with data grid, schema builder and interactive charts.
+It also has query builder, raw query editor with auto-complete, team collaboration features like connection, query and chart sharing among team members.
+</p><p>Web-based, but available packaged as a desktop app (linux, Mac, windows)
+</p>
+<h2><span class="mw-headline" id="CLI_Clients">CLI Clients</span></h2>
+<h3><span id="Open_Source_.2F_Free_Software_2"></span><span class="mw-headline" id="Open_Source_/_Free_Software_2">Open Source / Free Software</span></h3>
+<h4><span class="mw-headline" id="psql">psql</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.postgresql.org/docs/current/static/app-psql.html">https://www.postgresql.org/docs/current/static/app-psql.html</a>
+</p><p>The standard command line client, maintained by the postgresql development group and typically distributed as part of the server installation.
+</p>
+<h4><span class="mw-headline" id="pgcli">pgcli</span></h4>
+<p><a rel="nofollow" class="external free" href="https://www.pgcli.com">https://www.pgcli.com</a>
+</p><p>A command line client with syntax highlighting and pop-up command completion.
+</p>
+<h4><span class="mw-headline" id="jaqy">jaqy</span></h4>
+<p><a rel="nofollow" class="external free" href="https://teradata.github.io/jaqy/">https://teradata.github.io/jaqy/</a>
+</p><p>A universal JDBC command line client with lots of features.  It is not specific to PostgreSQL, but it is pre-configured to handle PostgreSQL servers.  Requires PostgreSQL JDBC driver.
+</p><p><br />
+</p>
+<h2><span class="mw-headline" id="Other_Resources">Other Resources</span></h2>
+<p><a href="/wiki/Community_Guide_to_PostgreSQL_GUI_Tools" title="Community Guide to PostgreSQL GUI Tools">Community Guide to PostgreSQL GUI Tools</a> - Includes many miscellaneous non-client tools, such as bulk loaders, schema diff, schema design, etc.
+</p><p><a href="/wiki/Design_Tools" title="Design Tools">Design Tools</a> - tools for designing database schemas
+</p><p><a href="/wiki/List_of_drivers" title="List of drivers">List of drivers</a>
+</p><p>Old possibly abandoned projects, see <a href="/wiki/Community_Guide_to_PostgreSQL_Tools_Abandoned" title="Community Guide to PostgreSQL Tools Abandoned">Community_Guide_to_PostgreSQL_Tools_Abandoned</a>
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408133928
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.143 seconds
+Real time usage: 0.163 seconds
+Preprocessor visited node count: 234/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:3438-0!canonical and timestamp 20260408133928 and revision id 43141.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=PostgreSQL_Clients&amp;oldid=43141">https://wiki.postgresql.org/index.php?title=PostgreSQL_Clients&amp;oldid=43141</a>"</div></div>
+				<div id="catlinks" class="catlinks catlinks-allhidden" data-mw="interface"></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/PostgreSQL_Clients" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:PostgreSQL_Clients&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/PostgreSQL_Clients">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=PostgreSQL_Clients&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=PostgreSQL_Clients&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/PostgreSQL_Clients" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:PostgreSQL_Clients&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=PostgreSQL+Clients" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/PostgreSQL_Clients" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/PostgreSQL_Clients" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=PostgreSQL_Clients&amp;oldid=43141" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=PostgreSQL_Clients&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 2 April 2026, at 15:02.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.143","walltime":"0.163","ppvisitednodes":{"value":234,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260408133928","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":586});});</script>
+</body>
+</html>

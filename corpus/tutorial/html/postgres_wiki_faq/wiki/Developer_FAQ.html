@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Developer FAQ - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"c626c55fddd86a344c4efe27","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Developer_FAQ","wgTitle":"Developer FAQ","wgCurRevisionId":41199,"wgRevisionId":41199,"wgArticleId":291,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["FAQ"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Developer_FAQ","wgRelevantArticleId":291,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Developer_FAQ rootpage-Developer_FAQ skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Developer FAQ</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Getting_Involved"><span class="tocnumber">1</span> <span class="toctext">Getting Involved</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#How_do_I_get_involved_in_PostgreSQL_development?"><span class="tocnumber">1.1</span> <span class="toctext">How do I get involved in PostgreSQL development?</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#How_do_I_download/update_the_current_source_tree?"><span class="tocnumber">1.2</span> <span class="toctext">How do I download/update the current source tree?</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#What_development_environment_is_required_to_develop_code?"><span class="tocnumber">1.3</span> <span class="toctext">What development environment is required to develop code?</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#How_do_I_get_involved_in_PostgreSQL_web_site_development?"><span class="tocnumber">1.4</span> <span class="toctext">How do I get involved in PostgreSQL web site development?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-6"><a href="#Development_Tools_and_Help"><span class="tocnumber">2</span> <span class="toctext">Development Tools and Help</span></a>
+<ul>
+<li class="toclevel-2 tocsection-7"><a href="#How_is_the_source_code_organized?"><span class="tocnumber">2.1</span> <span class="toctext">How is the source code organized?</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#What_information_is_available_to_learn_PostgreSQL_internals?"><span class="tocnumber">2.2</span> <span class="toctext">What information is available to learn PostgreSQL internals?</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#What_tools_are_available_to_learn_about/inspect_the_PostgreSQL_on-disk_format?"><span class="tocnumber">2.3</span> <span class="toctext">What tools are available to learn about/inspect the PostgreSQL on-disk format?</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#What_tools_are_available_for_developers?"><span class="tocnumber">2.4</span> <span class="toctext">What tools are available for developers?</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#What&#39;s_the_formatting_style_used_in_PostgreSQL_source_code?"><span class="tocnumber">2.5</span> <span class="toctext">What's the formatting style used in PostgreSQL source code?</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Is_there_a_diagram_of_the_system_catalogs_available?"><span class="tocnumber">2.6</span> <span class="toctext">Is there a diagram of the system catalogs available?</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#What_books_are_good_for_developers?"><span class="tocnumber">2.7</span> <span class="toctext">What books are good for developers?</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#What_is_configure_all_about?"><span class="tocnumber">2.8</span> <span class="toctext">What is configure all about?</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#How_do_I_add_a_new_port?"><span class="tocnumber">2.9</span> <span class="toctext">How do I add a new port?</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Why_don&#39;t_you_use_raw_devices,_async-I/O,_&lt;insert_your_favorite_wizz-bang_feature_here&gt;?"><span class="tocnumber">2.10</span> <span class="toctext">Why don't you use raw devices, async-I/O, &lt;insert your favorite wizz-bang feature here&gt;?</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#How_are_branches_managed?"><span class="tocnumber">2.11</span> <span class="toctext">How are branches managed?</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Where_can_I_get_a_copy_of_the_SQL_standards?"><span class="tocnumber">2.12</span> <span class="toctext">Where can I get a copy of the SQL standards?</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Are_there_known_deviations_from_the_SQL_Standard_in_PostgreSQL?"><span class="tocnumber">2.13</span> <span class="toctext">Are there known deviations from the SQL Standard in PostgreSQL?</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Where_can_I_get_technical_assistance?"><span class="tocnumber">2.14</span> <span class="toctext">Where can I get technical assistance?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-21"><a href="#Development_Process"><span class="tocnumber">3</span> <span class="toctext">Development Process</span></a>
+<ul>
+<li class="toclevel-2 tocsection-22"><a href="#What_do_I_do_after_choosing_an_item_to_work_on?"><span class="tocnumber">3.1</span> <span class="toctext">What do I do after choosing an item to work on?</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#How_do_I_test_my_changes?"><span class="tocnumber">3.2</span> <span class="toctext">How do I test my changes?</span></a>
+<ul>
+<li class="toclevel-3 tocsection-24"><a href="#Basic_system_testing"><span class="tocnumber">3.2.1</span> <span class="toctext">Basic system testing</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#Runtime_environment"><span class="tocnumber">3.2.2</span> <span class="toctext">Runtime environment</span></a></li>
+<li class="toclevel-3 tocsection-26"><a href="#Regression_test_suite"><span class="tocnumber">3.2.3</span> <span class="toctext">Regression test suite</span></a></li>
+<li class="toclevel-3 tocsection-27"><a href="#Isolation_tests"><span class="tocnumber">3.2.4</span> <span class="toctext">Isolation tests</span></a></li>
+<li class="toclevel-3 tocsection-28"><a href="#Valgrind"><span class="tocnumber">3.2.5</span> <span class="toctext">Valgrind</span></a></li>
+<li class="toclevel-3 tocsection-29"><a href="#Other_run_time_testing"><span class="tocnumber">3.2.6</span> <span class="toctext">Other run time testing</span></a></li>
+<li class="toclevel-3 tocsection-30"><a href="#Continuous_Integration"><span class="tocnumber">3.2.7</span> <span class="toctext">Continuous Integration</span></a></li>
+<li class="toclevel-3 tocsection-31"><a href="#What_about_unit_testing,_static_analysis,_model_checking...?"><span class="tocnumber">3.2.8</span> <span class="toctext">What about unit testing, static analysis, model checking...?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-32"><a href="#I_have_developed_a_patch,_what_next?"><span class="tocnumber">3.3</span> <span class="toctext">I have developed a patch, what next?</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#What_happens_to_my_patch_once_it_is_submitted?"><span class="tocnumber">3.4</span> <span class="toctext">What happens to my patch once it is submitted?</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#How_do_I_help_with_reviewing_patches?"><span class="tocnumber">3.5</span> <span class="toctext">How do I help with reviewing patches?</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#Do_I_need_to_sign_a_copyright_assignment?"><span class="tocnumber">3.6</span> <span class="toctext">Do I need to sign a copyright assignment?</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#May_I_add_my_own_copyright_notice_where_appropriate?"><span class="tocnumber">3.7</span> <span class="toctext">May I add my own copyright notice where appropriate?</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#Doesn&#39;t_the_PostgreSQL_license_itself_require_to_keep_the_copyright_notice_intact?"><span class="tocnumber">3.8</span> <span class="toctext">Doesn't the PostgreSQL license itself require to keep the copyright notice intact?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-38"><a href="#Technical_Questions"><span class="tocnumber">4</span> <span class="toctext">Technical Questions</span></a>
+<ul>
+<li class="toclevel-2 tocsection-39"><a href="#How_do_I_efficiently_access_information_in_system_catalogs_from_the_backend_code?"><span class="tocnumber">4.1</span> <span class="toctext">How do I efficiently access information in system catalogs from the backend code?</span></a></li>
+<li class="toclevel-2 tocsection-40"><a href="#Why_are_table,_column,_type,_function,_view_names_sometimes_referenced_as_Name_or_NameData,_and_sometimes_as_char_*?"><span class="tocnumber">4.2</span> <span class="toctext">Why are table, column, type, function, view names sometimes referenced as Name or NameData, and sometimes as char *?</span></a></li>
+<li class="toclevel-2 tocsection-41"><a href="#Why_do_we_use_Node_and_List_to_make_data_structures?"><span class="tocnumber">4.3</span> <span class="toctext">Why do we use Node and List to make data structures?</span></a></li>
+<li class="toclevel-2 tocsection-42"><a href="#I_just_added_a_field_to_a_structure._What_else_should_I_do?"><span class="tocnumber">4.4</span> <span class="toctext">I just added a field to a structure. What else should I do?</span></a></li>
+<li class="toclevel-2 tocsection-43"><a href="#Why_do_we_use_palloc()_and_pfree()_to_allocate_memory?"><span class="tocnumber">4.5</span> <span class="toctext">Why do we use palloc() and pfree() to allocate memory?</span></a></li>
+<li class="toclevel-2 tocsection-44"><a href="#What_is_ereport()?"><span class="tocnumber">4.6</span> <span class="toctext">What is ereport()?</span></a></li>
+<li class="toclevel-2 tocsection-45"><a href="#What_is_CommandCounterIncrement()?"><span class="tocnumber">4.7</span> <span class="toctext">What is CommandCounterIncrement()?</span></a></li>
+<li class="toclevel-2 tocsection-46"><a href="#I_need_to_do_some_changes_to_query_parsing._Can_you_succinctly_explain_the_parser_files?"><span class="tocnumber">4.8</span> <span class="toctext">I need to do some changes to query parsing. Can you succinctly explain the parser files?</span></a></li>
+<li class="toclevel-2 tocsection-47"><a href="#I_get_shift/reduce_conflict_I_don&#39;t_know_how_to_deal_with"><span class="tocnumber">4.9</span> <span class="toctext">I get shift/reduce conflict I don't know how to deal with</span></a></li>
+<li class="toclevel-2 tocsection-48"><a href="#How_do_I_look_at_a_query_plan_or_parsed_query?"><span class="tocnumber">4.10</span> <span class="toctext">How do I look at a query plan or parsed query?</span></a></li>
+<li class="toclevel-2 tocsection-49"><a href="#What_debugging_features_are_available?"><span class="tocnumber">4.11</span> <span class="toctext">What debugging features are available?</span></a>
+<ul>
+<li class="toclevel-3 tocsection-50"><a href="#Compile-time"><span class="tocnumber">4.11.1</span> <span class="toctext">Compile-time</span></a></li>
+<li class="toclevel-3 tocsection-51"><a href="#Run-time"><span class="tocnumber">4.11.2</span> <span class="toctext">Run-time</span></a></li>
+<li class="toclevel-3 tocsection-52"><a href="#gdb"><span class="tocnumber">4.11.3</span> <span class="toctext">gdb</span></a>
+<ul>
+<li class="toclevel-4 tocsection-53"><a href="#Tools"><span class="tocnumber">4.11.3.1</span> <span class="toctext">Tools</span></a></li>
+<li class="toclevel-4 tocsection-54"><a href="#core_dumps"><span class="tocnumber">4.11.3.2</span> <span class="toctext">core dumps</span></a></li>
+</ul>
+</li>
+<li class="toclevel-3 tocsection-55"><a href="#rr_record_and_replay_debugger"><span class="tocnumber">4.11.4</span> <span class="toctext">rr record and replay debugger</span></a></li>
+<li class="toclevel-3 tocsection-56"><a href="#Standalone_backend"><span class="tocnumber">4.11.5</span> <span class="toctext">Standalone backend</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-57"><a href="#I_broke_initdb,_how_do_I_debug_it?"><span class="tocnumber">4.12</span> <span class="toctext">I broke initdb, how do I debug it?</span></a></li>
+<li class="toclevel-2 tocsection-58"><a href="#Profiling_to_analyse_performance,_CPU_use"><span class="tocnumber">4.13</span> <span class="toctext">Profiling to analyse performance, CPU use</span></a></li>
+<li class="toclevel-2 tocsection-59"><a href="#Examining_backend_memory_use"><span class="tocnumber">4.14</span> <span class="toctext">Examining backend memory use</span></a></li>
+<li class="toclevel-2 tocsection-60"><a href="#gdb/MSVC_tracepoints"><span class="tocnumber">4.15</span> <span class="toctext">gdb/MSVC tracepoints</span></a></li>
+<li class="toclevel-2 tocsection-61"><a href="#Why_are_my_variables_full_of_0x7f_bytes?"><span class="tocnumber">4.16</span> <span class="toctext">Why are my variables full of 0x7f bytes?</span></a></li>
+<li class="toclevel-2 tocsection-62"><a href="#How_do_I_stop_gdb_getting_interrupted_by_SIGUSR1_all_the_time?"><span class="tocnumber">4.17</span> <span class="toctext">How do I stop gdb getting interrupted by SIGUSR1 all the time?</span></a></li>
+<li class="toclevel-2 tocsection-63"><a href="#How_do_I_attach_gdb_and_set_a_breakpoint_in_a_background_worker_/_helper_proc?"><span class="tocnumber">4.18</span> <span class="toctext">How do I attach gdb and set a breakpoint in a background worker / helper proc?</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Getting_Involved">Getting Involved</span></h2>
+<h3><span id="How_do_I_get_involved_in_PostgreSQL_development.3F"></span><span class="mw-headline" id="How_do_I_get_involved_in_PostgreSQL_development?">How do I get involved in PostgreSQL development?</span></h3>
+<p>Download the code and have a look around. See <a href="#How_do_I_download.2Fupdate_the_current_source_tree.3F">downloading the source tree</a>.
+</p><p>Subscribe to and read the <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/">pgsql-hackers mailing list</a> (often termed "hackers"). This is where the major contributors and core members of the project discuss development.  This <a rel="nofollow" class="external text" href="https://www.crunchydata.com/blog/understanding-the-postgres-hackers-mailing-list">list</a> of commonly-used terms might be helpful.
+</p>
+<h3><span id="How_do_I_download.2Fupdate_the_current_source_tree.3F"></span><span class="mw-headline" id="How_do_I_download/update_the_current_source_tree?">How do I download/update the current source tree?</span></h3>
+<p>There are several ways to obtain the source tree. Occasional developers can just get the most recent source tree snapshot from <a rel="nofollow" class="external free" href="ftp://ftp.postgresql.org/pub/snapshot/">ftp://ftp.postgresql.org/pub/snapshot/</a>.
+</p><p>Regular developers might want to take advantage of anonymous access to our source code management system. The source tree is currently hosted in git. For details of how to obtain the source from git see <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/git.html">the documentation</a> and <a href="/wiki/Working_with_Git" title="Working with Git">Working with Git</a>.
+</p>
+<h3><span id="What_development_environment_is_required_to_develop_code.3F"></span><span class="mw-headline" id="What_development_environment_is_required_to_develop_code?">What development environment is required to develop code?</span></h3>
+<p>PostgreSQL is developed mostly in the C programming language.  The source code is targeted at most of the popular Unix platforms and the Windows environment (XP, Windows 2000, and up).
+</p><p>Most developers run a Unix-like operating system and use an open source tool chain with <a rel="nofollow" class="external text" href="http://gcc.gnu.org">GCC</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/make/make.html">GNU Make</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/gdb/gdb.html">GDB</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/autoconf/">Autoconf</a>, and so on.  If you have contributed to open source software before, you will probably be familiar with these tools.  Developers using this tool chain on Windows make use of <a rel="nofollow" class="external text" href="http://www.mingw.org/">MinGW</a>, though most development on Windows is currently done with the Microsoft Visual Studio 2005 (version 8) development environment and associated tools.
+</p><p>The complete list of required software to build PostgreSQL can be found in the <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/install-requirements.html">installation instructions</a>.
+</p><p>Developers who regularly rebuild the source often pass the --enable-depend flag to configure.  The result is that if you make a modification to a C header file, all files depend upon that file are also rebuilt.
+</p><p>src/Makefile.custom can be used to set environment variables, like CUSTOM_COPT, that are used for every compile.
+</p>
+<h3><span id="How_do_I_get_involved_in_PostgreSQL_web_site_development.3F"></span><span class="mw-headline" id="How_do_I_get_involved_in_PostgreSQL_web_site_development?">How do I get involved in PostgreSQL web site development?</span></h3>
+<p>PostgreSQL website development is discussed on the <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-www/">pgsql-www mailing list</a> and organized by the <a href="/wiki/Infrastructure_team" title="Infrastructure team">Infrastructure team</a>. Source code for the postgresql.org web site is stored in a <a rel="nofollow" class="external text" href="http://git.postgresql.org/gitweb/?p=pgweb.git;a=summary">Git repository</a>.
+</p>
+<h2><span class="mw-headline" id="Development_Tools_and_Help">Development Tools and Help</span></h2>
+<h3><span id="How_is_the_source_code_organized.3F"></span><span class="mw-headline" id="How_is_the_source_code_organized?">How is the source code organized?</span></h3>
+<p>If you point your browser at <a rel="nofollow" class="external text" href="http://www.postgresql.org/developer/backend/">Backend Flowchart</a>, you will see a few paragraphs describing the data flow, the backend components in a flow chart, and a description of the shared memory area. You can click on any flowchart box to see a description. If you then click on the directory name, you will be taken to the source directory, to browse the actual source code behind it. We also have several README files in some source directories to describe the function of the module. The browser will display these when you enter the directory also.
+</p>
+<h3><span id="What_information_is_available_to_learn_PostgreSQL_internals.3F"></span><span class="mw-headline" id="What_information_is_available_to_learn_PostgreSQL_internals?">What information is available to learn PostgreSQL internals?</span></h3>
+<ul><li>Overview of PostgreSQL Internals <a rel="nofollow" class="external free" href="https://www.postgresql.org/docs/devel/static/overview.html">https://www.postgresql.org/docs/devel/static/overview.html</a></li>
+<li>Coding <a rel="nofollow" class="external free" href="https://www.postgresql.org/developer/coding/">https://www.postgresql.org/developer/coding/</a></li>
+<li>Introduction to Hacking PostgreSQL - With lots of code review! <a rel="nofollow" class="external free" href="https://www.cse.iitb.ac.in/infolab/Data/Courses/CS631/PostgreSQL-Resources/hacking_intro.pdf">https://www.cse.iitb.ac.in/infolab/Data/Courses/CS631/PostgreSQL-Resources/hacking_intro.pdf</a></li>
+<li>Introduction to Hacking PostgreSQL <a rel="nofollow" class="external free" href="http://www.neilconway.org/talks/hacking/">http://www.neilconway.org/talks/hacking/</a></li>
+<li>Postgres Internals Presentations <a rel="nofollow" class="external free" href="http://momjian.us/main/presentations/internals.html">http://momjian.us/main/presentations/internals.html</a></li>
+<li>The Internals of PostgreSQL <a rel="nofollow" class="external free" href="http://www.interdb.jp/pg/">http://www.interdb.jp/pg/</a></li>
+<li>PostgreSQL source code analysis (in Japanese) <a rel="nofollow" class="external free" href="http://ikubo.x0.com/PostgreSQL/pg_source.htm">http://ikubo.x0.com/PostgreSQL/pg_source.htm</a></li>
+<li>PostgreSQL Memorandum (in Japanese) <a rel="nofollow" class="external free" href="http://www.nminoru.jp/~nminoru/postgresql/">http://www.nminoru.jp/~nminoru/postgresql/</a></li></ul>
+<h3><span id="What_tools_are_available_to_learn_about.2Finspect_the_PostgreSQL_on-disk_format.3F"></span><span class="mw-headline" id="What_tools_are_available_to_learn_about/inspect_the_PostgreSQL_on-disk_format?">What tools are available to learn about/inspect the PostgreSQL on-disk format?</span></h3>
+<ul><li><a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/static/pageinspect.html">contrib/pageinspect</a></li>
+<li><a rel="nofollow" class="external text" href="https://github.com/petergeoghegan/pg_hexedit">pg_hexedit</a> - hex editor toolkit</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/hlinnaka/pg-internals-explorer">pg-internals-explorer</a> - ncurses interface to explore on-disk format (unmaintained)</li></ul>
+<h3><span id="What_tools_are_available_for_developers.3F"></span><span class="mw-headline" id="What_tools_are_available_for_developers?">What tools are available for developers?</span></h3>
+<p>First, all the files in the src/tools directory are designed for developers.
+</p>
+<pre>   RELEASE_CHANGES changes we have to make for each release
+   ccsym           find standard defines made by your compiler
+   copyright       fixes copyright notices
+</pre>
+<pre>   entab           converts spaces to tabs, used by pgindent
+   find_static     finds functions that could be made static
+   find_typedef    finds typedefs in the source code
+   find_badmacros  finds macros that use braces incorrectly
+   fsync           a script to provide information about the cost of cache
+                    syncing system calls
+   make_ctags      make vi 'tags' file in each directory
+   make_diff       make *.orig and diffs of source
+   make_etags      make emacs 'etags' files
+   make_keywords   make comparison of our keywords and SQL'92
+   make_mkid       make mkid ID files
+   git_changelog   used to generate a list of changes for each release
+   pginclude       scripts for adding/removing include files
+   pgindent        indents source files
+   pgtest          a semi-automated build system
+   thread          a thread testing script
+</pre>
+<p>In src/include/catalog:
+</p>
+<pre>   unused_oids     a script that finds unused OIDs for use in system catalogs
+   duplicate_oids  finds duplicate OIDs in system catalog definitions
+</pre>
+<p>tools/backend was already described in the question-and-answer above.
+</p><p>Second, you really should have an editor that can handle tags, so you can tag a function call to see the function definition, and then tag inside that function to see an even lower-level function, and then back out twice to return to the original function. Most editors support this via tags or etags files.
+</p><p>Third, you need to get id-utils from <a rel="nofollow" class="external free" href="ftp://ftp.gnu.org/gnu/idutils/">ftp://ftp.gnu.org/gnu/idutils/</a>
+</p><p>By running tools/make_mkid, an archive of source symbols can be created that can be rapidly queried.
+</p><p>Some developers make use of cscope, which can be found at <a rel="nofollow" class="external free" href="http://cscope.sf.net/">http://cscope.sf.net/</a>. Others use glimpse.
+</p><p>tools/make_diff has tools to create patch diff files that can be applied to the distribution. This produces diffs for easier readability.
+</p><p>pgindent is used to fix the source code style to conform to our standards, and is normally run at the end of each development cycle; see <a href="#What.27s_the_formatting_style_used_in_PostgreSQL_source_code.3F">this question</a> for more information on our style.
+</p><p>pginclude contains scripts used to add needed #include's to include files, and removed unneeded #include's.
+</p><p>When adding built-in objects such as types or functions, you will need to assign OIDs to them.  Our convention is that all hand-assigned OIDs are distinct values in the range 1-9999.  (It would work mechanically for them to be unique within individual system catalogs, but for clarity we require them to be unique across the whole system.)  There is a script called unused_oids in src/include/catalog that shows the currently unused OIDs.  To assign a new OID, pick one that is free according to unused_oids. The script will recommend a range to you, looking like this:
+</p>
+<pre>   Patches should use a more-or-less consecutive range of OIDs.
+   Best practice is to start with a random choice in the range 8000-9999.
+   Suggested random unused OID: 9209 (46 consecutive OID(s) available starting here)
+</pre>
+<p>and it's normally best to take its recommendation. See also the duplicate_oids script, which will complain if you made a mistake.
+</p>
+<h3><span id="What.27s_the_formatting_style_used_in_PostgreSQL_source_code.3F"></span><span class="mw-headline" id="What's_the_formatting_style_used_in_PostgreSQL_source_code?">What's the formatting style used in PostgreSQL source code?</span></h3>
+<p>Our standard format is BSD style, with each level of code indented one tab stop, where each tab stop is four columns. You will need to set your editor or file viewer to display tabs as four spaces.
+</p><p>The <a rel="nofollow" class="external text" href="http://git.postgresql.org/gitweb/?p=postgresql.git;a=tree;f=src/tools/editors;hb=HEAD">src/tools/editors directory of the latest sources</a> contains sample settings that can be used with the <b>emacs</b>, <b>vim</b> and compatible editors, to assist in keeping to PostgreSQL coding standards.
+</p><p><b>Vim</b> users will also find using-vim-for-postgres-dev tips in article <a href="/wiki/Configuring_vim_for_postgres_development" title="Configuring vim for postgres development">Configuring vim for postgres development</a>
+</p><p>For <b>less</b> or <b>more</b>, specify <code>-x4</code> to get the correct indentation.
+</p><p>We use the <tt>pgindent</tt> pretty-printer to format code to improve layout consistency.  pgindent is run on all source files at least once per development cycle, and many developers make a point of running modified code through pgindent before submitting or committing patches.  See the <a rel="nofollow" class="external text" href="http://git.postgresql.org/gitweb/?p=postgresql.git;a=tree;f=src/tools/pgindent;hb=HEAD">src/tools/pgindent source directory</a>. 
+</p><p>One thing pgindent does is to re-flow text within comments.  While this is often helpful, it can destroy carefully made manual layout.  Comment blocks that need specific line breaks should be written as block comments, where the comment starts as /*------.  Such comments will not be reformatted in any way.  Comment blocks starting in column 1, such as file or function header comments, won't be reflowed either.
+</p><p>See also <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/devel/source-format.html">the Formatting section</a> in the documentation.  <a rel="nofollow" class="external text" href="https://www.postgresql.org/message-id/flat/1221125165.5637.12.camel%40abbas-laptop">This thread</a> talks about our naming of variable and function names.
+</p><p>If you're wondering why we bother with this, <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/Coding_conventions">this article</a> describes the value of a consistent coding style.
+</p>
+<h3><span id="Is_there_a_diagram_of_the_system_catalogs_available.3F"></span><span class="mw-headline" id="Is_there_a_diagram_of_the_system_catalogs_available?">Is there a diagram of the system catalogs available?</span></h3>
+<p>Yes, we have <a rel="nofollow" class="external text" href="http://dalibo.org/_media/articles/catalog.png">at least one for v8.3</a> (<a rel="nofollow" class="external text" href="http://svn.postgresql.fr/repos/materials/advocacy/trunk/posters/catalogs83.svg">SVG version</a>), and <a rel="nofollow" class="external text" href="https://www.postgrescompare.com/2017/06/11/pg_catalog_constraints.html">several for v10</a>.
+</p>
+<h3><span id="What_books_are_good_for_developers.3F"></span><span class="mw-headline" id="What_books_are_good_for_developers?">What books are good for developers?</span></h3>
+<p>There are five good books:
+</p>
+<ul><li>An Introduction to Database Systems, by C.J. Date, Addison, Wesley</li>
+<li>A Guide to the SQL Standard, by C.J. Date, et. al, Addison, Wesley</li>
+<li>Fundamentals of Database Systems, by Elmasri and Navathe</li>
+<li>Transaction Processing, by Jim Gray and Andreas Reuter, Morgan Kaufmann</li>
+<li>Transactional Information Systems, by Gerhard Weikum and Gottfried Vossen, Morgan Kaufmann</li></ul>
+<h3><span id="What_is_configure_all_about.3F"></span><span class="mw-headline" id="What_is_configure_all_about?">What is configure all about?</span></h3>
+<p>The files configure and configure.in are part of the GNU autoconf package. Configure allows us to test for various capabilities of the OS, and to set variables that can then be tested in C programs and Makefiles. Autoconf is installed on the PostgreSQL main server. To add options to configure, edit configure.in, and then run autoconf to generate configure.
+</p><p>When configure is run by the user, it tests various OS capabilities, stores those in config.status and config.cache, and modifies a list of *.in files. For example, if there exists a Makefile.in, configure generates a Makefile that contains substitutions for all @var@ parameters found by configure.
+</p><p>When you need to edit files, make sure you don't waste time modifying files generated by configure. Edit the *.in file, and re-run configure to recreate the needed file. If you run make distclean from the top-level source directory, all files derived by configure are removed, so you see only the file contained in the source distribution.
+</p>
+<h3><span id="How_do_I_add_a_new_port.3F"></span><span class="mw-headline" id="How_do_I_add_a_new_port?">How do I add a new port?</span></h3>
+<p>There are a variety of places that need to be modified to add a new port. First, start in the src/template directory. Add an appropriate entry for your OS. Also, use src/config.guess to add your OS to src/template/.similar. You shouldn't match the OS version exactly. The configure test will look for an exact OS version number, and if not found, find a match without version number. Edit src/configure.in to add your new OS. (See configure item above.) You will need to run autoconf, or patch src/configure too.
+</p><p>Then, check src/include/port and add your new OS file, with appropriate values. Hopefully, there is already locking code in src/include/storage/s_lock.h for your CPU. There is also a src/makefiles directory for port-specific Makefile handling. There is a backend/port directory if you need special files for your OS.
+</p>
+<h3><span id="Why_don.27t_you_use_raw_devices.2C_async-I.2FO.2C_.3Cinsert_your_favorite_wizz-bang_feature_here.3E.3F"></span><span class="mw-headline" id="Why_don't_you_use_raw_devices,_async-I/O,_&lt;insert_your_favorite_wizz-bang_feature_here&gt;?">Why don't you use raw devices, async-I/O, &lt;insert your favorite wizz-bang feature here&gt;?</span></h3>
+<p>There is always a temptation to use the newest operating system features as soon as they arrive. We resist that temptation.
+</p><p>First, we support 15+ operating systems, so any new feature has to be well established before we will consider it. Second, most new wizz-bang features don't provide dramatic improvements. Third, they usually have some downside, such as decreased reliability or additional code required. Therefore, we don't rush to use new features but rather wait for the feature to be established, then ask for testing to show that a measurable improvement is possible.
+</p><p>As an example, threads are not yet used instead of multiple processes for backends because:
+</p>
+<ul><li>Historically, threads were poorly supported and buggy.</li>
+<li>An error in one backend can corrupt other backends if they're threads within a single process</li>
+<li>Speed improvements using threads are small compared to the remaining backend startup time.</li>
+<li>The backend code would be more complex.</li>
+<li>Terminating backend processes allows the OS to cleanly and quickly free all resources, protecting against memory and file descriptor leaks and making backend shutdown cheaper and faster</li>
+<li>Debugging threaded programs is much harder than debugging worker processes, and core dumps are much less useful</li>
+<li>Sharing of read-only executable mappings and the use of shared_buffers means processes, like threads, are very memory efficient</li>
+<li>Regular creation and destruction of processes helps protect against memory fragmentation, which can be hard to manage in long-running processes</li></ul>
+<p>(Whether individual backend processes should use multiple threads to make use of multiple cores for single queries is a separate question not covered here).
+</p><p>So, we are not ignorant of new features. It is just that we are cautious about their adoption. The TODO list often contains links to discussions showing our reasoning in these areas.
+</p><p>Even some modern platforms have surprising problems with widely used functionality. For example, Linux's AIO layer offers no reliable asynchronous way do fsync() and get completion notification.
+</p>
+<h3><span id="How_are_branches_managed.3F"></span><span class="mw-headline" id="How_are_branches_managed?">How are branches managed?</span></h3>
+<p>See <a href="/wiki/Working_with_Git#Using_Back_Branches" title="Working with Git">Using Back Branches</a> and <a href="/wiki/Committing_with_Git" title="Committing with Git">Committing with Git</a> for information about how branches and backporting are handled.
+</p>
+<h3><span id="Where_can_I_get_a_copy_of_the_SQL_standards.3F"></span><span class="mw-headline" id="Where_can_I_get_a_copy_of_the_SQL_standards?">Where can I get a copy of the SQL standards?</span></h3>
+<p>You are supposed to buy them from <a rel="nofollow" class="external text" href="https://www.iso.org/">ISO</a> or an ISO member such as <a rel="nofollow" class="external text" href="http://www.ansi.org">ANSI</a>.  Search for ISO/ANSI 9075.  ANSI's offer is less expensive, but the contents of the documents are the same between the two organizations.
+</p><p>Since buying an official copy of the standard is quite expensive, most developers rely on one of the various draft versions available on the Internet.  Some of these are:
+</p>
+<ul><li>SQL:2003 <a rel="nofollow" class="external free" href="http://www.wiscorp.com/sql_2003_standard.zip">http://www.wiscorp.com/sql_2003_standard.zip</a></li>
+<li>SQL:2011 (preliminary) <a rel="nofollow" class="external free" href="http://www.wiscorp.com/sql20nn.zip">http://www.wiscorp.com/sql20nn.zip</a></li>
+<li>No free copy of SQL:2016 appears to exist. (If you know one, please add a link here.)</li></ul>
+<p>The PostgreSQL documentation contains information about PostgreSQL and <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/features.html">SQL conformance</a>.
+</p><p>Some further web pages about the SQL standard are:
+</p>
+<ul><li><a rel="nofollow" class="external free" href="http://troels.arvin.dk/db/rdbms/links/#standards">http://troels.arvin.dk/db/rdbms/links/#standards</a></li>
+<li><a rel="nofollow" class="external free" href="http://www.wiscorp.com/SQLStandards.html">http://www.wiscorp.com/SQLStandards.html</a></li></ul>
+<p>Note that having access to a copy of the SQL standard is not necessary to become a useful contributor to PostgreSQL development.  Interpreting the standard is difficult and requires years of experience.  As the standard is silent on many useful features like indexing, there is a good bit of development happening outside its bounds.
+</p><p>See also <a href="/wiki/SQL_standard" title="SQL standard">SQL standard</a> for more information about getting the standard and participating in its development.
+</p>
+<h3><span id="Are_there_known_deviations_from_the_SQL_Standard_in_PostgreSQL.3F"></span><span class="mw-headline" id="Are_there_known_deviations_from_the_SQL_Standard_in_PostgreSQL?">Are there known deviations from the SQL Standard in PostgreSQL?</span></h3>
+<p>Certainly.  We list them <a href="/wiki/PostgreSQL_vs_SQL_Standard" title="PostgreSQL vs SQL Standard">here</a>.
+</p>
+<h3><span id="Where_can_I_get_technical_assistance.3F"></span><span class="mw-headline" id="Where_can_I_get_technical_assistance?">Where can I get technical assistance?</span></h3>
+<p>Many technical questions held by those new to the code have been answered on the pgsql-hackers mailing list - the archives of which can be found at <a rel="nofollow" class="external free" href="http://archives.postgresql.org/pgsql-hackers/">http://archives.postgresql.org/pgsql-hackers/</a>.
+</p><p>If you cannot find discussion or your particular question, feel free to put it to the list.
+</p><p>Major contributors also answer technical questions, including questions about development of new features, on IRC at irc.freenode.net in the #postgresql channel.
+</p>
+<h2><span class="mw-headline" id="Development_Process">Development Process</span></h2>
+<h3><span id="What_do_I_do_after_choosing_an_item_to_work_on.3F"></span><span class="mw-headline" id="What_do_I_do_after_choosing_an_item_to_work_on?">What do I do after choosing an item to work on?</span></h3>
+<p>Send an email to pgsql-hackers with a proposal for what you want to do (assuming your contribution is not trivial). Working in isolation is not advisable because experience has shown that there are often requirements that are not obvious, and if those are not agreed on beforehand it leads to wasted effort. In the email, discuss both the internal implementation method you plan to use, and any user-visible changes (new syntax, etc). For complex patches, it is important to get community feedback on your proposal before starting work. Failure to do so might mean your patch is rejected. If your work is being sponsored by a company, read <a rel="nofollow" class="external text" href="http://momjian.us/main/writings/pgsql/company_contributions.html">this article</a> for tips on being more effective.
+</p><p>Our queue of patches to be reviewed is maintained via a custom <a href="/wiki/CommitFest" class="mw-redirect" title="CommitFest">CommitFest</a> web application at <a rel="nofollow" class="external free" href="https://commitfest.postgresql.org">https://commitfest.postgresql.org</a>.
+</p>
+<h3><span id="How_do_I_test_my_changes.3F"></span><span class="mw-headline" id="How_do_I_test_my_changes?">How do I test my changes?</span></h3>
+<h4><span class="mw-headline" id="Basic_system_testing">Basic system testing</span></h4>
+<p>The easiest way to test your code is to ensure that it builds against the latest version of the code and that it does not generate compiler warnings.
+</p><p>It is worth advised that you pass --enable-cassert to configure. This will turn on assertions within the source which will often make bugs more visible because they cause data corruption or segmentation violations. This generally makes debugging much easier.
+</p><p>Then, perform run time testing via psql.
+</p>
+<h4><span class="mw-headline" id="Runtime_environment">Runtime environment</span></h4>
+<p>To test your modified version of PostgreSQL, it's convenient to install PostgreSQL into a local directory (in your home 
+directory, for instance) to avoid conflicting with a system wide 
+installation.  Use the <i>--prefix=</i> option to configure to specify an installation 
+location; <i>--with-pgport</i> to specify a non-standard default port is 
+helpful as well. To run this instance, you will need to make sure that the correct 
+binaries are used; depending on your operating system, environment variables 
+like PATH and LD_LIBRARY_PATH (on most Linux/Unix-like systems) need to be 
+set. Setting PGDATA will also be useful.
+</p><p>To avoid having to set this environment up manually, you may want to use 
+Greg Smith's <a rel="nofollow" class="external text" href="https://github.com/gregs1104/peg">peg</a> scripts,or the
+<a rel="nofollow" class="external text" href="https://github.com/PGBuildFarm/client-code">scripts</a> that are used on the 
+buildfarm.
+</p>
+<h4><span class="mw-headline" id="Regression_test_suite">Regression test suite</span></h4>
+<p>The next step is to test your changes against the existing regression test suite. To do this, issue "make check" in the root directory of the source tree. If any tests fail, investigate.
+</p><p>The regression tests and control program are in <tt>src/test/regress</tt>. 
+</p><p>The control program is <tt>pg_regress</tt>, but you usually run it via make rather than directly.
+</p><p>You may find it useful to use <tt>PG_REGRESS_DIFF_OPTS=-ud make check</tt> to get unified diffs, rather than the default context diffs that <tt>pg_regress</tt> produces.
+</p><p>If you've deliberately changed existing behavior, this change might cause a regression test failure but not any actual regression. If so, you should also patch the regression test suite too.
+</p><p>To change the options PostgreSQL runs with for a given regression test execution you can use the <tt>PGOPTIONS</tt> environment variable, e.g.
+</p>
+<pre>   PGOPTIONS="-c log_error_verbosity=verbose -c log_min_messages=debug2" make check
+</pre>
+<h4><span class="mw-headline" id="Isolation_tests">Isolation tests</span></h4>
+<p>For concurrency issues, PostgreSQL includes an "isolation tester" in <tt>src/test/isolation</tt> . This tool supports multiple connections and is useful if you are trying to reproduce concurrency related bugs or test new functionality.
+</p>
+<h4><span class="mw-headline" id="Valgrind">Valgrind</span></h4>
+<p>To use Valgrind, edit <tt>src/include/pg_config_manual.h</tt> to set <tt>#define USE_VALGRIND</tt>, then run the postmaster under Valgrind with the supplied suppressions.
+</p><p>See <a href="/wiki/Valgrind" title="Valgrind">Valgrind</a>.
+</p>
+<h4><span class="mw-headline" id="Other_run_time_testing">Other run time testing</span></h4>
+<p>Some developers make use of tools such as <a href="/index.php?title=Profiling_with_Perf&amp;action=edit&amp;redlink=1" class="new" title="Profiling with Perf (page does not exist)">perf</a> (from the Linux kernel), gprof (which comes with the GNU binutils suite), ftrace, dtrace and <a href="/wiki/Profiling_with_OProfile" title="Profiling with OProfile">oprofile</a> (<a rel="nofollow" class="external free" href="http://oprofile.sourceforge.net/">http://oprofile.sourceforge.net/</a>) for profiling and other related tools.
+</p>
+<h4><span class="mw-headline" id="Continuous_Integration">Continuous Integration</span></h4>
+<p>Once your tests are working locally, it's time to ensure they also work across different machines, architectures and operating systems.  For this we have a CI setup that can run from your own github.com account, and also for entries in Commitfest.  See <a href="/wiki/Continuous_Integration" title="Continuous Integration">Continuous Integration</a> for more information on our CI.
+</p>
+<h4><span id="What_about_unit_testing.2C_static_analysis.2C_model_checking....3F"></span><span class="mw-headline" id="What_about_unit_testing,_static_analysis,_model_checking...?">What about unit testing, static analysis, model checking...?</span></h4>
+<p>There have been a number of discussions about other testing frameworks and some developers are exploring these ideas.
+</p><p>Keep in mind the Makefiles do not have the proper dependencies for include files. You have to do a make clean and then another make. If you are using GCC you can use the --enable-depend option of configure to have the compiler compute the dependencies automatically.
+</p>
+<h3><span id="I_have_developed_a_patch.2C_what_next.3F"></span><span class="mw-headline" id="I_have_developed_a_patch,_what_next?">I have developed a patch, what next?</span></h3>
+<p>You will need to submit the patch to pgsql-hackers@postgresql.org. To help ensure your patch is reviewed and committed in a timely fashion, please try to follow the guidelines at <a href="/wiki/Submitting_a_Patch" title="Submitting a Patch">Submitting a Patch</a>.
+</p>
+<h3><span id="What_happens_to_my_patch_once_it_is_submitted.3F"></span><span class="mw-headline" id="What_happens_to_my_patch_once_it_is_submitted?">What happens to my patch once it is submitted?</span></h3>
+<p>It will be reviewed by other contributors to the project and will be either accepted or sent back for further work. The process is explained in more detail at <a href="/wiki/Submitting_a_Patch#Patch_review_and_commit" title="Submitting a Patch">Submitting a Patch</a>.
+</p>
+<h3><span id="How_do_I_help_with_reviewing_patches.3F"></span><span class="mw-headline" id="How_do_I_help_with_reviewing_patches?">How do I help with reviewing patches?</span></h3>
+<p>If you would like to contribute by reviewing a patch in the <a rel="nofollow" class="external text" href="https://commitfest.postgresql.org">CommitFest</a> queue, you are most welcome to do so.  Please read the guide at <a href="/wiki/Reviewing_a_Patch" title="Reviewing a Patch">Reviewing a Patch</a> for more information.
+</p>
+<h3><span id="Do_I_need_to_sign_a_copyright_assignment.3F"></span><span class="mw-headline" id="Do_I_need_to_sign_a_copyright_assignment?">Do I need to sign a copyright assignment?</span></h3>
+<p>No, contributors keeps their copyright (as is the case for most
+European countries anyway). They simply consider themselves to be part of
+the Postgres Global Development Group. (It's not even possible to assign
+copyright to PGDG, as it's not a legal entity). This is the same way that
+the Linux Kernel and many other Open Source projects works.
+</p>
+<h3><span id="May_I_add_my_own_copyright_notice_where_appropriate.3F"></span><span class="mw-headline" id="May_I_add_my_own_copyright_notice_where_appropriate?">May I add my own copyright notice where appropriate?</span></h3>
+<p>No, please don't. We like to keep the legal information short and crisp.
+Additionally, we've heard that could possibly pose problems for
+corporate users.
+</p>
+<h3><span id="Doesn.27t_the_PostgreSQL_license_itself_require_to_keep_the_copyright_notice_intact.3F"></span><span class="mw-headline" id="Doesn't_the_PostgreSQL_license_itself_require_to_keep_the_copyright_notice_intact?">Doesn't the PostgreSQL license itself require to keep the copyright notice intact?</span></h3>
+<p>Yes, it does. And it is, because the PostgreSQL Global Development Group
+covers all copyright holders. Also note that US law doesn't require any
+copyright notice for getting the copyright granted, just like most
+European laws.
+</p>
+<h2><span class="mw-headline" id="Technical_Questions">Technical Questions</span></h2>
+<h3><span id="How_do_I_efficiently_access_information_in_system_catalogs_from_the_backend_code.3F"></span><span class="mw-headline" id="How_do_I_efficiently_access_information_in_system_catalogs_from_the_backend_code?">How do I efficiently access information in system catalogs from the backend code?</span></h3>
+<p>You first need to find the tuples (rows) you are interested in. There are two ways. First, SearchSysCache() and related functions allow you to query the system catalogs using predefined indexes on the catalogs. This is the preferred way to access system tables, because the first call to the cache loads the needed rows, and future requests can return the results without accessing the base table.  A list of available caches is located in src/backend/utils/cache/syscache.c. src/backend/utils/cache/lsyscache.c contains many column-specific cache lookup functions.
+</p><p>The rows returned are cache-owned versions of the heap rows. Therefore, you must not modify or delete the tuple returned by SearchSysCache(). What you should do is release it with ReleaseSysCache() when you are done using it; this informs the cache that it can discard that tuple if necessary. If you neglect to call ReleaseSysCache(), then the cache entry will remain locked in the cache until end of transaction, which is tolerable during development but not considered acceptable for release-worthy code.
+</p><p>If you can't use the system cache, you will need to retrieve the data directly from the heap table, using the buffer cache that is shared by all backends. The backend automatically takes care of loading the rows into the buffer cache.  To do this, open the table with heap_open(). You can then start a table scan with heap_beginscan(), then use heap_getnext() and continue as long as HeapTupleIsValid() returns true. Then do a heap_endscan(). Keys can be assigned to the scan. No indexes are used, so all rows are going to be compared to the keys, and only the valid rows returned.
+</p><p>You can also use heap_fetch() to fetch rows by block number/offset. While scans automatically lock/unlock rows from the buffer cache, with heap_fetch(), you must pass a Buffer pointer, and ReleaseBuffer() it when completed.
+</p><p>Once you have the row, you can get data that is common to all tuples, like t_self and t_oid, by merely accessing the HeapTuple structure entries. If you need a table-specific column, you should take the HeapTuple pointer, and use the GETSTRUCT() macro to access the table-specific start of the tuple. You then cast the pointer, for example as a Form_pg_proc pointer if you are accessing the pg_proc table, or Form_pg_type if you are accessing pg_type. You can then access fields of the tuple by using the structure pointer:
+</p><p>((Form_pg_class) GETSTRUCT(tuple))-&gt;relnatts
+</p><p>Note however that this only works for columns that are fixed-width and never null, and only when all earlier columns are likewise fixed-width and
+never null.  Otherwise the column's location is variable and you must use heap_getattr() or related functions to extract it from the tuple.
+</p><p>Also, avoid storing directly into struct fields as a means of changing live tuples. The best way is to use heap_modifytuple() and pass it your original tuple, plus the values you want changed. It returns a palloc'ed tuple, which you pass to heap_update(). You can delete tuples by passing the tuple's t_self to heap_delete(). You use t_self for heap_update() too. Remember, tuples can be either system cache copies, which might go away after you call ReleaseSysCache(), or read directly from disk buffers, which go away when you heap_getnext(), heap_endscan, or ReleaseBuffer(), in the heap_fetch() case. Or it may be a palloc'ed tuple, that you must pfree() when finished.
+</p>
+<h3><span id="Why_are_table.2C_column.2C_type.2C_function.2C_view_names_sometimes_referenced_as_Name_or_NameData.2C_and_sometimes_as_char_.2A.3F"></span><span class="mw-headline" id="Why_are_table,_column,_type,_function,_view_names_sometimes_referenced_as_Name_or_NameData,_and_sometimes_as_char_*?">Why are table, column, type, function, view names sometimes referenced as Name or NameData, and sometimes as char *?</span></h3>
+<p>Table, column, type, function, and view names are stored in system tables in columns of type Name. Name is a fixed-length, null-terminated type of NAMEDATALEN bytes. (The default value for NAMEDATALEN is 64 bytes.)
+</p>
+<pre>  typedef struct nameData
+   {
+       char        data[NAMEDATALEN];
+   } NameData;
+   typedef NameData *Name;
+</pre>
+<p>Table, column, type, function, and view names that come into the backend via user queries are stored as variable-length, null-terminated character strings.
+</p><p>Many functions are called with both types of names, ie. heap_open(). Because the Name type is null-terminated, it is safe to pass it to a function expecting a char *. Because there are many cases where on-disk names(Name) are compared to user-supplied names(char *), there are many cases where Name and char * are used interchangeably.
+</p>
+<h3><span id="Why_do_we_use_Node_and_List_to_make_data_structures.3F"></span><span class="mw-headline" id="Why_do_we_use_Node_and_List_to_make_data_structures?">Why do we use Node and List to make data structures?</span></h3>
+<p>We do this because this allows a consistent way to pass data inside the backend in a flexible way. Every node has a NodeTag which specifies what type of data is inside the Node. Lists are groups of Nodes chained together as a forward-linked list.  The ordering of the list elements might or might not be significant, depending on the usage of the particular list.
+</p><p>Here are some of the List manipulation commands:
+</p>
+<dl><dt>lfirst(i)</dt>
+<dt>lfirst_int(i)</dt>
+<dt>lfirst_oid(i)</dt>
+<dd>return the data (a pointer, integer or OID respectively) of list cell i.</dd></dl>
+<dl><dt>lnext(i)</dt>
+<dd>return the next list cell after i.</dd></dl>
+<dl><dt>foreach(i, list)</dt>
+<dd>loop through list, assigning each list cell to i.</dd></dl>
+<p>It is important to note that i is a <code>ListCell *</code>, not the data in the List cell. You need to use one of the lfirst variants to get at the cell's data.
+</p><p>Here is a typical code snippet that loops through a List containing <code>Var *</code> cells and processes each one:
+</p>
+<pre>           List        *list;
+           ListCell    *i;
+           ...
+           foreach(i, list)
+           {
+               Var *var = (Var *) lfirst(i);
+               ...
+               /* process var here */
+           }
+</pre>
+<dl><dt>lcons(node, list)</dt>
+<dd>add node to the front of list, or create a new list with node if list is NIL.</dd></dl>
+<dl><dt>lappend(list, node)</dt>
+<dd>add node to the end of list.</dd></dl>
+<dl><dt>list_concat(list1, list2)</dt>
+<dd>Concatenate list2 on to the end of list1.</dd></dl>
+<dl><dt>list_length(list)</dt>
+<dd>return the length of the list.</dd></dl>
+<dl><dt>list_nth(list, i)</dt>
+<dd>return the i'th element in list, counting from zero.</dd></dl>
+<dl><dt>lcons_int, ...</dt>
+<dd>There are integer versions of these: lcons_int, lappend_int, etc. Also versions for OID lists: lcons_oid, lappend_oid, etc.</dd></dl>
+<p>You can print nodes easily inside gdb. First, to disable output truncation when you use the gdb print command:
+</p><p>(gdb) set print elements 0
+</p><p>Instead of printing values in gdb format, you can use the next two commands to print out List, Node, and structure contents in a verbose format that is easier to understand. Lists are unrolled into nodes, and nodes are printed in detail. The first prints in a short format, and the second in a long format:
+</p>
+<pre>(gdb) call print(any_pointer)
+(gdb) call pprint(any_pointer)
+</pre>
+<p>The output appears in the server log file, or on your screen if you are running a backend directly without a postmaster.
+</p>
+<h3><span id="I_just_added_a_field_to_a_structure._What_else_should_I_do.3F"></span><span class="mw-headline" id="I_just_added_a_field_to_a_structure._What_else_should_I_do?">I just added a field to a structure. What else should I do?</span></h3>
+<p>The structures passed around in the parser, rewriter, optimizer, and executor require quite a bit of support. Most structures have support routines in src/backend/nodes used to create, copy, read, and output those structures -- in particular, most node types need support in the files copyfuncs.c and equalfuncs.c, and some need support in outfuncs.c and possibly readfuncs.c. Make sure you add support for your new field to these files. Find any other places the structure might need code for your new field -- searching for references to existing fields of the struct is a good way to do that. mkid is helpful with this (see <a href="#What_tools_are_available_for_developers.3F">available tools</a>).
+</p>
+<h3><span id="Why_do_we_use_palloc.28.29_and_pfree.28.29_to_allocate_memory.3F"></span><span class="mw-headline" id="Why_do_we_use_palloc()_and_pfree()_to_allocate_memory?">Why do we use palloc() and pfree() to allocate memory?</span></h3>
+<p>palloc() and pfree() are used in place of malloc() and free() because we find it easier to automatically free all memory allocated when a query completes. This assures us that all memory that was allocated gets freed even if we have lost track of where we allocated it. There are special non-query contexts that memory can be allocated in. These affect when the allocated memory is freed by the backend.
+</p><p>You can dump information about these memory contexts, which can be useful when hunting leaks. See <a href="#Examining_backend_memory_use">#Examining backend memory use</a>.
+</p>
+<h3><span id="What_is_ereport.28.29.3F"></span><span class="mw-headline" id="What_is_ereport()?">What is ereport()?</span></h3>
+<p>ereport() is used to send messages to the front-end, and optionally terminate the current query being processed. See <a rel="nofollow" class="external text" href="http://developer.postgresql.org/pgdocs/postgres/error-message-reporting.html">here</a> for more details on how to use it.
+</p>
+<h3><span id="What_is_CommandCounterIncrement.28.29.3F"></span><span class="mw-headline" id="What_is_CommandCounterIncrement()?">What is CommandCounterIncrement()?</span></h3>
+<p>Normally, statements can not see the rows they modify. This allows UPDATE foo SET x = x + 1 to work correctly.
+</p><p>However, there are cases where a transaction needs to see rows affected in previous parts of the transaction. This is accomplished using a Command Counter. Incrementing the counter allows transactions to be broken into pieces so each piece can see rows modified by previous pieces. CommandCounterIncrement() increments the Command Counter, creating a new part of the transaction.
+</p>
+<h3><span id="I_need_to_do_some_changes_to_query_parsing._Can_you_succinctly_explain_the_parser_files.3F"></span><span class="mw-headline" id="I_need_to_do_some_changes_to_query_parsing._Can_you_succinctly_explain_the_parser_files?">I need to do some changes to query parsing. Can you succinctly explain the parser files?</span></h3>
+<p>The parser files live in the 'src/backend/parser' directory.
+</p><p>scan.l defines the lexer, i.e. the algorithm that splits a string (containing an SQL statement) into a stream of tokens. A token is usually a single word (i.e., doesn't contain spaces but is delimited by spaces), but can also be a whole single or double-quoted string for example. The lexer is basically defined in terms of regular expressions which describe the different token types.  
+</p><p>gram.y defines the grammar (the syntactical structure) of SQL statements, using the tokens generated by the lexer as basic building blocks. The grammar is defined in BNF notation. BNF resembles regular expressions but works on the level of tokens, not characters. Also, patterns (called rules or productions in BNF) are named, and may be recursive, i.e. use themselves as sub-patterns.
+</p><p>The actual lexer is generated from scan.l by a tool called flex. You can find the manual at <a rel="nofollow" class="external free" href="https://westes.github.io/flex/manual/index.html">https://westes.github.io/flex/manual/index.html</a>
+</p><p>The actual parser is generated from gram.y by a tool called bison. You can find the manual at <a rel="nofollow" class="external free" href="http://www.gnu.org/s/bison/">http://www.gnu.org/s/bison/</a>.
+</p><p>Beware, though, that you'll have a rather steep learning curve ahead of you if you've never used flex or bison before.
+</p>
+<h3><span id="I_get_shift.2Freduce_conflict_I_don.27t_know_how_to_deal_with"></span><span class="mw-headline" id="I_get_shift/reduce_conflict_I_don't_know_how_to_deal_with">I get shift/reduce conflict I don't know how to deal with</span></h3>
+<p>See <a href="/wiki/Fixing_shift/reduce_conflicts_in_Bison" class="mw-redirect" title="Fixing shift/reduce conflicts in Bison">Fixing_shift/reduce_conflicts_in_Bison</a>
+</p>
+<h3><span id="How_do_I_look_at_a_query_plan_or_parsed_query.3F"></span><span class="mw-headline" id="How_do_I_look_at_a_query_plan_or_parsed_query?">How do I look at a query plan or parsed query?</span></h3>
+<p>It's often desirable to examine the structure of a parsed query or a query plan. PostgreSQL stores these as hierarchical trees, which it can print out in a custom format.
+</p><p>The <tt>pprint</tt> function is used to dump these trees to the backend's stderr, where you can capture it from the logs. You usually invoke this function by attaching a debugger like gdb or MSVC to the backend of interest before you run a query, then set a breakpoint at the position in the parser/rewriter/optimizer/executor you want to see the query state. When the breakpoint triggers, just run:
+</p>
+<pre>   call pprint(theQueryVariable)
+</pre>
+<p>where theQueryVariable is any <tt>Node*</tt> of a type that <tt>pprint</tt> understands. Usually you'll call it on a <tt>Query*</tt> but it's also common to dump various sub-parts of a query, like a target-list, etc.
+</p><p>This feature can be very useful in conjunction with gdb or MSVC tracepoints.
+</p>
+<h3><span id="What_debugging_features_are_available.3F"></span><span class="mw-headline" id="What_debugging_features_are_available?">What debugging features are available?</span></h3>
+<h4><span class="mw-headline" id="Compile-time">Compile-time</span></h4>
+<p>First, if you are developing new C code you should ALWAYS work in a build configured with the <tt>--enable-cassert</tt> and <tt>--enable-debug</tt> options.  Enabling asserts turns on many sanity checking options.  Enabling debug symbols supports use of debuggers (such as gdb) to trace through misbehaving code. When compiling on <tt>gcc</tt>, the additional cflags <tt>-ggdb -Og -g3 -fno-omit-frame-pointer</tt> are also useful, as they insert a lot of debugging info detail. You can pass them to <tt>configure</tt> with something like:
+</p>
+<pre>   ./configure --enable-cassert --enable-debug CFLAGS="-ggdb -Og -g3 -fno-omit-frame-pointer"
+</pre>
+<p>Using <tt>-O0</tt> instead of <tt>-Og</tt> will disable most compiler optimisation, including inlining, but <tt>-Og</tt> performs almost as well as the usual optimser flags like <tt>-O2</tt> or <tt>-Os</tt> while providing much more debug info. You'll see many fewer <tt>&lt;value optimised out&gt;</tt> variables, less confusing and hard to follow re-ordering of execution, etc, but performance will remain quite usable. <tt>-ggdb -g3</tt> tells <tt>gcc</tt> to also include the maximum amount of debug information in the produced binaries, including things like macro definitions.
+</p><p><tt>-fno-omit-frame-pointer</tt> is useful when using tracing and profiling tools like <tt>perf</tt>, as frame pointers allow these tools to capture the call stack, not just the top function on the stack.
+</p>
+<h4><span class="mw-headline" id="Run-time">Run-time</span></h4>
+<p>The postgres server has a <tt>-d</tt> option that allows detailed information to be logged (elog or ereport DEBUGn printouts). The -d option takes a number that specifies the debug level. Be warned that high debug level values generate large log files. This option isn't available when starting the server via <tt>pg_ctl</tt>, but you can use <tt>-o log_min_messages=debug4</tt> or similar instead.
+</p><p>When adding print statements for debugging keep in mind that <tt>logging_collector = on</tt> must be set in your postgresql.conf (the default is <tt>off</tt>) for stdout/stderr to be captured and logged to a file. Consider using either <tt>elog()</tt> or <tt>fprintf(stderr, "Log\n")</tt> instead of <tt>printf("Log\n")</tt> since usually stdout is fully buffered while stderr is only line-buffered. If you print to stdout you'll need to use <tt>fflush</tt> frequently to keep the output in sync with error/log messages (which go through stderr).
+</p>
+<h4><span class="mw-headline" id="gdb">gdb</span></h4>
+<p>If the postmaster is running, start psql in one window, then find the PID of the postgres process used by psql using <tt>SELECT pg_backend_pid()</tt>. Use a debugger to attach to the postgres PID - <tt>gdb -p 1234</tt> or, within a running gdb, <tt>attach 1234</tt>. You might also find the <a href="/wiki/Gdblive_script" title="Gdblive script">gdblive script</a> useful. You can set breakpoints in the debugger and then issue queries from the psql session.
+</p><p>If you are looking to find the location that is generating an error or log message, set a breakpoint at <tt>errfinish</tt>. This will trap on all <tt>elog</tt> and <tt>ereport</tt> calls for enabled log levels, so it may be triggered a lot. If you're only interested in ERROR/FATAL/PANIC, use a <a rel="nofollow" class="external text" href="http://blog.vinceliu.com/2009/07/gdbs-conditional-breakpoints.html/">gdb conditional breakpoint</a> for <tt>errordata[errordata_stack_depth].elevel &gt;= 20</tt>, or set a source-line breakpoint within the cases for PANIC, FATAL, and ERROR in <tt>errfinish</tt>. Note that not all errors go through <tt>errfinish</tt>; in particular, permissions checks are thrown separately. If your breakpoint doesn't trigger, <tt>git grep</tt> for the error text and see where it's thrown from.
+</p><p>If you are debugging something that happens during session startup, you can set <tt>PGOPTIONS="-W n"</tt>, then start psql. This will cause startup to delay for n seconds so you can attach to the process with the debugger, set appropriate breakpoints, then continue through the startup sequence.
+</p><p>You can sometimes alternately figure out the target process for debugging by looking at <tt>pg_stat_activity</tt>, the logs, <tt>pg_locks</tt>, <tt>pg_stat_replication</tt>, etc.
+</p>
+<h5><span class="mw-headline" id="Tools">Tools</span></h5>
+<p>There are a some helpful sets of gdb macros and Python scripts to help with PostgreSQL debugging, such as:
+</p>
+<ul><li><a rel="nofollow" class="external text" href="https://github.com/tvondra/gdbpg">gdbpg</a></li></ul>
+<p>You can also <a href="/wiki/Developer_FAQ#Why_do_we_use_Node_and_List_to_make_data_structures.3F" title="Developer FAQ">call PostgreSQL functions like <tt>pprint</tt></a> from within <tt>gdb</tt> to inspect data structures.
+</p><p>All these tools and techniques work within <a rel="nofollow" class="external text" href="https://sourceware.org/gdb/wiki/GDB%20Front%20Ends"><tt>gdb</tt> wrappers</a> like <a rel="nofollow" class="external text" href="https://wiki.eclipse.org/CDT/StandaloneDebugger">the Eclipse CDT standalone graphical debugger</a>.
+</p>
+<h5><span class="mw-headline" id="core_dumps">core dumps</span></h5>
+<p>If it's too hard to predict which process will be the problem but you can relibly get it to crash (maybe by adding an appropriate <tt>Assert(...)</tt> and compiling with <tt>--enable-cassert</tt>) you can debug a core dump instead. On Linux you'll want to make sure <tt>/proc/sys/kernel/core_pattern</tt> has a sensible value like <tt>core.%e.%p.SIG%s.%t</tt> and, in the shell you launch PostgreSQL from, run:
+</p>
+<pre>ulimit -c unlimited
+</pre>
+<p>Unless you're working with a large <tt>shared_buffers</tt> you probably also want to set core dumps (and <tt>gdb</tt>'s <tt>gcore</tt>) to include shared memory, using:
+</p>
+<pre>echo 127 &gt; /proc/self/coredump_filter
+</pre>
+<p>Core dumps will be output in the PostgreSQL data directory unless your kernel's <tt>core_pattern</tt> says otherwise.
+</p>
+<h4><span class="mw-headline" id="rr_record_and_replay_debugger">rr record and replay debugger</span></h4>
+<p>PostgreSQL 13 can be debugged using <a rel="nofollow" class="external text" href="https://rr-project.org">the rr debugging recorder</a>. You can think of rr as a powerful framework for using GDB with replayable "recordings" of a program's execution. See the <a href="/wiki/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD#Recording_Postgres_using_rr_Record_and_Replay_Framework" title="Getting a stack trace of a running PostgreSQL backend on Linux/BSD">guide to using rr to debug Postgres</a> for further details.
+</p>
+<h4><span class="mw-headline" id="Standalone_backend">Standalone backend</span></h4>
+<p>If the postmaster is not running, you can actually run the postgres backend from the command line, and type your SQL statement directly. This is almost always a bad way to do things, however, since the usage environment isn't nearly as friendly as psql (no command history for instance) and there's no chance to study concurrent behavior.  You might have to use this method if you broke initdb, but otherwise it has nothing to recommend it.
+</p>
+<h3><span id="I_broke_initdb.2C_how_do_I_debug_it.3F"></span><span class="mw-headline" id="I_broke_initdb,_how_do_I_debug_it?">I broke <tt>initdb</tt>, how do I debug it?</span></h3>
+<p>Sometimes a patch will cause <tt>initdb</tt> failures. These are rarely in <tt>initdb</tt> its self; more often a failure occurs in a <tt>postgres</tt> backend launched by <tt>initdb</tt> to do some setup work.
+</p><p>If one of these is crashing or triggering an assertion, attaching <tt>gdb</tt> to <tt>initdb</tt> isn't going to do much by its self. <tt>initdb</tt> itself isn't crashing so <tt>gdb</tt> won't break.
+</p><p>What you need to do is run <tt>initdb</tt> under <tt>gdb</tt>, set a breakpoint on <tt>fork</tt>, then continue execution. When you trigger the breakpoint, <tt><b>f</b>inish</tt> the function. <tt>gdb</tt> will report that a child process was created, but this is <i>not</i> what you want, it's the shell that launched the real <tt>postgres</tt> instance.
+</p><p>While <tt>initdb</tt> is paused, use <tt>ps</tt> to find the <tt>postgres</tt> instance it started. <tt>pstree -p</tt> can be useful for this. When you've found it, attach a separate <tt>gdb</tt> session to it with <tt>gdb -p $the_postgres_pid</tt>. At this point you can safely detach <tt>gdb</tt> from <tt>initdb</tt> and debug the <tt>postgres</tt> instance that's failing.
+</p><p>See also <a href="/wiki/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD#Tracing_problems_when_creating_a_cluster" title="Getting a stack trace of a running PostgreSQL backend on Linux/BSD">Tracing_problems_when_creating_a_cluster</a>
+</p>
+<h3><span id="Profiling_to_analyse_performance.2C_CPU_use"></span><span class="mw-headline" id="Profiling_to_analyse_performance,_CPU_use">Profiling to analyse performance, CPU use</span></h3>
+<p>There are many options for profiling PostgreSQL, but one of the most popular now is <tt>perf</tt>, the Linux kernel profiling tool. See <a href="/wiki/Profiling_with_perf" title="Profiling with perf">Profiling with perf</a>.
+</p><p><tt>perf</tt> is extremely powerful and not limited to CPU profiling; it's a useful tracing tool too.
+</p><p>You can also compile PostgreSQL with profiling enabled to see what functions are taking execution time. Configuring with <tt>--enable-profiling</tt> is the recommended way to set this up.  Profile files from server processes will be deposited in the <tt>pgsql/data</tt> directory.  Profile files from clients such as <tt>psql</tt> will be put in the client's current directory.
+</p><p>You usually shouldn't use <tt>--enable-cassert</tt> or any user-defined <tt>-O</tt> flags like <tt>-Og</tt> / <tt>-O0</tt> when studying performance issues. The checks cassert enables are not always cheap, so they'll distort your profile data. Compiler optimisations are important to make sure you're profiling the same thing you'll actually be running.
+</p><p><tt>--enable-debug</tt> is fine when profiling with <tt>gcc</tt>; for other compilers, it should be avoided.
+</p><p><tt>perf</tt> is a less intrusive alternative to <tt>--enable-profiling</tt> on modern Linux systems.
+</p>
+<h3><span class="mw-headline" id="Examining_backend_memory_use">Examining backend memory use</span></h3>
+<p>PostgreSQL's <tt>palloc</tt> is a hierarchical memory allocator that wraps the platform allocator. See <a href="#Why_do_we_use_palloc()_and_pfree()_to_allocate_memory?">#Why do we use palloc() and pfree() to allocate memory?</a>.
+</p><p>Memory allocated with <tt>palloc</tt> is assigned to a <i>memory context</i> that's part of a hierarchy rooted at <tt>TopMemoryContext</tt>. Each context has a name.
+</p><p>You can dump stats about a memory context and its children using the <tt> MemoryContextStats(MemoryContext*)</tt> function. In the most common usage, that's:
+</p>
+<pre>   gdb -p $the_backend_pid
+   (gdb) p MemoryContextStats(TopMemoryContext)
+</pre>
+<p>The output is written to stderr.
+</p><p>This may appear in the main server log file, a secondary log used by the init system for before PostgreSQL's logging collector starts, journald, or on your screen if you are running a backend directly without a postmaster.
+</p><p>Starting with v14, you can use the view pg_backend_memory_contexts or function pg_log_backend_memory_contexts to access this same information without the use of gdb.
+</p>
+<h3><span id="gdb.2FMSVC_tracepoints"></span><span class="mw-headline" id="gdb/MSVC_tracepoints">gdb/MSVC tracepoints</span></h3>
+<p>Sometimes you want to trace execution and capture information without having to constantly switch to gdb every time you hit a breakpoint.
+</p><p>Both MSVC and <tt>gdb</tt> offer tracepoints for this. They're much more powerful than those offered by tools like <tt>perf</tt> - with the tradeoff that they're much more intrusive and require a debugger. For gdb, see <a rel="nofollow" class="external text" href="https://sourceware.org/gdb/onlinedocs/gdb/Tracepoint-Actions.html">gdb tracepoints</a>. You can use debugger tracepoints to do things like fire a memory context dump every time a tracepoint is hit, or print a query parse tree, etc.
+</p><p>A viable alternative for some simpler cases is now to use <tt>perf</tt> to capture function calls, local variables, etc. See <a href="/wiki/Profiling_with_perf" title="Profiling with perf">Profiling with perf</a>.
+</p>
+<h3><span id="Why_are_my_variables_full_of_0x7f_bytes.3F"></span><span class="mw-headline" id="Why_are_my_variables_full_of_0x7f_bytes?">Why are my variables full of 0x7f bytes?</span></h3>
+<p>In a debugger or a crash dump you may see memory full of 0x7f bytes - 0x7f7f words, 0x7f7f7f7f7f longs, etc.
+</p><p>This is because builds with <tt>CLOBBER_FREED_MEMORY</tt> defined will overwrite memory when it, or its containing memory context, is freed. This isn't necessarily associated with an explicit <tt>pfree</tt> - it can happen as a result of a <tt>MemoryContextReset</tt> or similar, possibly on memory you implicitly allocated to the current memory context by calling <tt>palloc</tt>, or allocated indirectly via a call to another function.
+</p><p><tt>CLOBBER_FREED_MEMORY</tt> is enabled by passing <tt>--enable-cassert</tt>.
+</p><p>See <tt>src/backend/utils/mmgr/aset.c</tt> for details.
+</p><p><br />
+</p>
+<h3><span id="How_do_I_stop_gdb_getting_interrupted_by_SIGUSR1_all_the_time.3F"></span><span class="mw-headline" id="How_do_I_stop_gdb_getting_interrupted_by_SIGUSR1_all_the_time?">How do I stop gdb getting interrupted by SIGUSR1 all the time?</span></h3>
+<p>PostgreSQL uses SIGUSR1 for latch setting on backends, for SetLatch / WaitLatch / WaitLatchOrSocket etc.
+</p><p>gdb breaks on SIGUSR1 by default making debugging hard.
+</p><p>Just
+</p>
+<pre>   handle SIGUSR1 noprint pass
+</pre>
+<p>to make it silently pass SIGUSR1 to the program and not pause.  Or start it like:
+</p>
+<pre>   gdb -ex 'handle SIGUSR1 nostop'
+</pre>
+<h3><span id="How_do_I_attach_gdb_and_set_a_breakpoint_in_a_background_worker_.2F_helper_proc.3F"></span><span class="mw-headline" id="How_do_I_attach_gdb_and_set_a_breakpoint_in_a_background_worker_/_helper_proc?">How do I attach gdb and set a breakpoint in a background worker / helper proc?</span></h3>
+<p>If you're trying to debug autovacuum, some arbitrary background worker, etc, it can be hard to get gdb attached when you want. Especially if the proc is short-lived.
+</p><p>A handy trick here is to inject an infinite loop that prints the pid until you attach gdb and change the loop-variable to allow debugging to continue. For example, if you add this just before the call to the function you want to debug:
+</p>
+<pre>   /* You may need to #include "miscadmin.h" and &lt;unistd.h&gt; */
+   
+   bool continue_sleep = true;
+   do {
+       sleep(1);
+       elog(LOG, "zzzzz %d", MyProcPid);
+   } while (continue_sleep);
+   
+   func_to_debug()
+</pre>
+<p>You can grep the logs for "zzzz" until it appears, attach to the pid of interest, set a breakpoint, and continue execution.
+</p>
+<pre>   $ gdb -p $the-pid
+   (gdb) break func_to_debug
+   (gdb) p continue_sleep=0
+   (gdb) cont
+</pre>
+<p>Note that it's bad practice to use <tt>sleep</tt> in PostgreSQL backends; use <tt>WaitLatch</tt> with a timeout instead. This is OK for debugging though.
+</p><p>Another option can be to have PostgreSQL delay all processes on start with the <tt>postgres -W &lt;seconds&gt;</tt> option, but this works poorly when you're debugging an issue in complex groups of bgworkers or something that only happens after extended runtime.
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408135046
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.075 seconds
+Real time usage: 0.082 seconds
+Preprocessor visited node count: 230/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 85/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    4.238      1 Template:Languages
+100.00%    4.238      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:291-0!canonical and timestamp 20260408135046 and revision id 41199.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Developer_FAQ&amp;oldid=41199">https://wiki.postgresql.org/index.php?title=Developer_FAQ&amp;oldid=41199</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:FAQ" title="Category:FAQ">FAQ</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Developer_FAQ" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Developer_FAQ&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Developer_FAQ">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Developer_FAQ&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Developer_FAQ&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Developer_FAQ" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Developer_FAQ&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Developer+FAQ" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Developer_FAQ" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Developer_FAQ" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Developer_FAQ&amp;oldid=41199" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Developer_FAQ&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 23 May 2025, at 07:45.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.075","walltime":"0.082","ppvisitednodes":{"value":230,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":85,"limit":5000000},"timingprofile":["100.00%    4.238      1 Template:Languages","100.00%    4.238      1 -total"]},"cachereport":{"timestamp":"20260408135046","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":346});});</script>
+</body>
+</html>

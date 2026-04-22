@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <script>
+      var App = {};
+      App.pageIDs = ["1e806c68-1974-11e4-aa6a-efecb22b3579","5a966edc-2b9a-11e3-ab9e-0023df7f7ec4","9e7b8f08-2ba2-11e3-a5aa-0023df7f7ec4","9df31ff6-3f20-11e3-8372-0023df7f7ec4","0483f866-2b9f-11e3-8908-0023df7f7ec4","eeac2498-12a5-11e4-8bf7-537359e34291","87cecbca-14fa-11e4-a0c7-8b4e1f3cc8a8"];
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/listing.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+
+  <!-- Navbar
+    ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+  
+    <div class="container">
+    
+      <div class="page-header">
+        <h1>
+String Operations          <a href="concat.html" class="btn btn-primary btn-large" style="margin-left: 50px;">Begin!</a>
+        </h1>
+      </div>
+    
+      <div class="row" style="margin-bottom:30px">
+        <div class="span8">
+          <p>
+<p>String operations in most RDBMSs are, arguably, needlessly painful.  Fortunately, Postgres is better than most in this regard, providing strong regular expression support.  This section covers basic string manipulation, use of the LIKE operator, and use of regular expressions.  I also make an effort to show you some alternative approaches that work reliably in most RDBMSs.  Be sure to check out Postgres' string function <a href="http://www.postgresql.org/docs/current/static/functions-matching.html">docs page</a> if you're not confident about these exercises.</p>
+<p>Anthony Molinaro's <a href="http://shop.oreilly.com/product/9780596009762.do">SQL Cookbook</a> provides some excellent documentation of (difficult) cross-DBMS compliant SQL string manipulation.  I'd strongly recommend his book.</p>          </p>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span10">
+          <ul class="topiclisting">
+<li><span class="listingitem"><a class="listlink" href='concat.html'>Format the names of members</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='like.html'>Find facilities by a name prefix</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='case.html'>Perform a case-insensitive search</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='reg.html'>Find telephone numbers with parentheses</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='pad.html'>Pad zip codes with leading zeroes</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='substr.html'>Count the number of members whose surname starts with each letter of the alphabet</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='translate.html'>Clean up telephone numbers</a></span></li>
+          </ul>
+        </div>
+    
+      </div><!-- /container -->
+    </div>  
+  
+      <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/bootstrap.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+  
+  </body>
+</html>

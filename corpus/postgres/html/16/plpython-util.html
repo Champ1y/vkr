@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 16: 46.9. Utility Functions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/16/plpython-util.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:06:59" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="46.9. Utility Functions" />
+  <meta property="og:description" content="46.9.&amp;nbsp;Utility Functions # The plpy module also provides the functions plpy.debug(msg, **kwargs) plpy.log(msg, **kwargs) plpy.info(msg, **kwargs) plpy.notice(msg, **kwargs) plpy.warning(msg, **kwargs) …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?290b0238" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?290b0238">
+
+  <script src="/media/js/theme.js?290b0238"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/plpython-util.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/16/index.html">PostgreSQL 16</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/plpython-util.html" title="PostgreSQL 18 - 46.9. Utility Functions" >Current</a>
+                          (<a href="/docs/18/plpython-util.html" title="PostgreSQL 18 - 46.9. Utility Functions" >18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/plpython-util.html" title="PostgreSQL 17 - 46.9. Utility Functions" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/plpython-util.html" title="PostgreSQL 16 - 46.9. Utility Functions" class="docs-version-selected">16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/plpython-util.html" title="PostgreSQL 15 - 46.9. Utility Functions" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/plpython-util.html" title="PostgreSQL 14 - 46.9. Utility Functions" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/plpython-util.html" title="PostgreSQL devel - 46.9. Utility Functions"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/plpython-util.html" title="PostgreSQL 13 - 46.9. Utility Functions"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/plpython-util.html" title="PostgreSQL 12 - 46.9. Utility Functions"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/plpython-util.html" title="PostgreSQL 11 - 46.9. Utility Functions"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/plpython-util.html" title="PostgreSQL 10 - 46.9. Utility Functions"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/plpython-util.html" title="PostgreSQL 9.6 - 46.9. Utility Functions"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/plpython-util.html" title="PostgreSQL 9.5 - 46.9. Utility Functions"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/plpython-util.html" title="PostgreSQL 9.4 - 46.9. Utility Functions"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/plpython-util.html" title="PostgreSQL 9.3 - 46.9. Utility Functions"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/plpython-util.html" title="PostgreSQL 9.2 - 46.9. Utility Functions"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/plpython-util.html" title="PostgreSQL 9.1 - 46.9. Utility Functions"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/plpython-util.html" title="PostgreSQL 9.0 - 46.9. Utility Functions"  rel="nofollow">9.0</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/16/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">46.9.&nbsp;Utility Functions</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="plpython-transactions.html" title="46.8.&nbsp;Transaction Management">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="plpython.html" title="Chapter&nbsp;46.&nbsp;PL/Python — Python Procedural Language">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;46.&nbsp;PL/Python — Python Procedural Language</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 16.13 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="plpython-python23.html" title="46.10.&nbsp;Python 2 vs. Python 3">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="PLPYTHON-UTIL">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">46.9.&nbsp;Utility Functions <a href="#PLPYTHON-UTIL" class="id_link">#</a></h2>
+      </div>
+    </div>
+  </div>
+  <p>The <code class="literal">plpy</code> module also provides the functions</p>
+  <table border="0" summary="Simple list" class="simplelist">
+    <tr>
+      <td><code class="literal">plpy.debug(<em class="replaceable"><code>msg, **kwargs</code></em>)</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">plpy.log(<em class="replaceable"><code>msg, **kwargs</code></em>)</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">plpy.info(<em class="replaceable"><code>msg, **kwargs</code></em>)</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">plpy.notice(<em class="replaceable"><code>msg, **kwargs</code></em>)</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">plpy.warning(<em class="replaceable"><code>msg, **kwargs</code></em>)</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">plpy.error(<em class="replaceable"><code>msg, **kwargs</code></em>)</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">plpy.fatal(<em class="replaceable"><code>msg, **kwargs</code></em>)</code></td>
+    </tr>
+  </table>
+  <p><a id="id-1.8.11.17.2.3" class="indexterm" name="id-1.8.11.17.2.3"></a> <code class="function">plpy.error</code> and <code class="function">plpy.fatal</code> actually raise a Python exception which, if uncaught, propagates out to the calling query, causing the current transaction or subtransaction to be aborted. <code class="literal">raise plpy.Error(<em class="replaceable"><code>msg</code></em>)</code> and <code class="literal">raise plpy.Fatal(<em class="replaceable"><code>msg</code></em>)</code> are equivalent to calling <code class="literal">plpy.error(<em class="replaceable"><code>msg</code></em>)</code> and <code class="literal">plpy.fatal(<em class="replaceable"><code>msg</code></em>)</code>, respectively but the <code class="literal">raise</code> form does not allow passing keyword arguments. The other functions only generate messages of different priority levels. Whether messages of a particular priority are reported to the client, written to the server log, or both is controlled by the <a class="xref" href="runtime-config-logging.html#GUC-LOG-MIN-MESSAGES">log_min_messages</a> and <a class="xref" href="runtime-config-client.html#GUC-CLIENT-MIN-MESSAGES">client_min_messages</a> configuration variables. See <a class="xref" href="runtime-config.html" title="Chapter&nbsp;20.&nbsp;Server Configuration">Chapter&nbsp;20</a> for more information.</p>
+  <p>The <em class="replaceable"><code>msg</code></em> argument is given as a positional argument. For backward compatibility, more than one positional argument can be given. In that case, the string representation of the tuple of positional arguments becomes the message reported to the client.</p>
+  <p>The following keyword-only arguments are accepted:</p>
+  <table border="0" summary="Simple list" class="simplelist">
+    <tr>
+      <td><code class="literal">detail</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">hint</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">sqlstate</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">schema_name</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">table_name</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">column_name</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">datatype_name</code></td>
+    </tr>
+    <tr>
+      <td><code class="literal">constraint_name</code></td>
+    </tr>
+  </table>
+  <p>The string representation of the objects passed as keyword-only arguments is used to enrich the messages reported to the client. For example:</p>
+  <pre class="programlisting">
+CREATE FUNCTION raise_custom_exception() RETURNS void AS $$
+plpy.error("custom exception message",
+           detail="some info about exception",
+           hint="hint for users")
+$$ LANGUAGE plpython3u;
+
+=# SELECT raise_custom_exception();
+ERROR:  plpy.Error: custom exception message
+DETAIL:  some info about exception
+HINT:  hint for users
+CONTEXT:  Traceback (most recent call last):
+  PL/Python function "raise_custom_exception", line 4, in &lt;module&gt;
+    hint="hint for users")
+PL/Python function "raise_custom_exception"
+</pre>
+  <p>Another set of utility functions are <code class="literal">plpy.quote_literal(<em class="replaceable"><code>string</code></em>)</code>, <code class="literal">plpy.quote_nullable(<em class="replaceable"><code>string</code></em>)</code>, and <code class="literal">plpy.quote_ident(<em class="replaceable"><code>string</code></em>)</code>. They are equivalent to the built-in quoting functions described in <a class="xref" href="functions-string.html" title="9.4.&nbsp;String Functions and Operators">Section&nbsp;9.4</a>. They are useful when constructing ad-hoc queries. A PL/Python equivalent of dynamic SQL from <a class="xref" href="plpgsql-statements.html#PLPGSQL-QUOTE-LITERAL-EXAMPLE" title="Example&nbsp;43.1.&nbsp;Quoting Values in Dynamic Queries">Example&nbsp;43.1</a> would be:</p>
+  <pre class="programlisting">
+plpy.execute("UPDATE tbl SET %s = %s WHERE key = %s" % (
+    plpy.quote_ident(colname),
+    plpy.quote_nullable(newvalue),
+    plpy.quote_literal(keyvalue)))
+</pre>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="plpython-transactions.html" title="46.8.&nbsp;Transaction Management">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="plpython.html" title="Chapter&nbsp;46.&nbsp;PL/Python — Python Procedural Language">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="plpython-python23.html" title="46.10.&nbsp;Python 2 vs. Python 3">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">46.8.&nbsp;Transaction Management&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 16.13 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;46.10.&nbsp;Python 2 vs. Python 3</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/16/plpython-util.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?290b0238"></script>
+
+  </body>
+</html>

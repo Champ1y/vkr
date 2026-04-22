@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Priorities/ja - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"77f0b59b1b2f04dafb228d2d","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Priorities/ja","wgTitle":"Priorities/ja","wgCurRevisionId":10598,"wgRevisionId":10598,"wgArticleId":1272,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["FAQ","Performance","Japanese"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Priorities/ja","wgRelevantArticleId":1272,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Priorities_ja rootpage-Priorities skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Priorities/ja</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ><span class="subpages">&lt; <a href="/wiki/Priorities" title="Priorities">Priorities</a></span></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#ユーザ、問い合わせ、データベースについてのプライオリティ付け"><span class="tocnumber">1</span> <span class="toctext">ユーザ、問い合わせ、データベースについてのプライオリティ付け</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#プライオリティが本当に問題なのか？"><span class="tocnumber">2</span> <span class="toctext">プライオリティが本当に問題なのか？</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#CPUが本当にボトルネックなのか？"><span class="tocnumber">2.1</span> <span class="toctext">CPUが本当にボトルネックなのか？</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-4"><a href="#CPUについてのプライオリティ付け"><span class="tocnumber">3</span> <span class="toctext">CPUについてのプライオリティ付け</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#バックエンド関数niceの開発"><span class="tocnumber">3.1</span> <span class="toctext">バックエンド関数niceの開発</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-6"><a href="#I/Oについてのプライオリティ付け"><span class="tocnumber">4</span> <span class="toctext">I/Oについてのプライオリティ付け</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#メモリについてのプライオリティ付け"><span class="tocnumber">5</span> <span class="toctext">メモリについてのプライオリティ付け</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#リンク"><span class="tocnumber">6</span> <span class="toctext">リンク</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#Credits"><span class="tocnumber">7</span> <span class="toctext">Credits</span></a></li>
+</ul>
+</div>
+
+<h2><span id=".E3.83.A6.E3.83.BC.E3.82.B6.E3.80.81.E5.95.8F.E3.81.84.E5.90.88.E3.82.8F.E3.81.9B.E3.80.81.E3.83.87.E3.83.BC.E3.82.BF.E3.83.99.E3.83.BC.E3.82.B9.E3.81.AB.E3.81.A4.E3.81.84.E3.81.A6.E3.81.AE.E3.83.97.E3.83.A9.E3.82.A4.E3.82.AA.E3.83.AA.E3.83.86.E3.82.A3.E4.BB.98.E3.81.91"></span><span class="mw-headline" id="ユーザ、問い合わせ、データベースについてのプライオリティ付け">ユーザ、問い合わせ、データベースについてのプライオリティ付け</span></h2>
+<p>PosgtgreSQLには特定のユーザ、問い合わせ、データベースが消費するリソースを制限する機能はありません。
+同様にあるユーザ/問い合わせ/データベースが他より多くのリソースを得られるようなプライオリティを設定する機能もありません。
+プライオリティの制限を実現するためにはオペレーティングシステムの機能を使用する必要があります。
+</p><p>PostgreSQLユーザ、問い合わせ、データベースが競い合うリソースには大きく以下の3つがあります。
+</p>
+<ul><li>メモリ</li>
+<li>CPU</li>
+<li>ディスクI/O</li></ul>
+<p>3つの中で、ディスクI/Oがデータベースアプリケーションのボトルネックとなることがよくあります。
+しかし常にそうとは限りません。
+スキーマ・問い合わせ設計の中には特にCPUが大きな問題となることがあります。
+その他大量のメモリを使用して作業することが、特にソート処理で、実際に利点となりえます。
+</p>
+<h2><span id=".E3.83.97.E3.83.A9.E3.82.A4.E3.82.AA.E3.83.AA.E3.83.86.E3.82.A3.E3.81.8C.E6.9C.AC.E5.BD.93.E3.81.AB.E5.95.8F.E9.A1.8C.E3.81.AA.E3.81.AE.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="プライオリティが本当に問題なのか？">プライオリティが本当に問題なのか？</span></h2>
+<p>問い合わせ/ユーザ/データベースへのプライオリティ付けを議論する前に、問い合わせを最適化し<a href="/wiki/Tuning_Your_PostgreSQL_Server" title="Tuning Your PostgreSQL Server">データベースのチューニング</a>を行うことが有効です。
+プライオリティについて作業したり余計な手段を取ることなく、以下の技法を使用して、完全に受け入れられる性能を得ることができることが分かるかもしれません。
+</p>
+<ul><li><a href="/wiki/Using_EXPLAIN" title="Using EXPLAIN">問い合わせの改良</a></li>
+<li>autovacuumの膨張化を防止するチューニング</li>
+<li><a href="/wiki/Performance_Optimization" title="Performance Optimization">一般的なクラスタの性能の向上</a></li>
+<li><a href="/wiki/VACUUM_FULL" title="VACUUM FULL">VACUUM FULL</a>の使用防止。これはインデックスの膨張をもたらす可能性があります。すると、大量のメモリを要し、そして、スキャンに長期間かかり、ディスクのI/Oバンド幅を無駄に使用してしまいます。詳しくは<a href="/wiki/VACUUM_FULL" title="VACUUM FULL">VACUUM FULL</a> wikiページを参照ください。</li></ul>
+<h3><span id="CPU.E3.81.8C.E6.9C.AC.E5.BD.93.E3.81.AB.E3.83.9C.E3.83.88.E3.83.AB.E3.83.8D.E3.83.83.E3.82.AF.E3.81.AA.E3.81.AE.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="CPUが本当にボトルネックなのか？">CPUが本当にボトルネックなのか？</span></h3>
+<p>よく、CPUの性能不足（100％）であることを問題とし、これがデータベースの性能低下の原因であると仮定します。
+これは必ずしも問題ではありません。
+システムは100%近くCPUを使用していると示しているかもしれませんが、実際ほとんどはI/Oバンド幅の制限が原因です。
+以下の試験を検討してください。
+これは20個のddプロセスを起動し、それぞれのプロセスが異なる1Gbブロックをハードディスクからオフセット1Gbで読み取るものです。
+</p>
+<pre>  for i in `seq 1 20`; do 
+  ( dd if=/dev/md0 bs=1M count=1000 skip=$(($i * 1000)) of=/dev/null &amp;)
+  done
+</pre>
+<p>'top'コマンドの出力結果は以下のようになります。
+</p>
+<pre>                          
+top - 14:51:55 up 3 days,  2:09,  5 users,  load average: 10.92, 4.94, 2.93
+Tasks: 259 total,   3 running, 256 sleeping,   0 stopped,   0 zombie
+Cpu(s):  1.6%us, 15.0%sy,  0.0%ni,  0.0%id, 78.6%wa,  0.8%hi,  4.0%si,  0.0%st
+Mem:   4055728k total,  3843408k used,   212320k free,   749448k buffers
+Swap:  2120544k total,     4144k used,  2116400k free,  2303356k cached
+
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                            
+   33 root      15  -5     0    0    0 R    5  0.0   0:26.67 kswapd0                            
+  904 root      20   0  4152 1772  628 D    5  0.0   0:00.62 dd                                 
+  874 root      20   0  4152 1768  628 D    3  0.0   0:00.74 dd                                 
+  908 root      20   0  4152 1768  628 D    3  0.0   0:00.80 dd                                 
+  888 root      20   0  4152 1772  628 D    3  0.0   0:00.44 dd                                 
+  906 root      20   0  4152 1772  628 D    3  0.0   0:00.56 dd                                 
+  894 root      20   0  4152 1768  628 D    2  0.0   0:00.49 dd                                 
+  902 root      20   0  4152 1772  628 D    2  0.0   0:00.46 dd   
+  .... etc ....                              
+</pre>
+<p>これはCPUのビジー状態ではないかと混乱するかもしれませんが、実際は、ディスクI/Oが原因の負荷を示します。
+ここで警告のキーとなる兆候は、CPU利用率の中でiowait("%wa")が高い割合を示していることです。
+つまり、見かけの負荷の多くは実際にはI/Oサブシステムにおける遅延によるものであることを意味します。
+`dd'プロセスのほとんどが'D'状態、つまりシステムコール内の割り込み不可のスリープ状態です。
+もし"ps"コマンドの"wchan"を点検すると、I/O待ちのスリープであることがわかるでしょう。
+</p><p>CPUの競合が問題であると仮定するのではなく、利用可能な<a href="/wiki/Performance_Analysis_Tools" title="Performance Analysis Tools">Performance Analysis Tools</a>を使用して、システムの本当のボトルネックが何かについてより優れた情報を得ることを勧めます。
+</p>
+<h2><span id="CPU.E3.81.AB.E3.81.A4.E3.81.84.E3.81.A6.E3.81.AE.E3.83.97.E3.83.A9.E3.82.A4.E3.82.AA.E3.83.AA.E3.83.86.E3.82.A3.E4.BB.98.E3.81.91"></span><span class="mw-headline" id="CPUについてのプライオリティ付け">CPUについてのプライオリティ付け</span></h2>
+<p>CPUに関して、（Unixシステムでは）"nice"を使用することができますが、バックエンドに接続する
+クライアントプログラムではなく対象のバックエンドに"nice"を行う必要がありますので、多少扱
+いづらいものです。"SELECT pg_backend_pid()" SQL問い合わせやpg_stat_activitiesビューの検索
+を行うことでバックエンドプロセスIDを入手することができますが、通常のセッション内でバックエ
+ンドのnice値を変更する方法はありません。特定の大規模問い合わせがあり、その実行時間を減少
+させたいような状況では、データベースクライアント外部でpg_stat_activityから対象の問い合わせ
+/クライアントを見つけ出し、この作業を行う監視プロセスを持つことができます。
+</p>
+<h3><span id=".E3.83.90.E3.83.83.E3.82.AF.E3.82.A8.E3.83.B3.E3.83.89.E9.96.A2.E6.95.B0nice.E3.81.AE.E9.96.8B.E7.99.BA"></span><span class="mw-headline" id="バックエンド関数niceの開発">バックエンド関数niceの開発</span></h3>
+<p>他の取りえる方法は、呼び出すバックエンドのnice値を"prio"に変更する"nice_backend(prio)" C関数を作成しインストールすることです。
+"prio"を0以上に制限し、スーパーユーザのみが使用可能な、バックエンドのnice値を変更可能かつ任意のプライオリティに設定可能な第二の関数"nice_backend_super(pid,prio)"を提供してください。
+だれもがこれを実装できるとはわかりませんが、関数のドキュメントや例を定義されたCユーザを元にたきつけ、この作業を行うようにnice(2)システムコールを使用することは難しくはないはずです。
+もし似たようなものを作成しているのであれば、<a rel="nofollow" class="external text" href="http://www.postgresql.org/community/lists/">pgsql-performance mailing list</a>に投稿し、ここにそのリンクを提供して<i>ください</i>。
+</p><p>こうした関数を使用したとしても、ユーザアプリケーション自身でCPUに負荷をかける問い合わせを実行する前に適切なnice値を設定するように協調させなければなりません。
+また、多くのバックエンドからの競合がある場合では大した効果は得られないでしょう。
+重要ではないもののプライオリティを低くするよりも重要なバックエンドのプライオリティを増やす方がより効果的です。
+</p>
+<h2><span id="I.2FO.E3.81.AB.E3.81.A4.E3.81.84.E3.81.A6.E3.81.AE.E3.83.97.E3.83.A9.E3.82.A4.E3.82.AA.E3.83.AA.E3.83.86.E3.82.A3.E4.BB.98.E3.81.91"></span><span class="mw-headline" id="I/Oについてのプライオリティ付け">I/Oについてのプライオリティ付け</span></h2>
+<p>I/Oはより難しいものです。
+一部のオペレーティングシステムでは、Linuxのioniceのように、I/Oのプライオリティを提供するものがあります。
+また、'nice'の使用方法と似たような方法でこれらを使用したいと考えるでしょう。
+残念ながら、うまく動作しません。
+PostgreSQLが行う作業、特にディスクへの書き込みが、すべてのバックエンドで共有されるメモリから動作する別個のバックグランドライタプロセスを介して行われるためです。
+同様に先行書き込みログは共有メモリを介して独自のプロセスで管理されています。
+これら2つのため、効率的に書き込みに関してユーザ別のプライオリティを与えることは非常に困難です。
+しかし読み込みに関してはioniceは相当効果があるはずです。
+</p><p>"nice"同様、接続レベルにおける効率的な制御を行うためには、追加の適切な補助関数が必要です。
+また、ユーザ毎のプライオリティを実現するためにはユーザの協力が必要です。
+</p><p>より良くI/O作業負荷を分離するためには<a href="/wiki/Prioritizing_databases_by_separating_into_multiple_clusters" title="Prioritizing databases by separating into multiple clusters">cluster separation</a>が必要です。
+これはデータベース毎レベルで独自のコストを持つものであり、データベースレベルでのみ有効です。
+</p>
+<h2><span id=".E3.83.A1.E3.83.A2.E3.83.AA.E3.81.AB.E3.81.A4.E3.81.84.E3.81.A6.E3.81.AE.E3.83.97.E3.83.A9.E3.82.A4.E3.82.AA.E3.83.AA.E3.83.86.E3.82.A3.E4.BB.98.E3.81.91"></span><span class="mw-headline" id="メモリについてのプライオリティ付け">メモリについてのプライオリティ付け</span></h2>
+<p>PostgreSQLには、クライアント毎に使用するメモリに関する<a href="/wiki/Tuning_Your_PostgreSQL_Server" title="Tuning Your PostgreSQL Server">tunable parameters</a>がいくつかあります。
+具体的には<code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/runtime-config-resource.html#GUC-WORK-MEM">work_mem</a></code>および<code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/runtime-config-resource.html#GUC-MAINTENANCE-WORK-MEM">maintenance_work_mem</a></code>です。
+これらは、バックエンドがソート処理やインデックス作成などの作業のために通常のメモリ量より多くのメモリを使用することができるように、指定された接続内で設定されるかもしれません。
+これらは保守的に<code>postgresql.conf</code>の低い値を設定し、そして、特定のバックエンドについてはより高い値を割り当てるように、たとえば<code>SET work_mem = '100MB';</code>のように<code>SET</code>コマンドを使用することもできます。
+</p><p>PostgreSQL 8.5からユーザ毎のGUC変数を使用して<code>work_mem</code>および<code>maintenance_work_mem</code>に別の値を設定することができます。
+以下に例を示します。
+</p>
+<pre>ALTER USER myuser SET work_mem = '50MB';
+</pre>
+<p>この方法でshared_buffersなどの設定でなされた共有メモリ割り当てをを変更することはできません。
+データベース起動時に決定される値であり、再起動しない限り変更できません。
+</p><p>ほとんどのオペレーティングシステムでは、例えばOSは他のバックエンドのメモリの代わりにバックエンドのメモリをswapさせるなどのメモリ割り当てをプライオリティ付けする簡単な方法はありません。
+</p>
+<h2><span id=".E3.83.AA.E3.83.B3.E3.82.AF"></span><span class="mw-headline" id="リンク">リンク</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="http://www.cs.cmu.edu/~harchol/Papers/actual-icde-submission.pdf">CMU article studying CPU priorities on Postgres and DB2 on TPC-C and TPC-W workloads</a></li></ul>
+<h2><span class="mw-headline" id="Credits">Credits</span></h2>
+<p>Page initially by <a href="/wiki/User:Ringerc" title="User:Ringerc">Ringerc</a> 02:34, 26 November 2009 (UTC)
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408143720
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.030 seconds
+Real time usage: 0.043 seconds
+Preprocessor visited node count: 53/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 1468/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    9.501      1 Template:Languages
+100.00%    9.501      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:1272-0!canonical and timestamp 20260408143720 and revision id 10598.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Priorities/ja&amp;oldid=10598">https://wiki.postgresql.org/index.php?title=Priorities/ja&amp;oldid=10598</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:FAQ" title="Category:FAQ">FAQ</a></li><li><a href="/wiki/Category:Performance" title="Category:Performance">Performance</a></li><li><a href="/wiki/Category:Japanese" title="Category:Japanese">Japanese</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Priorities/ja" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Priorities/ja&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Priorities/ja">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Priorities/ja&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Priorities/ja&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Priorities/ja" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Priorities/ja&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Priorities%2Fja" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Priorities/ja" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Priorities/ja" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Priorities/ja&amp;oldid=10598" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Priorities/ja&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 21 April 2010, at 11:42.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.030","walltime":"0.043","ppvisitednodes":{"value":53,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":1468,"limit":5000000},"timingprofile":["100.00%    9.501      1 Template:Languages","100.00%    9.501      1 -total"]},"cachereport":{"timestamp":"20260408143720","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":411});});</script>
+</body>
+</html>

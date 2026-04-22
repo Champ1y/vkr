@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Running &amp; Installing PostgreSQL On Native Windows/ja - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"ef3a1288f98ce784befb1770","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Running_\u0026_Installing_PostgreSQL_On_Native_Windows/ja","wgTitle":"Running \u0026 Installing PostgreSQL On Native Windows/ja","wgCurRevisionId":27680,"wgRevisionId":27680,"wgArticleId":554,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["FAQ","Japanese","Windows"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Running_\u0026_Installing_PostgreSQL_On_Native_Windows/ja","wgRelevantArticleId":554,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Running_Installing_PostgreSQL_On_Native_Windows_ja rootpage-Running_Installing_PostgreSQL_On_Native_Windows skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Running &amp; Installing PostgreSQL On Native Windows/ja</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ><span class="subpages">&lt; <a href="/wiki/Running_%26_Installing_PostgreSQL_On_Native_Windows" title="Running &amp; Installing PostgreSQL On Native Windows">Running &amp; Installing PostgreSQL On Native Windows</a></span></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#サポートされるプラットフォーム"><span class="tocnumber">1</span> <span class="toctext">サポートされるプラットフォーム</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#どのバージョンのWindowsでPostgreSQLは動作しますか？"><span class="tocnumber">1.1</span> <span class="toctext">どのバージョンのWindowsでPostgreSQLは動作しますか？</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#どのWindowsプラットフォームはサポート*されない*のでしょうか？"><span class="tocnumber">1.2</span> <span class="toctext">どのWindowsプラットフォームはサポート*されない*のでしょうか？</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#NT4とWindows_2000がサポートされていると聞いたのだけれども本当ですか？"><span class="tocnumber">1.3</span> <span class="toctext">NT4とWindows 2000がサポートされていると聞いたのだけれども本当ですか？</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Winsows95や98、MEはどうなっていますか？"><span class="tocnumber">1.4</span> <span class="toctext">Winsows95や98、MEはどうなっていますか？</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Windows用に64ビットで構築されたPostgreSQLはありますか？"><span class="tocnumber">1.5</span> <span class="toctext">Windows用に64ビットで構築されたPostgreSQLはありますか？</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#64ビット版のODBCドライバについては？"><span class="tocnumber">1.6</span> <span class="toctext">64ビット版のODBCドライバについては？</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#インストール"><span class="tocnumber">2</span> <span class="toctext">インストール</span></a>
+<ul>
+<li class="toclevel-2 tocsection-9"><a href="#WindowsでPostgreSQLをインストールするためには何が必要ですか？"><span class="tocnumber">2.1</span> <span class="toctext">WindowsでPostgreSQLをインストールするためには何が必要ですか？</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#PostgreSQLをソースコードからコンパイルするためには何が必要ですか？"><span class="tocnumber">2.2</span> <span class="toctext">PostgreSQLをソースコードからコンパイルするためには何が必要ですか？</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#なぜPostgreSQLを実行するために管理者以外のアカウントが必要なのですか？"><span class="tocnumber">2.3</span> <span class="toctext">なぜPostgreSQLを実行するために管理者以外のアカウントが必要なのですか？</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#FATパーティションにPostgreSQLをインストールできますか？"><span class="tocnumber">2.4</span> <span class="toctext">FATパーティションにPostgreSQLをインストールできますか？</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#PostgreSQLが必要とするファイルシステムの権限は何ですか？"><span class="tocnumber">2.5</span> <span class="toctext">PostgreSQLが必要とするファイルシステムの権限は何ですか？</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#なぜエンコーディングにUnicodeを選択できないのですか？"><span class="tocnumber">2.6</span> <span class="toctext">なぜエンコーディングにUnicodeを選択できないのですか？</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#英語以外の言語でインストールしたのだけれども、表示されるメッセージが全て英語になってます！"><span class="tocnumber">2.7</span> <span class="toctext">英語以外の言語でインストールしたのだけれども、表示されるメッセージが全て英語になってます！</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-16"><a href="#インストール時によくあるエラー"><span class="tocnumber">3</span> <span class="toctext">インストール時によくあるエラー</span></a>
+<ul>
+<li class="toclevel-2 tocsection-17"><a href="#PostgreSQLやインストーラが起動時にクラッシュしたり、起動できなかったり、起動が固まったりします。"><span class="tocnumber">3.1</span> <span class="toctext">PostgreSQLやインストーラが起動時にクラッシュしたり、起動できなかったり、起動が固まったりします。</span></a>
+<ul>
+<li class="toclevel-3 tocsection-18"><a href="#アンチウィルスソフトウェア"><span class="tocnumber">3.1.1</span> <span class="toctext">アンチウィルスソフトウェア</span></a>
+<ul>
+<li class="toclevel-4 tocsection-19"><a href="#問題がないアンチウィルスソフトウエアには何がありますか？"><span class="tocnumber">3.1.1.1</span> <span class="toctext">問題がないアンチウィルスソフトウエアには何がありますか？</span></a></li>
+</ul>
+</li>
+<li class="toclevel-3 tocsection-20"><a href="#ソフトウェアファイアウォール"><span class="tocnumber">3.1.2</span> <span class="toctext">ソフトウェアファイアウォール</span></a></li>
+<li class="toclevel-3 tocsection-21"><a href="#インストーラがインストール時に実行エラーで終了してしまいます？"><span class="tocnumber">3.1.3</span> <span class="toctext">インストーラがインストール時に実行エラーで終了してしまいます？</span></a></li>
+<li class="toclevel-3 tocsection-22"><a href="#postgresユーザのパスワードに関する障害"><span class="tocnumber">3.1.4</span> <span class="toctext">postgresユーザのパスワードに関する障害</span></a></li>
+<li class="toclevel-3 tocsection-23"><a href="#PATH環境変数"><span class="tocnumber">3.1.5</span> <span class="toctext">PATH環境変数</span></a></li>
+<li class="toclevel-3 tocsection-24"><a href="#initdbのインストールと実行の時、権限に関するエラーが起こります"><span class="tocnumber">3.1.6</span> <span class="toctext">initdbのインストールと実行の時、権限に関するエラーが起こります</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#%COMSPEC%_環境変数の確認"><span class="tocnumber">3.1.7</span> <span class="toctext">%COMSPEC% 環境変数の確認</span></a></li>
+<li class="toclevel-3 tocsection-26"><a href="#インストーラが指定したアカウントが管理者だと言い張ります。実際は管理者ではありません！"><span class="tocnumber">3.1.8</span> <span class="toctext">インストーラが指定したアカウントが管理者だと言い張ります。実際は管理者ではありません！</span></a></li>
+<li class="toclevel-3 tocsection-27"><a href="#ターミナルサービスセッションからはPostgreSQLをインストールできないというエラーメッセージが現れます"><span class="tocnumber">3.1.9</span> <span class="toctext">ターミナルサービスセッションからはPostgreSQLをインストールできないというエラーメッセージが現れます</span></a></li>
+<li class="toclevel-3 tocsection-28"><a href="#&quot;the_user_has_not_been_granted_the_requested_logon_type_at_this_computer&quot;などといったエラーになります"><span class="tocnumber">3.1.10</span> <span class="toctext">"the user has not been granted the requested logon type at this computer"などといったエラーになります</span></a></li>
+<li class="toclevel-3 tocsection-29"><a href="#サービスアカウントの削除方法は？これはユーザリストに出てきません"><span class="tocnumber">3.1.11</span> <span class="toctext">サービスアカウントの削除方法は？これはユーザリストに出てきません</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-30"><a href="#実行時によるある問題"><span class="tocnumber">4</span> <span class="toctext">実行時によるある問題</span></a>
+<ul>
+<li class="toclevel-2 tocsection-31"><a href="#手続き言語をインストールすると&quot;dynamic_load_error&quot;というエラーになります。"><span class="tocnumber">4.1</span> <span class="toctext">手続き言語をインストールすると"dynamic load error"というエラーになります。</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#サーバを一回だけ起動したのですが、多くのpostgres.exeプロセスが存在します。"><span class="tocnumber">4.2</span> <span class="toctext">サーバを一回だけ起動したのですが、多くのpostgres.exeプロセスが存在します。</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#環境変数はどう設定すればいいのですか。"><span class="tocnumber">4.3</span> <span class="toctext">環境変数はどう設定すればいいのですか。</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#ハードウェアは十分ありますが、一度に125程度以上の接続で動作させることができません。"><span class="tocnumber">4.4</span> <span class="toctext">ハードウェアは十分ありますが、一度に125程度以上の接続で動作させることができません。</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-35"><a href="#Windowsのバージョン固有の問題"><span class="tocnumber">5</span> <span class="toctext">Windowsのバージョン固有の問題</span></a>
+<ul>
+<li class="toclevel-2 tocsection-36"><a href="#64ビット版Windowsに32ビット版のPostgreSQLをインストールすることはできますか"><span class="tocnumber">5.1</span> <span class="toctext">64ビット版Windowsに32ビット版のPostgreSQLをインストールすることはできますか</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#PostgreSQL_ODBCドライバはどこにありますか？64ビット版のWindowsで32ビット版のPostgreSQLを使用しています。"><span class="tocnumber">5.2</span> <span class="toctext">PostgreSQL ODBCドライバはどこにありますか？64ビット版のWindowsで32ビット版のPostgreSQLを使用しています。</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#32ビット版のPostgreSQLサーバで64ビット版のODBCプログラムを使用することはできますか？"><span class="tocnumber">5.3</span> <span class="toctext">32ビット版のPostgreSQLサーバで64ビット版のODBCプログラムを使用することはできますか？</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span id=".E3.82.B5.E3.83.9D.E3.83.BC.E3.83.88.E3.81.95.E3.82.8C.E3.82.8B.E3.83.97.E3.83.A9.E3.83.83.E3.83.88.E3.83.95.E3.82.A9.E3.83.BC.E3.83.A0"></span><span class="mw-headline" id="サポートされるプラットフォーム">サポートされるプラットフォーム</span></h2>
+<h3><span id=".E3.81.A9.E3.81.AE.E3.83.90.E3.83.BC.E3.82.B8.E3.83.A7.E3.83.B3.E3.81.AEWindows.E3.81.A7PostgreSQL.E3.81.AF.E5.8B.95.E4.BD.9C.E3.81.97.E3.81.BE.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="どのバージョンのWindowsでPostgreSQLは動作しますか？">どのバージョンのWindowsでPostgreSQLは動作しますか？</span></h3>
+<p>少なくともバージョン9.0の時点では、PostgreSQLはWindows XP以上でサポートされます。32ビットおよび64ビットシステムで動作します。
+</p><p>より新しいメジャーバージョンのサーバがリリースされた後にリリースされた新しいバージョンのオペレーティングシステムについては、そのバージョンのサーバはテストされません。たとえばWindows 7はPostgreSQL 8.4の後にリリースされましたので、PostgreSQL 8.3ではWindows 7をサポートしません。同様に近い将来のRHEL 6がリリースされた時、PostgreSQL 9.0.xのみがそこでサポートされます。
+私たちは少なくとも、Windowsの新しいバージョンを、そのリリースの後のPostgreSQLのメジャーバージョンでサポートすることを目標としています。
+</p><p>ワンクリックインストーラでサポートされるプラットフォームについては、メインダウンロードページではなく、インストーラのダウンロードページ<a rel="nofollow" class="external text" href="http://www.postgresql.org/download/windows">download page for windows</a>を参照してください。
+</p><p>Windows以外のプラットフォームについては、<a href="/wiki/FAQ" title="FAQ">main FAQ</a> and the <a rel="nofollow" class="external text" href="http://www.postgresql.org/download/">main download page</a>を参照してください。
+</p>
+<h3><span id=".E3.81.A9.E3.81.AEWindows.E3.83.97.E3.83.A9.E3.83.83.E3.83.88.E3.83.95.E3.82.A9.E3.83.BC.E3.83.A0.E3.81.AF.E3.82.B5.E3.83.9D.E3.83.BC.E3.83.88.2A.E3.81.95.E3.82.8C.E3.81.AA.E3.81.84.2A.E3.81.AE.E3.81.A7.E3.81.97.E3.82.87.E3.81.86.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="どのWindowsプラットフォームはサポート*されない*のでしょうか？">どのWindowsプラットフォームはサポート*されない*のでしょうか？</span></h3>
+<p>PostgreSQLインストーラは以下ではテストまたはサポート<i>されません</i>。
+</p>
+<ul><li>Windows XP Embedded</li>
+<li>Windows 2000</li>
+<li>Windows NT 4</li>
+<li>Windows NT 3.5.x</li>
+<li>Windows 95/98/ME/3.x</li>
+<li>Windows CE</li>
+<li>Windows Mobile</li></ul>
+<p>これらのプラットフォームはサポートされません。こうしたプラットフォームでの援助をメーリングリストで頼まないでください。
+</p><p>組込みWindowsに関しては多少の情報があります。問題解消のために<a href="/wiki/Troubleshooting_Installation#Installation_fails_on_windows_embedded" title="Troubleshooting Installation">installation on embedded versions of windows</a>を参照してください。
+</p>
+<h3><span id="NT4.E3.81.A8Windows_2000.E3.81.8C.E3.82.B5.E3.83.9D.E3.83.BC.E3.83.88.E3.81.95.E3.82.8C.E3.81.A6.E3.81.84.E3.82.8B.E3.81.A8.E8.81.9E.E3.81.84.E3.81.9F.E3.81.AE.E3.81.A0.E3.81.91.E3.82.8C.E3.81.A9.E3.82.82.E6.9C.AC.E5.BD.93.E3.81.A7.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="NT4とWindows_2000がサポートされていると聞いたのだけれども本当ですか？">NT4とWindows 2000がサポートされていると聞いたのだけれども本当ですか？</span></h3>
+<p>公式にはサポートされておらず、また、以下のような若干の問題がありますが、PostgreSQLはWindows NT4とWindows 2000でも動作する可能性があります。。
+</p>
+<ul><li>インストーラは正しく動作しません。そのため、バイナリの.zipリリース、または、コードをコンパイルして、手作業でインストールしなければなりません。</li>
+<li>PostgreSQLはテーブル空間を実装するためにNTFSファイルシステムの"リパースポイント"機能を使用しています。リパースポイントはNT4では使用できませんので、テーブル空間を使用することはできません。</li>
+<li>標準ではWindows NT4には'runas.exe'コマンドがありません。このため、管理者アカウントからPostgreSQLを起動することが難しくなっています。</li></ul>
+<p>また、NT4での動作確認はほとんど行われていないことにも注意してください。
+</p>
+<ul><li>Windows NT 4またはWindows 2000では試験は行われません。これらのプラットフォームではより新しいバージョンは動作しない可能性があります。</li></ul>
+<p>これらの古いプラットフォームについての問い合わせをメーリングリストで行わないでください。
+けれども、<a rel="nofollow" class="external text" href="http://www.postgresql.org/support/professional_support">professional support</a>の一部の企業が支援してくれるかもしれません。
+</p>
+<h3><span id="Winsows95.E3.82.8498.E3.80.81ME.E3.81.AF.E3.81.A9.E3.81.86.E3.81.AA.E3.81.A3.E3.81.A6.E3.81.84.E3.81.BE.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="Winsows95や98、MEはどうなっていますか？">Winsows95や98、MEはどうなっていますか？</span></h3>
+<p>PostgreSQLはこれらのプラットフォームでは使用できない機能を必要としていますので、これらのプラットフォームでは動作しません。
+こうしたプラットフォームでPostgreSQLを実行する場合は<a rel="nofollow" class="external text" href="http://www.postgresql.org/files/documentation/faqs/text/FAQ_CYGWIN">Cygwin</a>の方を確認してください。こちらは9xプラットフォームをサポートしています。
+</p>
+<h3><span id="Windows.E7.94.A8.E3.81.AB64.E3.83.93.E3.83.83.E3.83.88.E3.81.A7.E6.A7.8B.E7.AF.89.E3.81.95.E3.82.8C.E3.81.9FPostgreSQL.E3.81.AF.E3.81.82.E3.82.8A.E3.81.BE.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="Windows用に64ビットで構築されたPostgreSQLはありますか？">Windows用に64ビットで構築されたPostgreSQLはありますか？</span></h3>
+<p><a href="/wiki/64bit_Windows_port" title="64bit Windows port">64bit Windows port</a>は<a href="/wiki/PostgreSQL_9.0" class="mw-redirect" title="PostgreSQL 9.0">PostgreSQL 9.0</a>でリリースされました。
+</p><p>一般的に、32ビットで構築されたこれまでのバージョンのPostgreSQLは、64ビット版のWindowsでもうまく動作します。これらはおよそ1GB以上のshared_buffersを実質的に使用することができませんが、Windowsカーネルがディスク読み取りをキャッシュするためにメモリを使用しますので、4GB以上のメモリがあることの利点はまだあります。
+</p>
+<h3><span id="64.E3.83.93.E3.83.83.E3.83.88.E7.89.88.E3.81.AEODBC.E3.83.89.E3.83.A9.E3.82.A4.E3.83.90.E3.81.AB.E3.81.A4.E3.81.84.E3.81.A6.E3.81.AF.EF.BC.9F"></span><span class="mw-headline" id="64ビット版のODBCドライバについては？">64ビット版のODBCドライバについては？</span></h3>
+<p>執筆時点では、<a rel="nofollow" class="external text" href="http://psqlodbc.projects.postgresql.org/">psqlODBC</a>のソースコード版には64ビットサポートが存在しますが、64ビットODBCドライバの公式バイナリリリースはありません。詳しくはpsqlODBCのwebサイトを確認してください。
+</p>
+<h2><span id=".E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.AB"></span><span class="mw-headline" id="インストール">インストール</span></h2>
+<h3><span id="Windows.E3.81.A7PostgreSQL.E3.82.92.E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.AB.E3.81.99.E3.82.8B.E3.81.9F.E3.82.81.E3.81.AB.E3.81.AF.E4.BD.95.E3.81.8C.E5.BF.85.E8.A6.81.E3.81.A7.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="WindowsでPostgreSQLをインストールするためには何が必要ですか？">WindowsでPostgreSQLをインストールするためには何が必要ですか？</span></h3>
+<p>Windowsにおける各種ダウンロード方法、インストール方法については<a rel="nofollow" class="external text" href="http://www.postgresql.org/download/windows">the PostgreSQL for Windows download page</a>を参照してください。
+</p><p>WindowsにPostgreSQLをインストールする一番簡単な方法は、EnterPriseDBにより保守されているOne Click installer package]を使用することです。これは上でリンクされたページから入手することができます。
+これは、コンパイル済みのバージョンのPostgreSQLをpgAdmin(管理・保守用のグラフィカルインタフェース)と一緒にインストールする他、特別な機能を追加する'contrib'モジュールや手続き言語を選択してインストールします。
+必要になるかもしれないODBCやJDBCドライバなどの追加コンポーネントのダウンロードとインストールを補助する、StackBuilderと呼ばれるプログラムがインストールされます。
+</p>
+<h3><span id="PostgreSQL.E3.82.92.E3.82.BD.E3.83.BC.E3.82.B9.E3.82.B3.E3.83.BC.E3.83.89.E3.81.8B.E3.82.89.E3.82.B3.E3.83.B3.E3.83.91.E3.82.A4.E3.83.AB.E3.81.99.E3.82.8B.E3.81.9F.E3.82.81.E3.81.AB.E3.81.AF.E4.BD.95.E3.81.8C.E5.BF.85.E8.A6.81.E3.81.A7.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="PostgreSQLをソースコードからコンパイルするためには何が必要ですか？">PostgreSQLをソースコードからコンパイルするためには何が必要ですか？</span></h3>
+<p>WindowsにおけるPostgreSQLのコンパイル方法、サポートされるコンパイラやツールについては<a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/install-windows.html">文書</a>を参照してください。
+</p>
+<h3><span id=".E3.81.AA.E3.81.9CPostgreSQL.E3.82.92.E5.AE.9F.E8.A1.8C.E3.81.99.E3.82.8B.E3.81.9F.E3.82.81.E3.81.AB.E7.AE.A1.E7.90.86.E8.80.85.E4.BB.A5.E5.A4.96.E3.81.AE.E3.82.A2.E3.82.AB.E3.82.A6.E3.83.B3.E3.83.88.E3.81.8C.E5.BF.85.E8.A6.81.E3.81.AA.E3.81.AE.E3.81.A7.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="なぜPostgreSQLを実行するために管理者以外のアカウントが必要なのですか？">なぜPostgreSQLを実行するために管理者以外のアカウントが必要なのですか？</span></h3>
+<p>ハッカーがパッケージ内のソフトウェアの不具合を使用してコンピュータへの取っ掛かりを持った場合、ハッカーはそのサービスを稼動しているユーザアカウントの権限を持つことになります。
+PostgreSQLではこうした不具合はまだありませんが、ハッカーがPostgreSQLの不具合を見つけ、それを悪用してシステムをハックしたとしても、損害が最小となるように管理者以外のサービスアカウントの使用を強制しています。
+</p><p>これはUnixの世界ではかなり前から常識的な方法でした。
+Windowsの世界でも、Microsoftやほかのベンダーがそのシステムのセキュリティを高めるにつれて、標準的な方法になりつつあります。
+</p><p>PostgreSQL リリース8.2では管理者アカウントで実行することが可能であるという点に注意してください。
+PostgreSQL 8.2以降では、取り消せない方法で起動時に管理者権限を放棄することができるので、PostgreSQLが乗っ取られるという極めて起こりそうにない出来事があっても、その後のシステムの安全性を保証します。
+</p>
+<h3><span id="FAT.E3.83.91.E3.83.BC.E3.83.86.E3.82.A3.E3.82.B7.E3.83.A7.E3.83.B3.E3.81.ABPostgreSQL.E3.82.92.E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.AB.E3.81.A7.E3.81.8D.E3.81.BE.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="FATパーティションにPostgreSQLをインストールできますか？">FATパーティションにPostgreSQLをインストールできますか？</span></h3>
+<p>FAT32は何らかのデータベースを稼働させるためのファイルシステムとしてはひどいものですので、FAT32ファイルシステム上のPostgreSQLはサポートも試験もされていません。
+</p><p>PostgreSQLの最優先すべきことはデータの整合性を保つことです。FATおよびFAT32ファイルシステムは単純で、必要とする信頼性やクラッシュに対する安全性を提供していません。さらにFATではセキュリティ機能が提供されませんので、データファイルそのものが承認なしに変更されてしまうのを防ぐことはできません。最後に、PostgreSQLは'リパースポイント'という機能を使用してテーブル空間を実装しています。
+この機能はFATパーティションでは使用できません。
+</p><p>NTFSファイルシステムはジャーナリングファイルシステムであり、より優れた信頼性とクラッシュ時の復旧機能を持っています。更に、判りやすいアクセス制御システムを持ち、PostgreSQLで使用するリパースポイントも提供します。
+</p><p>こうした理由により、PostgreSQLインストーラパッケージでは、NTFSパーティション以外にデータベースクラスタを初期化しません。
+サーバとユーティリティはパーティションの種類は関係なくインストールすることができます。
+</p><p>しかし、FATパーティションしか選べない、まれな場合もあることを把握しています。こうした場合、データベースクラスタを初期化させずに、通常通りにPostgreSQLをインストールすることもできます。インストールが完了した時に、手作業でFATパーティションに対して'initdb.exe'プログラムを実行してください。
+しかしセキュリティと信頼性については妥協することになりますし、また、テーブル空間の作成は失敗します。
+<b>運用段階ではFAT32でPostgreSQLを使用しないでください</b>。
+</p><p>多くの人がこの件について質問する理由は、彼らがUSBキーや外部ハードドライブを持っていて、PostgreSQLデータベースをそこに置きたいからです。そのようなことはしないでください。USBキーや外部ハードドライブをNTFSでフォーマットすることができますので、もしデータベースをそこで実行したいのであればそう<i>すべき</i>です。FATはリカバリ可能（クラッシュセーフ）でなく、Windowsで「安全に取り外す」を用いずにハードドライブを取り外すことはハードドライブに関する限りクラッシュとしてカウントされます。かなりの確率で破損が起こるでしょう。PostgreSQLと共に使用してあなたが気にかけるなんらかのデータを保存するのであれば、リムーバブルドライブをNTFSで再フォーマットすることは<i>大変重要</i>です。
+</p>
+<h3><span id="PostgreSQL.E3.81.8C.E5.BF.85.E8.A6.81.E3.81.A8.E3.81.99.E3.82.8B.E3.83.95.E3.82.A1.E3.82.A4.E3.83.AB.E3.82.B7.E3.82.B9.E3.83.86.E3.83.A0.E3.81.AE.E6.A8.A9.E9.99.90.E3.81.AF.E4.BD.95.E3.81.A7.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="PostgreSQLが必要とするファイルシステムの権限は何ですか？">PostgreSQLが必要とするファイルシステムの権限は何ですか？</span></h3>
+<p>PostgreSQLサービスアカウントには、サービスディレクトリまでの階層のディレクトリ全てに対する<i>読み取り</i>権限が必要です。
+データディレクトリについては<i>書き込み</i>権限<i>のみ</i>が必要です。
+特に、バイナリファイルを格納するディレクトリに対しては、<i>読み取り</i>以外を許可しては<i>なりません</i>。
+（インストール先のディレクトリ以下にある全てのディレクトリについてはインストーラが設定しますので、何も変更していなければ問題にならないはずです。）
+</p><p>また、PostgreSQLにはkernel32.dllやuser32.dllなどのシステムDLLへの<i>読み取り</i>権限が必要です。
+これは通常デフォルトで許可されています。
+CMD.EXEバイナリも同様ですが、こちらはロックされているかもしれませんのでその場合は解除しなければなりません。
+</p><p>マルチユーザシステムでPostgreSQLを稼動させる場合、PostgreSQLディレクトリから管理者以外の全てのユーザの権限を取り除かなければなりません。
+PostgreSQLのファイルに対して権限が必要なユーザは<i>決して</i>存在しません。
+全ての通信はlibpq接続を介して行われます。
+データファイルに直接アクセスすると、情報の漏洩をもたらしたり、システムが不安定になったりします。
+</p>
+<h3><span id=".E3.81.AA.E3.81.9C.E3.82.A8.E3.83.B3.E3.82.B3.E3.83.BC.E3.83.87.E3.82.A3.E3.83.B3.E3.82.B0.E3.81.ABUnicode.E3.82.92.E9.81.B8.E6.8A.9E.E3.81.A7.E3.81.8D.E3.81.AA.E3.81.84.E3.81.AE.E3.81.A7.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="なぜエンコーディングにUnicodeを選択できないのですか？">なぜエンコーディングにUnicodeを選択できないのですか？</span></h3>
+<p>PostgreSQL 8.1からWindows上でUTF-8 UNICODE符号化方式を完全にサポートしました。
+Unicode ODBCドライバはUTF-16をサポートし、また、JDBCドライバは完全にunicodeをサポートします。
+</p><p>PostgreSQLサーバは２バイトのUTF-16、４バイトのUTF-32 Unicode符号化方式を、内部データ格納やネットワーク通信においてサポートしません。
+WindowsにおいてUTF-16がデフォルトの符号化方式であり、Windowsユーザはたいてい「Unicode」といえばこの符号化方式と考えますので、これが問題になるかと想像するかもしれませんが、ODBCおよびJDBCドライバが面倒を見てくれますので、実際のところは問題ありません。
+libpqを直接使用するプログラムはこれに注意しなければなりません。が大した作業ではありません。
+</p>
+<h3><span id=".E8.8B.B1.E8.AA.9E.E4.BB.A5.E5.A4.96.E3.81.AE.E8.A8.80.E8.AA.9E.E3.81.A7.E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.AB.E3.81.97.E3.81.9F.E3.81.AE.E3.81.A0.E3.81.91.E3.82.8C.E3.81.A9.E3.82.82.E3.80.81.E8.A1.A8.E7.A4.BA.E3.81.95.E3.82.8C.E3.82.8B.E3.83.A1.E3.83.83.E3.82.BB.E3.83.BC.E3.82.B8.E3.81.8C.E5.85.A8.E3.81.A6.E8.8B.B1.E8.AA.9E.E3.81.AB.E3.81.AA.E3.81.A3.E3.81.A6.E3.81.BE.E3.81.99.EF.BC.81"></span><span class="mw-headline" id="英語以外の言語でインストールしたのだけれども、表示されるメッセージが全て英語になってます！">英語以外の言語でインストールしたのだけれども、表示されるメッセージが全て英語になってます！</span></h3>
+<p>インストール処理時の言語の選択はインストール時のみにインストーラが使用する言語を何にするかを決めるものです。
+インストール後の製品のメッセージの言語を変更するためには、<i>Natural language support</i>機能付きでインストールしなければなりません。
+その後、postgresql.confファイルを編集し、<i>lc_messages</i>パラメータの値を好みの言語に変更してください。
+</p>
+<h2><span id=".E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.AB.E6.99.82.E3.81.AB.E3.82.88.E3.81.8F.E3.81.82.E3.82.8B.E3.82.A8.E3.83.A9.E3.83.BC"></span><span class="mw-headline" id="インストール時によくあるエラー">インストール時によくあるエラー</span></h2>
+<h3><span id="PostgreSQL.E3.82.84.E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.A9.E3.81.8C.E8.B5.B7.E5.8B.95.E6.99.82.E3.81.AB.E3.82.AF.E3.83.A9.E3.83.83.E3.82.B7.E3.83.A5.E3.81.97.E3.81.9F.E3.82.8A.E3.80.81.E8.B5.B7.E5.8B.95.E3.81.A7.E3.81.8D.E3.81.AA.E3.81.8B.E3.81.A3.E3.81.9F.E3.82.8A.E3.80.81.E8.B5.B7.E5.8B.95.E3.81.8C.E5.9B.BA.E3.81.BE.E3.81.A3.E3.81.9F.E3.82.8A.E3.81.97.E3.81.BE.E3.81.99.E3.80.82"></span><span class="mw-headline" id="PostgreSQLやインストーラが起動時にクラッシュしたり、起動できなかったり、起動が固まったりします。">PostgreSQLやインストーラが起動時にクラッシュしたり、起動できなかったり、起動が固まったりします。</span></h3>
+<p>WindowsにおけるPostgreSQLのインストールと実行時の問題のよくある原因は、Windows Scripting
+Hostの問題、アンチウィルスソフトウェアの問題、（Microsoft以外の）サードパーティ製のソフトウェアファイアウォールです。
+またpostgresサービスアカウントのパスワードで問題が発生することもあります。
+</p><p>以下の節でこれらの問題を説明します。インストーラの問題を問い合わせる前にこれらを読み、手順に従ってみてください。
+</p>
+<h4><span id=".E3.82.A2.E3.83.B3.E3.83.81.E3.82.A6.E3.82.A3.E3.83.AB.E3.82.B9.E3.82.BD.E3.83.95.E3.83.88.E3.82.A6.E3.82.A7.E3.82.A2"></span><span class="mw-headline" id="アンチウィルスソフトウェア">アンチウィルスソフトウェア</span></h4>
+<p>何らかのアンチウィルスソフトをインストールしているのであれば、PostgreSQLで使用されるはずのデータディレクトリを対象から外す<b>必要があります</b>。
+これでうまくいかなければ、アンチウィルスソフトを完全にマシンからアンインストールする必要があるのかもしれません。
+</p><p>PostgreSQLはMicrosoftによる文書に完全にしたがって動作するようにWindows内のファイルアクセスコマンドを要求しますので、アンチウィルスソフトウェアはPostgreSQLの操作に干渉することがあり得ます。
+このため多くのアンチウィルスプログラムは、エラーまたは事故のような動作により、これらのコマンドを少し誤作動させてしまうように変更します。
+かなり単純な方法でファイルにアクセスしますので、ほとんどのプログラムで気になることはありません。
+PostgreSQLは継続的に複数のプロセスから同じファイル群を読み書きしますので、アンチウィルスソフトウェアのプログラムミスや設計ミスをもたらしがちです。
+こうした問題のため、不規則かつ予期できないエラー、最悪データ破損を引き起こすことがあり得ます。
+</p><p>またアンチウィルスソフトウェアがPostgreSQLの動作を劇的に遅くすることがよくあります。
+このためスキャナが無視するように少なくともpostgres.exeとデータディレクトリを対象から外さなければなりません
+</p>
+<h5><span id=".E5.95.8F.E9.A1.8C.E3.81.8C.E3.81.AA.E3.81.84.E3.82.A2.E3.83.B3.E3.83.81.E3.82.A6.E3.82.A3.E3.83.AB.E3.82.B9.E3.82.BD.E3.83.95.E3.83.88.E3.82.A6.E3.82.A8.E3.82.A2.E3.81.AB.E3.81.AF.E4.BD.95.E3.81.8C.E3.81.82.E3.82.8A.E3.81.BE.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="問題がないアンチウィルスソフトウエアには何がありますか？">問題がないアンチウィルスソフトウエアには何がありますか？</span></h5>
+<p>Windowsインストーラを構築する際に使用しているシステムはいずれもSophos AVかAVGの無料版を使用しています。
+またこれらのシステムでは、これらのプログラムを実行中であってもPostgreSQLのリグレッション試験を完全に通過しています。
+Microsoft Security Essentialsも動作することを把握しています。
+</p><p><i>nod32</i>アンチウィルス製品については問題がすでに報告されています。
+この製品を使用している場合は、排除プロセスリストに"postmaster.exe"を追加してください。
+(アドバンスオプションから設定可能です。)
+この問題については解決のための報告を行っています。
+</p><p>McAfeeやPandaアンチウィルスソフトウェア、および、NetLimiterネットワーク監視ソフトウェアについてもすでに問題が報告されています。
+このソフトウェアパッケージと一緒にPostgreSQLが稼動している場合もありますが、一部で動作しないことがあり、これに対するまだ具体的、あるいは推奨する方法はありません。
+インストール時に特化した問題かもしれません。
+アンインストールが必要な場合もありました。
+</p>
+<h4><span id=".E3.82.BD.E3.83.95.E3.83.88.E3.82.A6.E3.82.A7.E3.82.A2.E3.83.95.E3.82.A1.E3.82.A4.E3.82.A2.E3.82.A6.E3.82.A9.E3.83.BC.E3.83.AB"></span><span class="mw-headline" id="ソフトウェアファイアウォール">ソフトウェアファイアウォール</span></h4>
+<p>マシンにサードパーティ製のファイアウォールソフトウェアがインストールされている場合、無効またはアンインストールを試してください。
+実際のところ、Microsoftにより提供される組み込みのファイアウォールが優れた処理を行いますので、Windows XP以降ではサードパーティ製のファイアウォールの必要性はありません。
+一部のできがよくない、サードパーティ製のファイアウォールは正しくアンインストールすることができません。
+このためアンインストールの後、<a rel="nofollow" class="external text" href="http://support.microsoft.com/kb/299357">tell Windows to repair its network settings</a>を行わなければならないかもしれません。
+</p><p>インストールの際に無効にし、アンインストールの時に元に戻すことに失敗する製品が多くあるため、過去サードパーティ製ファイアウォールを使用していて、アンインストールした場合、Windows Firewallが有効に戻っていることを確認してください。
+</p>
+<h4><span id=".E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.A9.E3.81.8C.E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.AB.E6.99.82.E3.81.AB.E5.AE.9F.E8.A1.8C.E3.82.A8.E3.83.A9.E3.83.BC.E3.81.A7.E7.B5.82.E4.BA.86.E3.81.97.E3.81.A6.E3.81.97.E3.81.BE.E3.81.84.E3.81.BE.E3.81.99.EF.BC.9F"></span><span class="mw-headline" id="インストーラがインストール時に実行エラーで終了してしまいます？">インストーラがインストール時に実行エラーで終了してしまいます？</span></h4>
+<p>インストーラが<i>An error occured executing the Microsoft VC++ runtime installer</i>などのエラーで終了する可能性があります。
+これはWindowsでのみ起こり得ます。
+</p><p>これが発生する原因には大きく２つあります。
+</p><p>1) Windows Scripting HostがVBscriptsを実行することができませんでした。
+これは、スクリプトホストが無効な場合（あまりありません）、またはインストーレーションが破損していた場合に発生します。
+この問題の兆候は、<i>CScript Error: Can't find script engine "VBScript" for script "C:\...</i>のようなメッセージです。
+これはVBscriptインタプリタを再登録することで解消することがよくあります。
+<i>Start</i> -&gt; <i>Run</i>をクリックし、以下を入力、そして<i>OK</i>をクリックしてください。
+</p>
+<pre>regsvr32 %systemroot%\system32\vbscript.dll
+</pre>
+<p>これが失敗する場合、古めのバージョンのWindowsであれば<a rel="nofollow" class="external text" href="http://www.microsoft.com/downloads/en/results.aspx?freetext=windows+script+host&amp;displaylang=en&amp;stype=s_basic">updating the scripting host</a>を試してください。
+</p><p>また、レジストリキー HKEY_CLASSES_ROOT\.vbs\(Default) の値が VBSFile となっていることを確認してください。<a rel="nofollow" class="external autonumber" href="http://igordcard.blogspot.com/2012/03/unable-to-write-inside-temp-environment.html">[1]</a>
+</p><p>2) インストーラがシステムの<i>TEMP</i>ディレクトリで適切にファイルを読み書きすることができませんでした。
+これは、<i>TEMP</i>または<i>TMP</i>環境変数が標準以外の値に設定されている場合に起こります。
+これは、ログファイル内の、スクリプトが実行できなかった、または見つからなかったことを示すメッセージによって確認することができます。
+この問題を解消するためには、<i>TEMP</i>または<i>TMP</i>変数が正しい値に設定されていることを確認してください。
+</p>
+<h4><span id="postgres.E3.83.A6.E3.83.BC.E3.82.B6.E3.81.AE.E3.83.91.E3.82.B9.E3.83.AF.E3.83.BC.E3.83.89.E3.81.AB.E9.96.A2.E3.81.99.E3.82.8B.E9.9A.9C.E5.AE.B3"></span><span class="mw-headline" id="postgresユーザのパスワードに関する障害">postgresユーザのパスワードに関する障害</span></h4>
+<p>使用されるパスワードの違いと、パスワードリセットなど一般的な問題を解決させる方法について、Dave Pageが<a rel="nofollow" class="external text" href="http://pgsnake.blogspot.com/2010/07/postgresql-passwords-and-installers.html">ブログ記事</a>を記述しています。
+</p>
+<h4><span id="PATH.E7.92.B0.E5.A2.83.E5.A4.89.E6.95.B0"></span><span class="mw-headline" id="PATH環境変数">PATH環境変数</span></h4>
+<p><i>cygwin</i>をインストールし、かつ、cygwin\binディレクトリがシステムのPATH変数にある場合も問題があります。
+このcygwinディレクトリにはインタプリタ言語(TCL、perl、python)に関連したDLLファイルが存在します。
+が、これらにはインストーラやインストールされたPostgreSQLをハングさせたりクラッシュさせるような不具合があります。
+インストーラを実行する前にパスからcygwin\binディレクトリを消去してください！
+</p><p>libssl、libintl、またはその両方のバージョンを含むディレクトリがPATH環境変数に含まれている場合にも、問題が報告されています。
+</p>
+<h4><span id="initdb.E3.81.AE.E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.AB.E3.81.A8.E5.AE.9F.E8.A1.8C.E3.81.AE.E6.99.82.E3.80.81.E6.A8.A9.E9.99.90.E3.81.AB.E9.96.A2.E3.81.99.E3.82.8B.E3.82.A8.E3.83.A9.E3.83.BC.E3.81.8C.E8.B5.B7.E3.81.93.E3.82.8A.E3.81.BE.E3.81.99"></span><span class="mw-headline" id="initdbのインストールと実行の時、権限に関するエラーが起こります">initdbのインストールと実行の時、権限に関するエラーが起こります</span></h4>
+<p>PostgreSQLサービスアカウントが、インストール先のディレクトリまでの階層全てに権限を持っているか確認してください。
+インストーラはインストール先ディレクトリの権限を設定しますが、その親ディレクトリの権限は設定しません。
+</p><p>ワンクリックインストーラを実行中に、"The database Cluster initialisation failed"のように関連したエラーが表示される可能性があります。
+</p><p>install-postgresqlのログを確認してください。
+ただし、通常は権限エラーに関連しています。下記のスレッドが手助けとなる可能性があります、
+</p><p><a rel="nofollow" class="external free" href="http://forums.enterprisedb.com/posts/list/2044.page#7503">http://forums.enterprisedb.com/posts/list/2044.page#7503</a>
+</p><p>又は代わりに、ディレクトリ権限を修正し、バージョン9では以下のように手動でinitcluster.vbsスクリプトを再起動することが出来ます。
+</p>
+<pre>cscript //NoLogo "&lt;install_path&gt;/installer/server/initcluster.vbs" "postgres" "postgres" "&lt;password&gt;" "&lt;install_path&gt;" "&lt;data_path&gt;" 5432 "DEFAULT"
+</pre>
+<h4><span id=".25COMSPEC.25_.E7.92.B0.E5.A2.83.E5.A4.89.E6.95.B0.E3.81.AE.E7.A2.BA.E8.AA.8D"></span><span class="mw-headline" id="%COMSPEC%_環境変数の確認">%COMSPEC% 環境変数の確認</span></h4>
+<p>いくつかのWindowsインストールソフトウェアは、initdbの実行を阻害する不正な%COMSPEC%環境変数を設定するようです。
+</p><p>コマンドプロンプトにて以下を実行します：
+</p>
+<pre>echo %COMSPEC%
+</pre>
+<p>以下のような記述が見られます：
+</p>
+<pre>   C:\Windows\system32\cmd.exe
+</pre>
+<p>（C:\WindowsはWindowsのインストールディレクトです）。
+</p><p>他に何か存在する場合は、システムコントロールパネルを確認し、環境変数設定のCOMSPECを確認してください。他の値が存在する場合は間違いです：
+</p>
+<ul><li>復元ポイントを作成してください；そして</li>
+<li>バックアップを取り；その後</li>
+<li>システム環境変数設定を変更し、cmd.exeが正しい場所を示すように修正してください</li></ul>
+<p>正しく設定できたか試験をすることができます：
+</p>
+<ul><li>新たにcmd.exeプロンプトを開きます（既に開いているものを再利用しない）；そして</li>
+<li><code>"%COMSPEC%" /C "echo test ok"</code>を実行します</li></ul>
+<p>正しく設定できている場合は"test ok"と表示されるはずです。
+</p>
+<h4><span id=".E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.A9.E3.81.8C.E6.8C.87.E5.AE.9A.E3.81.97.E3.81.9F.E3.82.A2.E3.82.AB.E3.82.A6.E3.83.B3.E3.83.88.E3.81.8C.E7.AE.A1.E7.90.86.E8.80.85.E3.81.A0.E3.81.A8.E8.A8.80.E3.81.84.E5.BC.B5.E3.82.8A.E3.81.BE.E3.81.99.E3.80.82.E5.AE.9F.E9.9A.9B.E3.81.AF.E7.AE.A1.E7.90.86.E8.80.85.E3.81.A7.E3.81.AF.E3.81.82.E3.82.8A.E3.81.BE.E3.81.9B.E3.82.93.EF.BC.81"></span><span class="mw-headline" id="インストーラが指定したアカウントが管理者だと言い張ります。実際は管理者ではありません！">インストーラが指定したアカウントが管理者だと言い張ります。実際は管理者ではありません！</span></h4>
+<p>よくあるのは、そのつもりがなかったとしても、指定したアカウントがadministratorまたはpowerユーザであることです。
+インストーラで使用している検査は具体的にいうとAdministratorsグループやPower Usersグループのメンバを検査しています。
+作業を戻して、「Local Users and Groups」からAdministratorsグループを開き、メンバを確認してください。
+更に、どのグループ(ドメインまたはローカル)がAdministratorsグループのメンバになっているか、そしてそのグループのグループメンバなどなどと確認してください。
+PostgreSQLは入れ子のグループに対して全てのレベルを検査します。
+</p>
+<h4><span id=".E3.82.BF.E3.83.BC.E3.83.9F.E3.83.8A.E3.83.AB.E3.82.B5.E3.83.BC.E3.83.93.E3.82.B9.E3.82.BB.E3.83.83.E3.82.B7.E3.83.A7.E3.83.B3.E3.81.8B.E3.82.89.E3.81.AFPostgreSQL.E3.82.92.E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.AB.E3.81.A7.E3.81.8D.E3.81.AA.E3.81.84.E3.81.A8.E3.81.84.E3.81.86.E3.82.A8.E3.83.A9.E3.83.BC.E3.83.A1.E3.83.83.E3.82.BB.E3.83.BC.E3.82.B8.E3.81.8C.E7.8F.BE.E3.82.8C.E3.81.BE.E3.81.99"></span><span class="mw-headline" id="ターミナルサービスセッションからはPostgreSQLをインストールできないというエラーメッセージが現れます">ターミナルサービスセッションからはPostgreSQLをインストールできないというエラーメッセージが現れます</span></h4>
+<p>残念ながらその通りです。
+PostgreSQLのバックエンドはTSセッションからは実行しません。
+また、initdbを行うために、インストーラはスタンドアロンのバックエンドを起動しなければなりません。
+そのため、インストールはコンソールから行わなければなりません。
+Windows Server 2003を使用している場合は、単なる管理用セッションではなく、実際のコンソールにリモートアクセスすることができることに注意してください。
+このためには、<i>mstsc /console</i>を実行してリモートデスクトップ接続を開始し、その後は通常通りに接続してください。
+これはサーバローカルのコンソールをロックし、そのセッション経由のコントロールを提供します。
+この状況であれば、PostgreSQLをうまくインストールできるはずです。
+</p>
+<h4><span id=".22the_user_has_not_been_granted_the_requested_logon_type_at_this_computer.22.E3.81.AA.E3.81.A9.E3.81.A8.E3.81.84.E3.81.A3.E3.81.9F.E3.82.A8.E3.83.A9.E3.83.BC.E3.81.AB.E3.81.AA.E3.82.8A.E3.81.BE.E3.81.99"></span><span class="mw-headline" id="&quot;the_user_has_not_been_granted_the_requested_logon_type_at_this_computer&quot;などといったエラーになります">"the user has not been granted the requested logon type at this computer"などといったエラーになります</span></h4>
+<p>指定したPostgreSQLアカウントが『サービスとしてログオン』権限と『ローカルにログオン』権限を持っていることを確認してください。
+『ローカルにログオン』権限はインストール段階でのみ必要で、セキュリティポリシーが要求している場合インストール後に取り除くことができます。
+(権限は『ローカルセキュリティポリシー』MMC スナップインを使用して付与したり削除したりできます。
+『ローカルにログオン』権限はデフォルトです。『サービスとしてログオン』権限は通常、インストーラによって自動的に付与されます。)
+</p><p>まだ問題があるのであれば、監査を(『ローカルセキュリティポリシー』スナップインを使用して)有効にし、他にどんな権限がセットアップに必要かを知らせてください。
+</p><p>コンピュータがドメインのメンバである場合、グループポリシーを使用してドメインレベルでセキュリティポリシーが制御されているかもしれません。
+</p>
+<h4><span id=".E3.82.B5.E3.83.BC.E3.83.93.E3.82.B9.E3.82.A2.E3.82.AB.E3.82.A6.E3.83.B3.E3.83.88.E3.81.AE.E5.89.8A.E9.99.A4.E6.96.B9.E6.B3.95.E3.81.AF.EF.BC.9F.E3.81.93.E3.82.8C.E3.81.AF.E3.83.A6.E3.83.BC.E3.82.B6.E3.83.AA.E3.82.B9.E3.83.88.E3.81.AB.E5.87.BA.E3.81.A6.E3.81.8D.E3.81.BE.E3.81.9B.E3.82.93"></span><span class="mw-headline" id="サービスアカウントの削除方法は？これはユーザリストに出てきません">サービスアカウントの削除方法は？これはユーザリストに出てきません</span></h4>
+<p>WindowsのGUIツールは時々一部のアカウントを隠しますので、そこから削除することはできません。
+これには自動的に作成（過去のインストレーションから引き継がれたのかもしれません）されたPostgreSQLサービスアカウントが含まれます。このアカウントを削除するためには、以下のようにコマンドラインからNETコマンドを使用してください。
+</p>
+<pre>NET USER &lt;username&gt; /DELETE
+</pre>
+<p>ここで&lt;username&gt;はユーザのWindowsログイン名、たとえば<i>postgres</i>です。
+</p>
+<h2><span id=".E5.AE.9F.E8.A1.8C.E6.99.82.E3.81.AB.E3.82.88.E3.82.8B.E3.81.82.E3.82.8B.E5.95.8F.E9.A1.8C"></span><span class="mw-headline" id="実行時によるある問題">実行時によるある問題</span></h2>
+<h3><span id=".E6.89.8B.E7.B6.9A.E3.81.8D.E8.A8.80.E8.AA.9E.E3.82.92.E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.AB.E3.81.99.E3.82.8B.E3.81.A8.22dynamic_load_error.22.E3.81.A8.E3.81.84.E3.81.86.E3.82.A8.E3.83.A9.E3.83.BC.E3.81.AB.E3.81.AA.E3.82.8A.E3.81.BE.E3.81.99.E3.80.82"></span><span class="mw-headline" id="手続き言語をインストールすると&quot;dynamic_load_error&quot;というエラーになります。">手続き言語をインストールすると"dynamic load error"というエラーになります。</span></h3>
+<p>その手続き言語用の実際の言語DLLが存在しないことを意味する場合がほとんどです。
+PostgreSQLのDLLには言語バインディングのみしか含まれてません。
+言語の分散DLLはシステムPATHに存在しなければなりません。
+現時点の異なる手続き言語で必要なDLLの一覧に関しては、<a rel="nofollow" class="external text" href="http://pginstaller.projects.postgresql.org">インストール手順</a>を参照してください。
+</p><p>どのDLLが存在しないかを正確に調べるために、Microsoftが提供する<i>depends</i>ツールを使用することができます。
+これは、インストール用とは別のWindows CDにあるWindows Support Toolsから利用可能です。
+<i>depends plpython.dll</i> (PL/pythonの場合)を実行することで、どのインポートが存在しないかを表示します。
+</p>
+<h3><span id=".E3.82.B5.E3.83.BC.E3.83.90.E3.82.92.E4.B8.80.E5.9B.9E.E3.81.A0.E3.81.91.E8.B5.B7.E5.8B.95.E3.81.97.E3.81.9F.E3.81.AE.E3.81.A7.E3.81.99.E3.81.8C.E3.80.81.E5.A4.9A.E3.81.8F.E3.81.AEpostgres.exe.E3.83.97.E3.83.AD.E3.82.BB.E3.82.B9.E3.81.8C.E5.AD.98.E5.9C.A8.E3.81.97.E3.81.BE.E3.81.99.E3.80.82"></span><span class="mw-headline" id="サーバを一回だけ起動したのですが、多くのpostgres.exeプロセスが存在します。">サーバを一回だけ起動したのですが、多くのpostgres.exeプロセスが存在します。</span></h3>
+<p>これは正常です。
+PostgreSQLは複数プロセスアーキテクチャを使用しています。
+空のシステムでは、2個から5個のプロセスが存在するかと思います。
+クライアントが接続し始めると、プロセス数は増加します。
+</p>
+<h3><span id=".E7.92.B0.E5.A2.83.E5.A4.89.E6.95.B0.E3.81.AF.E3.81.A9.E3.81.86.E8.A8.AD.E5.AE.9A.E3.81.99.E3.82.8C.E3.81.B0.E3.81.84.E3.81.84.E3.81.AE.E3.81.A7.E3.81.99.E3.81.8B.E3.80.82"></span><span class="mw-headline" id="環境変数はどう設定すればいいのですか。">環境変数はどう設定すればいいのですか。</span></h3>
+<p>PostgreSQLは複数の設定のために環境変数を使用します。
+ほとんどのバージョンのWindowsでは、環境変数を変更するためにマイコンピュータのプロパティを開き、「詳細設定」を選択します。
+2種類の環境変数が存在することに注意してください。
+ひとつは全ユーザに適用されるシステム環境変数、もうひとつは現在のユーザ向けの環境変数です。
+PostgreSQLサービス向けの設定を行うための環境変数では、システム環境変数を変更しなければなりません。
+システム環境変数を変更した後、サービスを再起動しなければなりません。
+</p>
+<h3><span id=".E3.83.8F.E3.83.BC.E3.83.89.E3.82.A6.E3.82.A7.E3.82.A2.E3.81.AF.E5.8D.81.E5.88.86.E3.81.82.E3.82.8A.E3.81.BE.E3.81.99.E3.81.8C.E3.80.81.E4.B8.80.E5.BA.A6.E3.81.AB125.E7.A8.8B.E5.BA.A6.E4.BB.A5.E4.B8.8A.E3.81.AE.E6.8E.A5.E7.B6.9A.E3.81.A7.E5.8B.95.E4.BD.9C.E3.81.95.E3.81.9B.E3.82.8B.E3.81.93.E3.81.A8.E3.81.8C.E3.81.A7.E3.81.8D.E3.81.BE.E3.81.9B.E3.82.93.E3.80.82"></span><span class="mw-headline" id="ハードウェアは十分ありますが、一度に125程度以上の接続で動作させることができません。">ハードウェアは十分ありますが、一度に125程度以上の接続で動作させることができません。</span></h3>
+<p>サービスとして使用すると、おおよそ125以上の同時接続で失敗することを経験するかもしれません。
+PostgreSQLが依存するライブラリの一部がuser32.dllに依存することが原因で発生する可能性があります。
+user32.dllはデスクトップヒープとして知られる領域からメモリを割り当てます。
+デスクトップヒープはログインセッションごとに割り当てられ、通常、非対話型セッションでは512キロバイトが割り当てられます。
+通常稼動する各postgresプロセスはおおよそ3.2キロバイトのデスクトップヒープを消費します。
+これとその他のオーバーヘッドにより、おおよそ125接続近辺で割り当て可能なヒープがなくなります。
+これはコマンドラインから起動した場合には発生しません（より正確には、もっと多くの接続で発生するようになります）。
+対話型のログインセッションで通常3メガバイトのデスクトップヒープが割り当てられるからです。
+</p><p><a rel="nofollow" class="external text" href="http://support.microsoft.com/kb/184802">Microsoft ナレッジベースの記事</a>で紹介されているようにレジストリの第三SharedSection値を変更することで、非対話型デスクトップヒープを増やすことができます。
+あまりに大きな値を指定するとシステムが起動できなくなる可能性がありますので、これには十分な注意が必要です。
+</p><p><br />
+</p>
+<h2><span id="Windows.E3.81.AE.E3.83.90.E3.83.BC.E3.82.B8.E3.83.A7.E3.83.B3.E5.9B.BA.E6.9C.89.E3.81.AE.E5.95.8F.E9.A1.8C"></span><span class="mw-headline" id="Windowsのバージョン固有の問題">Windowsのバージョン固有の問題</span></h2>
+<h4><span id="64.E3.83.93.E3.83.83.E3.83.88.E7.89.88Windows.E3.81.AB32.E3.83.93.E3.83.83.E3.83.88.E7.89.88.E3.81.AEPostgreSQL.E3.82.92.E3.82.A4.E3.83.B3.E3.82.B9.E3.83.88.E3.83.BC.E3.83.AB.E3.81.99.E3.82.8B.E3.81.93.E3.81.A8.E3.81.AF.E3.81.A7.E3.81.8D.E3.81.BE.E3.81.99.E3.81.8B"></span><span class="mw-headline" id="64ビット版Windowsに32ビット版のPostgreSQLをインストールすることはできますか">64ビット版Windowsに32ビット版のPostgreSQLをインストールすることはできますか</span></h4>
+<p>最近の32ビット版のPostgreSQL（8.3以降）は64ビット版のWindows XP以降にインストールし、使用することができます。しかし最大プロセスアドレス空間（とこれに伴う共有メモリ）に関して32ビットの制限が残っています。
+</p><p>32ビット版のPostgreSQLサーバに、サーバが稼動中のコンピュータ、またはプログラムの実行環境に64ビット版のlibpqもしくはpsqlODBCドライバがインストールされている場合はそのコンピュータ上の64ビット版のプログラムから接続することができます。
+</p><p>32ビット版のPostgreSQLサーバは32ビット版のlibpqとpsqlODBCしかインストールしませんので、追加で64ビット版のODBCドライバかlibpqをインストールしていない限り、サーバをインストールしたコンピュータ上では32ビット版のプログラムのみがそのデータベースを使用することができます。
+</p>
+<h4><span id="PostgreSQL_ODBC.E3.83.89.E3.83.A9.E3.82.A4.E3.83.90.E3.81.AF.E3.81.A9.E3.81.93.E3.81.AB.E3.81.82.E3.82.8A.E3.81.BE.E3.81.99.E3.81.8B.EF.BC.9F64.E3.83.93.E3.83.83.E3.83.88.E7.89.88.E3.81.AEWindows.E3.81.A732.E3.83.93.E3.83.83.E3.83.88.E7.89.88.E3.81.AEPostgreSQL.E3.82.92.E4.BD.BF.E7.94.A8.E3.81.97.E3.81.A6.E3.81.84.E3.81.BE.E3.81.99.E3.80.82"></span><span class="mw-headline" id="PostgreSQL_ODBCドライバはどこにありますか？64ビット版のWindowsで32ビット版のPostgreSQLを使用しています。">PostgreSQL ODBCドライバはどこにありますか？64ビット版のWindowsで32ビット版のPostgreSQLを使用しています。</span></h4>
+<p>32ビット版のドライバを使用して32ビット版のアプリケーション用のデータソースを設定するためには32ビット版のODBC管理を使用しなければなりません。
+</p><p><a rel="nofollow" class="external text" href="http://psqlodbc.projects.postgresql.org">psqlODBC</a>の<a href="#What_about_64-bit_ODBC_drivers?">64-bit version</a>を同時にインストールしていない限り、PostgreSQLの32ビット版のインストールでは32ビット版のODBCドライバしかありません。この32ビットODBCドライバは32ビットプログラムのみで使用することができ、「64ビット版ODBC管理では現れません」。
+</p><p>64ビット版のWindowsの<code>c:\windows\system32\odbcad32</code>は、この名前にも関わらず「64ビット」ODBCドライバ管理ですので、これは混乱を招きます。これはWindows開発の歴史による産物です。多くのアプリケーションとインストーラがこの名前とパスにあるodbcad32.exeに依存していることは明らかです。このためMicrosoftはばかげた名前になったにも関わらず面倒な状態に陥りました。「system32」ディレクトリが64ビット版Windowsでもこの名前であることも同じ理由です。PostgreSQLでこれをどうにかすることはできません。
+</p><p>参考文献: <a rel="nofollow" class="external text" href="http://support.microsoft.com/kb/942976">http://support.microsoft.com/kb/942976</a>
+</p><p>この記事を読めば64ビット版Windowsにおける32ビット版のODBC管理が以下にあることが分かるでしょう。
+</p>
+<pre>%systemdrive%\Windows\SysWoW64\odbcad32.exe
+</pre>
+<p>上記パスを"Start-&gt;Run"に入力することで、これを起動することができます。32ビット版のODBC管理上にPostgreSQL ODBCドライバが現れます。
+</p><p>64ビット版のアプリケーションでは32ビット版のODBCドライバを使用することは「できません」。つまり、64ビット版のODBCドライバをインストールしていない限り32ビット版のアプリケーションでのみPostgreSQL ODBCドライバを使用することができます。
+</p>
+<h4><span id="32.E3.83.93.E3.83.83.E3.83.88.E7.89.88.E3.81.AEPostgreSQL.E3.82.B5.E3.83.BC.E3.83.90.E3.81.A764.E3.83.93.E3.83.83.E3.83.88.E7.89.88.E3.81.AEODBC.E3.83.97.E3.83.AD.E3.82.B0.E3.83.A9.E3.83.A0.E3.82.92.E4.BD.BF.E7.94.A8.E3.81.99.E3.82.8B.E3.81.93.E3.81.A8.E3.81.AF.E3.81.A7.E3.81.8D.E3.81.BE.E3.81.99.E3.81.8B.EF.BC.9F"></span><span class="mw-headline" id="32ビット版のPostgreSQLサーバで64ビット版のODBCプログラムを使用することはできますか？">32ビット版のPostgreSQLサーバで64ビット版のODBCプログラムを使用することはできますか？</span></h4>
+<p>64ビット版の<a rel="nofollow" class="external autonumber" href="http://psqlodbc.projects.postgresql.org">[2]</a>ドライバをインストールしている場合のみです。インストール節を参照してください。
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408015605
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.035 seconds
+Real time usage: 0.047 seconds
+Preprocessor visited node count: 140/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 267/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    7.825      1 Template:Languages
+100.00%    7.825      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:554-0!canonical and timestamp 20260408015605 and revision id 27680.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows/ja&amp;oldid=27680">https://wiki.postgresql.org/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows/ja&amp;oldid=27680</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:FAQ" title="Category:FAQ">FAQ</a></li><li><a href="/wiki/Category:Japanese" title="Category:Japanese">Japanese</a></li><li><a href="/wiki/Category:Windows" title="Category:Windows">Windows</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Running_%26_Installing_PostgreSQL_On_Native_Windows/ja" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/Talk:Running_%26_Installing_PostgreSQL_On_Native_Windows/ja" rel="discussion" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Running_%26_Installing_PostgreSQL_On_Native_Windows/ja">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows/ja&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows/ja&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Running_%26_Installing_PostgreSQL_On_Native_Windows/ja" title="Page">Page</a></li><li id="talk-mobile" class="mw-list-item"><a href="/wiki/Talk:Running_%26_Installing_PostgreSQL_On_Native_Windows/ja" title="Discussion">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Running+%26+Installing+PostgreSQL+On+Native+Windows%2Fja" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Running_%26_Installing_PostgreSQL_On_Native_Windows/ja" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Running_%26_Installing_PostgreSQL_On_Native_Windows/ja" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows/ja&amp;oldid=27680" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows/ja&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 30 May 2016, at 03:35.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.035","walltime":"0.047","ppvisitednodes":{"value":140,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":267,"limit":5000000},"timingprofile":["100.00%    7.825      1 Template:Languages","100.00%    7.825      1 -total"]},"cachereport":{"timestamp":"20260408015605","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":401});});</script>
+</body>
+</html>

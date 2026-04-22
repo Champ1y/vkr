@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 18: 67.3. Subtransactions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/18/subxacts.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:07:09" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="67.3. Subtransactions" />
+  <meta property="og:description" content="67.3.&amp;nbsp;Subtransactions # Subtransactions are started inside transactions, allowing large transactions to be broken into smaller units. Subtransactions can commit or …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?290b0238" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?290b0238">
+
+  <script src="/media/js/theme.js?290b0238"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/subxacts.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/18/index.html">PostgreSQL 18</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/subxacts.html" title="PostgreSQL 18 - 67.3. Subtransactions" class="docs-version-selected">Current</a>
+                          (<a href="/docs/18/subxacts.html" title="PostgreSQL 18 - 67.3. Subtransactions" class="docs-version-selected">18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/subxacts.html" title="PostgreSQL 17 - 67.3. Subtransactions" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/subxacts.html" title="PostgreSQL 16 - 67.3. Subtransactions" >16</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/subxacts.html" title="PostgreSQL devel - 67.3. Subtransactions"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/18/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">67.3.&nbsp;Subtransactions</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="xact-locking.html" title="67.2.&nbsp;Transactions and Locking">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="transactions.html" title="Chapter&nbsp;67.&nbsp;Transaction Processing">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;67.&nbsp;Transaction Processing</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="two-phase.html" title="67.4.&nbsp;Two-Phase Transactions">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="SUBXACTS">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">67.3.&nbsp;Subtransactions <a href="#SUBXACTS" class="id_link">#</a></h2>
+      </div>
+    </div>
+  </div>
+  <p>Subtransactions are started inside transactions, allowing large transactions to be broken into smaller units. Subtransactions can commit or abort without affecting their parent transactions, allowing parent transactions to continue. This allows errors to be handled more easily, which is a common application development pattern. The word subtransaction is often abbreviated as <em class="firstterm">subxact</em>.</p>
+  <p>Subtransactions can be started explicitly using the <code class="command">SAVEPOINT</code> command, but can also be started in other ways, such as PL/pgSQL's <code class="literal">EXCEPTION</code> clause. PL/Python and PL/Tcl also support explicit subtransactions. Subtransactions can also be started from other subtransactions. The top-level transaction and its child subtransactions form a hierarchy or tree, which is why we refer to the main transaction as the top-level transaction.</p>
+  <p>If a subtransaction is assigned a non-virtual transaction ID, its transaction ID is referred to as a <span class="quote">“<span class="quote">subxid</span>”</span>. Read-only subtransactions are not assigned subxids, but once they attempt to write, they will be assigned one. This also causes all of a subxid's parents, up to and including the top-level transaction, to be assigned non-virtual transaction ids. We ensure that a parent xid is always lower than any of its child subxids.</p>
+  <p>The immediate parent xid of each subxid is recorded in the <code class="filename">pg_subtrans</code> directory. No entry is made for top-level xids since they do not have a parent, nor is an entry made for read-only subtransactions.</p>
+  <p>When a subtransaction commits, all of its committed child subtransactions with subxids will also be considered subcommitted in that transaction. When a subtransaction aborts, all of its child subtransactions will also be considered aborted.</p>
+  <p>When a top-level transaction with an xid commits, all of its subcommitted child subtransactions are also persistently recorded as committed in the <code class="filename">pg_xact</code> subdirectory. If the top-level transaction aborts, all its subtransactions are also aborted, even if they were subcommitted.</p>
+  <p>The more subtransactions each transaction keeps open (not rolled back or released), the greater the transaction management overhead. Up to 64 open subxids are cached in shared memory for each backend; after that point, the storage I/O overhead increases significantly due to additional lookups of subxid entries in <code class="filename">pg_subtrans</code>.</p>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="xact-locking.html" title="67.2.&nbsp;Transactions and Locking">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="transactions.html" title="Chapter&nbsp;67.&nbsp;Transaction Processing">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="two-phase.html" title="67.4.&nbsp;Two-Phase Transactions">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">67.2.&nbsp;Transactions and Locking&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;67.4.&nbsp;Two-Phase Transactions</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/18/subxacts.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?290b0238"></script>
+
+  </body>
+</html>

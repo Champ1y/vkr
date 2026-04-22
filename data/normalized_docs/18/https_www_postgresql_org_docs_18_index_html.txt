@@ -1,0 +1,1 @@
+[PostgreSQL 18.3 Documentation / The PostgreSQL Global Development Group] Copyright © 1996–2026 The PostgreSQL Global Development Group

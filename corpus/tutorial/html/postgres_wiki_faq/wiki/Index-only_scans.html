@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Index-only scans - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"743032da226dce08f396f710","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Index-only_scans","wgTitle":"Index-only scans","wgCurRevisionId":27848,"wgRevisionId":27848,"wgArticleId":1544,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Indexes"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Index-only_scans","wgRelevantArticleId":1544,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Index-only_scans rootpage-Index-only_scans skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Index-only scans</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+Index-only scans are a major performance feature added to Postgres 9.2. They allow certain types of queries to be satisfied just by retrieving data from indexes, and not from tables. This can result in a significant reduction in the amount of I/O necessary to satisfy queries.
+</p><p>During a regular index scan, indexes are traversed, in a manner similar to any other tree structure, by comparing a constant against Datums that are stored in the index. Btree-indexed types must satisfy the trichotomy property; that is, the type must follow the reflexive, symmetric and transitive law. Those laws accord with our intuitive understanding of how a type ought to behave anyway, but the fact that an index's physical structure reflects the relative values of Datums actually mandates that these rules be followed by types. Btree indexes contain what are technically redundant copies of the column data that is indexed.
+</p><p>PostgreSQL indexes do not contain visibility information. That is, it is not directly possible to ascertain if any given tuple is visible to the current transaction, which is why it has taken so long for index-only scans to be implemented. Writing an implementation with a cheap but reliable visibility look-aside proved challenging.
+</p><p>The implementation of the feature disproportionately involved making an existing on-disk structure called the visibility map crash-safe. It was necessary for the structure to reliably (and inexpensively) indicate visibility of index tuples - to do any less would imply the possibility of index-only scans producing incorrect results, which of course would be absolutely unacceptable.
+</p><p>The fact that indexes only contain data that is actually indexed, and not other unindexed columns, naturally precludes using an index-only scan when the other columns are queried (by appearing in a query select list, for example).
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Example_queries_where_index-only_scans_could_be_used_in_principle"><span class="tocnumber">1</span> <span class="toctext">Example queries where index-only scans could be used in principle</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Index-only_scans_and_index-access_methods"><span class="tocnumber">2</span> <span class="toctext">Index-only scans and index-access methods</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#The_Visibility_Map_(and_other_relation_forks)"><span class="tocnumber">3</span> <span class="toctext">The Visibility Map (and other relation forks)</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Crash_safety,_recovery_and_the_visibility_map"><span class="tocnumber">4</span> <span class="toctext">Crash safety, recovery and the visibility map</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#Covering_indexes"><span class="tocnumber">5</span> <span class="toctext">Covering indexes</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Interaction_with_HOT"><span class="tocnumber">6</span> <span class="toctext">Interaction with HOT</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#What_types_of_queries_may_be_satisfied_by_an_index-only_scan?"><span class="tocnumber">7</span> <span class="toctext">What types of queries may be satisfied by an index-only scan?</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Is_&quot;count(*)&quot;_much_faster_now?"><span class="tocnumber">8</span> <span class="toctext">Is "count(*)" much faster now?</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#Why_isn&#39;t_my_query_using_an_index-only_scan?"><span class="tocnumber">9</span> <span class="toctext">Why isn't my query using an index-only scan?</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#Summary"><span class="tocnumber">10</span> <span class="toctext">Summary</span></a></li>
+</ul>
+</div>
+
+<h3><span class="mw-headline" id="Example_queries_where_index-only_scans_could_be_used_in_principle">Example queries where index-only scans could be used in principle</span></h3>
+<p>Assuming that there is some (non-expression) index on a column (typically a primary key):
+</p>
+<pre> select count(*) from categories;
+</pre>
+<p>Assuming that there is a composite index on (1st_indexed_col, 2nd_indexed_col):
+</p>
+<pre> select 1st_indexed_col, 2nd_indexed_col from categories;
+</pre>
+<p>Postgres 9.2 added the capability of allowing indexed_col op ANY(ARRAY[...]) conditions to be used in plain index scans and index-only scans. Previously, such conditions could only be used in bitmap index scans. For this reason, it is possible to see an index-only scan for these ScalarArrayOpExpr queries:
+</p>
+<pre> select indexed_col from categories where indexed_col in (4, 5, 6);
+</pre>
+<h3><span class="mw-headline" id="Index-only_scans_and_index-access_methods">Index-only scans and index-access methods</span></h3>
+<p>Index-only scans are not actually limited to scans on btree indexes. SP-GiST operator classes may support index-only scans.
+</p>
+<pre> postgres=# select amname, amcanreturn from pg_am where amcanreturn&#160;!= 0;
+  amname | amcanreturn
+ --------+--------------
+  btree  | btcanreturn
+  spgist | spgcanreturn
+ (2 rows)
+</pre>
+<p>SP-GiST opclasses may or may not imply that the actual on-disk index is "lossy"; there will be full redundant copies of Datums stored only for certain operator classes, and so index-only scans are only actually supported by some SP-GiST indexes. Support for additional index AMs will probably follow in a future release of PostgreSQL - GiST and GIN operator classes like btree_gist and btree_gin, or in 9.3, SP-GiST's "quad tree over a range" opclass, are not lossy, and so could in principle support index-only scans. Also, even with lossy indexes, it is still possible in principle to solve "select count(*)" queries, which may follow in a future release.
+</p>
+<h3><span id="The_Visibility_Map_.28and_other_relation_forks.29"></span><span class="mw-headline" id="The_Visibility_Map_(and_other_relation_forks)">The Visibility Map (and other relation forks)</span></h3>
+<p>The Visibility Map is a simple data structure associated with every heap relation (table). It is a "relation fork"; an on-disk ancillary file associated with a particular relation (table or index). Note that index relations (that is, indexes) do not have a visibility map associated with them. The visibility map is concerned with tracking which tuples are visible to all transactions at a high level. Tuples from one transaction may or may not be visible to any given other transaction, depending on whether or not their originating transaction actually committed (yet, or ever, if the transaction aborted), and when that occurred relative to our transaction's current snapshot. Note that the exact
+behaviour depends on our transaction isolation level. Note also that it is quite possible for one transaction to see one physical tuple/set of values for one logical tuple, while another transaction sees other, distinct values for that same logical tuple, because, in effect, each of the two transaction has a differing idea of what constitutes "now". This is the core idea of MVCC. When there is absolute consensus that all physical tuples (row versions) in a heap page are visible, the page's corresponding bit may be set.
+</p><p>Another relation fork that you may be familiar with is the freespace map. In contrast to the visibility map, there is a FSM&#160;for both heap and index relations (with the sole exception of hash index relations, which have none).
+</p><p>The purpose of the freespace map is to quickly locate a page with enough free space to hold a tuple to be stored, or to determine if no such page exists and the relation has to be extended.
+</p><p>In PostgreSQL 8.4, the current freespace map implementation was added. It made the freespace map an on-disk relation fork. The previous implementation required administrators to guestimate the number of relations, and the required freespace map size for each, so that the freespace map existed only in a fixed allocation of shared memory. This tended to result in wasted space due to undersizing, as the core system's storage manager needlessly extended relations.
+</p>
+<pre> [peter@peterlaptop 12935]$ ls -l -h -a
+ -rw-------. 1 peter peter 8.0K Sep 28 00:00 12910
+ -rw-------. 1 peter peter  24K Sep 28 00:00 12910_fsm
+ -rw-------. 1 peter peter 8.0K Sep 28 00:00 12910_vm
+ ***SNIP***
+</pre>
+<p>The FSM is structured as a binary tree <a rel="nofollow" class="external autonumber" href="http://www.postgresql.org/docs/9.2/static/storage-fsm.html">[1]</a>. There is one leaf node per heap page, with non-leaf nodes stores the maximum amount of free space for any of its children. So, unlike EXPLAIN output's node costs, the values are not cumulative.
+</p><p>The visibility map is a simpler structure. There is one bit for each page in the heap relation that the visibility map corresponds to.
+</p><p>The primary practical reason for having and maintaining the visibility map is to optimise VACUUM. A set bit indicates that all tuples on the corresponding heap page are known to be visible to all transactions, and therefore that vacuuming the page is unnecessary. Like the new freespace map implementation, the visibility map was added in Postgres 8.4.
+</p><p>The visibility map is conservative in that a set bit (1) indicates that all tuples are visible on the page, but an unset bit (0) indicates that that condition may or may not be true <a rel="nofollow" class="external autonumber" href="http://www.postgresql.org/docs/9.2/static/storage-vm.html">[2]</a>.
+</p>
+<h3><span id="Crash_safety.2C_recovery_and_the_visibility_map"></span><span class="mw-headline" id="Crash_safety,_recovery_and_the_visibility_map">Crash safety, recovery and the visibility map</span></h3>
+<p>This involves WAL-logging setting a bit within the visibility map during VACUUM, and taking various special measures during recovery.
+</p><p>The Postgres write-ahead log is widely used to ensure crash-safety, but it is also intergral to the built-in Hot Standby/Streaming replication feature.
+</p><p>Recovery treats marking a page all-visible as a recovery conflict for snapshots that could still fail to see XIDs on that page.  PostgreSQL may in the future try to soften this, so that the implementation simply forces index scans to do heap fetches in cases where this may be an issue, rather than throwing a hard conflict.
+</p>
+<h3><span class="mw-headline" id="Covering_indexes">Covering indexes</span></h3>
+<p>Covering indexes are indexes creating for the express purpose of being used in index-only scans. They typically "cover" more columns than would otherwise make sense for an index, typically columns that are known to be part of particular expensive, frequently executed query's selectlist. PostgreSQL supports using just the first few columns of the index in a regular index scan if that is in the query's predicate, so covering indexes need not be completely useless for regular index scans.
+</p>
+<h3><span class="mw-headline" id="Interaction_with_HOT">Interaction with HOT</span></h3>
+<p>HOT (Heap-only tuples) is a major performance feature that was added in Postgres 8.3. This allowed UPDATES to rows (which, owing to Postgres's MVCC architecture, are implemented with a deletion and insertion of physical tuples) to only have to create a new physical heap tuple when inserting, and not a new index tuple, if and only if the update did not affect indexed columns.
+</p><p>With HOT, it became possible for an index scan to traverse a so-called HOT chain; it could get from the physical index tuple (which would probably have been created by an original INSERT, and related to an earlier version of the logical tuple), to the corresponding physical heap tuple. The heap tuple would itself contain a pointer to the next version of the tuple (that is, the tuple ctid), which might, in turn, have a pointer of its own. The index scan eventually arrives at tuple that is current according to the query's snapshot.
+</p><p>HOT also enables opportunistic mini-vacuums, where the HOT chain is "pruned".
+</p><p>All told, this performance optimisation has been found to be very valuable, particularly for OLTP workloads. It is quite natural that tuples that are frequently updated are generally not indexed. However, when considering creating a covering index, the need to maximise the number of HOT updates should be carefully weighed.
+</p><p>You can monitor the total proportion of HOT updates for each relation using this query.
+</p>
+<pre> postgres=# select n_tup_upd, n_tup_hot_upd from pg_stat_user_tables;
+</pre>
+<h3><span id="What_types_of_queries_may_be_satisfied_by_an_index-only_scan.3F"></span><span class="mw-headline" id="What_types_of_queries_may_be_satisfied_by_an_index-only_scan?">What types of queries may be satisfied by an index-only scan?</span></h3>
+<p>Aside from the obvious restriction that queries cannot reference columns that are not indexed by a single index in order to use an index-only scan, the need to visit the heap where all tuples are not known to be visible is relatively expensive. The planner weighs this factor heavily when considering an index-only scan, and in general the need to ensure that the bulk of the table's tuples have their visibility map bits set is likely to restrict index-only scans' usefulness to queries against infrequently updated tables.
+</p><p>It is not necessary for all bits to be set; index-only scans may "visit the heap" if that is necessary. Index-only scans are something of a misnomer, in fact - index mostly scans might be a more appropriate appellation. An explain analyze involving an index-only scan will indicate how frequently that occurred in practice.
+</p>
+<pre> postgres=# explain analyze select count(*) from categories;
+                                                                 QUERY PLAN
+ ------------------------------------------------------------------------------------------------------------------------------------------
+  Aggregate  (cost=12.53..12.54 rows=1 width=0) (actual time=0.046..0.046 rows=1 loops=1)
+    -&gt;  Index Only Scan using categories_pkey on categories  (cost=0.00..12.49 rows=16 width=0) (actual time=0.018..0.038 rows=16 loops=1)
+          Heap Fetches: 16
+  Total runtime: 0.108 ms
+ (4 rows)
+</pre>
+<p>As the number of heap fetches (or "visits") that are projected to be needed by the planner goes up, the planner will eventually conclude that an index-only scan isn't desirable, as it isn't the cheapest possible plan according to its cost model. The value of index-only scans lies wholly in their potential to allow us to elide heap access (if only partially) and minimise I/O.
+</p>
+<h3><span id="Is_.22count.28.2A.29.22_much_faster_now.3F"></span><span class="mw-headline" id="Is_&quot;count(*)&quot;_much_faster_now?">Is "count(*)" much faster now?</span></h3>
+<p>A traditional complaint made of PostgreSQL, generally when comparing it unfavourably with MySQL (at least when using the MyIsam storage engine, which doesn't use MVCC) has been "count(*) is slow". Index-only scans *can* be used to satisfy these queries without there being any predicate to limit the number of rows returned, and without forcing an index to be used by specifying that the tuples should be ordered by an indexed column. However, in practice that isn't particularly likely.
+</p><p>It is important to realise that the planner is concerned with minimising the total cost of the query. With databases, the cost of I/O typically dominates. For that reason, "count(*) without any predicate" queries will only use an index-only scan if the index is significantly smaller than its table. This typically only happens when the table's row width is much wider than some indexes'.
+</p>
+<h3><span id="Why_isn.27t_my_query_using_an_index-only_scan.3F"></span><span class="mw-headline" id="Why_isn't_my_query_using_an_index-only_scan?">Why isn't my query using an index-only scan?</span></h3>
+<p>VACUUM does not have any particular tendency to behave more aggressively to facilitate using index-only scans more frequently. While VACUUM can be set to behave more aggressively in various ways, it's far from clear that to do so specifically to make index-only scans occur more frequently represents a sensible course of action.
+</p><p>The planner doesn't directly examine the entire visibility map of a relation when considering an index-only scan (however, the executor does maintain a running tally, which is visible in explain analyze output). However, the planner does naturally weigh the proportion of pages which are known visible to all.
+</p><p>In Postgres 9.2, statistics are gathered about the proportion of pages that are known all-visible. The pg_class.relallvisible column indicates how many pages are visible (the proportion can be obtained by calculating it as a proportion of pg_class.relpages). These statistics are updated when VACUUM is run. It is advisable to run VACUUM ANALYZE immediately after upgrading to PostgreSQL 9.2, in order to ensure that relallvisible roughly accords with reality.
+</p><p>Note that it is possible to examine the number of index scans (including index-only scans and bitmap index scans) by examining
+pg_stat_user_indexes.idx_scan. If your covering index isn't being used, you're essentially paying for the overhead of maintaining it during writes with no benefit in return. Drop the index!
+</p>
+<h3><span class="mw-headline" id="Summary">Summary</span></h3>
+<p>It is possible for index-only scans to greatly decrease the amount of I/O required to execute some queries. For certain queries, particularly queries that are characteristic of data warehousing (i.e. relatively large amounts of static, infrequently-updated data where reports on historic data is frequently required), they can considerably improve performance. Such queries have been observed to execute anything from twice to twenty times as fast with index-only scans. However, one should bear in mind that:
+</p>
+<ul><li>Index-only scans are opportunistic, in that they take advantage of a pre-existing state of affairs where it happens to be possible to elide heap access. However, the server doesn't make any particular effort to facilitate index-only scans, and it is difficult to recommend a course of action to make index-only scans occur more frequently, except to define covering indexes in response to a measured need (For example, when pg_stat_statements indicates that a disproportionate amount of I/O is being used to execute a query against fairly static data, with a smallish subset of table columns retrieved).</li></ul>
+<ul><li>When creating a covering index, the likely effect on HOT updates should be weighed heavily. Are there many HOT updates on the table to begin with? This is a general point of concern, because creating an index may prevent HOT updates from occurring, and because the number of HOT updates is a reasonably good proxy for just how static a table is (i.e. the total number of inserts, updates and deletes), and therefore how likely it is that most heap pages are known to be all-visible at any given time.</li></ul>
+<ul><li>Index-only scans are only used when the planner surmises that that will reduce the total amount of I/O required, according to its imperfect cost-based modelling. This all heavily depends on visibility of tuples, if an index would be used anyway (i.e. how selective a predicate is, etc), and if there is actually an index available that could be used by an index-only scan in principle.</li></ul>
+<!-- 
+NewPP limit report
+Cached time: 20260408134557
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.027 seconds
+Real time usage: 0.035 seconds
+Preprocessor visited node count: 33/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    8.649      1 Template:Languages
+100.00%    8.649      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:1544-0!canonical and timestamp 20260408134557 and revision id 27848.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Index-only_scans&amp;oldid=27848">https://wiki.postgresql.org/index.php?title=Index-only_scans&amp;oldid=27848</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:Indexes" title="Category:Indexes">Indexes</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Index-only_scans" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Index-only_scans&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Index-only_scans">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Index-only_scans&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Index-only_scans&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Index-only_scans" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Index-only_scans&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Index-only+scans" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Index-only_scans" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Index-only_scans" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Index-only_scans&amp;oldid=27848" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Index-only_scans&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 6 July 2016, at 14:21.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.027","walltime":"0.035","ppvisitednodes":{"value":33,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    8.649      1 Template:Languages","100.00%    8.649      1 -total"]},"cachereport":{"timestamp":"20260408134557","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":449});});</script>
+</body>
+</html>

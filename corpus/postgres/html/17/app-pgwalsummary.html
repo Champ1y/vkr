@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 17: pg_walsummary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/17/app-pgwalsummary.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:07:05" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="pg_walsummary" />
+  <meta property="og:description" content="pg_walsummary pg_walsummary — print contents of WAL summary files Synopsis pg_walsummary [option...] [file...] Description pg_walsummary is used to print the …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?97ba32d2" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?97ba32d2">
+
+  <script src="/media/js/theme.js?97ba32d2"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/app-pgwalsummary.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/17/index.html">PostgreSQL 17</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/app-pgwalsummary.html" title="PostgreSQL 18 - pg_walsummary" >Current</a>
+                          (<a href="/docs/18/app-pgwalsummary.html" title="PostgreSQL 18 - pg_walsummary" >18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/app-pgwalsummary.html" title="PostgreSQL 17 - pg_walsummary" class="docs-version-selected">17</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/app-pgwalsummary.html" title="PostgreSQL devel - pg_walsummary"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/17/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center"><span class="application">pg_walsummary</span></th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="pgwaldump.html" title="pg_waldump">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="reference-server.html" title="PostgreSQL Server Applications">Up</a></td>
+      <th width="60%" align="center">PostgreSQL Server Applications</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 17.9 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="app-postgres.html" title="postgres">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="APP-PGWALSUMMARY">
+  <div class="titlepage"></div><a id="id-1.9.5.15.1" class="indexterm" name="id-1.9.5.15.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle"><span class="application">pg_walsummary</span></span></h2>
+    <p>pg_walsummary — print contents of WAL summary files</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <div class="cmdsynopsis">
+      <p id="id-1.9.5.15.4.1"><code class="command">pg_walsummary</code> [<em class="replaceable"><code>option</code></em>...] [<em class="replaceable"><code>file</code></em>...]</p>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.5.15.5">
+    <h2>Description</h2>
+    <p><span class="application">pg_walsummary</span> is used to print the contents of WAL summary files. These binary files are found with the <code class="literal">pg_wal/summaries</code> subdirectory of the data directory, and can be converted to text using this tool. This is not ordinarily necessary, since WAL summary files primarily exist to support <a class="link" href="continuous-archiving.html#BACKUP-INCREMENTAL-BACKUP" title="25.3.3.&nbsp;Making an Incremental Backup">incremental backup</a>, but it may be useful for debugging purposes.</p>
+    <p>A WAL summary file is indexed by tablespace OID, relation OID, and relation fork. For each relation fork, it stores the list of blocks that were modified by WAL within the range summarized in the file. It can also store a "limit block," which is 0 if the relation fork was created or truncated within the relevant WAL range, and otherwise the shortest length to which the relation fork was truncated. If the relation fork was not created, deleted, or truncated within the relevant WAL range, the limit block is undefined or infinite and will not be printed by this tool.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.5.15.6">
+    <h2>Options</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><code class="option">-i</code><br /></span><span class="term"><code class="option">--individual</code></span></dt>
+        <dd>
+          <p>By default, <code class="literal">pg_walsummary</code> prints one line of output for each range of one or more consecutive modified blocks. This can make the output a lot briefer, since a relation where all blocks from 0 through 999 were modified will produce only one line of output rather than 1000 separate lines. This option requests a separate line of output for every modified block.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-q</code><br /></span><span class="term"><code class="option">--quiet</code></span></dt>
+        <dd>
+          <p>Do not print any output, except for errors. This can be useful when you want to know whether a WAL summary file can be successfully parsed but don't care about the contents.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-V</code><br /></span><span class="term"><code class="option">--version</code></span></dt>
+        <dd>
+          <p>Display version information, then exit.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-?</code><br /></span><span class="term"><code class="option">--help</code></span></dt>
+        <dd>
+          <p>Shows help about <span class="application">pg_walsummary</span> command line arguments, and exits.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.5.15.7">
+    <h2>Environment</h2>
+    <p>The environment variable <code class="envar">PG_COLOR</code> specifies whether to use color in diagnostic messages. Possible values are <code class="literal">always</code>, <code class="literal">auto</code> and <code class="literal">never</code>.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.5.15.8">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="app-pgbasebackup.html" title="pg_basebackup"><span class="refentrytitle"><span class="application">pg_basebackup</span></span></a>, <a class="xref" href="app-pgcombinebackup.html" title="pg_combinebackup"><span class="refentrytitle"><span class="application">pg_combinebackup</span></span></a></span>
+  </div>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="pgwaldump.html" title="pg_waldump">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="reference-server.html" title="PostgreSQL Server Applications">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="app-postgres.html" title="postgres">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top"><span class="application">pg_waldump</span>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 17.9 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;<span class="application">postgres</span></td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/17/app-pgwalsummary.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?97ba32d2"></script>
+
+  </body>
+</html>

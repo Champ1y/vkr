@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <script>
+      var App = {};
+      App.pageIDs = ["4FBCBF61-D92D-460B-91EF-F295390794C0","6D111D5A-A6DD-408A-8634-8778EBCD7B5A","65DF6CDB-3FA3-489D-8269-4D418BA306DA","91F7E06D-AAED-4179-8661-83BCC330A016","91F9C895-3651-4ACF-936E-91635428EB6D","DA480CB7-CA03-4E37-833F-65A4DB72B181","5CFRB62B-4C60-4D87-B99C-92610B44136F","7d327298-223e-11e3-b1bb-0023df7f7ec4","98eed3b2-229a-11e3-ad0b-0023df7f7ec4","0bd6fea0-2844-11e3-8dea-0023df7f7ec4"];
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/listing.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+
+  <!-- Navbar
+    ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+  
+    <div class="container">
+    
+      <div class="page-header">
+        <h1>
+Working with Timestamps          <a href="timestamp.html" class="btn btn-primary btn-large" style="margin-left: 50px;">Begin!</a>
+        </h1>
+      </div>
+    
+      <div class="row" style="margin-bottom:30px">
+        <div class="span8">
+          <p>
+<p>Dates/Times in SQL are a complex topic, deserving of a category of their own.  They're also fantastically powerful, making it easier to work with variable-length concepts like 'months' than many programming languages.</p>
+<p>Before getting started on this category, it's probably worth taking a look over the PostgreSQL <a href="http://www.postgresql.org/docs/current/static/functions-datetime.html">docs page</a> on date/time functions.  You might also want to complete the aggregate functions category, since we'll use some of those capabilities in this section.</p>          </p>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span10">
+          <ul class="topiclisting">
+<li><span class="listingitem"><a class="listlink" href='timestamp.html'>Produce a timestamp for 1 a.m. on the 31st of August 2012</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='interval.html'>Subtract timestamps from each other</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='series.html'>Generate a list of all the dates in October 2012</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='extract.html'>Get the day of the month from a timestamp</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='interval2.html'>Work out the number of seconds between timestamps</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='daysinmonth.html'>Work out the number of days in each month of 2012</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='daysremaining.html'>Work out the number of days remaining in the month</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='endtimes.html'>Work out the end time of bookings</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='bookingspermonth.html'>Return a count of bookings for each month</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='utilisationpermonth.html'>Work out the utilisation percentage for each facility by month</a></span></li>
+          </ul>
+        </div>
+    
+      </div><!-- /container -->
+    </div>  
+  
+      <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/bootstrap.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+  
+  </body>
+</html>

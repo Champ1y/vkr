@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>FAQ/pt - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"c27762bcbede1edf46d8e712","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"FAQ/pt","wgTitle":"FAQ/pt","wgCurRevisionId":36311,"wgRevisionId":36311,"wgArticleId":696,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["FAQ","Português"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"FAQ/pt","wgRelevantArticleId":696,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-FAQ_pt rootpage-FAQ skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">FAQ/pt</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ><span class="subpages">&lt; <a href="/wiki/FAQ" title="FAQ">FAQ</a></span></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Introdução"><span class="tocnumber">1</span> <span class="toctext">Introdução</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Perguntas_Gerais"><span class="tocnumber">2</span> <span class="toctext">Perguntas Gerais</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#O_que_é_PostgreSQL?_Como_ele_é_pronunciado?_O_que_é_Postgres?"><span class="tocnumber">2.1</span> <span class="toctext">O que é PostgreSQL? Como ele é pronunciado? O que é Postgres?</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Quem_controla_o_PostgreSQL?"><span class="tocnumber">2.2</span> <span class="toctext">Quem controla o PostgreSQL?</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Qual_é_a_licença_do_PostgreSQL?"><span class="tocnumber">2.3</span> <span class="toctext">Qual é a licença do PostgreSQL?</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Quais_plataformas_o_PostgreSQL_pode_ser_executado?"><span class="tocnumber">2.4</span> <span class="toctext">Quais plataformas o PostgreSQL pode ser executado?</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Onde_eu_posso_conseguir_o_PostgreSQL?"><span class="tocnumber">2.5</span> <span class="toctext">Onde eu posso conseguir o PostgreSQL?</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Onde_eu_posso_conseguir_suporte?"><span class="tocnumber">2.6</span> <span class="toctext">Onde eu posso conseguir suporte?</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Como_eu_informo_a_existência_de_um_bug?"><span class="tocnumber">2.7</span> <span class="toctext">Como eu informo a existência de um bug?</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Como_eu_posso_saber_quais_são_os_bugs_conhecidos_ou_funcionalidades_ausentes?"><span class="tocnumber">2.8</span> <span class="toctext">Como eu posso saber quais são os bugs conhecidos ou funcionalidades ausentes?</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Que_documentação_está_disponível?"><span class="tocnumber">2.9</span> <span class="toctext">Que documentação está disponível?</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Como_eu_posso_aprender_SQL?"><span class="tocnumber">2.10</span> <span class="toctext">Como eu posso aprender SQL?</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Como_posso_submeter_uma_correção_(patch)_ou_me_juntar_a_equipe_de_desenvolvimento?"><span class="tocnumber">2.11</span> <span class="toctext">Como posso submeter uma correção (patch) ou me juntar a equipe de desenvolvimento?</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Como_é_o_PostgreSQL_comparado_a_outros_SGBDs?"><span class="tocnumber">2.12</span> <span class="toctext">Como é o PostgreSQL comparado a outros SGBDs?</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#O_PostgreSQL_gerenciará_mudanças_no_horário_devido_ao_horário_de_verão_em_vários_países?"><span class="tocnumber">2.13</span> <span class="toctext">O PostgreSQL gerenciará mudanças no horário devido ao horário de verão em vários países?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-16"><a href="#Perguntas_sobre_Clientes"><span class="tocnumber">3</span> <span class="toctext">Perguntas sobre Clientes</span></a>
+<ul>
+<li class="toclevel-2 tocsection-17"><a href="#Quais_interfaces_estão_disponíveis_para_PostgreSQL?"><span class="tocnumber">3.1</span> <span class="toctext">Quais interfaces estão disponíveis para PostgreSQL?</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Quais_ferramentas_estão_disponíveis_para_utilizar_o_PostgreSQL_com_páginas_Web?"><span class="tocnumber">3.2</span> <span class="toctext">Quais ferramentas estão disponíveis para utilizar o PostgreSQL com páginas Web?</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#O_PostgreSQL_tem_interfaces_gráficas_para_iteragir_com_o_usuário?"><span class="tocnumber">3.3</span> <span class="toctext">O PostgreSQL tem interfaces gráficas para iteragir com o usuário?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-20"><a href="#Perguntas_Administrativas"><span class="tocnumber">4</span> <span class="toctext">Perguntas Administrativas</span></a>
+<ul>
+<li class="toclevel-2 tocsection-21"><a href="#Como_eu_instalo_o_PostgreSQL_em_um_local_diferente_de_/usr/local/pgsql?"><span class="tocnumber">4.1</span> <span class="toctext">Como eu instalo o PostgreSQL em um local diferente de /usr/local/pgsql?</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#Como_eu_controlo_conexões_de_outras_máquinas?"><span class="tocnumber">4.2</span> <span class="toctext">Como eu controlo conexões de outras máquinas?</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#Como_eu_ajusto_o_servidor_de_banco_de_dados_para_obter_uma_performance_melhor?"><span class="tocnumber">4.3</span> <span class="toctext">Como eu ajusto o servidor de banco de dados para obter uma performance melhor?</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#Quais_características_de_depuração_estão_disponíveis?"><span class="tocnumber">4.4</span> <span class="toctext">Quais características de depuração estão disponíveis?</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#Por_que_eu_recebo_&quot;Sorry,_too_many_clients&quot;_quando_eu_tento_conectar?"><span class="tocnumber">4.5</span> <span class="toctext">Por que eu recebo "Sorry, too many clients" quando eu tento conectar?</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#Qual_é_o_processo_de_atualização_do_PostgreSQL?"><span class="tocnumber">4.6</span> <span class="toctext">Qual é o processo de atualização do PostgreSQL?</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#Que_tipo_de_hardware_eu_devo_usar?"><span class="tocnumber">4.7</span> <span class="toctext">Que tipo de hardware eu devo usar?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-28"><a href="#Perguntas_Operacionais"><span class="tocnumber">5</span> <span class="toctext">Perguntas Operacionais</span></a>
+<ul>
+<li class="toclevel-2 tocsection-29"><a href="#Como_eu_faço_um_SELECT_somente_dos_primeiros_registros_de_uma_consulta?_Um_registro_randômico?"><span class="tocnumber">5.1</span> <span class="toctext">Como eu faço um SELECT somente dos primeiros registros de uma consulta? Um registro randômico?</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#Como_eu_descubro_quais_tabelas,_índices,_bancos_de_dados_e_usuários_estão_definidos?_Como_eu_vejo_as_consultas_utilizadas_pelo_psql_para_mostrá-los?"><span class="tocnumber">5.2</span> <span class="toctext">Como eu descubro quais tabelas, índices, bancos de dados e usuários estão definidos? Como eu vejo as consultas utilizadas pelo psql para mostrá-los?</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#Como_você_muda_o_tipo_de_dado_de_uma_coluna?"><span class="tocnumber">5.3</span> <span class="toctext">Como você muda o tipo de dado de uma coluna?</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#Qual_é_o_tamanho_máximo_de_um_registro,_uma_tabela_e_um_banco_de_dados?"><span class="tocnumber">5.4</span> <span class="toctext">Qual é o tamanho máximo de um registro, uma tabela e um banco de dados?</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#Quanto_espaço_em_disco_é_necessário_para_armazenar_dados_de_um_arquivo_texto?"><span class="tocnumber">5.5</span> <span class="toctext">Quanto espaço em disco é necessário para armazenar dados de um arquivo texto?</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#Por_que_minhas_consultas_estão_lentas?_Por_que_elas_não_estão_utilizando_meus_índices?"><span class="tocnumber">5.6</span> <span class="toctext">Por que minhas consultas estão lentas? Por que elas não estão utilizando meus índices?</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#Como_eu_vejo_como_o_otimizador_de_consulta_está_avaliando_a_minha_consulta?"><span class="tocnumber">5.7</span> <span class="toctext">Como eu vejo como o otimizador de consulta está avaliando a minha consulta?</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#Como_eu_faço_buscas_com_expressões_regulares_e_buscas_com_expressões_regulares_sem_diferenciar_maiúsculas_de_minúsculas?_Como_eu_utilizo_um_índice_para_buscas_que_não_diferenciam_maiúsculas_de_minúsculas?"><span class="tocnumber">5.8</span> <span class="toctext">Como eu faço buscas com expressões regulares e buscas com expressões regulares sem diferenciar maiúsculas de minúsculas? Como eu utilizo um índice para buscas que não diferenciam maiúsculas de minúsculas?</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#Em_uma_consulta,_como_eu_detecto_se_um_campo_é_NULL?_Como_eu_posso_concatenar_possíveis_NULLs?_Como_eu_posso_ordenar_por_um_campo_que_é_NULL_ou_não?"><span class="tocnumber">5.9</span> <span class="toctext">Em uma consulta, como eu detecto se um campo é NULL? Como eu posso concatenar possíveis NULLs? Como eu posso ordenar por um campo que é NULL ou não?</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#Qual_é_a_diferença_entre_os_vários_tipos_de_dado_de_caracteres?"><span class="tocnumber">5.10</span> <span class="toctext">Qual é a diferença entre os vários tipos de dado de caracteres?</span></a>
+<ul>
+<li class="toclevel-3 tocsection-39"><a href="#Como_eu_crio_um_campo_serial/auto_incremento?"><span class="tocnumber">5.10.1</span> <span class="toctext">Como eu crio um campo serial/auto incremento?</span></a></li>
+<li class="toclevel-3 tocsection-40"><a href="#Como_eu_consigo_o_valor_de_um_campo_SERIAL?"><span class="tocnumber">5.10.2</span> <span class="toctext">Como eu consigo o valor de um campo SERIAL?</span></a></li>
+<li class="toclevel-3 tocsection-41"><a href="#currval()_não_lida_com_condição_de_corrida_com_outros_usuários?"><span class="tocnumber">5.10.3</span> <span class="toctext">currval() não lida com condição de corrida com outros usuários?</span></a></li>
+<li class="toclevel-3 tocsection-42"><a href="#Por_que_os_números_da_minha_sequência_não_são_reutilizados_quando_uma_transação_é_abortada?_Por_que_há_intervalos_nos_números_da_minha_sequência/coluna_SERIAL?"><span class="tocnumber">5.10.4</span> <span class="toctext">Por que os números da minha sequência não são reutilizados quando uma transação é abortada? Por que há intervalos nos números da minha sequência/coluna SERIAL?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-43"><a href="#O_que_é_um_OID?_O_que_é_um_CTID?"><span class="tocnumber">5.11</span> <span class="toctext">O que é um OID? O que é um CTID?</span></a></li>
+<li class="toclevel-2 tocsection-44"><a href="#Por_que_eu_recebo_o_erro_&quot;ERROR:_Memory_exhausted_in_AllocSetAlloc()&quot;?"><span class="tocnumber">5.12</span> <span class="toctext">Por que eu recebo o erro "ERROR: Memory exhausted in AllocSetAlloc()"?</span></a></li>
+<li class="toclevel-2 tocsection-45"><a href="#Como_eu_informo_qual_versão_do_PostgreSQL_eu_estou_utilizando?"><span class="tocnumber">5.13</span> <span class="toctext">Como eu informo qual versão do PostgreSQL eu estou utilizando?</span></a></li>
+<li class="toclevel-2 tocsection-46"><a href="#Como_eu_crio_uma_coluna_que_conterá_por_padrão_a_hora_atual?"><span class="tocnumber">5.14</span> <span class="toctext">Como eu crio uma coluna que conterá por padrão a hora atual?</span></a></li>
+<li class="toclevel-2 tocsection-47"><a href="#Como_eu_faço_uma_junção_externa_(outer_join)?"><span class="tocnumber">5.15</span> <span class="toctext">Como eu faço uma junção externa (outer join)?</span></a></li>
+<li class="toclevel-2 tocsection-48"><a href="#Como_eu_faço_consultas_utilizando_múltiplos_bancos_de_dados?"><span class="tocnumber">5.16</span> <span class="toctext">Como eu faço consultas utilizando múltiplos bancos de dados?</span></a></li>
+<li class="toclevel-2 tocsection-49"><a href="#Como_eu_retorno_múltiplos_registros_ou_colunas_de_uma_função?"><span class="tocnumber">5.17</span> <span class="toctext">Como eu retorno múltiplos registros ou colunas de uma função?</span></a></li>
+<li class="toclevel-2 tocsection-50"><a href="#Por_que_eu_obtenho_erros_&quot;relation_with_OID_######_does_not_exist&quot;_ao_acessar_tabelas_temporárias_em_funções_PL/PgSQL?"><span class="tocnumber">5.18</span> <span class="toctext">Por que eu obtenho erros "relation with OID ###### does not exist" ao acessar tabelas temporárias em funções PL/PgSQL?</span></a></li>
+<li class="toclevel-2 tocsection-51"><a href="#Quais_soluções_de_replicação_estão_disponíveis?"><span class="tocnumber">5.19</span> <span class="toctext">Quais soluções de replicação estão disponíveis?</span></a></li>
+<li class="toclevel-2 tocsection-52"><a href="#Por_que_os_nomes_de_minhas_tabelas_e_colunas_não_são_reconhecidos_em_minha_consulta?_Por_que_as_maiúsculas_não_são_preservadas?"><span class="tocnumber">5.20</span> <span class="toctext">Por que os nomes de minhas tabelas e colunas não são reconhecidos em minha consulta? Por que as maiúsculas não são preservadas?</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span id="Introdu.C3.A7.C3.A3o"></span><span class="mw-headline" id="Introdução">Introdução</span></h2>
+<p>Esta é um tradução de <a href="/wiki/FAQ" title="FAQ">Perguntas Frequentes em inglês</a>.
+</p><p>Os documentos com perguntas específicas sobre plataformas são respondidas no <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/faq/">site oficial</a>.
+</p>
+<h2><span class="mw-headline" id="Perguntas_Gerais">Perguntas Gerais</span></h2>
+<h3><span id="O_que_.C3.A9_PostgreSQL.3F_Como_ele_.C3.A9_pronunciado.3F_O_que_.C3.A9_Postgres.3F"></span><span class="mw-headline" id="O_que_é_PostgreSQL?_Como_ele_é_pronunciado?_O_que_é_Postgres?">O que é PostgreSQL? Como ele é pronunciado? O que é Postgres?</span></h3>
+<p>PostgreSQL é pronunciado Post-Gres-Q-L. (Para os curiosos que querem saber como se diz "PostgreSQL", um arquivo de áudio está disponível).
+</p><p>O PostgreSQL é um sistema de banco de dados objeto-relacional que tem as características de sistemas de bancos de dados comerciais tradicionais com melhoramentos encontrados nos sistemas SGBDs de próxima geração. PostgreSQL é livre e o código-fonte completo está disponível.
+</p><p>O desenvolvimento do PostgreSQL é feito por um grupo de desenvolvedores voluntários (na sua maioria) espalhados pelo mundo e que se comunicam via Internet. É um projeto da comunidade e não é controlado por nenhuma empresa. Para se envolver, veja a FAQ do desenvolvedor em <a rel="nofollow" class="external free" href="http://www.postgresql.org/docs/faqs.FAQ_DEV.html">http://www.postgresql.org/docs/faqs.FAQ_DEV.html</a>
+</p><p>Postgres é um apelido para o PostgreSQL amplamente utilizado. Era o nome original do projeto em Berkeley e dentre os outros apelidos é o preferido. Se você acha 'PostgreSQL' difícil de pronunciar, diga apenas 'Postgres'.
+</p><p><br />
+</p>
+<h3><span id="Quem_controla_o_PostgreSQL.3F"></span><span class="mw-headline" id="Quem_controla_o_PostgreSQL?">Quem controla o PostgreSQL?</span></h3>
+<p>Se você está procurando por um mantenedor, comitê central ou empresa controladora do PostgreSQL, desista --- não há um(a). Nós temos um comitê core e committers CVS, mas estes grupos são mais para questões administrativas do que controle. O projeto é direcionado pela comunidade de desenvolvedores e usuários, que qualquer um pode se juntar. Tudo o que você precisa é se inscrever nas listas de discussão e participar das discussões. Veja a FAQ do desenvolvedor para obter informações como se envolver com o desenvolvimento do PostgreSQL.
+</p>
+<h3><span id="Qual_.C3.A9_a_licen.C3.A7a_do_PostgreSQL.3F"></span><span class="mw-headline" id="Qual_é_a_licença_do_PostgreSQL?">Qual é a licença do PostgreSQL?</span></h3>
+<p>O PostgreSQL é distribuído sob a licença BSD clássica. Basicamente, ela permite que usuários façam qualquer coisa com o código, incluindo revender os binários sem o código-fonte. A única restrição é que você não nos responsabilize legalmente por problemas com o programa de computador. Há também a exigência de que esta licença apareça em todas as cópias do programa de computador. Aqui está a licença BSD que usamos atualmente:
+</p><p>PostgreSQL está sujeito a seguinte licença:
+</p><p>PostgreSQL Data Base Management System
+</p><p>Portions Copyright (c) 1996-2009, PostgreSQL Global Development Group Portions Copyright (c) 1994-1996 Regents of the University of California
+</p><p>Permission to use, copy, modify, and distribute this software and its documentation for any purpose, without fee, and without a written agreement is hereby granted, provided that the above copyright notice and this paragraph and the following two paragraphs appear in all copies.
+</p><p>IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</p><p>THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+</p><p><br />
+</p>
+<h3><span id="Quais_plataformas_o_PostgreSQL_pode_ser_executado.3F"></span><span class="mw-headline" id="Quais_plataformas_o_PostgreSQL_pode_ser_executado?">Quais plataformas o PostgreSQL pode ser executado?</span></h3>
+<p>Em geral, qualquer plataforma moderna compatível com Unix deve ser capaz de executar o PostgreSQL. As plataformas que foram testadas antes do lançamento de uma versão são listadas nas instruções de instalação.
+</p><p>O PostgreSQL também executa nativamente nos sistemas operacionais Microsoft Windows baseados no NT tais como Win200 SP4, WinXP e Win2003. Um instalador pré-empacotado está disponível em <a rel="nofollow" class="external free" href="http://pgfoundry.org/projects/pginstaller">http://pgfoundry.org/projects/pginstaller</a>. Versões do Windows baseadas no MS-DOS (Win95, Win98, WinMe) podem executar o PostgreSQL utilizando o Cygwin.
+</p><p>Há também uma versão para o Novell Netware 6 em <a rel="nofollow" class="external free" href="http://forge.novell.com">http://forge.novell.com</a> e uma versão para OS/2 (eComStation) em <a rel="nofollow" class="external free" href="http://hobbes.nmsu.edu/cgi-bin/h-search?sh=1&amp;button=Search&amp;key=postgreSQL&amp;stype=all&amp;sort=type&amp;dir=%2F">http://hobbes.nmsu.edu/cgi-bin/h-search?sh=1&amp;button=Search&amp;key=postgreSQL&amp;stype=all&amp;sort=type&amp;dir=%2F</a>.
+</p>
+<h3><span id="Onde_eu_posso_conseguir_o_PostgreSQL.3F"></span><span class="mw-headline" id="Onde_eu_posso_conseguir_o_PostgreSQL?">Onde eu posso conseguir o PostgreSQL?</span></h3>
+<p>Via navegador web, utilize <a rel="nofollow" class="external free" href="http://www.postgresql.org/ftp/">http://www.postgresql.org/ftp/</a> e via ftp, utilize <a rel="nofollow" class="external free" href="ftp://ftp.postgresql.org/pub/">ftp://ftp.postgresql.org/pub/</a>.
+1.6) Qual é a última versão?
+</p><p>A última versão do PostgreSQL é a versão 8.2.5.
+</p><p>Nós planejamos lançar versões novas a cada ano com versões corretivas em alguns meses.
+</p>
+<h3><span id="Onde_eu_posso_conseguir_suporte.3F"></span><span class="mw-headline" id="Onde_eu_posso_conseguir_suporte?">Onde eu posso conseguir suporte?</span></h3>
+<p>A comunidade do PostgreSQL fornece assistência a muitos de seus usuários via e-mail. O principal sítio web para inscrição nas listas de e-mail é <a rel="nofollow" class="external free" href="http://www.postgresql.org/community/lists/">http://www.postgresql.org/community/lists/</a>. As listas general e bugs são um bom lugar para início.
+</p><p>O principal canal de IRC é o #postgresql na Libera (irc.libera.chat). Para se conectar você pode utilizar o comando Unix irc -c '#postgresql' "$USER" irc.libera.chat ou utilizar qualquer outro cliente de IRC. Um canal hispânico (#postgresql-es) e um francês (#postgresqlfr) também existem na mesma rede. Há também um canal PostgreSQL na EFNet.
+</p><p>Uma lista de empresas que prestam suporte comercial está disponível em <a rel="nofollow" class="external free" href="http://www.postgresql.org/support/professional_support">http://www.postgresql.org/support/professional_support</a>.
+</p>
+<h3><span id="Como_eu_informo_a_exist.C3.AAncia_de_um_bug.3F"></span><span class="mw-headline" id="Como_eu_informo_a_existência_de_um_bug?">Como eu informo a existência de um bug?</span></h3>
+<p>Visite o formulário que reporta bugs do PostgreSQL em <a rel="nofollow" class="external free" href="http://www.postgresql.org/support/submitbug">http://www.postgresql.org/support/submitbug</a>.
+</p><p>Verifique também o nosso ftp <a rel="nofollow" class="external free" href="ftp://ftp.postgresql.org/pub">ftp://ftp.postgresql.org/pub</a> para ver se há uma versão mais recente do PostgreSQL.
+</p><p>Bugs submetidos utilizando o formulário ou informado a qualquer lista de discussão do PostgreSQL tipicamente gera uma das seguintes respostas:
+</p>
+<pre>   * Não é um bug e o porquê
+   * É um bug conhecido e já está na lista de AFAZERES
+   * O bug foi corrigido na versão atual
+   * O bug foi corrigido mas não foi empacotado em um versão oficial
+   * Um pedido foi feito para obter informações detalhadas:
+         o Sistema Operacional
+         o Versão do PostgreSQL
+         o Exemplo de teste que reproduz o bug
+         o Informações sobre depuração
+         o Saída reconstituidora de vestígios (backtrace) do depurador
+   * O bug é novo. O seguinte pode ocorrer:
+         o Uma correção é criada e será incluída na próxima versão
+         o O bug não pode ser corrigido imediatamente e é adicionado a lista de AFAZERES
+</pre>
+<h3><span id="Como_eu_posso_saber_quais_s.C3.A3o_os_bugs_conhecidos_ou_funcionalidades_ausentes.3F"></span><span class="mw-headline" id="Como_eu_posso_saber_quais_são_os_bugs_conhecidos_ou_funcionalidades_ausentes?">Como eu posso saber quais são os bugs conhecidos ou funcionalidades ausentes?</span></h3>
+<p>O PostgreSQL suporta um subconjunto extendido do SQL:2003. Veja nossa lista de AFAZERES que contém bugs conhecidos, funcionalidades ausentes e planos futuros.
+</p><p>Uma solicitação de funcionalidade geralmente resulta em uma das seguintes respostas:
+</p>
+<pre>   * A funcionalidade já está na lista de AFAZERES
+   * A funcionalidade não é desejável porque:
+         o Ela duplica uma funcionalidade existente que já segue o padrão SQL
+         o A funcionalidade aumentará a complexidade do código mas adicionará pouco benefício
+         o A funcionalidade será insegura ou não-confiável
+   * A nova funcionalidade é adicionada a lista de AFAZERES
+</pre>
+<p>O PostgreSQL não utiliza sistema de acompanhamento de bugs porque nós achamos mais eficiente responder diretamente o e-mail e manter a lista de AFAZERES atualizada. Na prática, bugs não duram muito no programa; e bugs que afetam uma grande quantidade de usuários são corrigidos rapidamente. O único lugar para encontrar todas as mudanças, melhorias e correções em uma versão do PostgreSQL é ler as mensagens de log do CVS. Até mesmo as notas de lançamento não listam todas as mudanças feitas no programa.
+</p>
+<h3><span id="Que_documenta.C3.A7.C3.A3o_est.C3.A1_dispon.C3.ADvel.3F"></span><span class="mw-headline" id="Que_documentação_está_disponível?">Que documentação está disponível?</span></h3>
+<p>O PostgreSQL inclui vasta documentação, incluindo um manual extenso, páginas de manuais (man pages) e alguns exemplos teste. Veja o diretório /doc. Você também pode pesquisar os manuais online em <a rel="nofollow" class="external free" href="http://www.postgresql.org/docs">http://www.postgresql.org/docs</a>.
+</p><p>Há dois livros sobre PostgreSQL disponíveis online em <a rel="nofollow" class="external free" href="http://www.postgresql.org/docs/books/awbook.html">http://www.postgresql.org/docs/books/awbook.html</a> e <a rel="nofollow" class="external free" href="http://www.commandprompt.com/ppbook/">http://www.commandprompt.com/ppbook/</a>. Há uma lista de livros sobre PostgreSQL disponíveis para compra. Um dos mais populares é o do Korry Douglas. Uma lista de análise sobre os livros pode ser encontrada em <a rel="nofollow" class="external free" href="http://www.postgresql.org/docs/books/">http://www.postgresql.org/docs/books/</a>. Há também uma coleção de artigos técnicos sbore PostgreSQL em <a rel="nofollow" class="external free" href="http://www.postgresql.org/docs/techdocs/">http://www.postgresql.org/docs/techdocs/</a>.
+</p><p>O programa cliente de linha de comando psql tem alguns comandos \d para mostrar informações sobre tipos, operadores, funções, agregações, etc. - utilize \? para mostrar os comandos disponíveis.
+</p><p>Nosso sítio web contém ainda mais documentação.
+</p>
+<h3><span id="Como_eu_posso_aprender_SQL.3F"></span><span class="mw-headline" id="Como_eu_posso_aprender_SQL?">Como eu posso aprender SQL?</span></h3>
+<p>Primeiro, considere os livros específicos sobre PostgreSQL mencionados acima. Muitos de nossos usuários gostam do The Practical SQL Handbook, Bowman, Judith S., et al., Addison-Wesley. Outros do The Complete Reference SQL, Groff et al., McGraw-Hill.
+</p><p>Há também bons tutoriais disponíveis online:
+</p>
+<pre>   * <a rel="nofollow" class="external free" href="http://www.intermedia.net/support/sql/sqltut.shtm">http://www.intermedia.net/support/sql/sqltut.shtm</a>
+   * <a rel="nofollow" class="external free" href="http://sqlcourse.com">http://sqlcourse.com</a>
+   * <a rel="nofollow" class="external free" href="http://www.w3schools.com/sql/default.asp">http://www.w3schools.com/sql/default.asp</a>
+   * <a rel="nofollow" class="external free" href="http://mysite.verizon.net/Graeme_Birchall/id1.html">http://mysite.verizon.net/Graeme_Birchall/id1.html</a>
+</pre>
+<h3><span id="Como_posso_submeter_uma_corre.C3.A7.C3.A3o_.28patch.29_ou_me_juntar_a_equipe_de_desenvolvimento.3F"></span><span class="mw-headline" id="Como_posso_submeter_uma_correção_(patch)_ou_me_juntar_a_equipe_de_desenvolvimento?">Como posso submeter uma correção (patch) ou me juntar a equipe de desenvolvimento?</span></h3>
+<p>Veja a FAQ do Desenvolvedor.
+</p>
+<h3><span id="Como_.C3.A9_o_PostgreSQL_comparado_a_outros_SGBDs.3F"></span><span class="mw-headline" id="Como_é_o_PostgreSQL_comparado_a_outros_SGBDs?">Como é o PostgreSQL comparado a outros SGBDs?</span></h3>
+<p>Há várias maneiras de se medir um software: funcionalidades, performance, confiabilidade, suporte e preço.
+</p><p>Funcionalidades
+</p>
+<pre>   PostgreSQL tem muitas características presentes em muitos SGBDs comerciais como transações, subconsultas, gatilhos, visões, integridade referencial de chave estrangeira e bloqueio (lock) sofisticado. Nós temos algumas funcionalidades que eles não tem, como tipos definidos pelo usuário, herança, regras e controle de concorrência de múltiplas versões para reduzir bloqueios (locks).
+</pre>
+<p>Performance
+</p>
+<pre>   A performance do PostgreSQL é comparável a outros bancos de dados comerciais e de código livre. Ele é mais rápido em algumas coisas, mais lento em outras. Nossa performance é geralmente +/- 10% comparada a de outros bancos de dados.
+</pre>
+<p>Confiabilidade
+</p>
+<pre>   Nós sabemos que um SGBD deve ser confiável ou ele é inútil. Nós empenhamos em lançar versões bem testadas, de código estável e que tenha o mínimo de bugs. Cada versão tem no mínimo um mês de teste em versão beta, e nosso histórico de versões mostra que nós podemos fornecer versões estáveis e sólidas que estão prontas para uso em produção. Nós acreditamos que somos comparados a nosso favor com outros sistemas de bancos de dados nessa área.
+</pre>
+<p>Suporte
+</p>
+<pre>   Nossas listas de discussão fornecem contato com um grupo de desenvolvedores e usuários para ajudar a resolver muitos problemas encontrados. Enquanto nós não podemos garantir o conserto, SGBDs comerciais nem sempre fornecem também. Com acesso direto aos desenvolvedores, a comunidade de usuários, manuais e o código fonte faz com que o suporte do PostgreSQL seja superior ao de outros SGBDs. Há suporte comercial por incidente disponíveis para aqueles que precisam de um. (Veja seção 1.7 da FAQ).
+</pre>
+<p>Preço
+</p>
+<pre>   Nós somos livres para uso dele tanto comercial quanto não comercial. Você pode adicionar nosso código ao seu produto sem limitações, exceto aquelas descritas na nossa licença BSD mencionada acima.
+</pre>
+<h3><span id="O_PostgreSQL_gerenciar.C3.A1_mudan.C3.A7as_no_hor.C3.A1rio_devido_ao_hor.C3.A1rio_de_ver.C3.A3o_em_v.C3.A1rios_pa.C3.ADses.3F"></span><span class="mw-headline" id="O_PostgreSQL_gerenciará_mudanças_no_horário_devido_ao_horário_de_verão_em_vários_países?">O PostgreSQL gerenciará mudanças no horário devido ao horário de verão em vários países?</span></h3>
+<p>Mudanças no horário de verão dos USA foram incluídas nas versões 8.0 .[4+] do PostgreSQL e em todas as versões grandes, i.e. 8.1. Mudanças no Canadá e Austrália Oeste foram incluídas na 8.0.[10+], 8.1.[6+] e em todas as versões grandes subsequentes. Versões do PostgreSQL anteriores a 8.0 utilizam o banco de dados de zona horária do sistema operacional para informações sobre horário de verão.
+</p>
+<h2><span class="mw-headline" id="Perguntas_sobre_Clientes">Perguntas sobre Clientes</span></h2>
+<h3><span id="Quais_interfaces_est.C3.A3o_dispon.C3.ADveis_para_PostgreSQL.3F"></span><span class="mw-headline" id="Quais_interfaces_estão_disponíveis_para_PostgreSQL?">Quais interfaces estão disponíveis para PostgreSQL?</span></h3>
+<p>A instalação do PostgreSQL inclui somente as interfaces C e C embutida. Todas as outras interfaces são projetos independentes que podem ser obtidos separadamente; sendo separados permitem que eles tenham suas próprias datas de lançamento e time de desenvolvedores.
+</p><p>Algumas linguagens de programação como PHP incluem uma interface para PostgreSQL. Interfaces para linguagens como Perl, TCL, Python e muitas outras estão disponíveis em <a rel="nofollow" class="external free" href="http://www.pgfoundry.org">http://www.pgfoundry.org</a>.
+</p>
+<h3><span id="Quais_ferramentas_est.C3.A3o_dispon.C3.ADveis_para_utilizar_o_PostgreSQL_com_p.C3.A1ginas_Web.3F"></span><span class="mw-headline" id="Quais_ferramentas_estão_disponíveis_para_utilizar_o_PostgreSQL_com_páginas_Web?">Quais ferramentas estão disponíveis para utilizar o PostgreSQL com páginas Web?</span></h3>
+<p>Uma boa introdução para páginas web que utilizam bancos de dados pode ser vista em: <a rel="nofollow" class="external free" href="http://www.webreview.com">http://www.webreview.com</a>
+</p><p>Para integração na Web, PHP (<a rel="nofollow" class="external free" href="http://www.php.net">http://www.php.net</a>) é uma excelente interface.
+</p><p>Para casos complexos, muitos usam a Interface Perl e DBD::Pg com CGI.pm ou mod_perl.
+</p>
+<h3><span id="O_PostgreSQL_tem_interfaces_gr.C3.A1ficas_para_iteragir_com_o_usu.C3.A1rio.3F"></span><span class="mw-headline" id="O_PostgreSQL_tem_interfaces_gráficas_para_iteragir_com_o_usuário?">O PostgreSQL tem interfaces gráficas para iteragir com o usuário?</span></h3>
+<p>Há um vasto número de Ferramentas Gráficas (GUI), que estão disponíveis para o PostgreSQL, comerciais e de desenvolvedores de código aberto. Uma lista detalhada pode ser encontrada em Documentação da Comunidade PostgreSQL
+</p>
+<h2><span class="mw-headline" id="Perguntas_Administrativas">Perguntas Administrativas</span></h2>
+<h3><span id="Como_eu_instalo_o_PostgreSQL_em_um_local_diferente_de_.2Fusr.2Flocal.2Fpgsql.3F"></span><span class="mw-headline" id="Como_eu_instalo_o_PostgreSQL_em_um_local_diferente_de_/usr/local/pgsql?">Como eu instalo o PostgreSQL em um local diferente de /usr/local/pgsql?</span></h3>
+<p>Especifique a opção --prefix quando executar o configure.
+</p>
+<h3><span id="Como_eu_controlo_conex.C3.B5es_de_outras_m.C3.A1quinas.3F"></span><span class="mw-headline" id="Como_eu_controlo_conexões_de_outras_máquinas?">Como eu controlo conexões de outras máquinas?</span></h3>
+<p>Por padrão, o PostgreSQL só permite conexões da máquina local utilizando soquetes de domínio Unix ou conexões TCP/IP. Outras máquinas não poderão conectar-se a menos que você modifique listen_addresses no postgresql.conf, habilite a autenticação por máquina modificando o arquivo $PGDATA/pg_hba.conf e reinicie o servidor PostgreSQL.
+</p>
+<h3><span id="Como_eu_ajusto_o_servidor_de_banco_de_dados_para_obter_uma_performance_melhor.3F"></span><span class="mw-headline" id="Como_eu_ajusto_o_servidor_de_banco_de_dados_para_obter_uma_performance_melhor?">Como eu ajusto o servidor de banco de dados para obter uma performance melhor?</span></h3>
+<p>Há três grandes áreas para melhorar a performance em potencial:
+</p><p>Mudança de Consultas
+</p>
+<pre>   Isto involve modificar consultas para obter melhor performance:
+</pre>
+<pre>       * Criação de índices, incluir expressões e índices parciais
+       * Utilização o COPY ao invés de múltiplos comandos INSERTs
+       * Agrupamento de múltiplos comandos em uma única transação para diminuir a despesa com efetivações (commit)
+       * Utilização do CLUSTER quando recuperar vários registros de um índice
+       * Utilização do LIMIT para retornar um subconjunto da saída da consulta
+       * Utilização de Consultas preparadas
+       * Utilização de ANALYZE para manter as estatísticas do otimizador corretas
+       * Utilização regular do VACUUM ou pg_autovacuum
+       * Remoção de índices durante grande mudança de dados
+</pre>
+<p>Configuração do Servidor
+</p>
+<pre>   Um grande número de configurações que afetam a performance. Para obter detalhes adicionais, veja Administration Guide/Server Run-time Environment/Run-time Configuration para listagem completa, e para comentários veja <a rel="nofollow" class="external free" href="http://www.varlena.com/varlena/GeneralBits/Tidbits/annotated_conf_e.html">http://www.varlena.com/varlena/GeneralBits/Tidbits/annotated_conf_e.html</a> e <a rel="nofollow" class="external free" href="http://www.varlena.com/varlena/GeneralBits/Tidbits/perf.html">http://www.varlena.com/varlena/GeneralBits/Tidbits/perf.html</a>.
+</pre>
+<p>Seleção do Hardware
+</p>
+<pre>   O efeito do hardware na performance é detalhado em <a rel="nofollow" class="external free" href="http://www.powerpostgresql.com/PerfList/">http://www.powerpostgresql.com/PerfList/</a> e <a rel="nofollow" class="external free" href="http://momjian.us/main/writings/pgsql/hw_performance/index.html">http://momjian.us/main/writings/pgsql/hw_performance/index.html</a>.
+</pre>
+<h3><span id="Quais_caracter.C3.ADsticas_de_depura.C3.A7.C3.A3o_est.C3.A3o_dispon.C3.ADveis.3F"></span><span class="mw-headline" id="Quais_características_de_depuração_estão_disponíveis?">Quais características de depuração estão disponíveis?</span></h3>
+<p>Há muitas variáveis de configuração do servidor log_* que habilitam a exibição de consultas e estatísticas que podem ser muito úteis para depuração e medidas de performance.
+</p>
+<h3><span id="Por_que_eu_recebo_.22Sorry.2C_too_many_clients.22_quando_eu_tento_conectar.3F"></span><span class="mw-headline" id="Por_que_eu_recebo_&quot;Sorry,_too_many_clients&quot;_quando_eu_tento_conectar?">Por que eu recebo "Sorry, too many clients" quando eu tento conectar?</span></h3>
+<p>Você atingiu o limite padrão de 100 sessões. Você precisa aumentar o limite do servidor PostgreSQL, que diz quantos processos servidor concorrentes ele pode iniciar, alterando o valor max_connections no postgresql.conf e reiniciando o postmaster.
+</p>
+<h3><span id="Qual_.C3.A9_o_processo_de_atualiza.C3.A7.C3.A3o_do_PostgreSQL.3F"></span><span class="mw-headline" id="Qual_é_o_processo_de_atualização_do_PostgreSQL?">Qual é o processo de atualização do PostgreSQL?</span></h3>
+<p>Veja <a rel="nofollow" class="external free" href="http://www.postgresql.org/support/versioning">http://www.postgresql.org/support/versioning</a> para discuss�o geral sobre atualiza��es e <a rel="nofollow" class="external free" href="http://www.postgresql.org/docs/current/static/install-upgrading.html">http://www.postgresql.org/docs/current/static/install-upgrading.html</a> para instruções específicas.
+</p>
+<h3><span id="Que_tipo_de_hardware_eu_devo_usar.3F"></span><span class="mw-headline" id="Que_tipo_de_hardware_eu_devo_usar?">Que tipo de hardware eu devo usar?</span></h3>
+<p>Por causa do hardware de PC ser em sua maioria compatível, pessoas tendem a acreditar que todos os hardwares de PC são de mesma qualidade. Não é verdade. ECC RAM, SCSI e placas mãe de qualidade são mais confiáveis e têm uma melhor performance do que hardwares mais baratos. O PostgreSQL executará em quase todo hardware, mas se a confiabilidade e a performance forem importantes é prudente pesquisar sobre as opções de hardware. Nossas listas de discussão podem ser usadas para discutir opções de hardware e dilemas.
+</p>
+<h2><span class="mw-headline" id="Perguntas_Operacionais">Perguntas Operacionais</span></h2>
+<h3><span id="Como_eu_fa.C3.A7o_um_SELECT_somente_dos_primeiros_registros_de_uma_consulta.3F_Um_registro_rand.C3.B4mico.3F"></span><span class="mw-headline" id="Como_eu_faço_um_SELECT_somente_dos_primeiros_registros_de_uma_consulta?_Um_registro_randômico?">Como eu faço um SELECT somente dos primeiros registros de uma consulta? Um registro randômico?</span></h3>
+<p>Para obter somente alguns registros, se você sabe o número de registros necessários ao executar o SELECT utilize o LIMIT. Se um índice corresponde no ORDER BY é possível que a consulta toda não tenha que ser executada. Se você não sabe o número de registros ao executar o SELECT, utilize um cursor e o FETCH.
+</p><p>Para obter um registro randômico, utilize:
+</p>
+<pre>   SELECT col
+   FROM tab
+   ORDER BY random()
+   LIMIT 1;
+</pre>
+<h3><span id="Como_eu_descubro_quais_tabelas.2C_.C3.ADndices.2C_bancos_de_dados_e_usu.C3.A1rios_est.C3.A3o_definidos.3F_Como_eu_vejo_as_consultas_utilizadas_pelo_psql_para_mostr.C3.A1-los.3F"></span><span class="mw-headline" id="Como_eu_descubro_quais_tabelas,_índices,_bancos_de_dados_e_usuários_estão_definidos?_Como_eu_vejo_as_consultas_utilizadas_pelo_psql_para_mostrá-los?">Como eu descubro quais tabelas, índices, bancos de dados e usuários estão definidos? Como eu vejo as consultas utilizadas pelo psql para mostrá-los?</span></h3>
+<p>Utilize o comando \dt para ver tabelas no psql. Para obter uma lista completa dos comandos no psql você pode utilizar \?. Alternativamente, você pode ler o código-fonte do psql no arquivo pgsql/src/bin/psql/describe.c, ele contém os comandos SQL que geram a saída para os comandos de contrabarra do psql. Você também pode iniciar o psql com a opção -E para que as consultas utilizadas para executar os comandos que você informou seja exibida. O PostgreSQL também fornece uma inteface compatível com SQL do INFORMATION SCHEMA que você pode consultar para obter informação sobre o banco de dados.
+</p><p>Há também tabelas do sistema que começam com pg_ que os descrevem também.
+</p><p>Utilizando o psql -l listará todos os bancos de dados.
+</p><p>Veja também o arquivo pgsql/src/tutorial/syscat.source. Ele ilustra muitos dos comandos SELECTs necessários para obter informação das tabelas de sistema do banco de dados.
+</p>
+<h3><span id="Como_voc.C3.AA_muda_o_tipo_de_dado_de_uma_coluna.3F"></span><span class="mw-headline" id="Como_você_muda_o_tipo_de_dado_de_uma_coluna?">Como você muda o tipo de dado de uma coluna?</span></h3>
+<p>Mudar o tipo de dado de uma coluna pode ser feito facilmente na versão 8.0 ou superior com ALTER TABLE ALTER COLUMN TYPE.
+</p><p>Em versões anteriores, faça isso:
+</p>
+<pre>   BEGIN;
+   ALTER TABLE tab ADD COLUMN col_nova novo_tipo_dado;
+   UPDATE tab SET col_nova = CAST(col_antiga AS novo_tipo_dado);
+   ALTER TABLE tab DROP COLUMN col_antiga;
+   COMMIT;
+</pre>
+<p>Você pode então querer fazer um VACUUM FULL tab para recuperar o espaço em disco utilizado pelos registros expirados.
+</p>
+<h3><span id="Qual_.C3.A9_o_tamanho_m.C3.A1ximo_de_um_registro.2C_uma_tabela_e_um_banco_de_dados.3F"></span><span class="mw-headline" id="Qual_é_o_tamanho_máximo_de_um_registro,_uma_tabela_e_um_banco_de_dados?">Qual é o tamanho máximo de um registro, uma tabela e um banco de dados?</span></h3>
+<p>Estes são os limites:
+</p>
+<pre>   Tamanho máximo de um banco de dados?	ilimitado (existem bancos de dados de 32 TB)
+   Tamanho máximo de uma tabela?	32 TB
+   Tamanho máximo de um registro?	400 GB
+   Tamanho máximo de um campo?	1 GB
+   Número máximo de registros em uma tabela?	ilimitado
+   Número máximo de colunas em uma tabela?	250-1600 dependendo dos tipos das colunas
+   Número máximo de índices em uma tabela?	ilimitado
+</pre>
+<p>É claro, que eles não são ilimitados, mas limitados ao espaço em disco disponível e espaço em memória/swap. A Performance será penalizada quando estes valores se tornarem grandes.
+</p><p>O tamanho máximo de uma tabela com 32 TB não requer suporte a arquivos grandes do sistema operacional. Tabelas grandes são armazenadas como múltiplos arquivos de 1 GB então o limite do sistema de arquivos não é importante.
+</p><p>O tamanho máximo de uma tabela, o tamanho de um registro e o número máximo de colunas podem ser quadruplicados aumentando-se o tamanho padrão do bloco para 32k. O tamanho máximo de uma tabela pode também ser aumentado utilizando particionamento de tabela.
+</p><p>Uma limitação é que índices não podem ser criados em colunas maiores do que 2.000 caracteres. Felizmente, tais índices são raramente necessários. Unicidade é melhor garantida por um índice de uma função de um hash MD5 de uma coluna longa, e indexação de texto longo permite a busca de palavras dentro da coluna.
+</p>
+<h3><span id="Quanto_espa.C3.A7o_em_disco_.C3.A9_necess.C3.A1rio_para_armazenar_dados_de_um_arquivo_texto.3F"></span><span class="mw-headline" id="Quanto_espaço_em_disco_é_necessário_para_armazenar_dados_de_um_arquivo_texto?">Quanto espaço em disco é necessário para armazenar dados de um arquivo texto?</span></h3>
+<p>Um banco de dados PostgreSQL irá requerer até cinco vezes a quantidade de espaço requerida para armazenar dados em um arquivo texto.
+</p><p>Como um exemplo, considere um arquivo com 100.000 linhas contendo um inteiro e uma descrição em cada linha. Suponha que o tamanho médio da descrição é de vinte bytes. O arquivo terá 2,8 MB. O tamanho do arquivo do banco de dados PostgreSQL que contém esses dados pode ser estimado em 5,2 MB:
+</p>
+<pre>   24 bytes: cada cabeçalho de registro (aproximadamente)
+   24 bytes: um campo int e um campo texto
+  + 4 bytes: ponteiro na página para a tupla
+  -------------------------------------------
+   52 bytes por registro
+</pre>
+<pre>  O tamanho de uma página de dados no PostgreSQL é 8192 bytes (8 KB), então:
+</pre>
+<pre>  8192 bytes por página
+  ------------------------   =  158 registros por página do banco de dados (arredondado para baixo)
+    52 bytes por registro
+</pre>
+<pre>  100000 registros de dados
+  ----------------------------  =  633 páginas do banco de dados (arredondado para cima)
+     158 registros por página
+</pre>
+<p>633 páginas do banco de dados * 8192 bytes por página  =  5.185.536 bytes (5,2 MB)
+</p><p>Índices não requerem muito espaço, mas contém dados que foram indexados, então eles podem ocupar algum espaço.
+</p><p>NULLs são armazenados como bitmaps, então eles utilizam muito pouco espaço.
+</p>
+<h3><span id="Por_que_minhas_consultas_est.C3.A3o_lentas.3F_Por_que_elas_n.C3.A3o_est.C3.A3o_utilizando_meus_.C3.ADndices.3F"></span><span class="mw-headline" id="Por_que_minhas_consultas_estão_lentas?_Por_que_elas_não_estão_utilizando_meus_índices?">Por que minhas consultas estão lentas? Por que elas não estão utilizando meus índices?</span></h3>
+<p>Índices não são utilizados por toda consulta. Índices são utilizados somente se a tabela é maior do que um tamanho mínimo, e a consulta seleciona somente uma pequena porcentagem dos registros da tabela. Isto porque o acesso randômico ao disco causado pela busca indexada pode ser mais lento do que uma leitura ao longo da tabela ou busca sequencial.
+</p><p>Para determinar se um índice deveria ser utilizado, o PostgreSQL deve ter estatísticas sobre a tabela. Estas estatísticas são coletadas utilizando o VACUUM ANALYZE ou simplesmente o ANALYZE. Utilizando estatísticas, o otimizador sbae quantos registros estão na tabela, e pode melhor determinar se índices deveriam ser utilizados. Estatísticas também são úteis para determinar a ordem de junção ótima e métodos de junção. Coleção de estatísticas deveriam ser feitas periodicamente a medida que o conteúdo da tabela muda.
+</p><p>Índices não são normalmente utilizados para ORDER BY ou para fazer junções. Uma busca sequencial seguido por uma ordenação explícita é geralmente mais rápida do que uma busca indexada em uma tabela grande. Contudo, LIMIT combinado com ORDER BY frequentemente utilizará índice porque somente uma pequena porção da tabela será retornada.
+</p><p>Se você acredita que o otimizador está incorreto ao escolher uma busca sequencial, utilize SET enable_seqscan TO 'off' e execute a consulta novamente para ver se uma busca indexada é realmente mais rápida.
+</p><p>Ao utilizar operadores curinga tais como LIKE ou ~, índices podem ser utilizados somente em algumas condições:
+</p>
+<pre>   * O início da cadeia de caracteres da busca deve ser iniciar com uma cadeia de caracteres, i.e.
+         o modelos LIKE não devem iniciar com&#160;%.
+         o modelos ~ (expressões regulares) devem iniciar com ^.
+   * A cadeia de caracteres utilizada na busca não pode iniciar com a classe de caracteres e.g. [a-e].
+   * Busca que não diferenciam maiúsculas de minúsculas tais como ILIKE e ~* não utilizam índices. Em vez disso, utilize índice de expressão, que é descrito na seção 4.8.
+   * O idioma padrão C deve ser usando durante o initdb porque não é possível saber o próximo caracter em idiomas que não sejam o C. Você pode criar um índice especial text_pattern_ops para tais casos que funcionam somente para indexação com LIKE. Também é possível utilizar indexação de busca textual para buscas por palavras.
+</pre>
+<p>Em versões anteriores a 8.0, índices frequentemente não podem ser utilizados a menos que os tipos de dados correspondam aos tipos de coluna do índice. Isto era particularmente verdadeiro para índices de coluna int2, int8 e numeric.
+</p>
+<h3><span id="Como_eu_vejo_como_o_otimizador_de_consulta_est.C3.A1_avaliando_a_minha_consulta.3F"></span><span class="mw-headline" id="Como_eu_vejo_como_o_otimizador_de_consulta_está_avaliando_a_minha_consulta?">Como eu vejo como o otimizador de consulta está avaliando a minha consulta?</span></h3>
+<p>Veja o comando EXPLAIN no manual.
+</p>
+<h3><span id="Como_eu_fa.C3.A7o_buscas_com_express.C3.B5es_regulares_e_buscas_com_express.C3.B5es_regulares_sem_diferenciar_mai.C3.BAsculas_de_min.C3.BAsculas.3F_Como_eu_utilizo_um_.C3.ADndice_para_buscas_que_n.C3.A3o_diferenciam_mai.C3.BAsculas_de_min.C3.BAsculas.3F"></span><span class="mw-headline" id="Como_eu_faço_buscas_com_expressões_regulares_e_buscas_com_expressões_regulares_sem_diferenciar_maiúsculas_de_minúsculas?_Como_eu_utilizo_um_índice_para_buscas_que_não_diferenciam_maiúsculas_de_minúsculas?">Como eu faço buscas com expressões regulares e buscas com expressões regulares sem diferenciar maiúsculas de minúsculas? Como eu utilizo um índice para buscas que não diferenciam maiúsculas de minúsculas?</span></h3>
+<p>O operador ~ faz avaliação de expressões regulares, e ~* faz avaliação não sensível a maiúsculas de expressões regulares. A variante não sensível a maiúsculas do LIKE é chamada de ILIKE.
+</p><p>Comparações de igualdade não sensíveis a maiúsculas são normalmente expressadas como:
+</p>
+<pre>   SELECT *
+   FROM tab
+   WHERE lower(col) = 'abc';
+</pre>
+<p>Isso não irá utilizar o índice padrão. Contudo, se você criar um índice de expressão, ele será utilizado:
+</p>
+<pre>   CREATE INDEX tabindex ON tab (lower(col));
+</pre>
+<p>Se o índice acima é criado como UNIQUE, embora a coluna possa armazenar caracteres maiúsculos e minúsculos, ele não pode ter valores idênticos que diferem apenas em letras maiúsculas e minúsculas. Para forçar uma letra maiúscula ou minúscula a ser armazenada na coluna, utilize uma restrição CHECK ou um gatilho.
+</p>
+<h3><span id="Em_uma_consulta.2C_como_eu_detecto_se_um_campo_.C3.A9_NULL.3F_Como_eu_posso_concatenar_poss.C3.ADveis_NULLs.3F_Como_eu_posso_ordenar_por_um_campo_que_.C3.A9_NULL_ou_n.C3.A3o.3F"></span><span class="mw-headline" id="Em_uma_consulta,_como_eu_detecto_se_um_campo_é_NULL?_Como_eu_posso_concatenar_possíveis_NULLs?_Como_eu_posso_ordenar_por_um_campo_que_é_NULL_ou_não?">Em uma consulta, como eu detecto se um campo é NULL? Como eu posso concatenar possíveis NULLs? Como eu posso ordenar por um campo que é NULL ou não?</span></h3>
+<p>Você testa a coluna com IS NULL e IS NOT NULL, como a seguir:
+</p>
+<pre>  SELECT *
+  FROM tab
+  WHERE col IS NULL;
+</pre>
+<p>Para concatenar com possíveis NULLs, utilize COALESCE(), assim:
+</p>
+<pre>  SELECT COALESCE(col1, <i>) || COALESCE(col2, </i>)
+  FROM tab
+</pre>
+<p>Para ordenar pelo status NULL, utilize os modificadores IS NULL e IS NOT NULL na sua cláusula ORDER BY. Coisas que são verdadeiro serão ordenadas acima das coisas que são falso, então a consulta a seguir irá colocar entradas NULL no início da lista de resultados:
+</p>
+<pre>  SELECT *
+  FROM tab
+  ORDER BY (col IS NOT NULL)
+</pre>
+<h3><span id="Qual_.C3.A9_a_diferen.C3.A7a_entre_os_v.C3.A1rios_tipos_de_dado_de_caracteres.3F"></span><span class="mw-headline" id="Qual_é_a_diferença_entre_os_vários_tipos_de_dado_de_caracteres?">Qual é a diferença entre os vários tipos de dado de caracteres?</span></h3>
+<pre>   Tipo	Nome Interno	Observação
+   VARCHAR(n)	varchar	tamanho especifica o tamanho máximo, sem preenchimento
+   CHAR(n)	bpchar	preenchimento em branco para comprimento fixo específico
+   TEXT	text	nenhum limite superior específico no comprimento
+   BYTEA	bytea	vetor de bytes de comprimento variável (seguro a byte nulo)
+   "char"	char	um caracter
+</pre>
+<p>Você verá o nome interno quando examinar o catálogo do sistema e em algumas mensagens de erro.
+</p><p>Os primeiros quatro tipos acima são do tipo "varlena" (i.e., os primeiros quatro bytes no disco são o comprimento seguido pelos dados). Consequentemente o espaço atual utilizado é ligeiramente maior do que o tamanho declarado. Contudo, valores longos são também sujeitos a compressão, então o espaço em disco pode também ser bem menor do que o esperado.
+</p><p>VARCHAR(n) é melhor quando está armazenando cadeias de caracteres de comprimento variável e há um limite de tamanho desta cadeia. TEXT é para cadeias de caracteres de comprimento ilimitado, com o máximo de um gigabyte.
+</p><p>CHAR(n) é para armazenar cadeias de caracteres que são todas do mesmo tamanho. CHAR(n) preenche com espaços em branco até o tamanho especificado, enquanto o VARCHAR(n) armazena somente os caracteres fornecidos. BYTEA é para armazenar dados binários, particularmente valores que incluem bytes NULL. Todos os tipos descritos aqui tem características de performance similares.
+</p>
+<h4><span id="Como_eu_crio_um_campo_serial.2Fauto_incremento.3F"></span><span class="mw-headline" id="Como_eu_crio_um_campo_serial/auto_incremento?">Como eu crio um campo serial/auto incremento?</span></h4>
+<p>PostgreSQL suporta o tipo de dados SERIAL. Ele cria automaticamente uma sequência. Por exemplo:
+</p>
+<pre>   CREATE TABLE pessoa ( 
+       id   SERIAL, 
+       nome TEXT 
+   );
+</pre>
+<p>é automaticamente traduzido em:
+</p>
+<pre>   CREATE SEQUENCE pessoa_id_seq;
+   CREATE TABLE pessoa ( 
+       id   INT4 NOT NULL DEFAULT nextval('pessoa_id_seq'),
+       nome TEXT 
+   );
+</pre>
+<p>Sequências automaticamente criadas são nomeadas como &lt;tabela&gt;_&lt;colunaserial&gt;_seq, onde tabela e colunaserial são os nomes da tabela e da coluna serial, respectivamente. Veja a página sobre create_sequence no manual para obter informações adicionais sobre sequências.
+</p>
+<h4><span id="Como_eu_consigo_o_valor_de_um_campo_SERIAL.3F"></span><span class="mw-headline" id="Como_eu_consigo_o_valor_de_um_campo_SERIAL?">Como eu consigo o valor de um campo SERIAL?</span></h4>
+<p>A maneira mais simples de obter o próximo valor SERIAL de uma sequência é com RETURNING. Utilizando o exemplo da tabela em 4.11.1, ele ficaria assim:
+</p>
+<pre>   INSERT INTO pessoa (nome) VALUES ('Blaise Pascal') RETURNING id;
+</pre>
+<p>Você também pode chamar nextval() e utilizar o valor no INSERT ou chamar currval() após o INSERT.
+</p>
+<h4><span id="currval.28.29_n.C3.A3o_lida_com_condi.C3.A7.C3.A3o_de_corrida_com_outros_usu.C3.A1rios.3F"></span><span class="mw-headline" id="currval()_não_lida_com_condição_de_corrida_com_outros_usuários?">currval() não lida com condição de corrida com outros usuários?</span></h4>
+<p>Não. currval() retorna o valor atual atribuido pela sua sessão, e não por todas as sessões.
+</p>
+<h4><span id="Por_que_os_n.C3.BAmeros_da_minha_sequ.C3.AAncia_n.C3.A3o_s.C3.A3o_reutilizados_quando_uma_transa.C3.A7.C3.A3o_.C3.A9_abortada.3F_Por_que_h.C3.A1_intervalos_nos_n.C3.BAmeros_da_minha_sequ.C3.AAncia.2Fcoluna_SERIAL.3F"></span><span class="mw-headline" id="Por_que_os_números_da_minha_sequência_não_são_reutilizados_quando_uma_transação_é_abortada?_Por_que_há_intervalos_nos_números_da_minha_sequência/coluna_SERIAL?">Por que os números da minha sequência não são reutilizados quando uma transação é abortada? Por que há intervalos nos números da minha sequência/coluna SERIAL?</span></h4>
+<p>Para melhorar a concorrência, valores da sequência são atribuídos a transações correntes e não são travados até que a transação seja finalizada. Isso causa intervalos na numeração por causa de transações abortadas.
+</p>
+<h3><span id="O_que_.C3.A9_um_OID.3F_O_que_.C3.A9_um_CTID.3F"></span><span class="mw-headline" id="O_que_é_um_OID?_O_que_é_um_CTID?">O que é um OID? O que é um CTID?</span></h3>
+<p>Se uma tabela é criada com WITH OIDS, cada registro recebe um OID único. OIDs são automaticamente atribuídos como inteiros de 4 bytes que são únicos ao longo de toda instalação. Contudo, eles são limitados em 4 bilhões e, então, os OIDs começam a ser duplicados. O PostgreSQL utiliza OIDs para ligar as tabelas do sistema.
+</p><p>Para numerar registros nas tabelas do usuários, é melhor utilizar SERIAL ao invés de OIDs porque sequências SERIAL são únicas somente em uma tabela; e são menos propícias a atingir o limite. SERIAL8 está disponível para armazenar valores de sequências com oito bytes.
+</p><p>CTIDs são utilizados para identificar registros físicos específicos com valores de block e deslocamento. CTIDs mudam após registros serem modificados ou recarregados. Eles são utilizados por índices para apontar registros físicos.
+</p>
+<h3><span id="Por_que_eu_recebo_o_erro_.22ERROR:_Memory_exhausted_in_AllocSetAlloc.28.29.22.3F"></span><span class="mw-headline" id="Por_que_eu_recebo_o_erro_&quot;ERROR:_Memory_exhausted_in_AllocSetAlloc()&quot;?">Por que eu recebo o erro "ERROR: Memory exhausted in AllocSetAlloc()"?</span></h3>
+<p>Você provavelmente está sem memória virtual no seu sistema, ou o seu núcleo (kernel) tem um limite baixo para certos recursos. Tente isto antes de iniciar o servidor PostgreSQL:
+</p>
+<pre>   ulimit -d 262144
+   limit datasize 256m
+</pre>
+<p>Dependendo da sua shell, somente um desses comando terá sucesso, mas ele definirá o segmento de dados do seu processo com um limite maior e talvez permita que a consulta seja feita. Este comando é aplicado ao processo atual e todos os subprocessos criados depois do comando ser executado. Se você tiver problemas com o cliente SQL porque o processo servidor retornou muitos dados, tente-o antes de iniciar o cliente.
+</p>
+<h3><span id="Como_eu_informo_qual_vers.C3.A3o_do_PostgreSQL_eu_estou_utilizando.3F"></span><span class="mw-headline" id="Como_eu_informo_qual_versão_do_PostgreSQL_eu_estou_utilizando?">Como eu informo qual versão do PostgreSQL eu estou utilizando?</span></h3>
+<p>No psql, digite SELECT version();
+</p>
+<h3><span id="Como_eu_crio_uma_coluna_que_conter.C3.A1_por_padr.C3.A3o_a_hora_atual.3F"></span><span class="mw-headline" id="Como_eu_crio_uma_coluna_que_conterá_por_padrão_a_hora_atual?">Como eu crio uma coluna que conterá por padrão a hora atual?</span></h3>
+<p>Utilize CURRENT_TIMESTAMP:
+</p><p>	CREATE TABLE teste (x int, modtime timestamp DEFAULT CURRENT_TIMESTAMP );
+</p>
+<h3><span id="Como_eu_fa.C3.A7o_uma_jun.C3.A7.C3.A3o_externa_.28outer_join.29.3F"></span><span class="mw-headline" id="Como_eu_faço_uma_junção_externa_(outer_join)?">Como eu faço uma junção externa (outer join)?</span></h3>
+<p>PostgreSQL suporta junções externas utilizando a sintaxe padrão do SQL. Aqui temos dois exemplos:
+</p>
+<pre>   SELECT *
+   FROM t1 LEFT OUTER JOIN t2 ON (t1.col = t2.col);
+</pre>
+<p>ou
+</p>
+<pre>   SELECT *
+   FROM t1 LEFT OUTER JOIN t2 USING (col);
+</pre>
+<p>Essas duas consultas indênticas juntam t1.col com t2.col, e também retornam qualquer registro que não foi juntado em t1 (aqueles que não combinaram com t2). Uma junção a direita RIGHT adicionaria registros que não foram juntados da tabela t2. Uma junção completa (FULL) retornaria os registros combinados mais todos os registros não combinados de t1 e t2. A palavra OUTER é opcional e é assumida nas junções LEFT, RIGHT e FULL. Junções ordinárias são chamadas junções internas (INNER).
+</p>
+<h3><span id="Como_eu_fa.C3.A7o_consultas_utilizando_m.C3.BAltiplos_bancos_de_dados.3F"></span><span class="mw-headline" id="Como_eu_faço_consultas_utilizando_múltiplos_bancos_de_dados?">Como eu faço consultas utilizando múltiplos bancos de dados?</span></h3>
+<p>Não há outra maneira de consultar um banco de dados caso ele não seja o atual. Porque o PostgreSQL carrega catálogos do sistema específicos do banco de dados, é incerto como uma consulta em banco de dados distintos pode se comportar.
+</p><p>contrib/dblink permite consultas em bancos de dados distintos utilizando chamadas de funções. É claro, que um cliente pode fazer conexões simultâneas em bancos de dados diferentes e juntar os resultados no cliente.
+</p>
+<h3><span id="Como_eu_retorno_m.C3.BAltiplos_registros_ou_colunas_de_uma_fun.C3.A7.C3.A3o.3F"></span><span class="mw-headline" id="Como_eu_retorno_múltiplos_registros_ou_colunas_de_uma_função?">Como eu retorno múltiplos registros ou colunas de uma função?</span></h3>
+<p>É fácil utilizando funções que retornam conjunto, <a rel="nofollow" class="external free" href="http://www.postgresql.org/docs/techdocs.17">http://www.postgresql.org/docs/techdocs.17</a>.
+</p>
+<h3><span id="Por_que_eu_obtenho_erros_.22relation_with_OID_.23.23.23.23.23.23_does_not_exist.22_ao_acessar_tabelas_tempor.C3.A1rias_em_fun.C3.A7.C3.B5es_PL.2FPgSQL.3F"></span><span class="mw-headline" id="Por_que_eu_obtenho_erros_&quot;relation_with_OID_######_does_not_exist&quot;_ao_acessar_tabelas_temporárias_em_funções_PL/PgSQL?">Por que eu obtenho erros "relation with OID ###### does not exist" ao acessar tabelas temporárias em funções PL/PgSQL?</span></h3>
+<p>Em versões do PostgreSQL &lt; 8.3, PL/PgSQL armazena o conteúdo da função, e o efeito indesejado é que se uma função PL/PgSQL acessa uma tabela temporária, e aquela tabela é removida e criada novamente, e a função é chamada novamente, a função irá falhar porque o conteúdo armazenado da função ainda apontará para a tabela temporária antiga. A solução é utilizar o EXECUTE para acesso a tabelas temporárias no PL/PgSQL. Isto irá fazer com que a consulta seja avaliada toda vez.
+</p><p>Este problema não ocorre no PostgreSQL 8.3 ou superior.
+</p>
+<h3><span id="Quais_solu.C3.A7.C3.B5es_de_replica.C3.A7.C3.A3o_est.C3.A3o_dispon.C3.ADveis.3F"></span><span class="mw-headline" id="Quais_soluções_de_replicação_estão_disponíveis?">Quais soluções de replicação estão disponíveis?</span></h3>
+<p>Embora "replicação" seja um termo simples, há várias tecnologias para fazer replicação, com vantagens e desvantagens para cada um.
+</p><p>Replicação mestre/escravo permite que um mestre receba consultas de leitura e escrita, enquanto os escravos só podem aceitar leitura/consultas SELECT. A solução mais popular de replicação mestre-escravo para PostgreSQL disponível livremente é Slony-I.
+</p><p>Replicação com múltiplos mestres permite que consultas leitura/escrita sejam enviadas para múltiplos computadores replicadores. Esta capacidade também tem um sério impacto na performance por causa da necessidade de sincronizar as mudanças entre os servidores. PGCluster é a solução mais popular disponível livremente para PostgreSQL.
+</p><p>Há também soluções de replicação comerciais e baseadas em hardware disponíveis que suportam uma variedade de modelos de replicação.
+</p>
+<h3><span id="Por_que_os_nomes_de_minhas_tabelas_e_colunas_n.C3.A3o_s.C3.A3o_reconhecidos_em_minha_consulta.3F_Por_que_as_mai.C3.BAsculas_n.C3.A3o_s.C3.A3o_preservadas.3F"></span><span class="mw-headline" id="Por_que_os_nomes_de_minhas_tabelas_e_colunas_não_são_reconhecidos_em_minha_consulta?_Por_que_as_maiúsculas_não_são_preservadas?">Por que os nomes de minhas tabelas e colunas não são reconhecidos em minha consulta? Por que as maiúsculas não são preservadas?</span></h3>
+<p>A causa mais comum de nomes desconhecidos é o uso de aspas ao redor dos nomes da tabela ou coluna durante a criação da tabela. Ao utilizar aspas, nomes de tabela e coluna (chamados de identificadores) são armazenados como especificado, significando que você deve utilizar aspas quando se referir aos nomes na consulta. Algumas interfaces, como pgAdmin, automaticamente colocam aspas nos identificadores durante a criação da tabela. Então, para identificadores serem reconhecidos, você deve:
+</p>
+<pre>   * Evitar colocar aspas no identificador ao criar tabelas
+   * Utilizar somente caracteres minúsculos em identificadores
+   * Colocar aspas em identificadores ao referenciá-los nas consultas
+</pre>
+<!-- 
+NewPP limit report
+Cached time: 20260408144315
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.077 seconds
+Real time usage: 0.091 seconds
+Preprocessor visited node count: 160/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    9.194      1 Template:Languages
+100.00%    9.194      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:696-0!canonical and timestamp 20260408144315 and revision id 36311.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=FAQ/pt&amp;oldid=36311">https://wiki.postgresql.org/index.php?title=FAQ/pt&amp;oldid=36311</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:FAQ" title="Category:FAQ">FAQ</a></li><li><a href="/wiki/Category:Portugu%C3%AAs" title="Category:Português">Português</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/FAQ/pt" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:FAQ/pt&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/FAQ/pt">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=FAQ/pt&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=FAQ/pt&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/FAQ/pt" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:FAQ/pt&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=FAQ%2Fpt" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/FAQ/pt" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/FAQ/pt" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=FAQ/pt&amp;oldid=36311" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=FAQ/pt&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 13 August 2021, at 18:17.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.077","walltime":"0.091","ppvisitednodes":{"value":160,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    9.194      1 Template:Languages","100.00%    9.194      1 -total"]},"cachereport":{"timestamp":"20260408144315","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":520});});</script>
+</body>
+</html>

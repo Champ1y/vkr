@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Community Disk Tuning Guide - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"1f558e57fe1fe335bc65ee5a","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Community_Disk_Tuning_Guide","wgTitle":"Community Disk Tuning Guide","wgCurRevisionId":8905,"wgRevisionId":8905,"wgArticleId":104,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Administration","Performance"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Community_Disk_Tuning_Guide","wgRelevantArticleId":104,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Community_Disk_Tuning_Guide rootpage-Community_Disk_Tuning_Guide skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Community Disk Tuning Guide</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p>NOTE:  This document is a bit out of date. You are encouraged to update it and remove this notice&#160;:-) 
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Disk_Optimisation_Strategies_for_PostgreSQL"><span class="tocnumber">1</span> <span class="toctext">Disk Optimisation Strategies for PostgreSQL</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Software_related"><span class="tocnumber">1.1</span> <span class="toctext">Software related</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Hardware_related"><span class="tocnumber">1.2</span> <span class="toctext">Hardware related</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Operating_System_Specific"><span class="tocnumber">1.3</span> <span class="toctext">Operating System Specific</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Filesystem_recommendations"><span class="tocnumber">1.4</span> <span class="toctext">Filesystem recommendations</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Partitioning_recommendations"><span class="tocnumber">1.5</span> <span class="toctext">Partitioning recommendations</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Where_to_put_Indexes,_Tables,_and_other_things"><span class="tocnumber">1.6</span> <span class="toctext">Where to put Indexes, Tables, and other things</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#NFS"><span class="tocnumber">1.7</span> <span class="toctext">NFS</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9"><a href="#Hardware_related_2"><span class="tocnumber">2</span> <span class="toctext">Hardware related</span></a>
+<ul>
+<li class="toclevel-2 tocsection-10"><a href="#RAID_Configuration"><span class="tocnumber">2.1</span> <span class="toctext">RAID Configuration</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Hardware_versus_Software"><span class="tocnumber">2.2</span> <span class="toctext">Hardware versus Software</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#RAID_array_levels"><span class="tocnumber">2.3</span> <span class="toctext">RAID array levels</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#SCSI_vs_IDE"><span class="tocnumber">2.4</span> <span class="toctext">SCSI vs IDE</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#SCSI_Contoller_types"><span class="tocnumber">2.5</span> <span class="toctext">SCSI Contoller types</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Drive_spindle_speeds"><span class="tocnumber">2.6</span> <span class="toctext">Drive spindle speeds</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Contributors_thus_far"><span class="tocnumber">2.7</span> <span class="toctext">Contributors thus far</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Disk_Optimisation_Strategies_for_PostgreSQL">Disk Optimisation Strategies for PostgreSQL</span></h2>
+<p>Suggested topics thus far
+</p>
+<h3><span class="mw-headline" id="Software_related">Software related</span></h3>
+<ul><li>Operating System Specific</li>
+<li>Filesystem recommendations</li>
+<li>Partitioning recommendations</li>
+<li>Where to put Indexes, Tables, and other things</li>
+<li>NFS</li></ul>
+<h3><span class="mw-headline" id="Hardware_related">Hardware related</span></h3>
+<ul><li>RAID Configuration</li>
+<li>SCSI vs IDE</li>
+<li>SCSI Controller types</li>
+<li>Drive spindle speeds</li></ul>
+<h3><span class="mw-headline" id="Operating_System_Specific">Operating System Specific</span></h3>
+<ul><li>?</li></ul>
+<h3><span class="mw-headline" id="Filesystem_recommendations">Filesystem recommendations</span></h3>
+<ul><li>Software RAID</li>
+<li>Journalling types recommended/required/etc</li>
+<li>etc</li></ul>
+<h3><span class="mw-headline" id="Partitioning_recommendations">Partitioning recommendations</span></h3>
+<ul><li>?</li></ul>
+<h3><span id="Where_to_put_Indexes.2C_Tables.2C_and_other_things"></span><span class="mw-headline" id="Where_to_put_Indexes,_Tables,_and_other_things">Where to put Indexes, Tables, and other things</span></h3>
+<ul><li>Multiple disk drives</li>
+<li>Putting WAL log files on an otherwise idle drive</li>
+<li>etc</li></ul>
+<h3><span class="mw-headline" id="NFS">NFS</span></h3>
+<ul><li>v2 vs v3 vs v4</li>
+<li>Locking issues</li>
+<li>Speed considerations</li></ul>
+<p><br />
+</p>
+<h2><span class="mw-headline" id="Hardware_related_2">Hardware related</span></h2>
+<h3><span class="mw-headline" id="RAID_Configuration">RAID Configuration</span></h3>
+<p>RAID: Redundant Array of Independent Disks. RAID allows a computer to use two or more physical drives as a larger, faster, more dependable single logical drive. By striping information redundantly across several drives, a RAID array can survive the failure of one or more disk drives and continue to operate.
+</p><p>RAID configuration consists of two primary choices:
+</p>
+<ul><li>Hardware versus Software RAID</li>
+<li>RAID level</li></ul>
+<h3><span class="mw-headline" id="Hardware_versus_Software">Hardware versus Software</span></h3>
+<p>While hardware RAID is often considered superior to software based RAID, there are circumstances where a software RAID array represents a better value. Hardware's primary advantage over software is that it allows the RAID controller to cache writes with battery backed memory, thus ensuring better crash recovery, while maintaining good speed. Be careful choosing a hardware RAID card to ensure it has both a solid driver for your operating system, and that if it has cache that it is battery backed and can be set to write back mode.
+</p><p>Software RAID is often a good choice for report databases, where write performance isn't a critical issue.
+</p>
+<h3><span class="mw-headline" id="RAID_array_levels">RAID array levels</span></h3>
+<ul><li>RAID level 0: RAID level 0 simply stripes information across the disks with no parity. This method aggregates the bandwidth of several drives at once with little or no overhead. While this level provides the fastest possible performance, it isn't technically "RAID", since the failure of any one disk results in the loss of all data stored on that drive, with no recoverability. This level requires at least 2 drives, but gets faster as more drives are added. The chance of failure increases as you increase the number of drives, so large RAID0 arrays are not a good idea. While not commonly used alone, it is often used with other RAID levels to provide both fast performance and redundancy. Common usage: batch file processing database where the input data is well defined and can be replaced easily.<br /></li>
+<li>RAID level 1: RAID level 1 writes everything to two or more disks. RAID level 1 is well suited for small to medium workloads. It provides the failsafe of a mirrored drive set with the minimum number of drives needed, two. For heavily read databases, RAID level 1 with more than 2 drives can provide very good throughput, by allowing for greater aggregate read bandwidth than just 2 drives. Note that there is a penalty of having to write every update to all the drives in the array. Common usage: workgroup / intranet, OLAP, batch processing.<br /></li>
+<li>RAID level 5: RAID level 5 is well suited for medium to large workloads. RAID5 requires at least three disk drives, but the more drives you place in a RAID5 array the faster it generally runs and the better it handles heavy parallel load. Common usage: intranet, OLAP, OLTP.<br /></li>
+<li>RAID level 1+0, 5+0 While RAID level 0 has no redundancy of its own, it can be added by building a RAID level 1 or 5 array on top of a set of RAID level 0 arrays. This combination often provides the best speed for the least number of drives. At least 4 drives are required for RAID 1+0, and at least 6 drives are required for RAID 5+0. Common usage: high performance OLTP.<br /></li>
+<li>RAID level 0+1, 0+5 This level is much like level 1+0 or 5+0, but instead of being a set of RAID1 or 5 built on top of a set of RAID0, it is a set of RAID0 built on top of multiple RAID1 or 5 arrays. It too is commonly used for OLTP.<br /></li></ul>
+<h3><span class="mw-headline" id="SCSI_vs_IDE">SCSI vs IDE</span></h3>
+<ul><li>Where each is best suited</li>
+<li>Data security issues with IDE drives and write cache enabled</li>
+<li>Speed expectations from them</li></ul>
+<h3><span class="mw-headline" id="SCSI_Contoller_types">SCSI Contoller types</span></h3>
+<ul><li>U160 vs U320, etc.</li>
+<li>Adaptec 29160 (not bad)</li>
+<li>Advansys UW (sucks due to BIOS incompatibilities with some drives)</li>
+<li>etc</li></ul>
+<h3><span class="mw-headline" id="Drive_spindle_speeds">Drive spindle speeds</span></h3>
+<ul><li>Performance when database is on a 15000 RPM SCSI disk vs 10000 RPM SCSI disk vs 7200 RPM IDE disk</li></ul>
+<h3><span class="mw-headline" id="Contributors_thus_far">Contributors thus far</span></h3>
+<p>Justin Clift<br />
+Shridhar Daithankar<br />
+Lee Kindness<br />
+Scott Marlowe<br />
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260407220409
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.025 seconds
+Real time usage: 0.029 seconds
+Preprocessor visited node count: 48/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:104-0!canonical and timestamp 20260407220409 and revision id 8905.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Community_Disk_Tuning_Guide&amp;oldid=8905">https://wiki.postgresql.org/index.php?title=Community_Disk_Tuning_Guide&amp;oldid=8905</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:Administration" title="Category:Administration">Administration</a></li><li><a href="/wiki/Category:Performance" title="Category:Performance">Performance</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Community_Disk_Tuning_Guide" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Community_Disk_Tuning_Guide&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Community_Disk_Tuning_Guide">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Community_Disk_Tuning_Guide&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Community_Disk_Tuning_Guide&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Community_Disk_Tuning_Guide" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Community_Disk_Tuning_Guide&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Community+Disk+Tuning+Guide" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Community_Disk_Tuning_Guide" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Community_Disk_Tuning_Guide" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Community_Disk_Tuning_Guide&amp;oldid=8905" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Community_Disk_Tuning_Guide&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 26 November 2009, at 04:44.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.025","walltime":"0.029","ppvisitednodes":{"value":48,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260407220409","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":251});});</script>
+</body>
+</html>

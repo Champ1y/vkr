@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 17: 43.4. Global Values in PL/Perl</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/17/plperl-global.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:07:05" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="43.4. Global Values in PL/Perl" />
+  <meta property="og:description" content="43.4.&amp;nbsp;Global Values in PL/Perl # You can use the global hash %_SHARED to store data, including code references, between function …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?290b0238" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?290b0238">
+
+  <script src="/media/js/theme.js?290b0238"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/plperl-global.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/17/index.html">PostgreSQL 17</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/plperl-global.html" title="PostgreSQL 18 - 43.4. Global Values in PL/Perl" >Current</a>
+                          (<a href="/docs/18/plperl-global.html" title="PostgreSQL 18 - 43.4. Global Values in PL/Perl" >18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/plperl-global.html" title="PostgreSQL 17 - 43.4. Global Values in PL/Perl" class="docs-version-selected">17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/plperl-global.html" title="PostgreSQL 16 - 43.4. Global Values in PL/Perl" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/plperl-global.html" title="PostgreSQL 15 - 43.4. Global Values in PL/Perl" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/plperl-global.html" title="PostgreSQL 14 - 43.4. Global Values in PL/Perl" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/plperl-global.html" title="PostgreSQL devel - 43.4. Global Values in PL/Perl"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/plperl-global.html" title="PostgreSQL 13 - 43.4. Global Values in PL/Perl"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/plperl-global.html" title="PostgreSQL 12 - 43.4. Global Values in PL/Perl"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/plperl-global.html" title="PostgreSQL 11 - 43.4. Global Values in PL/Perl"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/plperl-global.html" title="PostgreSQL 10 - 43.4. Global Values in PL/Perl"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/plperl-global.html" title="PostgreSQL 9.6 - 43.4. Global Values in PL/Perl"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/plperl-global.html" title="PostgreSQL 9.5 - 43.4. Global Values in PL/Perl"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/plperl-global.html" title="PostgreSQL 9.4 - 43.4. Global Values in PL/Perl"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/plperl-global.html" title="PostgreSQL 9.3 - 43.4. Global Values in PL/Perl"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/plperl-global.html" title="PostgreSQL 9.2 - 43.4. Global Values in PL/Perl"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/plperl-global.html" title="PostgreSQL 9.1 - 43.4. Global Values in PL/Perl"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/plperl-global.html" title="PostgreSQL 9.0 - 43.4. Global Values in PL/Perl"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/plperl-global.html" title="PostgreSQL 8.4 - 43.4. Global Values in PL/Perl"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/plperl-global.html" title="PostgreSQL 8.3 - 43.4. Global Values in PL/Perl"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/plperl-global.html" title="PostgreSQL 8.2 - 43.4. Global Values in PL/Perl"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/plperl-global.html" title="PostgreSQL 8.1 - 43.4. Global Values in PL/Perl"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/plperl-global.html" title="PostgreSQL 8.0 - 43.4. Global Values in PL/Perl"  rel="nofollow">8.0</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/17/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">43.4.&nbsp;Global Values in PL/Perl</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="plperl-builtins.html" title="43.3.&nbsp;Built-in Functions">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="plperl.html" title="Chapter&nbsp;43.&nbsp;PL/Perl — Perl Procedural Language">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;43.&nbsp;PL/Perl — Perl Procedural Language</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 17.9 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="plperl-trusted.html" title="43.5.&nbsp;Trusted and Untrusted PL/Perl">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="PLPERL-GLOBAL">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">43.4.&nbsp;Global Values in PL/Perl <a href="#PLPERL-GLOBAL" class="id_link">#</a></h2>
+      </div>
+    </div>
+  </div>
+  <p>You can use the global hash <code class="varname">%_SHARED</code> to store data, including code references, between function calls for the lifetime of the current session.</p>
+  <p>Here is a simple example for shared data:</p>
+  <pre class="programlisting">
+CREATE OR REPLACE FUNCTION set_var(name text, val text) RETURNS text AS $$
+    if ($_SHARED{$_[0]} = $_[1]) {
+        return 'ok';
+    } else {
+        return "cannot set shared variable $_[0] to $_[1]";
+    }
+$$ LANGUAGE plperl;
+
+CREATE OR REPLACE FUNCTION get_var(name text) RETURNS text AS $$
+    return $_SHARED{$_[0]};
+$$ LANGUAGE plperl;
+
+SELECT set_var('sample', 'Hello, PL/Perl!  How''s tricks?');
+SELECT get_var('sample');
+</pre>
+  <p>Here is a slightly more complicated example using a code reference:</p>
+  <pre class="programlisting">
+CREATE OR REPLACE FUNCTION myfuncs() RETURNS void AS $$
+    $_SHARED{myquote} = sub {
+        my $arg = shift;
+        $arg =~ s/(['\\])/\\$1/g;
+        return "'$arg'";
+    };
+$$ LANGUAGE plperl;
+
+SELECT myfuncs(); /* initializes the function */
+
+/* Set up a function that uses the quote function */
+
+CREATE OR REPLACE FUNCTION use_quote(TEXT) RETURNS text AS $$
+    my $text_to_quote = shift;
+    my $qfunc = $_SHARED{myquote};
+    return &amp;$qfunc($text_to_quote);
+$$ LANGUAGE plperl;
+</pre>
+  <p>(You could have replaced the above with the one-liner <code class="literal">return $_SHARED{myquote}-&gt;($_[0]);</code> at the expense of readability.)</p>
+  <p>For security reasons, PL/Perl executes functions called by any one SQL role in a separate Perl interpreter for that role. This prevents accidental or malicious interference by one user with the behavior of another user's PL/Perl functions. Each such interpreter has its own value of the <code class="varname">%_SHARED</code> variable and other global state. Thus, two PL/Perl functions will share the same value of <code class="varname">%_SHARED</code> if and only if they are executed by the same SQL role. In an application wherein a single session executes code under multiple SQL roles (via <code class="literal">SECURITY DEFINER</code> functions, use of <code class="command">SET ROLE</code>, etc.) you may need to take explicit steps to ensure that PL/Perl functions can share data via <code class="varname">%_SHARED</code>. To do that, make sure that functions that should communicate are owned by the same user, and mark them <code class="literal">SECURITY DEFINER</code>. You must of course take care that such functions can't be used to do anything unintended.</p>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="plperl-builtins.html" title="43.3.&nbsp;Built-in Functions">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="plperl.html" title="Chapter&nbsp;43.&nbsp;PL/Perl — Perl Procedural Language">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="plperl-trusted.html" title="43.5.&nbsp;Trusted and Untrusted PL/Perl">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">43.3.&nbsp;Built-in Functions&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 17.9 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;43.5.&nbsp;Trusted and Untrusted PL/Perl</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/17/plperl-global.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?290b0238"></script>
+
+  </body>
+</html>

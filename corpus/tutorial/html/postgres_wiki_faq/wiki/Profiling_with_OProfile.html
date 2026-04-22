@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Profiling with OProfile - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"1d8d91719ea1fcf1b7df73fa","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Profiling_with_OProfile","wgTitle":"Profiling with OProfile","wgCurRevisionId":15572,"wgRevisionId":15572,"wgArticleId":883,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Benchmarking"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Profiling_with_OProfile","wgRelevantArticleId":883,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Profiling_with_OProfile rootpage-Profiling_with_OProfile skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Profiling with OProfile</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><a rel="nofollow" class="external text" href="http://oprofile.sourceforge.net/news/">OProfile</a> is an operating system level profiler for Linux that's known to give useful results profiling PostgreSQL.  
+</p>
+<h2><span class="mw-headline" id="Initial_Setup">Initial Setup</span></h2>
+<p>This needs to be done only once per system boot:
+</p>
+<pre> sudo opcontrol --init
+ sudo opcontrol --setup --no-vmlinux
+</pre>
+<p>although you can re-issue the --setup command to change profiling options later.
+</p><p>If you need detail about what the kernel is doing, get debug symbols for your kernel; then the setup command looks something like
+</p>
+<pre>sudo opcontrol --setup --vmlinux=/usr/lib/debug/lib/modules/`uname -r`/vmlinux
+</pre>
+<p>There are a vast number of other options to the --setup command, but you don't need them for ordinary cases.
+</p>
+<h6><span class="mw-headline" id="Virtual_Machine_Setup">Virtual Machine Setup</span></h6>
+<p>If you are using a virtual machine, you might need to make oprofile use a timer instead of trying to use hardware performance counters that might not be available. You can do that on the fly by shutting down oprofile if it's running and executing:
+</p>
+<pre> sudo opcontrol --deinit
+ sudo modprobe oprofile timer=1
+</pre>
+<p>You can make this setting permanent by adding a file to /etc/modprobe.d (at least on Fedora) called oprofile.conf with these contents:
+</p>
+<pre> options oprofile timer=1
+</pre>
+<h2><span id="Start.2Fstop_profiling"></span><span class="mw-headline" id="Start/stop_profiling">Start/stop profiling</span></h2>
+<pre> sudo opcontrol --start
+ sudo opcontrol --reset
+ ... exercise your debug-enabled program here ...
+ sudo opcontrol --dump&#160;; sudo opcontrol --shutdown
+</pre>
+<p>The test case should run at least a minute or two to get numbers with
+reasonable accuracy.
+</p><p>Analysis:
+</p>
+<pre> opreport --long-filenames | more
+ opreport -l image:/path/to/postgres | more
+</pre>
+<p>If you really want detail:
+</p>
+<pre> opannotate --source /path/to/postgres &gt;someplace
+</pre>
+<p>The --reset command zeroes the stats that these programs report on, so be sure to save the output you want before running another test case.  Also, modifying the executable program-under-test invalidates the stats for it.
+</p>
+<h2><span class="mw-headline" id="Additional_analysis">Additional analysis</span></h2>
+<p>Getting callgraph information from oprofile can provide additional detail about libraries that are being used, including using of the common libc library calls. Although it won't directly tell what function in libc is being called, you would see where the calls are coming from, which is usually enough to guess what the libc function is.
+</p><p>Important: to get useful callgraph information, you must compile with -fno-omit-frame-pointer.
+</p><p>You can also get the oprofile data, including callgraph, into kcachegrind, which is *very* helpful, using a script such like <a rel="nofollow" class="external free" href="http://roberts.vorpus.org/~njs/op2calltree.py">http://roberts.vorpus.org/~njs/op2calltree.py</a>
+</p>
+<h2><span class="mw-headline" id="Interpreting_the_results">Interpreting the results</span></h2>
+<p>A good example showing how to use the results from oprofile to help make a performance-related coding decision is <a rel="nofollow" class="external text" href="http://archives.postgresql.org/message-id/22408.1150570607@sss.pgh.pa.us">oprofile results for stats collector test</a>
+</p>
+<h1><span class="mw-headline" id="Other_alternatives">Other alternatives</span></h1>
+<p>OProfile is preferred to gprof because of several <a rel="nofollow" class="external text" href="http://archives.postgresql.org/message-id/7684.1244652691@sss.pgh.pa.us">limitations of gprof</a>.
+</p><p>Another possibility is to <a rel="nofollow" class="external text" href="http://archives.postgresql.org/message-id/4A32722F.5070103@starsilk.net">use valgrind</a> for profiling; <a rel="nofollow" class="external text" href="http://blog.cleverelephant.ca/2008/08/valgrinding-postgis.html">example usage</a>
+</p><p>Newer Linux systems (kernels 2.6.31 and later) can use the <a href="/wiki/Profiling_with_perf" title="Profiling with perf">perf</a> utility.
+</p>
+<h1><span class="mw-headline" id="Installing_the_software">Installing the software</span></h1>
+<p>Whether OProfile works correctly is very dependent on how your Linux distribution was packaged.  According to the <a rel="nofollow" class="external text" href="http://code.google.com/p/unladen-swallow/wiki/UsingOProfile">Unladen-swallow project</a>, "The oProfile packages in Debian Sid and Ubuntu Hardy, Jaunty, Karmic, and Lucid are all broken", with an alternate package suggested there you can swap for the system one.  Debian Squeeze should have a working version, as shown in the good <a rel="nofollow" class="external text" href="http://ceph.newdream.net/wiki/Cpu_profiling">Ceph tutorial</a> on using the program.  You will need the linux-image-debug package to trace into the kernel, and when that's available you may be able to start the program without the "--no-vmlinux" flag.
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260407163439
+Cache expiry: 86400
+Reduced expiry: false
+Complications: []
+CPU time usage: 0.018 seconds
+Real time usage: 0.022 seconds
+Preprocessor visited node count: 22/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:883-0!canonical and timestamp 20260407163439 and revision id 15572.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Profiling_with_OProfile&amp;oldid=15572">https://wiki.postgresql.org/index.php?title=Profiling_with_OProfile&amp;oldid=15572</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:Benchmarking" title="Category:Benchmarking">Benchmarking</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Profiling_with_OProfile" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Profiling_with_OProfile&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Profiling_with_OProfile">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Profiling_with_OProfile&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Profiling_with_OProfile&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Profiling_with_OProfile" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Profiling_with_OProfile&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Profiling+with+OProfile" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Profiling_with_OProfile" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Profiling_with_OProfile" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Profiling_with_OProfile&amp;oldid=15572" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Profiling_with_OProfile&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 11 October 2011, at 16:33.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.018","walltime":"0.022","ppvisitednodes":{"value":22,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260407163439","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":384});});</script>
+</body>
+</html>

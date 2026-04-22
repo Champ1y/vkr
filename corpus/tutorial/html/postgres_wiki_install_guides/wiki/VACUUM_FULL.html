@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>VACUUM FULL - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"3beeac045af29f0b6ae95d20","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"VACUUM_FULL","wgTitle":"VACUUM FULL","wgCurRevisionId":38405,"wgRevisionId":38405,"wgArticleId":1236,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Historical information","FAQ","Vacuuming","Administration","Performance"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"VACUUM_FULL","wgRelevantArticleId":1236,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-VACUUM_FULL rootpage-VACUUM_FULL skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">VACUUM FULL</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+</p>
+<div class="errorbox">
+   <p>This page contains <strong><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/Category:Historical_information">historical information or deprecated articles</a></strong>.</p>
+</div>
+<p><br />
+</p>
+<hr />
+<p>This document is obsolete for PostgreSQL 9.0 and above. Most of the content applies only to PostgreSQL 8.4 and below.
+</p>
+<hr />
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#VACUUM_vs_VACUUM_FULL_(PostgreSQL_8.4_and_older)"><span class="tocnumber">1</span> <span class="toctext">VACUUM vs VACUUM FULL (PostgreSQL 8.4 and older)</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#When_to_use_VACUUM_FULL_and_when_not_to"><span class="tocnumber">1.1</span> <span class="toctext">When to use VACUUM FULL and when not to</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#What_to_use_instead"><span class="tocnumber">1.2</span> <span class="toctext">What to use instead</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#Autovacuum"><span class="tocnumber">1.2.1</span> <span class="toctext">Autovacuum</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#VACUUM"><span class="tocnumber">1.2.2</span> <span class="toctext">VACUUM</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#CLUSTER"><span class="tocnumber">1.2.3</span> <span class="toctext">CLUSTER</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#TRUNCATE_TABLE"><span class="tocnumber">1.2.4</span> <span class="toctext">TRUNCATE TABLE</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#ALTER_TABLE_.._SET_DATA_TYPE_(relevant_for_8.4_and_below_only)"><span class="tocnumber">1.2.5</span> <span class="toctext">ALTER TABLE .. SET DATA TYPE (relevant for 8.4 and below only)</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#SELECT_..._INTO_(relevant_for_8.4_and_below_only)"><span class="tocnumber">1.2.6</span> <span class="toctext">SELECT ... INTO (relevant for 8.4 and below only)</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-10"><a href="#Recovering_from_index_bloat_caused_by_VACUUM_FULL_(relevant_for_8.4_and_below_only)"><span class="tocnumber">1.3</span> <span class="toctext">Recovering from index bloat caused by VACUUM FULL (relevant for 8.4 and below only)</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h1><span id="VACUUM_vs_VACUUM_FULL_.28PostgreSQL_8.4_and_older.29"></span><span class="mw-headline" id="VACUUM_vs_VACUUM_FULL_(PostgreSQL_8.4_and_older)">VACUUM vs VACUUM FULL (PostgreSQL 8.4 and older)</span></h1>
+<hr />
+<p>This document is obsolete for PostgreSQL 9.0 and above. Much of the content applies only to PostgreSQL 8.4 and below.
+</p>
+<hr />
+<p>The <code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-vacuum.html">VACUUM</a></code> command and associated autovacuum process are PostgreSQL's way of controlling MVCC bloat. The <code>VACUUM</code> command has two main forms of interest - ordinary <code>VACUUM</code>, and <code>VACUUM FULL</code>. These two commands are actually quite different and should not be confused.
+</p><p><code>VACUUM</code> scans a table, marking tuples that are no longer needed as free space so that they can be overwritten by newly inserted or updated data. See <a href="/wiki/Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT" title="Introduction to VACUUM, ANALYZE, EXPLAIN, and COUNT">Introduction to VACUUM, ANALYZE, EXPLAIN, and COUNT</a> and the PostgreSQL documentation on <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/mvcc.html">MVCC</a> for a detailed explanation of this. Note that you should rarely need to use the <code>VACUUM</code> command directly on a modern PostgreSQL database, as <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/routine-vacuuming.html#AUTOVACUUM">autovacuum</a> should take care of it for you if properly set up.
+</p><p><code>VACUUM FULL</code>, unlike <code>VACUUM</code>, touches data that has not been deleted. On pre-9.0 versions of PostgreSQL, it moves data into spaces earlier in the file that have been freed. Once it has created a free space at the end of the file, it truncates the file so that the OS knows that space is free and may be reused for other things. Moving in-use data around this way can have adverse side-effects, including taking heavy weight locks, increased i/o, and adding index bloat. On older systems, there are better ways to free space if you need to, and better ways to optimize tables (see below) so you should essentially never use <code>VACUUM FULL</code> on a pre-9.x system. Even on 9.x and above, the system is designed with the goal that you should never be running <code>VACUUM FULL</code> regularly, and doing so can have costs like huge WAL archive output and high loads on any streaming replication servers. 
+</p><p>For clarity, <b>9.0 changes VACUUM FULL</b>.  As covered in the <a rel="nofollow" class="external text" href="http://developer.postgresql.org/pgdocs/postgres/sql-vacuum.html">documentation</a>, the VACUUM FULL implementation has been changed to one that's similar to using CLUSTER in older versions.  This gives a slightly different set of trade-offs from the older VACUUM FULL described here.  While the potential to make the database slower via index bloating had been removed by this change, it's still something you may want to avoid doing, due to the locking and general performance overhead of a VACUUM FULL.
+</p>
+<h2><span class="mw-headline" id="When_to_use_VACUUM_FULL_and_when_not_to">When to use <code>VACUUM FULL</code> and when not to</span></h2>
+<p>Many people, either based on misguided advice on the 'net or on the assumption that it must be "better", periodically run <code>VACUUM FULL</code> on their tables. This is generally not recommended and in some cases can make your database slower, not faster.
+</p><p><code>VACUUM FULL</code> is only needed when you have a table that is mostly dead rows - ie, the vast majority of its contents have been deleted. It should not be used for table optimization or periodic maintenance, as it's generally counterproductive. In most cases the freed space will be promptly re-allocated, possibly increasing file-system-level fragmentation and requiring file system space allocations that're slower than just re-using existing free space within a table.
+</p><p>When you run <code>VACUUM FULL</code> on a table, that table is locked for the duration of the operation, so nothing else can work with the table. <code>VACUUM FULL</code> is <i>much</i> slower than a normal <i>VACUUM</i>, so the table may be unavailable for a while. 
+</p><p>More importantly, on pre-9.0 systems, while <code>VACUUM FULL</code> compacts the table, it does not compact the indexes - and in fact may increase their size, thus slowing them down, causing more disk I/O when the indexes are used, and increasing the amount of memory they require. A <code>REINDEX</code> may be required after <code>VACUUM FULL</code> on PostgreSQL versions older than 9.0. See the main documentation's <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/routine-vacuuming.html#VACUUM-BASICS">notes on VACUUM vs VACUUM FULL</a>.
+</p>
+<h2><span class="mw-headline" id="What_to_use_instead">What to use instead</span></h2>
+<p>If you shouldn't use regularly use <code>VACUUM FULL</code> (or use it at all on versions older than 9.0) ... what should you be using?
+</p>
+<h3><span class="mw-headline" id="Autovacuum"><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/routine-vacuuming.html#AUTOVACUUM">Autovacuum</a></span></h3>
+<p>If <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/routine-vacuuming.html#AUTOVACUUM">autovacuum</a> is running frequently enough and aggressively enough, your tables should never grow ("bloat") due to unreclaimed dead rows, so you should never need to return "dead" space to the OS.
+</p><p>Autovacuum continues to improve dramatically with every PostgreSQL version, and is a very good reason to make sure you are running the latest version. For example, with 8.4 the free space map is now managed automatically, removing a no-longer-necessary tuning parameter and eliminating a major source of table bloat.
+</p><p>If autovacuum isn't doing enough to keep your tables and indexes bloat-free, tune it, don't supplement it with manual vacuuming and reindexing. You may need to increase your free space map settings (pre-8.4), tune autovacuum to run more frequently, and/or tell autovacuum to vacuum certain frequently-updated tables more aggressively than others.
+</p>
+<h3><span class="mw-headline" id="VACUUM"><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-vacuum.html">VACUUM</a></code></span></h3>
+<p>Unless you need to return space to the OS so that other tables or other parts of the system can use that space, or you are trying to repair a table that has bloated out of control due to insufficient autovacuum, you should use <code>VACUUM</code> instead of <code>VACUUM FULL</code>.
+</p><p>If you need to manually <code>VACUUM</code> your tables at any time other than when running major admin or update tasks that rewrite large parts of your tables, you probably don't have autovacuum set up well enough.
+</p>
+<h3><span class="mw-headline" id="CLUSTER"><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-cluster.html">CLUSTER</a></code></span></h3>
+<p>If you're trying to "optimise" your tables by packing them down and removing table bloat that's accumulated due to (say) insufficiently aggressive autovacuuming, or you're trying to return dead space in a table to the operating system, it's fine to use VACUUM FULL in PostgreSQL 9.0 and above. 
+</p><p>Consider setting a FILLFACTOR of less than the default 100, so the rewritten table has some free space pre-alloacated within it for updates and new inserts; otherwise you'll just get file system allocations as soon as you do anything to the table.
+</p><p>In older versions, it's preferable to use <code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-cluster.html">CLUSTER</a></code>. It runs a <i>lot</i> faster than pre-9.0 <code>VACUUM FULL</code> and will compact and optimise the indexes as well as the table its self. However, you will need enough free space to hold all the in-use data from the table while <code>CLUSTER</code> runs. As with post-9.0 VACUUM FULL, a non-default FILLFACTOR may be wise.
+</p>
+<h3><span class="mw-headline" id="TRUNCATE_TABLE"><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-truncate.html">TRUNCATE TABLE</a></code></span></h3>
+<p>If you've been using <code>VACUUM FULL</code> to free space from a table that's periodically completely emptied using <code>DELETE FROM tablename;</code> (without a <code>WHERE</code> clause), you can use <code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-truncate.html">TRUNCATE TABLE</a></code> to replace those two steps with one much, <i>much</i> faster one.
+</p><p>Instead of:
+</p>
+<pre>DELETE FROM tablename;
+VACUUM FULL tablename;
+</pre>
+<p>write:
+</p>
+<pre>TRUNCATE TABLE tablename;
+</pre>
+<p>Please make sure to read the caveats in the notes on the <code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-truncate.html">TRUNCATE TABLE</a></code> documentation. If <code>TRUNCATE TABLE</code> isn't suitable for your needs, you can use <code>DELETE</code> followed by <code>CLUSTER</code> instead.
+</p><p>If using <code>DELETE</code> on a table that is the target of foreign key references, consider adding an index to the referencing columns. That will allow checks for foreign key enforcement to avoid a sequential scan on the referencing table, making <code>DELETE</code> from the referenced table vastly faster.
+</p>
+<h3><span id="ALTER_TABLE_.._SET_DATA_TYPE_.28relevant_for_8.4_and_below_only.29"></span><span class="mw-headline" id="ALTER_TABLE_.._SET_DATA_TYPE_(relevant_for_8.4_and_below_only)"><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-altertable.html">ALTER TABLE .. SET DATA TYPE</a></code> (relevant for 8.4 and below only)</span></h3>
+<p><i>This section is obsolete for PostgreSQL 9.0 and above. Skip it unless you use a very old version.</i>
+</p><p>The problem with <code>CLUSTER</code> is that it reorders the table following an index. If the table is not already approximately in that index' order, this will take a long time because it will have to do a scattered read of the table pages over and over as it looks for each tuple. A faster alternative is to request a full table rewrite without requiring a particular order. PostgreSQL versions prior to 9.0 do not offer any direct way to invoke this operation; however, you can use the following workaround. Choose any table column, and use <code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-altertable.html">ALTER TABLE</a></code> to change its type <i>to the same type</i>. This is obviously going to cause no logical change to the table, but the server will have to rewrite the table, getting rid of dead tuples while at it.
+</p><p>For example, assuming the <code>an_integer_column</code> is of type <code>INTEGER</code>:
+</p>
+<pre>ALTER TABLE your_table ALTER an_integer_column SET DATA TYPE integer;
+</pre>
+<p>This trick will not work in PostgreSQL versions 9.1 or later, as it detects that the change in data type is degenerate and so no rewrite is necessary.
+</p>
+<h3><span id="SELECT_..._INTO_.28relevant_for_8.4_and_below_only.29"></span><span class="mw-headline" id="SELECT_..._INTO_(relevant_for_8.4_and_below_only)"><code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-selectinto.html">SELECT ... INTO</a></code> (relevant for 8.4 and below only)</span></h3>
+<p><i>This section is obsolete for PostgreSQL 9.0 and above. Skip it unless you use a very old version.</i>
+</p><p>Sometimes it can be faster to use a <code><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-selectinto.html">SELECT ... INTO</a></code> command to copy data from a bloated table into a new table, then re-create the indexes and finally rename the tables to replace the old one with the new one. It's rarely worth doing this instead of using <code>CLUSTER</code>, though, as <code>CLUSTER</code> does almost the same thing automatically and can rebuild indexes in parallel. The main reason you may want to use <code>SELECT ... INTO</code> instead of <code>CLUSTER</code> is if you don't want to sort the table.
+</p><p><br />
+</p>
+<h2><span id="Recovering_from_index_bloat_caused_by_VACUUM_FULL_.28relevant_for_8.4_and_below_only.29"></span><span class="mw-headline" id="Recovering_from_index_bloat_caused_by_VACUUM_FULL_(relevant_for_8.4_and_below_only)">Recovering from index bloat caused by <code>VACUUM FULL</code> (relevant for 8.4 and below only)</span></h2>
+<p><i>This section is obsolete for PostgreSQL 9.0 and above. Skip it unless you use a very old version.</i>
+</p><p>If you have indexes badly bloated by regular use of <code>VACUUM FULL</code>, your best bet is usually going to be to use <code>CLUSTER</code> to rewrite the table and rebuild the indexes.
+</p><p>If you can't afford to have the table locked for that long, you can rebuild each index individually while queries continue to run on the table. PostgreSQL unfortunately doesn't have a <code>REINDEX CONCURRENTLY</code> command, but it can be simulated with appropriate use of <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-createindex.html">CREATE INDEX ... CONCURRENTLY</a>, <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-alterindex.html">ALTER INDEX ... RENAME</a> and <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/sql-dropindex.html">DROP INDEX</a> to create new indexes, swap the old and new ones by renaming, and drop the old indexes.  Note that since you can't drop some indexes, such as primary keys, this may not be a possible cleanup technique for all of them.
+</p><p>Originally by --<a href="/wiki/User:Ringerc" title="User:Ringerc">Ringerc</a> 03:48, 26 November 2009 (UTC)
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408135934
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.044 seconds
+Real time usage: 0.060 seconds
+Preprocessor visited node count: 51/1000000
+Post‐expand include size: 293/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 3/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 178/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   13.952      1 Template:Historic
+100.00%   13.952      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:1236-0!canonical and timestamp 20260408135933 and revision id 38405.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=VACUUM_FULL&amp;oldid=38405">https://wiki.postgresql.org/index.php?title=VACUUM_FULL&amp;oldid=38405</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:Historical_information" title="Category:Historical information">Historical information</a></li><li><a href="/wiki/Category:FAQ" title="Category:FAQ">FAQ</a></li><li><a href="/wiki/Category:Vacuuming" title="Category:Vacuuming">Vacuuming</a></li><li><a href="/wiki/Category:Administration" title="Category:Administration">Administration</a></li><li><a href="/wiki/Category:Performance" title="Category:Performance">Performance</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/VACUUM_FULL" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/Talk:VACUUM_FULL" rel="discussion" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/VACUUM_FULL">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=VACUUM_FULL&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=VACUUM_FULL&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/VACUUM_FULL" title="Page">Page</a></li><li id="talk-mobile" class="mw-list-item"><a href="/wiki/Talk:VACUUM_FULL" title="Discussion">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=VACUUM+FULL" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/VACUUM_FULL" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/VACUUM_FULL" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=VACUUM_FULL&amp;oldid=38405" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=VACUUM_FULL&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 25 November 2023, at 23:27.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.044","walltime":"0.060","ppvisitednodes":{"value":51,"limit":1000000},"postexpandincludesize":{"value":293,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":3,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":178,"limit":5000000},"timingprofile":["100.00%   13.952      1 Template:Historic","100.00%   13.952      1 -total"]},"cachereport":{"timestamp":"20260408135934","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":465});});</script>
+</body>
+</html>

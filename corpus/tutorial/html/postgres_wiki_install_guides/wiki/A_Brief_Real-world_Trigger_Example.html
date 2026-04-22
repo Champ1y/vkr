@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>A Brief Real-world Trigger Example - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"634e8f48a72f98f9a127ef47","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"A_Brief_Real-world_Trigger_Example","wgTitle":"A Brief Real-world Trigger Example","wgCurRevisionId":21480,"wgRevisionId":21480,"wgArticleId":115,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["SQL","Administration"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"A_Brief_Real-world_Trigger_Example","wgRelevantArticleId":115,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-A_Brief_Real-world_Trigger_Example rootpage-A_Brief_Real-world_Trigger_Example skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">A Brief Real-world Trigger Example</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#A_Brief_Real-world_Trigger_Example"><span class="tocnumber">1</span> <span class="toctext">A Brief Real-world Trigger Example</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#The_Database"><span class="tocnumber">1.1</span> <span class="toctext">The Database</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Solution_1_(in_an_ideal_world...)"><span class="tocnumber">1.2</span> <span class="toctext">Solution 1 (in an ideal world...)</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Solution_2_(well,_it&#39;s_not_normal...)"><span class="tocnumber">1.3</span> <span class="toctext">Solution 2 (well, it's not normal...)</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Solution_3_(here&#39;s_one_I_made_earlier...)"><span class="tocnumber">1.4</span> <span class="toctext">Solution 3 (here's one I made earlier...)</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Problems_with_Solution_3"><span class="tocnumber">1.5</span> <span class="toctext">Problems with Solution 3</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#References"><span class="tocnumber">1.6</span> <span class="toctext">References</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#SQL_Script"><span class="tocnumber">1.7</span> <span class="toctext">SQL Script</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="A_Brief_Real-world_Trigger_Example">A Brief Real-world Trigger Example</span></h2>
+<p>Created 2003-03-13 by Richard Huxton (dev@archonet.com)
+</p><p>Version: First Draft - treat with caution
+</p><p>This is a real-world example, showing how you can use the plpgsql procedural language to build a trigger function to enforce integrity beyond that which foreign keys can offer you. The tables have been simplified to the minimum required for this example, but represent real tables for a real project.
+</p>
+<h3><span class="mw-headline" id="The_Database">The Database</span></h3>
+<ul><li>We have a set of products, each of which has a certain type.</li>
+<li>We have a set of servers, each of which can only serve a specific type of product.</li>
+<li>Servers provide a subset of products and the same product can be available from many servers.</li></ul>
+<p>This gives us a table structure like:
+</p>
+<pre>product (pr_id, pr_type)
+server (svr_id, pr_type)
+server_products (svr_id, pr_id)
+</pre>
+<p>We can use foreign keys to make sure that server_products have a valid svr_id and pr_id but if we want to enforce the type of a product we need to check two tables, because what matters is that the pr_type from product matches the corresponding one in server.
+</p>
+<h3><span id="Solution_1_.28in_an_ideal_world....29"></span><span class="mw-headline" id="Solution_1_(in_an_ideal_world...)">Solution 1 (in an ideal world...)</span></h3>
+<p>A simple solution would be to define a view possible_server_products that would contain svr_id,pr_type and pr_id and then reference that. Unfortunately, PostgreSQL can't check a foreign key against a view, only against a real table. This isn't a theoretical limitation of relational theory, but there are some complex implementation issues, so it isn't likely to happen any time soon.
+</p><p>I would describe how to implement foreign keys against views, but there isn't space in the margin here&#160;;-).
+</p>
+<h3><span id="Solution_2_.28well.2C_it.27s_not_normal....29"></span><span class="mw-headline" id="Solution_2_(well,_it's_not_normal...)">Solution 2 (well, it's not normal...)</span></h3>
+<p>If we change our definitions slightly, so we have server_products (svr_id,pr_type,pr_id) we can have a foreign key referencing (svr_id,pr_type) in table server and another on (pr_type,pr_id) in product that does exactly what we want.
+</p><p>Unfortunately, we now need to look up the pr_type in our application when we insert a new product. We can avoid that by defining a view that looked like our original version of server_products and write rules that do the lookup for us.
+</p><p>There is however, a more fundamental problem with this solution - we have a redundant pr_type in every row of server_products. Is it part of the primary key for this table, or if not does it depend on the primary key? Well, our primary key is clearly (svr_id,pr_id) since this identifies the row. But - pr_type doesn't depend on this key, it depends on svr_id alone (or pr_id alone, depending on how you want to look at it). This is a violation of 2nd Normal Form (2NF) and I like a normalised database, so this solution isn't acceptable.
+</p>
+<h3><span id="Solution_3_.28here.27s_one_I_made_earlier....29"></span><span class="mw-headline" id="Solution_3_(here's_one_I_made_earlier...)">Solution 3 (here's one I made earlier...)</span></h3>
+<p>So - we don't want to change our table definitions but do want to enforce product type. To do this we will need to manually add three triggers (one for each table involved) and a function or functions to enforce our constraints.
+</p><p>In this case, I chose to have one function used by all three triggers. You could make a good argument for three different functions, but having all the code in one place makes it less likely I'll forget to change something if I change the database structure.
+</p><p>Assuming we've run the createlang utility, we'll define our function using:
+</p>
+<pre>CREATE OR REPLACE FUNCTION check_srv_prodtype() RETURNS trigger AS
+...code here...
+LANGUAGE 'plpgsql';
+</pre>
+<p>Within the function we'll need to check the value of the TG_RELNAME pseudo-variable which tells us which table triggered a call to us. Then, we can check the contents of the NEW pseudo-record to see if the values are acceptable. If they are, we return NEW otherwise we return NULL. The code fragment to check changes to server_products would be something like:
+</p>
+<pre>IF TG_RELNAME=''server_products'' THEN
+SELECT pr_type INTO prod_type FROM possible_server_products WHERE svr_id=NEW.svr_id AND pr_id=NEW.pr_id;
+IF FOUND THEN
+RETURN NEW;
+ELSE
+RETURN NULL;
+END IF;
+ELSE...
+
+-- Definition of possible_server_products is:
+CREATE VIEW possible_server_products AS
+SELECT s.svr_id, s.pr_type, p.pr_id FROM server s, product p WHERE p.pr_type=s.pr_type;
+</pre>
+<p>In the actual function we'll want to generate an error message as well as returning NULL and adding some comments. Then, we can set up triggers to call our function.
+</p>
+<pre>CREATE TRIGGER check_server_products
+AFTER INSERT OR UPDATE ON server_products
+FOR EACH ROW EXECUTE PROCEDURE check_srv_prodtype();
+</pre>
+<p>This tells PG to call our function every time an insert or update is made to table server_products after other checks but before the transaction is committed. If we said BEFORE INSERT... the function would be called before any foreign key checks were run.
+</p><p>The full listing to reproduce this solution is at the end of this document.
+</p>
+<h3><span class="mw-headline" id="Problems_with_Solution_3">Problems with Solution 3</span></h3>
+<p>No system is perfect. There are two main problems with the solution below.
+</p><p>Firstly, the function needs to be run for every row inserted or modified in all three tables, and it runs queries for each test. If you have a lot of frequently modified rows this is going to be a performance hit. It might be an option to write the function in C but since the function is so simple, gains would probably be small.
+</p><p>Secondly, the function itself might have an error. Since we couldn't meet our integrity requirements with built-in features we had no choice but to write some code, but it should be tested. As an example, in the first draft of this function I forgot to test changes to the server table and only caught this when testing.
+</p>
+<h3><span class="mw-headline" id="References">References</span></h3>
+<p><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/interactive/sql-createtable.html">Foreign keys reference</a> on the CREATE TABLE page.
+</p><p>The <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/interactive/app-createlang.html">createlang</a> utility.
+</p><p><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/interactive/sql-createtrigger.html">CREATE TRIGGER</a> reference.
+</p><p>Trigger Functions in plpgsql.
+</p><p>An overview of the <a rel="nofollow" class="external text" href="http://home.earthlink.net/%7Ebillkent/Doc/simple5.htm">Normal Forms</a> or as a <a rel="nofollow" class="external text" href="http://mingo.info-science.uiowa.edu/courses/automation/reference/p120-kent.pdf">pdf</a>.
+</p>
+<h3><span class="mw-headline" id="SQL_Script">SQL Script</span></h3>
+<p>The SQL to recreate this example is given below - you should cut and paste it into a text editor and save it as briefex_trigger.txt. You can then run it from psql with \i briefex_trigger.txt. It has been tested on PG v7.3 so if you have problems please make sure no oddities have crept in during cut &amp; paste.
+</p><p>NOTE - there seems to be an issue with some of the quotes in the listing below. All quotes in the function should be doubled up, any single quotes are an error.
+</p>
+<pre>DROP TABLE product CASCADE;
+DROP TABLE server CASCADE;
+DROP VIEW possible_server_products CASCADE;
+DROP VIEW actual_server_products CASCADE;
+DROP TABLE server_products CASCADE;
+CREATE TABLE product (
+pr_id int NOT NULL,
+pr_type int NOT NULL,
+PRIMARY KEY (pr_id)
+);
+CREATE TABLE server (
+svr_id varchar(4) NOT NULL,
+pr_type int NOT NULL,
+PRIMARY KEY (svr_id)
+);
+CREATE TABLE server_products (
+svr_id varchar(4) NOT NULL REFERENCES server (svr_id),
+pr_id int NOT NULL REFERENCES product (pr_id),
+PRIMARY KEY (svr_id, pr_id)
+);
+-- Now add some triggers to check pr_type is valid for servers
+-- 
+CREATE VIEW possible_server_products AS
+SELECT s.svr_id, s.pr_type, p.pr_id FROM server s, product p WHERE p.pr_type=s.pr_type;
+CREATE VIEW actual_server_products AS
+SELECT s.svr_id, s.pr_type, sp.pr_id FROM server s, server_products sp WHERE s.svr_id=sp.svr_id;
+CREATE OR REPLACE FUNCTION check_srv_prodtype() RETURNS trigger AS '
+DECLARE
+prod_id int4;
+prod_type int4;
+server_id varchar(4);
+BEGIN
+IF TG_RELNAME=''server_products'' THEN
+-- check product can be allocated to this server
+SELECT pr_type INTO prod_type FROM possible_server_products WHERE svr_id=NEW.svr_id AND pr_id=NEW.pr_id;
+IF FOUND THEN
+-- product type is valid for this server
+RETURN NEW;
+ELSE
+SELECT pr_type INTO prod_type FROM product WHERE pr_id=NEW.pr_id;
+IF FOUND THEN
+RAISE EXCEPTION ''Server&#160;% does not support products of type&#160;% (product id =&#160;%)'', NEW.svr_id, prod_type, NEW.pr_id;
+ELSE
+-- Need this in case we are called from BEFORE trigger
+-- in which case foreign key check has not happened
+RAISE EXCEPTION ''Server&#160;% does not support non-existent products (product id =&#160;%)''
+, NEW.svr_id, NEW.pr_id;
+END IF;
+RETURN NULL;
+END IF;
+ELSIF TG_RELNAME=''product'' THEN
+-- Inserting/updating a "product"
+SELECT svr_id INTO server_id FROM actual_server_products WHERE pr_id=NEW.pr_id AND pr_type&lt;&gt;NEW.pr_type;
+IF NOT(FOUND) THEN
+-- this product is either not used or the new type is valid where it is used.
+RETURN NEW;
+ELSE
+SELECT pr_type INTO prod_type FROM server WHERE svr_id=server_id;
+RAISE EXCEPTION ''Server&#160;% uses product&#160;% and only allows product type&#160;%''
+, server_id, NEW.pr_id, prod_type;
+RETURN NULL;
+END IF;
+ELSE
+-- Must be updating a "server", see if there are any products for it.
+SELECT pr_id INTO prod_id FROM server_products WHERE svr_id=NEW.svr_id;
+IF found THEN
+-- Have products, so no change to pr_type allowed.
+IF OLD.pr_type&lt;&gt;NEW.pr_type THEN
+SELECT pr_type INTO prod_type FROM product WHERE pr_id=prod_id;
+RAISE EXCEPTION ''Server&#160;% uses product&#160;% and so requires product type&#160;%'
+, NEW.svr_id, prod_id, prod_type;
+RETURN NULL;
+END IF;
+END IF;
+-- All OK, either no server_products or type isnt changed
+RETURN NEW;
+END IF;
+END;'
+LANGUAGE 'plpgsql';
+CREATE TRIGGER check_server_products
+AFTER INSERT OR UPDATE ON server_products
+FOR EACH ROW EXECUTE PROCEDURE check_srv_prodtype();
+CREATE TRIGGER check_used_product_type
+AFTER INSERT OR UPDATE ON product
+FOR EACH ROW EXECUTE PROCEDURE check_srv_prodtype();
+CREATE TRIGGER check_server_product_type
+AFTER INSERT OR UPDATE ON server
+FOR EACH ROW EXECUTE PROCEDURE check_srv_prodtype(); -- OK, now try inserting some data
+INSERT INTO product VALUES (1,1);
+INSERT INTO product VALUES (2,2);
+INSERT INTO product VALUES (3,1);
+INSERT INTO product VALUES (4,2);
+INSERT INTO server VALUES ('a',1);
+INSERT INTO server VALUES ('b',2);
+INSERT INTO server_products VALUES ('a',1);
+INSERT INTO server_products VALUES ('a',3);
+-- Next insert should fail
+INSERT INTO server_products VALUES ('a',2);
+-- And this should fail
+UPDATE product SET pr_type=2 WHERE pr_id=1;
+-- As should this
+UPDATE server SET pr_type=2 WHERE svr_id='a';
+</pre>
+<!-- 
+NewPP limit report
+Cached time: 20260408041641
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.021 seconds
+Real time usage: 0.025 seconds
+Preprocessor visited node count: 46/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 4422/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:115-0!canonical and timestamp 20260408041641 and revision id 21480.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=A_Brief_Real-world_Trigger_Example&amp;oldid=21480">https://wiki.postgresql.org/index.php?title=A_Brief_Real-world_Trigger_Example&amp;oldid=21480</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:SQL" title="Category:SQL">SQL</a></li><li><a href="/wiki/Category:Administration" title="Category:Administration">Administration</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/A_Brief_Real-world_Trigger_Example" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:A_Brief_Real-world_Trigger_Example&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/A_Brief_Real-world_Trigger_Example">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=A_Brief_Real-world_Trigger_Example&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=A_Brief_Real-world_Trigger_Example&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/A_Brief_Real-world_Trigger_Example" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:A_Brief_Real-world_Trigger_Example&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=A+Brief+Real-world+Trigger+Example" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/A_Brief_Real-world_Trigger_Example" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/A_Brief_Real-world_Trigger_Example" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=A_Brief_Real-world_Trigger_Example&amp;oldid=21480" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=A_Brief_Real-world_Trigger_Example&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 29 November 2013, at 01:17.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.021","walltime":"0.025","ppvisitednodes":{"value":46,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":4422,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260408041641","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":342});});</script>
+</body>
+</html>

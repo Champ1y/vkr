@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Submitting a Patch - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"15f73ea4d30521cbab060401","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Submitting_a_Patch","wgTitle":"Submitting a Patch","wgCurRevisionId":38858,"wgRevisionId":38858,"wgArticleId":288,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Community","Getting a patch accepted"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Submitting_a_Patch","wgRelevantArticleId":288,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Submitting_a_Patch rootpage-Submitting_a_Patch skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Submitting a Patch</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Initial_patch_design"><span class="tocnumber">1</span> <span class="toctext">Initial patch design</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Design_your_interface_first"><span class="tocnumber">1.1</span> <span class="toctext">Design your interface first</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Save_us_the_trouble_of_reformatting_your_code"><span class="tocnumber">1.2</span> <span class="toctext">Save us the trouble of reformatting your code</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-4"><a href="#Patch_submission"><span class="tocnumber">2</span> <span class="toctext">Patch submission</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Reasons_your_patch_might_be_returned"><span class="tocnumber">2.1</span> <span class="toctext">Reasons your patch might be returned</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Submission_timing"><span class="tocnumber">2.2</span> <span class="toctext">Submission timing</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7"><a href="#Patch_review_and_commit"><span class="tocnumber">3</span> <span class="toctext">Patch review and commit</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Mutual_Review_Offset_Obligations"><span class="tocnumber">4</span> <span class="toctext">Mutual Review Offset Obligations</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#Followup_on_submissions"><span class="tocnumber">5</span> <span class="toctext">Followup on submissions</span></a>
+<ul>
+<li class="toclevel-2 tocsection-10"><a href="#How_do_you_get_someone_to_respond_to_you?"><span class="tocnumber">5.1</span> <span class="toctext">How do you get someone to respond to you?</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Submitting_patch_updates"><span class="tocnumber">5.2</span> <span class="toctext">Submitting patch updates</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Initial_patch_design">Initial patch design</span></h2>
+<p>If you have a trivial patch that serves an obvious need, you may be able to write the patch and submit it directly to the <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/">pgsql-hackers</a> mailing list without having its design reviewed first.  But in general, a non-trivial change should be discussed (potentially before the code is even written) on the <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/">pgsql-hackers</a> list before being submitted as a patch.
+</p><p>For general coding style guidelines, see the <a href="/wiki/Developer_FAQ" title="Developer FAQ">Developer FAQ</a> and the <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/source.html">PostgreSQL Coding Conventions</a>.
+</p>
+<h3><span class="mw-headline" id="Design_your_interface_first">Design your interface first</span></h3>
+<p>Ask yourself these questions: 
+</p>
+<ul><li>Will the user interact with this new feature? if so, how?</li>
+<li>What is the syntax? Have ideas, and the ability to defend technical decisions you believe strongly in.</li>
+<li>What are the exact semantics/behaviors?</li>
+<li>Are there any backward compatibility issues?</li>
+<li>Get community buy-in at this level of detail before you start coding. But not necessarily consensus.</li>
+<li>Write an opening paragraph to your email to the -hackers list that answers these questions:
+<ul><li>This is the kind of problem I'm trying to solve</li>
+<li>This is what it is doing right now</li>
+<li>This is what it will do.</li></ul></li></ul>
+<p>Mostly, get someone from the community involved in your ideas as early as possible so that you can even get half-baked ideas vetted early, rather than creating something in a vacuum.  Similarly, it's easier to make progress and keep patches focused if you concentrate on the smallest portion of the idea you can execute perfectly.  Resist the temptation to build a giant patch all at once, as those are much less likely to be reviewed usefully and therefore committed.  You should take a look at how your patch will eventually be <a href="/wiki/Reviewing_a_Patch" title="Reviewing a Patch">reviewed</a>, so you can make sure that review is likely to succeed.
+</p>
+<h3><span class="mw-headline" id="Save_us_the_trouble_of_reformatting_your_code">Save us the trouble of reformatting your code</span></h3>
+<p>Please read <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/devel/source-format.html">PostgreSQL Coding Conventions</a>.  Also, follow the style of the adjacent code!  Ultimately, we rely on <i>pgindent</i> to maintain a consistent style across our source code.  <a rel="nofollow" class="external text" href="https://www.postgresql.org/message-id/4251.1250051236@sss.pgh.pa.us">Suggestions from Tom</a> clarify some of the trickier situations you might run into.  <a href="/wiki/Creating_Clean_Patches" title="Creating Clean Patches">Creating Clean Patches</a> provides a walkthrough of how to do self-review and improvement of your patches to fix code formatting issues.
+</p><p>Naming things (code variables, functions, etc) is important, and when in doubt, ask someone else to help you with names. We tend to use <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/CamelCase">CamelCase</a> or underscores: <code>thisStyleIsOkay</code> or <code>this_is_okay_too</code>.
+</p><p>Generally, try to blend in with the surrounding code. Do not use #ifdef's to enable your changes. Comments are for clarification and to explain the <i>why</i> question, not for delineating your code from the surroundings nor to re-state what the code is doing. After your patch, the code should look as if it has always been written in that way, instead of the new feature having been bolted on after the fact.
+</p><p>Please remove any spurious whitespace. &#160;Using <code>git diff --check</code> (or <code>git show --check</code> for the latest commit) makes bogus whitespace stand out.
+</p>
+<h2><span class="mw-headline" id="Patch_submission">Patch submission</span></h2>
+<p>Once you believe your patch is complete, please read through the complete patch that you will be sending to the mailing list.  Ensure that the patch didn't mistakenly include unintended changes (such as whitespace changes, test code, #ifdef 0'd out blocks, etc).  The patch should then be submitted via e-mail to the <a rel="nofollow" class="external text" href="http://www.postgresql.org/list/pgsql-hackers/">pgsql-hackers</a> mailing list.  At that time, or after you wait for initial feedback, you should also add it to the page for the next <a rel="nofollow" class="external text" href="https://commitfest.postgresql.org/">CommitFest</a>.
+</p><p>Normally changes should be submitted as a single patch that includes every file touched.  If the patch is large and can be logically separated into distinct and separately commit-able sections for easier review, with a clear order they get applied in described when applicable, that can be more straightforward for reviewers to work with for more complicated patches. The simplest way to format your patch is to use ``git format-patch``; see <a rel="nofollow" class="external text" href="https://peter.eisentraut.org/blog/2023/05/09/how-to-submit-a-patch-by-email-2023-edition">How to submit a patch by email, 2023 edition</a> for a deeper discussion of the topic, as well as <a href="/wiki/Creating_Clean_Patches" title="Creating Clean Patches">Creating Clean Patches</a> for more thoughts on making your patch reviewer friendly.
+</p><p>Please note that PostgreSQL uses a BSD/MIT-style license for its code. By posting a patch to the public PostgreSQL mailing lists, you are giving the PostgreSQL Global Development Group the non-revocable right to distribute your patch under the <a rel="nofollow" class="external text" href="http://www.postgresql.org/about/licence/">PostgreSQL license</a>.
+</p><p>Please include all of the following information with each patch submitted; kindly do not format your email like you're filling out a form.
+</p>
+<ul><li>Project name.</li>
+<li>Uniquely identifiable file name, so we can tell difference between your v1 and v24.</li>
+<li>What the patch does in a short paragraph.</li>
+<li>Whether the patch is for discussion or for application (see WIP notes below)</li>
+<li>Which branch the patch is against (ordinarily this will be <i>master</i>).  For more on branches in PostgreSQL, see <a href="/wiki/Working_with_Git#Using_Back_Branches" title="Working with Git">Using Back Branches</a>.</li>
+<li>Whether it compiles and tests successfully, so we know nothing obvious is broken.</li>
+<li>Whether it contains any platform-specific items and if so, has it been tested on other platforms.</li>
+<li>Confirm that the patch includes <a href="/wiki/Regression_test_authoring" title="Regression test authoring">regression tests</a> to check the new feature actually works as described.</li>
+<li>Include documentation on how to use the new feature, including examples.  See the <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/docguide.html">documentation documentation</a> for more information.</li>
+<li>Describe the effect your patch has on performance, if any.</li>
+<li>Try to include a few lines about why you chose to do things particular ways, rather than let your reviewer guess what was happening. This can be done as code comments, but it might also be an additional reviewers' guide, or additions to a README file in one of the code directories.</li>
+<li>If your patch addresses a <a href="/wiki/Todo" title="Todo">Todo</a> item, please give the name of the Todo item in your email.  This is so that the reviewers will know that the item needs to be marked as done if your patch is applied.</li></ul>
+<p>It is helpful for early patches, ones not intended to be of commit quality, to be labeled clearly as such so that the appropriate style of review is done.  The abbreviation WIP ("Work in Progress") is the standard shorthand to attach to patches intended for review not as a commit candidate, but for design feedback.  Labeling your patch as a WIP on your e-mail subject line and on the matching description in the CF application will advise reviewers to focus more on the general approach, rather than on things like coding style that can normally be ignored in the early portion of a patch's lifecycle.
+</p>
+<h3><span class="mw-headline" id="Reasons_your_patch_might_be_returned">Reasons your patch might be returned</span></h3>
+<p>Submitting the patch is just the first step towards getting it committed. Very few patches are committed exactly as originally submitted, even those submitted by experienced professional developers. For any non-trivial patch you should plan for at least 3 versions before final acceptance.
+</p><p>There are a few common reasons patches are returned without getting the review consideration the submitter was hoping for:
+</p>
+<ul><li><b>The fastest way to get your patch rejected is to make unrelated changes</b>.  Reformatting lines that haven't changed, changing unrelated comments you felt were poorly worded, touching code not necessary to your change, etc. Each patch should have the minimum set of changes required to work robustly.  If you do not follow the code formatting suggestions above, expect your patch to be returned to you with the feedback of "follow the code conventions", quite likely without any other review.</li></ul>
+<ul><li><b>Consider how the patch would be reviewed</b>.  The things a reviewer will evaluate are listed in <a href="/wiki/Reviewing_a_Patch" title="Reviewing a Patch">Reviewing a Patch</a>.  You should look at this list and consider if you will pass it before submission.  We recommend that new code contributors first spend time doing review, so that you will already be familiar with this list and process.  The review guidelines are used because they work; doing your own self-review before submitting your patch is recommended.</li></ul>
+<ul><li><b>Performance gain is claimed without test case</b>.  Performance patches are fun to write but hard to validate.  If the patch is intended to improve performance, it's a good idea to include some reproducible tests to demonstrate the improvement.  If a reviewer cannot duplicate your claimed performance improvement in a short period of time, it's very likely your patch will be returned.  Do not expect that a reviewer is going to find your performance feature so interesting that they will build an entire test suite to prove it works.  You should have done that as part of patch validation, and included the necessary framework for testing with the submission.</li></ul>
+<ul><li><b>Did not include documentation or regression tests</b>.  Any patch without these two items is automatically considered a WIP one--you might get review of your patch, but do not expect it to be committed.  See <a href="/wiki/Regression_test_authoring" title="Regression test authoring">Regression test authoring</a> for more information about how to write these tests.  Documenting the design at a high level in your submission e-mail is also recommended.</li></ul>
+<ul><li><b>Failed to address earlier criticisms of this design</b>.  Many patches try to do things that have been tried or considered before, where the earlier discussion found a problem with the obvious approach.  Not saying how your new submission addresses those issues suggests you have the same problems.  The <a href="/wiki/Todo" title="Todo">todo list</a> is a good source for finding past discussion of ideas for patches.</li></ul>
+<p>The objective of all of these suggested items is to ensure that the reviewer's time is not wasted. You spent time writing the code, but that does <b>not</b> mean you can demand time, energy and interest from a reviewer. Follow these guidelines and become familiar with the review process.  Make it easy on yourself and others so that your patch is accepted quickly, easily and with good humor on all sides.
+</p><p>The presentation <a rel="nofollow" class="external text" href="http://www.pgcon.org/2011/schedule/events/303.en.html">How To Get Your PostgreSQL Patch Accepted</a> provides some additional suggestions for how to submit a patch that will be considered more seriously.
+</p>
+<h3><span class="mw-headline" id="Submission_timing">Submission timing</span></h3>
+<p>To improve the odds of the right discussion of your patch or idea happening, pay attention to what the community work cycle is.  If for example you send in a brand new idea in the beta phase, don't be surprised if no one is paying attention because they are focused on release work.  Come back when the beta is done, please!
+</p><p>PostgreSQL development is organized with periodic <a href="/wiki/CommitFest" class="mw-redirect" title="CommitFest">CommitFests</a>, which are periods where new development halts in order to focus on patch review and committing.  It's best if you can avoid sending in a new patch during the occasional weeks when there is an active CommitFest; you can check the schedule via the <a rel="nofollow" class="external text" href="https://commitfest.postgresql.org/">CommitFest application</a>.  If your schedule doesn't allow waiting until an active CommitFest is over, you should explicitly label your submission as intended for the next CommitFest, not the current one, so that it's clear it's not intended to be part of the active review process. Additionally, keep in mind that reviews of your patch may not occur until the next CommitFest begins, since everyone else is likely busy working on their own patches for submission.
+</p>
+<h2><span class="mw-headline" id="Patch_review_and_commit">Patch review and commit</span></h2>
+<p>There's a few different workflows a patch can follow after it's been submitted that lead to it being committed:
+</p><p>Workflow A:
+</p>
+<ol><li>You post patch to pgsql-hackers</li>
+<li>A committer picks it up immediately and commits it.</li></ol>
+<p>Workflow B:
+</p>
+<ol><li>You post a patch to pgsql-hackers</li>
+<li>You add the patch to the <a rel="nofollow" class="external text" href="http://commitfest.postgresql.org/action/commitfest_view/open">open commitfest</a> queue</li>
+<li>A committer picks up the patch from the queue, and commits it</li></ol>
+<p>At any of these stages, your patch might instead be rejected for technical, style, or other reasons.  These rejections will normally come with feedback on whether an improved version of that patch would be more acceptable.  In those cases, you should consider updating your patch based on that feedback and re-submit.
+</p>
+<h2><span class="mw-headline" id="Mutual_Review_Offset_Obligations">Mutual Review Offset Obligations</span></h2>
+<p>PostgreSQL is a community project which relies on peer review.  Each patch submitter to a CommitFest is expected to review at least one other patch.  Ideally the patch selected for mutual review will be of similar size and/or scope to the one submitted.  Someone who submits a feature that's thousands of lines long can't just review a tiny submission by someone else and expect the community to be satisfied.  The idea is similar to the "offset" concept used for balancing gas emissions.
+</p><p>This policy permits the project to review, accept, reject, or return feedback on each patch in a timely fashion.  Few other open source projects provide such a guarantee for processing submissions.  Failure to participate in the review process means the PostgreSQL community can't promise you review and feedback of your own patches.  Actively reviewing another patch during the CommitFest also helps keeps contributors engaged, so that they can process feedback on their submission.  Very few submissions are committed without first going through feedback and revisions during a CommitFest.
+</p><p>For paid contributors to PostgreSQL, this policy means that you should make it clear to your sponsor that doing patch review is an obligation.  When time is budgeted and the schedule laid out for developing a new feature for submission to the PostgreSQL project, that should include review resources for another feature as a necessary part of its overhead.
+</p>
+<h2><span class="mw-headline" id="Followup_on_submissions">Followup on submissions</span></h2>
+<h3><span id="How_do_you_get_someone_to_respond_to_you.3F"></span><span class="mw-headline" id="How_do_you_get_someone_to_respond_to_you?">How do you get someone to respond to you?</span></h3>
+<p>You've sent an email to -hackers and no one has responded. What do you do?
+</p>
+<ul><li>Make sure you've added your patch to the <a rel="nofollow" class="external text" href="http://commitfest.postgresql.org/action/commitfest_view/open">open commitfest</a> queue.</li>
+<li>Start out by reviewing a patch or responding to email on the lists. Even if it is unrelated to what you're doing.</li>
+<li>Start with submitting a patch that is small and uncontroversial to help them understand you, and to get you familiar with the overall process.</li>
+<li>People are more willing to listen and work with someone who is already contributing.</li>
+<li>Also, in our community -- if no one objects, then there is implicit approval. Within reason!</li></ul>
+<p>Participating in community is a process, not a single event.
+</p>
+<h3><span class="mw-headline" id="Submitting_patch_updates">Submitting patch updates</span></h3>
+<p>When submitting a new version of a previously submitted patch, you should do a few additional things:
+</p>
+<ul><li>Uniquely identify the new version.  You can use <code>git format-patch -vN</code>, incrementing N each time; or you can add an incrementing numerical suffix manually.  Using the ".patch" extension allows some reviewers to more easily read it in their email client/code editor.</li></ul>
+<ul><li>Make sure it's easy to find any earlier discussion of the patch, by providing <code>Message-Id</code>-based links to the <a rel="nofollow" class="external text" href="https://www.postgresql.org/list/pgsql-hackers/">mailing list posts</a>.  Don't expect that everyone will still be able to find previous submissions on their own.  You can usually get the message ID of your email by looking for the header <b>Message-Id</b> in your email client.  Try <i>View message source</i> or <i>View original</i> if it's not obviously visible.</li></ul>
+<!-- 
+NewPP limit report
+Cached time: 20260408140959
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.036 seconds
+Real time usage: 0.042 seconds
+Preprocessor visited node count: 43/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:288-0!canonical and timestamp 20260408140959 and revision id 38858.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Submitting_a_Patch&amp;oldid=38858">https://wiki.postgresql.org/index.php?title=Submitting_a_Patch&amp;oldid=38858</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:Community" title="Category:Community">Community</a></li><li><a href="/wiki/Category:Getting_a_patch_accepted" title="Category:Getting a patch accepted">Getting a patch accepted</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Submitting_a_Patch" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Submitting_a_Patch&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Submitting_a_Patch">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Submitting_a_Patch&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Submitting_a_Patch&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Submitting_a_Patch" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Submitting_a_Patch&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Submitting+a+Patch" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Submitting_a_Patch" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Submitting_a_Patch" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Submitting_a_Patch&amp;oldid=38858" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Submitting_a_Patch&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 30 April 2024, at 04:37.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.036","walltime":"0.042","ppvisitednodes":{"value":43,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260408140959","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":373});});</script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>ReleasePrep - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"4f86c38b309cf255c5303d48","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"ReleasePrep","wgTitle":"ReleasePrep","wgCurRevisionId":18306,"wgRevisionId":18306,"wgArticleId":158,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Advocacy","Policies"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"ReleasePrep","wgRelevantArticleId":158,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-ReleasePrep rootpage-ReleasePrep skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">ReleasePrep</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p>Preparation Checklist for Minor Releases
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#4-5_Days_Before_Announce"><span class="tocnumber">1</span> <span class="toctext">4-5 Days Before Announce</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#3-4_Days_Before_Announce"><span class="tocnumber">2</span> <span class="toctext">3-4 Days Before Announce</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#24_Hours_Before_Announce"><span class="tocnumber">3</span> <span class="toctext">24 Hours Before Announce</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#8_Hours_Before_Announce"><span class="tocnumber">4</span> <span class="toctext">8 Hours Before Announce</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#4_Hours_Before_Announce"><span class="tocnumber">5</span> <span class="toctext">4 Hours Before Announce</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#The_Announce_E-mail"><span class="tocnumber">6</span> <span class="toctext">The Announce E-mail</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#Day_After_Announce"><span class="tocnumber">7</span> <span class="toctext">Day After Announce</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Other_Comments_and_Reminders"><span class="tocnumber">8</span> <span class="toctext">Other Comments and Reminders</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="4-5_Days_Before_Announce">4-5 Days Before Announce</span></h2>
+<ul><li>Contact translators to make sure that all translation strings are in (Peter Eisentraut)</li>
+<li>Contact -packagers and warn them of release</li></ul>
+<h2><span class="mw-headline" id="3-4_Days_Before_Announce">3-4 Days Before Announce</span></h2>
+<ul><li>Upload source code, and notify -packagers</li>
+<li>Have -packagers test source code</li>
+<li>Contact Regional Contacts and warn them of upcoming release</li>
+<li>Decide who's handling what for the release</li>
+<li>Have WWW team prepare updates to the home page</li></ul>
+<h2><span class="mw-headline" id="24_Hours_Before_Announce">24 Hours Before Announce</span></h2>
+<ul><li>Submit News item and have member of the WWW team check it</li>
+<li>Upload binaries (make sure that Windows packagers are ready!)</li></ul>
+<h2><span class="mw-headline" id="8_Hours_Before_Announce">8 Hours Before Announce</span></h2>
+<ul><li>Build new docs and commit them</li></ul>
+<h2><span class="mw-headline" id="4_Hours_Before_Announce">4 Hours Before Announce</span></h2>
+<ul><li>Commit News item</li>
+<li>Commit changes to home page</li>
+<li>Update "What's New" link target on /docs and commit</li></ul>
+<h2><span class="mw-headline" id="The_Announce_E-mail">The Announce E-mail</span></h2>
+<ul><li>Must go out under an @postgresql.org e-mail address with no personal footer</li>
+<li>Should be checked by:
+<ul><li>The web team (links)</li>
+<li>The core team &amp; packagers (contents)</li></ul></li>
+<li>Check that new pages, downloads have propagated before sending out announce</li>
+<li>Check links again!</li>
+<li>If you don't have automatic -announce approval, make sure an -announce moderator is on duty</li></ul>
+<h2><span class="mw-headline" id="Day_After_Announce">Day After Announce</span></h2>
+<ul><li>Update Sourceforge</li>
+<li>Update Freshmeat</li>
+<li>Update #postgresql topic</li>
+<li>Update version in <a rel="nofollow" class="external text" href="http://www.wikipedia.org/wiki/PostgreSQL">Wikipedia</a></li></ul>
+<h2><span class="mw-headline" id="Other_Comments_and_Reminders">Other Comments and Reminders</span></h2>
+<p>1. Releases are performed only by community members with @postgresql.org. People known to announce releases are jdrake@postgresql.org, josh@postgresql.org and dpage@postgresql.org .
+</p><p>2. If the release email has a signature, make sure it is referencing PostgreSQL and not the contributors private interests.
+</p><p>3. Work with a web contributor or ready a patch for front page and developers/.
+</p><p>4. Make sure docs are generated.
+</p>
+<pre>* <a rel="nofollow" class="external free" href="https://pgweb.postgresql.org/browser/trunk/portal/tools/docs/readme.txt">https://pgweb.postgresql.org/browser/trunk/portal/tools/docs/readme.txt</a>
+</pre>
+<p>If you can't get to that site, work with someone who can. (Magnus Hagander, Stefan Kaltenbrunner, Dave Page, Robert Treat)
+</p><p>5. Ready email from &lt;contributor&gt;@postgresql.org to -general, -advocacy and
+-announce. 
+</p>
+<pre> * Check <a rel="nofollow" class="external free" href="http://anoncvs.postgresql.org/cvsweb.cgi/pgsql/src/include/catalog/catversion.h">http://anoncvs.postgresql.org/cvsweb.cgi/pgsql/src/include/catalog/catversion.h</a> just in case it is an initdb forcing release.
+</pre>
+<p>6. Double check that 1,2,5 only contain references to @postgresql.org 
+</p><p>7. Confirm packages and symlinks are on ftp sites and mirrors have begun to propagate. 
+</p><p>8. Get confirmation from -packagers that the web patch looks good. You will need to work with your web contributor or set up a development sandbox for this.
+</p><p>9. Work with operator on #postgresql to change topic. Commonly logged in operators are linuxpoet (Joshua Drake) and davidfetter (David Fetter)
+</p><p>10. Once 1-9 are done
+</p>
+<pre> * Get web patch committed. Insure it looks correct on wwwmaster
+ * Wait for patch to propagate, this takes at least one hour(site gets build every hour at exactly :00) or can be forced through the admin interface on wwwmaster.
+   * Send announcement to -general, -advocacy and -announce
+   * If you are not an -announce moderator prepare a moderator in advance. Known moderators are jd@commandprompt.com (Joshua Drake) and xzilla@users.sourceforge.net (Robert Treat)
+</pre>
+<p>11. Update SourceForge entry (devrim@gunduz.org)
+</p><p>12. Update Freshmeat (scrappy@hub.org)
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260407235228
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.019 seconds
+Real time usage: 0.023 seconds
+Preprocessor visited node count: 24/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:158-0!canonical and timestamp 20260407235228 and revision id 18306.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=ReleasePrep&amp;oldid=18306">https://wiki.postgresql.org/index.php?title=ReleasePrep&amp;oldid=18306</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:Advocacy" title="Category:Advocacy">Advocacy</a></li><li><a href="/wiki/Category:Policies" title="Category:Policies">Policies</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/ReleasePrep" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:ReleasePrep&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/ReleasePrep">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=ReleasePrep&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=ReleasePrep&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/ReleasePrep" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:ReleasePrep&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=ReleasePrep" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/ReleasePrep" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/ReleasePrep" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=ReleasePrep&amp;oldid=18306" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=ReleasePrep&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 26 September 2012, at 08:52.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.019","walltime":"0.023","ppvisitednodes":{"value":24,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260407235228","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":382});});</script>
+</body>
+</html>

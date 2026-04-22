@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <script>
+      var App = {};
+      App.pageIDs = ["E3C88AF9-53BC-460D-9D06-ED66630FACBC","AB9B1D9D-E13D-461E-9D24-03563CFA350B","72632294-4D39-4342-8BE4-162B883F5798","FD2FCC4E-391D-4C3A-B066-B61F86A6A14D","1E7B6EED-BDC5-4B46-829C-0E1B10BD8644","0AC4E3E2-A77E-403E-B75E-99273CDBE06B","699A3656-42C9-40AE-A56D-54DD6905FDEF","4C85AC8E-6F45-457C-B9C9-41C07C57A39D"];
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/listing.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+
+  <!-- Navbar
+    ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+  
+    <div class="container">
+    
+      <div class="page-header">
+        <h1>
+Joins and Subqueries          <a href="simplejoin.html" class="btn btn-primary btn-large" style="margin-left: 50px;">Begin!</a>
+        </h1>
+      </div>
+    
+      <div class="row" style="margin-bottom:30px">
+        <div class="span8">
+          <p>
+<p>This category deals primarily with a foundational concept in relational database systems: joining.  Joining allows you to combine related information from multiple tables to answer a question.  This isn't just beneficial for ease of querying: a lack of join capability encourages denormalisation of data, which increases the complexity of keeping your data internally consistent.
+
+<p>This topic covers inner, outer, and self joins, as well as spending a little time on subqueries (queries within queries). If you struggle with these questions, I strongly recommend <a href="http://shop.oreilly.com/product/9780596007270.do">Learning SQL</a>, by Alan Beaulieu, as a concise and well-written book on the subject.</p>          </p>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span10">
+          <ul class="topiclisting">
+<li><span class="listingitem"><a class="listlink" href='simplejoin.html'>Retrieve the start times of members' bookings</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='simplejoin2.html'>Work out the start times of bookings for tennis courts</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='self.html'>Produce a list of all members who have recommended another member</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='self2.html'>Produce a list of all members, along with their recommender</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='threejoin.html'>Produce a list of all members who have used a tennis court</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='threejoin2.html'>Produce a list of costly bookings</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='sub.html'>Produce a list of all members, along with their recommender, using no joins.</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='tjsub.html'>Produce a list of costly bookings, using a subquery</a></span></li>
+          </ul>
+        </div>
+    
+      </div><!-- /container -->
+    </div>  
+  
+      <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/bootstrap.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+  
+  </body>
+</html>

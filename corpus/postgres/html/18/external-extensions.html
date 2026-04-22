@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 18: H.4. Extensions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/18/external-extensions.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:07:09" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="H.4. Extensions" />
+  <meta property="og:description" content="H.4.&amp;nbsp;Extensions # PostgreSQL is designed to be easily extensible. For this reason, extensions loaded into the database can function just …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?97ba32d2" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?97ba32d2">
+
+  <script src="/media/js/theme.js?97ba32d2"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/external-extensions.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/18/index.html">PostgreSQL 18</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/external-extensions.html" title="PostgreSQL 18 - H.4. Extensions" class="docs-version-selected">Current</a>
+                          (<a href="/docs/18/external-extensions.html" title="PostgreSQL 18 - H.4. Extensions" class="docs-version-selected">18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/external-extensions.html" title="PostgreSQL 17 - H.4. Extensions" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/external-extensions.html" title="PostgreSQL 16 - H.4. Extensions" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/external-extensions.html" title="PostgreSQL 15 - H.4. Extensions" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/external-extensions.html" title="PostgreSQL 14 - H.4. Extensions" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/external-extensions.html" title="PostgreSQL devel - H.4. Extensions"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/external-extensions.html" title="PostgreSQL 13 - H.4. Extensions"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/external-extensions.html" title="PostgreSQL 12 - H.4. Extensions"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/external-extensions.html" title="PostgreSQL 11 - H.4. Extensions"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/external-extensions.html" title="PostgreSQL 10 - H.4. Extensions"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/external-extensions.html" title="PostgreSQL 9.6 - H.4. Extensions"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/external-extensions.html" title="PostgreSQL 9.5 - H.4. Extensions"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/external-extensions.html" title="PostgreSQL 9.4 - H.4. Extensions"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/external-extensions.html" title="PostgreSQL 9.3 - H.4. Extensions"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/external-extensions.html" title="PostgreSQL 9.2 - H.4. Extensions"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/external-extensions.html" title="PostgreSQL 9.1 - H.4. Extensions"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/external-extensions.html" title="PostgreSQL 9.0 - H.4. Extensions"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/external-extensions.html" title="PostgreSQL 8.4 - H.4. Extensions"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/external-extensions.html" title="PostgreSQL 8.3 - H.4. Extensions"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/external-extensions.html" title="PostgreSQL 8.2 - H.4. Extensions"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/external-extensions.html" title="PostgreSQL 8.1 - H.4. Extensions"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/external-extensions.html" title="PostgreSQL 8.0 - H.4. Extensions"  rel="nofollow">8.0</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/18/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">H.4.&nbsp;Extensions</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="external-pl.html" title="H.3.&nbsp;Procedural Languages">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="external-projects.html" title="Appendix&nbsp;H.&nbsp;External Projects">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;H.&nbsp;External Projects</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sourcerepo.html" title="Appendix&nbsp;I.&nbsp;The Source Code Repository">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="EXTERNAL-EXTENSIONS">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">H.4.&nbsp;Extensions <a href="#EXTERNAL-EXTENSIONS" class="id_link">#</a></h2>
+      </div>
+    </div>
+  </div><a id="id-1.11.9.6.2" class="indexterm" name="id-1.11.9.6.2"></a>
+  <p><span class="productname">PostgreSQL</span> is designed to be easily extensible. For this reason, extensions loaded into the database can function just like features that are built in. The <code class="filename">contrib/</code> directory shipped with the source code contains several extensions, which are described in <a class="xref" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules and Extensions">Appendix&nbsp;F</a>. Other extensions are developed independently, like <span class="application"><a class="ulink" href="https://postgis.net/" target="_top">PostGIS</a></span>. Even <span class="productname">PostgreSQL</span> replication solutions can be developed externally. For example, <span class="application"><a class="ulink" href="https://www.slony.info" target="_top">Slony-I</a></span> is a popular primary/standby replication solution that is developed independently from the core project.</p>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="external-pl.html" title="H.3.&nbsp;Procedural Languages">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="external-projects.html" title="Appendix&nbsp;H.&nbsp;External Projects">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sourcerepo.html" title="Appendix&nbsp;I.&nbsp;The Source Code Repository">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">H.3.&nbsp;Procedural Languages&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;Appendix&nbsp;I.&nbsp;The Source Code Repository</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/18/external-extensions.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?97ba32d2"></script>
+
+  </body>
+</html>

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 17: E.8. Release 17.2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/17/release-17-2.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:07:05" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="E.8. Release 17.2" />
+  <meta property="og:description" content="E.8.&amp;nbsp;Release 17.2 # E.8.1. Migration to Version 17.2 E.8.2. Changes Release date:&amp;nbsp;2024-11-21 This release contains a few fixes from 17.1. …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?290b0238" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?290b0238">
+
+  <script src="/media/js/theme.js?290b0238"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/17/release-17-2.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/17/index.html">PostgreSQL 17</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/17/release-17-2.html" title="PostgreSQL 17 - E.8. Release 17.2" class="docs-version-selected">17</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/17/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">E.8.&nbsp;Release 17.2</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="release-17-3.html" title="E.7.&nbsp;Release 17.3">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="release.html" title="Appendix&nbsp;E.&nbsp;Release Notes">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;E.&nbsp;Release Notes</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 17.9 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="release-17-1.html" title="E.9.&nbsp;Release 17.1">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="RELEASE-17-2">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">E.8.&nbsp;Release 17.2 <a href="#RELEASE-17-2" class="id_link">#</a></h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="release-17-2.html#RELEASE-17-2-MIGRATION">E.8.1. Migration to Version 17.2</a></span></dt>
+      <dt><span class="sect2"><a href="release-17-2.html#RELEASE-17-2-CHANGES">E.8.2. Changes</a></span></dt>
+    </dl>
+  </div>
+  <p><strong>Release date:&nbsp;</strong>2024-11-21</p>
+  <p>This release contains a few fixes from 17.1. For information about new features in major release 17, see <a class="xref" href="release-17.html" title="E.10.&nbsp;Release 17">Section&nbsp;E.10</a>.</p>
+  <div class="sect2" id="RELEASE-17-2-MIGRATION">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">E.8.1.&nbsp;Migration to Version 17.2 <a href="#RELEASE-17-2-MIGRATION" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <p>A dump/restore is not required for those running 17.X.</p>
+    <p>However, if you are upgrading from a version earlier than 17.1, see <a class="xref" href="release-17-1.html" title="E.9.&nbsp;Release 17.1">Section&nbsp;E.9</a>.</p>
+  </div>
+  <div class="sect2" id="RELEASE-17-2-CHANGES">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">E.8.2.&nbsp;Changes <a href="#RELEASE-17-2-CHANGES" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">
+          <p>Repair ABI break for extensions that work with struct <code class="structname">ResultRelInfo</code> (Tom Lane) <a class="ulink" href="https://postgr.es/c/6bfacd368" target="_top">§</a></p>
+          <p>Last week's minor releases unintentionally broke binary compatibility with <span class="application">timescaledb</span> and several other extensions. Restore the affected structure to its previous size, so that such extensions need not be rebuilt.</p>
+        </li>
+        <li class="listitem">
+          <p>Restore functionality of <code class="command">ALTER {ROLE|DATABASE} SET role</code> (Tom Lane, Noah Misch) <a class="ulink" href="https://postgr.es/c/1c05004a8" target="_top">§</a></p>
+          <p>The fix for CVE-2024-10978 accidentally caused settings for <code class="varname">role</code> to not be applied if they come from non-interactive sources, including previous <code class="command">ALTER {ROLE|DATABASE}</code> commands and the <code class="varname">PGOPTIONS</code> environment variable.</p>
+        </li>
+        <li class="listitem">
+          <p>Fix cases where a logical replication slot's <code class="structfield">restart_lsn</code> could go backwards (Masahiko Sawada) <a class="ulink" href="https://postgr.es/c/568e78a65" target="_top">§</a></p>
+          <p>Previously, restarting logical replication could sometimes cause the slot's restart point to be recomputed as an older value than had previously been advertised in <code class="structname">pg_replication_slots</code>. This is bad, since for example WAL files might have been removed on the basis of the later <code class="structfield">restart_lsn</code> value, in which case replication would fail to restart.</p>
+        </li>
+        <li class="listitem">
+          <p>Avoid deleting still-needed WAL files during <span class="application">pg_rewind</span> (Polina Bungina, Alexander Kukushkin) <a class="ulink" href="https://postgr.es/c/cb844d66b" target="_top">§</a></p>
+          <p>Previously, in unlucky cases, it was possible for <span class="application">pg_rewind</span> to remove important WAL files from the rewound demoted primary. In particular this happens if those files have been marked for archival (i.e., their <code class="filename">.ready</code> files were created) but not yet archived. Then the newly promoted node no longer has such files because of them having been recycled, but likely they are needed for recovery in the demoted node. If <span class="application">pg_rewind</span> removes them, recovery is not possible anymore.</p>
+        </li>
+        <li class="listitem">
+          <p>Fix race conditions associated with dropping shared statistics entries (Kyotaro Horiguchi, Michael Paquier) <a class="ulink" href="https://postgr.es/c/1d6a03ea4" target="_top">§</a></p>
+          <p>These bugs could lead to loss of statistics data, assertion failures, or <span class="quote">“<span class="quote">can only drop stats once</span>”</span> errors.</p>
+        </li>
+        <li class="listitem">
+          <p>Count index scans in <code class="filename">contrib/bloom</code> indexes in the statistics views, such as the <code class="structname">pg_stat_user_indexes</code>.<code class="structfield">idx_scan</code> counter (Masahiro Ikeda) <a class="ulink" href="https://postgr.es/c/7af6d1306" target="_top">§</a></p>
+        </li>
+        <li class="listitem">
+          <p>Fix crash when checking to see if an index's opclass options have changed (Alexander Korotkov) <a class="ulink" href="https://postgr.es/c/a6fa869cf" target="_top">§</a></p>
+          <p>Some forms of <code class="command">ALTER TABLE</code> would fail if the table has an index with non-default operator class options.</p>
+        </li>
+        <li class="listitem">
+          <p>Avoid assertion failure caused by disconnected NFA sub-graphs in regular expression parsing (Tom Lane) <a class="ulink" href="https://postgr.es/c/5f28e6ba7" target="_top">§</a></p>
+          <p>This bug does not appear to have any visible consequences in non-assert builds.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="release-17-3.html" title="E.7.&nbsp;Release 17.3">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="release.html" title="Appendix&nbsp;E.&nbsp;Release Notes">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="release-17-1.html" title="E.9.&nbsp;Release 17.1">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">E.7.&nbsp;Release 17.3&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 17.9 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;E.9.&nbsp;Release 17.1</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/17/release-17-2.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?290b0238"></script>
+
+  </body>
+</html>

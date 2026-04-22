@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <script>
+      var App = {};
+      App.pageIDs = ["eeb585a7-bdb9-411d-a1ce-057769c30346","cf4a345f-93a6-4920-a87c-e3957f6c3d18","4363ffe4-3c61-4445-a3bd-d8fcbd313d4c","badeb19f-3590-4cdc-ad7c-911ae9d4b675","f0d7e446-0e04-41b3-b5c6-dcaa9c89645a","fabb545a-0c85-4c5d-a713-a156d673ccdb","a281e531-33d4-4672-93d9-428982bdb75a","1a596ce6-0839-412b-b00a-5f8a66499cbb","cb420c69-04cc-4b82-ad27-12e9840420f1"];
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/listing.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+
+  <!-- Navbar
+    ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+  
+    <div class="container">
+    
+      <div class="page-header">
+        <h1>
+Modifying data          <a href="insert.html" class="btn btn-primary btn-large" style="margin-left: 50px;">Begin!</a>
+        </h1>
+      </div>
+    
+      <div class="row" style="margin-bottom:30px">
+        <div class="span8">
+          <p>
+<p>Querying data is all well and good, but at some point you're probably going to want to put data into your database! This section deals with inserting, updating, and deleting information. Operations that alter your data like this are collectively known as Data Manipulation Language, or DML.</p>
+<p>In previous sections, we returned to you the results of the query you've performed. Since modifications like the ones we're making in this section don't return any query results, we instead show you the updated content of the table you're supposed to be working on. You can compare this with the table shown in 'Expected Results' to see how you've done.</p>
+<p>If you struggle with these questions, I strongly recommend <a href="http://shop.oreilly.com/product/9780596007270.do">Learning SQL</a>, by Alan Beaulieu.</p>          </p>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span10">
+          <ul class="topiclisting">
+<li><span class="listingitem"><a class="listlink" href='insert.html'>Insert some data into a table</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='insert2.html'>Insert multiple rows of data into a table</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='insert3.html'>Insert calculated data into a table</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='update.html'>Update some existing data</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='updatemultiple.html'>Update multiple rows and columns at the same time</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='updatecalculated.html'>Update a row based on the contents of another row</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='delete.html'>Delete all bookings</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='deletewh.html'>Delete a member from the cd.members table</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='deletewh2.html'>Delete based on a subquery</a></span></li>
+          </ul>
+        </div>
+    
+      </div><!-- /container -->
+    </div>  
+  
+      <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/bootstrap.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+  
+  </body>
+</html>
