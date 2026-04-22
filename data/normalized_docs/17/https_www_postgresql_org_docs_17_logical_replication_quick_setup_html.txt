@@ -1,0 +1,10 @@
+[29.12. Quick Setup #] First set the configuration options in postgresql.conf :
+[29.12. Quick Setup #] wal_level = logical
+[29.12. Quick Setup #] The other required settings have default values that are sufficient for a basic setup.
+[29.12. Quick Setup #] pg_hba.conf needs to be adjusted to allow replication (the values here depend on your actual network configuration and user you want to use for connecting):
+[29.12. Quick Setup #] host all repuser 0.0.0.0/0 md5
+[29.12. Quick Setup #] Then on the publisher database:
+[29.12. Quick Setup #] CREATE PUBLICATION mypub FOR TABLE users, departments;
+[29.12. Quick Setup #] And on the subscriber database:
+[29.12. Quick Setup #] CREATE SUBSCRIPTION mysub CONNECTION 'dbname=foo host=bar user=repuser' PUBLICATION mypub;
+[29.12. Quick Setup #] The above will start the replication process, which synchronizes the initial table contents of the tables users and departments and then starts replicating incremental changes to those tables.

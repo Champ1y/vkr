@@ -1,0 +1,472 @@
+[E.10. Release 17 # / E.10.1. Overview #] PostgreSQL 17 contains many new features and enhancements, including:
+[E.10. Release 17 # / E.10.1. Overview #] New memory management system for VACUUM , which reduces memory consumption and can improve overall vacuuming performance.
+[E.10. Release 17 # / E.10.1. Overview #] New memory management system for VACUUM , which reduces memory consumption and can improve overall vacuuming performance.
+[E.10. Release 17 # / E.10.1. Overview #] New SQL/JSON capabilities, including constructors, identity functions, and the JSON_TABLE() function, which converts JSON data into a table representation.
+[E.10. Release 17 # / E.10.1. Overview #] New SQL/JSON capabilities, including constructors, identity functions, and the JSON_TABLE() function, which converts JSON data into a table representation.
+[E.10. Release 17 # / E.10.1. Overview #] Various query performance improvements, including for sequential reads using streaming I/O, write throughput under high concurrency, and searches over multiple values in a btree index.
+[E.10. Release 17 # / E.10.1. Overview #] Various query performance improvements, including for sequential reads using streaming I/O, write throughput under high concurrency, and searches over multiple values in a btree index.
+[E.10. Release 17 # / E.10.1. Overview #] Logical replication enhancements, including: Failover control pg_createsubscriber , a utility that creates logical replicas from physical standbys pg_upgrade now preserves logical replication slots on publishers and full subscription state on subscribers. This will allow upgrades to future major versions to continue logical replication without requiring copy to resynchronize.
+[E.10. Release 17 # / E.10.1. Overview #] Logical replication enhancements, including:
+[E.10. Release 17 # / E.10.1. Overview #] pg_createsubscriber , a utility that creates logical replicas from physical standbys
+[E.10. Release 17 # / E.10.1. Overview #] pg_createsubscriber , a utility that creates logical replicas from physical standbys
+[E.10. Release 17 # / E.10.1. Overview #] pg_upgrade now preserves logical replication slots on publishers and full subscription state on subscribers. This will allow upgrades to future major versions to continue logical replication without requiring copy to resynchronize.
+[E.10. Release 17 # / E.10.1. Overview #] pg_upgrade now preserves logical replication slots on publishers and full subscription state on subscribers. This will allow upgrades to future major versions to continue logical replication without requiring copy to resynchronize.
+[E.10. Release 17 # / E.10.1. Overview #] New client-side connection option, sslnegotiation=direct , that performs a direct TLS handshake to avoid a round-trip negotiation.
+[E.10. Release 17 # / E.10.1. Overview #] New client-side connection option, sslnegotiation=direct , that performs a direct TLS handshake to avoid a round-trip negotiation.
+[E.10. Release 17 # / E.10.1. Overview #] pg_basebackup now supports incremental backup.
+[E.10. Release 17 # / E.10.1. Overview #] pg_basebackup now supports incremental backup.
+[E.10. Release 17 # / E.10.1. Overview #] COPY adds a new option, ON_ERROR ignore , that allows a copy operation to continue in the event of an error.
+[E.10. Release 17 # / E.10.1. Overview #] COPY adds a new option, ON_ERROR ignore , that allows a copy operation to continue in the event of an error.
+[E.10. Release 17 # / E.10.1. Overview #] The above items and other new features of PostgreSQL 17 are explained in more detail in the sections below.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] A dump/restore using pg_dumpall or use of pg_upgrade or logical replication is required for those wishing to migrate data from any previous release. See Section 18.6 for general information on migrating to new major releases.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Version 17 contains a number of changes that may affect compatibility with previous releases. Observe the following incompatibilities:
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Change functions to use a safe search_path during maintenance operations (Jeff Davis) § § This prevents maintenance operations ( ANALYZE , CLUSTER , CREATE INDEX , CREATE MATERIALIZED VIEW , REFRESH MATERIALIZED VIEW , REINDEX , or VACUUM ) from performing unsafe access. Functions used by expression indexes and materialized views that need to reference non-default schemas must specify a search path during function creation.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Change functions to use a safe search_path during maintenance operations (Jeff Davis) § §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] This prevents maintenance operations ( ANALYZE , CLUSTER , CREATE INDEX , CREATE MATERIALIZED VIEW , REFRESH MATERIALIZED VIEW , REINDEX , or VACUUM ) from performing unsafe access. Functions used by expression indexes and materialized views that need to reference non-default schemas must specify a search path during function creation.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Restrict ago to only appear at the end in interval values (Joseph Koshakow) § § Also, prevent empty interval units from appearing multiple times.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Restrict ago to only appear at the end in interval values (Joseph Koshakow) § §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Also, prevent empty interval units from appearing multiple times.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove server variable old_snapshot_threshold (Thomas Munro) § This variable allowed vacuum to remove rows that potentially could be still visible to running transactions, causing "snapshot too old" errors later if accessed. This feature might be re-added to PostgreSQL later if an improved implementation is found.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove server variable old_snapshot_threshold (Thomas Munro) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] This variable allowed vacuum to remove rows that potentially could be still visible to running transactions, causing "snapshot too old" errors later if accessed. This feature might be re-added to PostgreSQL later if an improved implementation is found.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Change SET SESSION AUTHORIZATION handling of the initial session user's superuser status (Joseph Koshakow) § The new behavior is based on the session user's superuser status at the time the SET SESSION AUTHORIZATION command is issued, rather than their superuser status at connection time.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Change SET SESSION AUTHORIZATION handling of the initial session user's superuser status (Joseph Koshakow) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] The new behavior is based on the session user's superuser status at the time the SET SESSION AUTHORIZATION command is issued, rather than their superuser status at connection time.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove feature which simulated per-database users (Nathan Bossart) § The feature, db_user_namespace , was rarely used.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove feature which simulated per-database users (Nathan Bossart) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] The feature, db_user_namespace , was rarely used.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove adminpack contrib extension (Daniel Gustafsson) § This was used by now end-of-life pgAdmin III .
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove adminpack contrib extension (Daniel Gustafsson) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] This was used by now end-of-life pgAdmin III .
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove wal_sync_method value fsync_writethrough on Windows (Thomas Munro) § This value was the same as fsync on Windows .
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove wal_sync_method value fsync_writethrough on Windows (Thomas Munro) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] This value was the same as fsync on Windows .
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Change file boundary handling of two WAL file name functions (Kyotaro Horiguchi, Andres Freund, Bruce Momjian) § The functions pg_walfile_name() and pg_walfile_name_offset() used to report the previous LSN segment number when the LSN was on a file segment boundary; it now returns the current LSN segment.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Change file boundary handling of two WAL file name functions (Kyotaro Horiguchi, Andres Freund, Bruce Momjian) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] The functions pg_walfile_name() and pg_walfile_name_offset() used to report the previous LSN segment number when the LSN was on a file segment boundary; it now returns the current LSN segment.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove server variable trace_recovery_messages since it is no longer needed (Bharath Rupireddy) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove server variable trace_recovery_messages since it is no longer needed (Bharath Rupireddy) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove information schema column element_types . domain_default (Peter Eisentraut) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove information schema column element_types . domain_default (Peter Eisentraut) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Change pgrowlocks lock mode output labels (Bruce Momjian) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Change pgrowlocks lock mode output labels (Bruce Momjian) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove buffers_backend and buffers_backend_fsync from pg_stat_bgwriter (Bharath Rupireddy) § These fields are considered redundant to similar columns in pg_stat_io .
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Remove buffers_backend and buffers_backend_fsync from pg_stat_bgwriter (Bharath Rupireddy) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] These fields are considered redundant to similar columns in pg_stat_io .
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Rename I/O block read/write timing statistics columns of pg_stat_statements (Nazir Bilal Yavuz) § This renames blk_read_time to shared_blk_read_time , and blk_write_time to shared_blk_write_time .
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Rename I/O block read/write timing statistics columns of pg_stat_statements (Nazir Bilal Yavuz) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] This renames blk_read_time to shared_blk_read_time , and blk_write_time to shared_blk_write_time .
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Change pg_attribute . attstattarget and pg_statistic_ext . stxstattarget to represent the default statistics target as NULL (Peter Eisentraut) § §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Change pg_attribute . attstattarget and pg_statistic_ext . stxstattarget to represent the default statistics target as NULL (Peter Eisentraut) § §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Rename pg_collation . colliculocale to colllocale and pg_database . daticulocale to datlocale (Jeff Davis) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Rename pg_collation . colliculocale to colllocale and pg_database . daticulocale to datlocale (Jeff Davis) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Rename pg_stat_progress_vacuum column max_dead_tuples to max_dead_tuple_bytes , rename num_dead_tuples to num_dead_item_ids , and add dead_tuple_bytes (Masahiko Sawada) § §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Rename pg_stat_progress_vacuum column max_dead_tuples to max_dead_tuple_bytes , rename num_dead_tuples to num_dead_item_ids , and add dead_tuple_bytes (Masahiko Sawada) § §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Rename SLRU columns in system view pg_stat_slru (Alvaro Herrera) § The column names accepted by pg_stat_reset_slru() are also changed.
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] Rename SLRU columns in system view pg_stat_slru (Alvaro Herrera) §
+[E.10. Release 17 # / E.10.2. Migration to Version 17 #] The column names accepted by pg_stat_reset_slru() are also changed.
+[E.10. Release 17 # / E.10.3. Changes #] Below you will find a detailed account of the changes between PostgreSQL 17 and the previous major release.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow the optimizer to improve CTE plans by considering the statistics and sort order of columns referenced in earlier row output clauses (Jian Guo, Richard Guo, Tom Lane) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow the optimizer to improve CTE plans by considering the statistics and sort order of columns referenced in earlier row output clauses (Jian Guo, Richard Guo, Tom Lane) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Improve optimization of IS NOT NULL and IS NULL query restrictions (David Rowley, Richard Guo, Andy Fan) § § Remove IS NOT NULL restrictions from queries on NOT NULL columns and eliminate scans on NOT NULL columns if IS NULL is specified.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Improve optimization of IS NOT NULL and IS NULL query restrictions (David Rowley, Richard Guo, Andy Fan) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Remove IS NOT NULL restrictions from queries on NOT NULL columns and eliminate scans on NOT NULL columns if IS NULL is specified.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow partition pruning on boolean columns on IS [NOT] UNKNOWN conditionals (David Rowley) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow partition pruning on boolean columns on IS [NOT] UNKNOWN conditionals (David Rowley) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Improve optimization of range values when using containment operators <@ and @> (Kim Johan Andersson, Jian He) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Improve optimization of range values when using containment operators <@ and @> (Kim Johan Andersson, Jian He) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow correlated IN subqueries to be transformed into joins (Andy Fan, Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow correlated IN subqueries to be transformed into joins (Andy Fan, Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Improve optimization of the LIMIT clause on partitioned tables, inheritance parents, and UNION ALL queries (Andy Fan, David Rowley) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Improve optimization of the LIMIT clause on partitioned tables, inheritance parents, and UNION ALL queries (Andy Fan, David Rowley) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow query nodes to be run in parallel in more cases (Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow query nodes to be run in parallel in more cases (Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow GROUP BY columns to be internally ordered to match ORDER BY (Andrei Lepikhov, Teodor Sigaev) § This can be disabled using server variable enable_group_by_reordering .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow GROUP BY columns to be internally ordered to match ORDER BY (Andrei Lepikhov, Teodor Sigaev) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] This can be disabled using server variable enable_group_by_reordering .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow UNION (without ALL ) to use MergeAppend (David Rowley) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow UNION (without ALL ) to use MergeAppend (David Rowley) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Fix MergeAppend plans to more accurately compute the number of rows that need to be sorted (Alexander Kuzmenkov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Fix MergeAppend plans to more accurately compute the number of rows that need to be sorted (Alexander Kuzmenkov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow GiST and SP-GiST indexes to be part of incremental sorts (Miroslav Bendik) § This is particularly useful for ORDER BY clauses where the first column has a GiST and SP-GiST index, and other columns do not.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Allow GiST and SP-GiST indexes to be part of incremental sorts (Miroslav Bendik) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] This is particularly useful for ORDER BY clauses where the first column has a GiST and SP-GiST index, and other columns do not.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Add columns to pg_stats to report range-type histogram information (Egor Rogov, Soumyadeep Chakraborty) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.1. Optimizer #] Add columns to pg_stats to report range-type histogram information (Egor Rogov, Soumyadeep Chakraborty) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.2. Indexes #] Allow btree indexes to more efficiently find a set of values, such as those supplied by IN clauses using constants (Peter Geoghegan, Matthias van de Meent) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.2. Indexes #] Allow btree indexes to more efficiently find a set of values, such as those supplied by IN clauses using constants (Peter Geoghegan, Matthias van de Meent) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.2. Indexes #] Allow BRIN indexes to be created using parallel workers (Tomas Vondra, Matthias van de Meent) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.2. Indexes #] Allow BRIN indexes to be created using parallel workers (Tomas Vondra, Matthias van de Meent) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Allow vacuum to more efficiently remove and freeze tuples (Melanie Plageman, Heikki Linnakangas) § WAL traffic caused by vacuum is also more compact.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Allow vacuum to more efficiently remove and freeze tuples (Melanie Plageman, Heikki Linnakangas) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] WAL traffic caused by vacuum is also more compact.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Allow vacuum to more efficiently store tuple references (Masahiko Sawada, John Naylor) § § § § Additionally, vacuum is no longer silently limited to one gigabyte of memory when maintenance_work_mem or autovacuum_work_mem are higher.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Allow vacuum to more efficiently store tuple references (Masahiko Sawada, John Naylor) § § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Additionally, vacuum is no longer silently limited to one gigabyte of memory when maintenance_work_mem or autovacuum_work_mem are higher.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Optimize vacuuming of relations with no indexes (Melanie Plageman) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Optimize vacuuming of relations with no indexes (Melanie Plageman) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Increase default vacuum_buffer_usage_limit to 2MB (Thomas Munro) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Increase default vacuum_buffer_usage_limit to 2MB (Thomas Munro) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Improve performance when checking roles with many memberships (Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Improve performance when checking roles with many memberships (Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Improve performance of heavily-contended WAL writes (Bharath Rupireddy) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Improve performance of heavily-contended WAL writes (Bharath Rupireddy) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Improve performance when transferring large blocks of data to a client (Melih Mutlu) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Improve performance when transferring large blocks of data to a client (Melih Mutlu) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Allow the grouping of file system reads with the new system variable io_combine_limit (Thomas Munro, Andres Freund, Melanie Plageman, Nazir Bilal Yavuz) § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.3. General Performance #] Allow the grouping of file system reads with the new system variable io_combine_limit (Thomas Munro, Andres Freund, Melanie Plageman, Nazir Bilal Yavuz) § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Create system view pg_stat_checkpointer (Bharath Rupireddy, Anton A. Melnikov, Alexander Korotkov) § § § Relevant columns have been removed from pg_stat_bgwriter and added to this new system view.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Create system view pg_stat_checkpointer (Bharath Rupireddy, Anton A. Melnikov, Alexander Korotkov) § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Relevant columns have been removed from pg_stat_bgwriter and added to this new system view.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Improve control over resetting statistics (Atsushi Torikoshi, Bharath Rupireddy) § § § Allow pg_stat_reset_shared() (with no arguments) and pg_stat_reset_shared( NULL ) to reset all shared statistics. Allow pg_stat_reset_shared('slru') and pg_stat_reset_slru() (with no arguments) to reset SLRU statistics, which was already possible with pg_stat_reset_slru(NULL).
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Improve control over resetting statistics (Atsushi Torikoshi, Bharath Rupireddy) § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Allow pg_stat_reset_shared() (with no arguments) and pg_stat_reset_shared( NULL ) to reset all shared statistics. Allow pg_stat_reset_shared('slru') and pg_stat_reset_slru() (with no arguments) to reset SLRU statistics, which was already possible with pg_stat_reset_slru(NULL).
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Add log messages related to WAL recovery from backups (Andres Freund) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Add log messages related to WAL recovery from backups (Andres Freund) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Add log_connections log line for trust connections (Jacob Champion) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Add log_connections log line for trust connections (Jacob Champion) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Add log message to report walsender acquisition and release of replication slots (Bharath Rupireddy) § This is enabled by the server variable log_replication_commands .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Add log message to report walsender acquisition and release of replication slots (Bharath Rupireddy) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] This is enabled by the server variable log_replication_commands .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Add system view pg_wait_events that reports wait event types (Bertrand Drouvot) § This is useful for adding descriptions to wait events reported in pg_stat_activity .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Add system view pg_wait_events that reports wait event types (Bertrand Drouvot) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] This is useful for adding descriptions to wait events reported in pg_stat_activity .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Add wait events for checkpoint delays (Thomas Munro) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Add wait events for checkpoint delays (Thomas Munro) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Allow vacuum to report the progress of index processing (Sami Imseih) § This appears in system view pg_stat_progress_vacuum columns indexes_total and indexes_processed .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] Allow vacuum to report the progress of index processing (Sami Imseih) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.4. Monitoring #] This appears in system view pg_stat_progress_vacuum columns indexes_total and indexes_processed .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.5. Privileges #] Allow granting the right to perform maintenance operations (Nathan Bossart) § The permission can be granted on a per-table basis using the MAINTAIN privilege and on a per-role basis via the pg_maintain predefined role. Permitted operations are VACUUM , ANALYZE , REINDEX , REFRESH MATERIALIZED VIEW , CLUSTER , and LOCK TABLE .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.5. Privileges #] Allow granting the right to perform maintenance operations (Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.5. Privileges #] The permission can be granted on a per-table basis using the MAINTAIN privilege and on a per-role basis via the pg_maintain predefined role. Permitted operations are VACUUM , ANALYZE , REINDEX , REFRESH MATERIALIZED VIEW , CLUSTER , and LOCK TABLE .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.5. Privileges #] Allow roles with pg_monitor membership to execute pg_current_logfile() (Pavlo Golub, Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.5. Privileges #] Allow roles with pg_monitor membership to execute pg_current_logfile() (Pavlo Golub, Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Add system variable allow_alter_system to disallow ALTER SYSTEM (Jelte Fennema-Nio, Gabriele Bartolini) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Add system variable allow_alter_system to disallow ALTER SYSTEM (Jelte Fennema-Nio, Gabriele Bartolini) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Allow ALTER SYSTEM to set unrecognized custom server variables (Tom Lane) § This is also possible with GRANT ON PARAMETER .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Allow ALTER SYSTEM to set unrecognized custom server variables (Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] This is also possible with GRANT ON PARAMETER .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Add server variable transaction_timeout to restrict the duration of transactions (Andrey Borodin, Japin Li, Junwang Zhao, Alexander Korotkov) § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Add server variable transaction_timeout to restrict the duration of transactions (Andrey Borodin, Japin Li, Junwang Zhao, Alexander Korotkov) § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Add a builtin platform-independent collation provider (Jeff Davis) § § § § This supports C and C.UTF-8 collations.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Add a builtin platform-independent collation provider (Jeff Davis) § § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] This supports C and C.UTF-8 collations.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Add server variable huge_pages_status to report the use of huge pages by Postgres (Justin Pryzby) § This is useful when huge_pages is set to try .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Add server variable huge_pages_status to report the use of huge pages by Postgres (Justin Pryzby) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] This is useful when huge_pages is set to try .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Add server variable to disable event triggers (Daniel Gustafsson) § The setting, event_triggers , allows for the temporary disabling of event triggers for debugging.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Add server variable to disable event triggers (Daniel Gustafsson) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] The setting, event_triggers , allows for the temporary disabling of event triggers for debugging.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Allow the SLRU cache sizes to be configured (Andrey Borodin, Dilip Kumar, Alvaro Herrera) § The new server variables are commit_timestamp_buffers , multixact_member_buffers , multixact_offset_buffers , notify_buffers , serializable_buffers , subtransaction_buffers , and transaction_buffers . commit_timestamp_buffers , transaction_buffers , and subtransaction_buffers scale up automatically with shared_buffers .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] Allow the SLRU cache sizes to be configured (Andrey Borodin, Dilip Kumar, Alvaro Herrera) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.6. Server Configuration #] The new server variables are commit_timestamp_buffers , multixact_member_buffers , multixact_offset_buffers , notify_buffers , serializable_buffers , subtransaction_buffers , and transaction_buffers . commit_timestamp_buffers , transaction_buffers , and subtransaction_buffers scale up automatically with shared_buffers .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add support for incremental file system backup (Robert Haas, Jakub Wartak, Tomas Vondra) § § Incremental backups can be created using pg_basebackup 's new --incremental option. The new application pg_combinebackup allows manipulation of base and incremental file system backups.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add support for incremental file system backup (Robert Haas, Jakub Wartak, Tomas Vondra) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Incremental backups can be created using pg_basebackup 's new --incremental option. The new application pg_combinebackup allows manipulation of base and incremental file system backups.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Allow the creation of WAL summarization files (Robert Haas, Nathan Bossart, Hubert Depesz Lubaczewski) § § § § These files record the block numbers that have changed within an LSN range and are useful for incremental file system backups. This is controlled by the server variables summarize_wal and wal_summary_keep_time , and introspected with pg_available_wal_summaries() , pg_wal_summary_contents() , and pg_get_wal_summarizer_state() .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Allow the creation of WAL summarization files (Robert Haas, Nathan Bossart, Hubert Depesz Lubaczewski) § § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] These files record the block numbers that have changed within an LSN range and are useful for incremental file system backups. This is controlled by the server variables summarize_wal and wal_summary_keep_time , and introspected with pg_available_wal_summaries() , pg_wal_summary_contents() , and pg_get_wal_summarizer_state() .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add the system identifier to file system backup manifest files (Amul Sul) § This helps detect invalid WAL usage.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add the system identifier to file system backup manifest files (Amul Sul) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] This helps detect invalid WAL usage.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Allow connection string value dbname to be written when pg_basebackup writes connection information to postgresql.auto.conf (Vignesh C, Hayato Kuroda) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Allow connection string value dbname to be written when pg_basebackup writes connection information to postgresql.auto.conf (Vignesh C, Hayato Kuroda) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add column pg_replication_slots . invalidation_reason to report the reason for invalid slots (Shveta Malik, Bharath Rupireddy) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add column pg_replication_slots . invalidation_reason to report the reason for invalid slots (Shveta Malik, Bharath Rupireddy) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add column pg_replication_slots . inactive_since to report slot inactivity duration (Bharath Rupireddy) § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add column pg_replication_slots . inactive_since to report slot inactivity duration (Bharath Rupireddy) § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add function pg_sync_replication_slots() to synchronize logical replication slots (Hou Zhijie, Shveta Malik, Ajin Cherian, Peter Eisentraut) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add function pg_sync_replication_slots() to synchronize logical replication slots (Hou Zhijie, Shveta Malik, Ajin Cherian, Peter Eisentraut) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add the failover property to the replication protocol (Hou Zhijie, Shveta Malik) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.7. Streaming Replication and Recovery #] Add the failover property to the replication protocol (Hou Zhijie, Shveta Malik) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Add application pg_createsubscriber to create a logical replica from a physical standby server (Euler Taveira) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Add application pg_createsubscriber to create a logical replica from a physical standby server (Euler Taveira) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Have pg_upgrade migrate valid logical slots and subscriptions (Hayato Kuroda, Hou Zhijie, Vignesh C, Julien Rouhaud, Shlok Kyal) § § This allows logical replication to continue quickly after the upgrade. This only works for old PostgreSQL clusters that are version 17 or later.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Have pg_upgrade migrate valid logical slots and subscriptions (Hayato Kuroda, Hou Zhijie, Vignesh C, Julien Rouhaud, Shlok Kyal) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] This allows logical replication to continue quickly after the upgrade. This only works for old PostgreSQL clusters that are version 17 or later.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Enable the failover of logical slots (Hou Zhijie, Shveta Malik, Ajin Cherian) § This is controlled by an optional fifth argument to pg_create_logical_replication_slot() .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Enable the failover of logical slots (Hou Zhijie, Shveta Malik, Ajin Cherian) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] This is controlled by an optional fifth argument to pg_create_logical_replication_slot() .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Add server variable sync_replication_slots to enable failover logical slot synchronization (Shveta Malik, Hou Zhijie, Peter Smith) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Add server variable sync_replication_slots to enable failover logical slot synchronization (Shveta Malik, Hou Zhijie, Peter Smith) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Add logical replication failover control to CREATE/ALTER SUBSCRIPTION (Shveta Malik, Hou Zhijie, Ajin Cherian) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Add logical replication failover control to CREATE/ALTER SUBSCRIPTION (Shveta Malik, Hou Zhijie, Ajin Cherian) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Allow the application of logical replication changes to use hash indexes on the subscriber (Hayato Kuroda) § Previously only btree indexes could be used for this purpose.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Allow the application of logical replication changes to use hash indexes on the subscriber (Hayato Kuroda) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Previously only btree indexes could be used for this purpose.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Improve logical decoding performance in cases where there are many subtransactions (Masahiko Sawada) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Improve logical decoding performance in cases where there are many subtransactions (Masahiko Sawada) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Restart apply workers if subscription owner's superuser privileges are revoked (Vignesh C) § This forces reauthentication.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Restart apply workers if subscription owner's superuser privileges are revoked (Vignesh C) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Add flush option to pg_logical_emit_message() (Michael Paquier) § This makes the message durable.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Add flush option to pg_logical_emit_message() (Michael Paquier) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] This makes the message durable.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Allow specification of physical standbys that must be synchronized before they are visible to subscribers (Hou Zhijie, Shveta Malik) § § The new server variable is synchronized_standby_slots .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Allow specification of physical standbys that must be synchronized before they are visible to subscribers (Hou Zhijie, Shveta Malik) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] The new server variable is synchronized_standby_slots .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Add worker type column to pg_stat_subscription (Peter Smith) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.1. Server # / E.10.3.1.8. Logical Replication #] Add worker type column to pg_stat_subscription (Peter Smith) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add new COPY option ON_ERROR ignore to discard error rows (Damir Belyalov, Atsushi Torikoshi, Alex Shulgin, Jian He, Yugo Nagata) § § § § The default behavior is ON_ERROR stop .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add new COPY option ON_ERROR ignore to discard error rows (Damir Belyalov, Atsushi Torikoshi, Alex Shulgin, Jian He, Yugo Nagata) § § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] The default behavior is ON_ERROR stop .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add new COPY option LOG_VERBOSITY which reports COPY FROM ignored error rows (Bharath Rupireddy) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add new COPY option LOG_VERBOSITY which reports COPY FROM ignored error rows (Bharath Rupireddy) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow COPY FROM to report the number of skipped rows during processing (Atsushi Torikoshi) § This appears in system view column pg_stat_progress_copy . tuples_skipped .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow COPY FROM to report the number of skipped rows during processing (Atsushi Torikoshi) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] This appears in system view column pg_stat_progress_copy . tuples_skipped .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] In COPY FROM , allow easy specification that all columns should be forced null or not null (Zhang Mingli) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] In COPY FROM , allow easy specification that all columns should be forced null or not null (Zhang Mingli) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow partitioned tables to have identity columns (Ashutosh Bapat) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow partitioned tables to have identity columns (Ashutosh Bapat) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow exclusion constraints on partitioned tables (Paul A. Jungwirth) § As long as exclusion constraints compare partition key columns for equality, other columns can use exclusion constraint-specific comparisons.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow exclusion constraints on partitioned tables (Paul A. Jungwirth) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] As long as exclusion constraints compare partition key columns for equality, other columns can use exclusion constraint-specific comparisons.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add clearer ALTER TABLE method to set a column to the default statistics target (Peter Eisentraut) § The new syntax is ALTER TABLE ... SET STATISTICS DEFAULT ; using SET STATISTICS -1 is still supported.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add clearer ALTER TABLE method to set a column to the default statistics target (Peter Eisentraut) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] The new syntax is ALTER TABLE ... SET STATISTICS DEFAULT ; using SET STATISTICS -1 is still supported.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow ALTER TABLE to change a column's generation expression (Amul Sul) § The syntax is ALTER TABLE ... ALTER COLUMN ... SET EXPRESSION .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow ALTER TABLE to change a column's generation expression (Amul Sul) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] The syntax is ALTER TABLE ... ALTER COLUMN ... SET EXPRESSION .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow specification of table access methods on partitioned tables (Justin Pryzby, Soumyadeep Chakraborty, Michael Paquier) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow specification of table access methods on partitioned tables (Justin Pryzby, Soumyadeep Chakraborty, Michael Paquier) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add DEFAULT setting for ALTER TABLE .. SET ACCESS METHOD (Michael Paquier) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add DEFAULT setting for ALTER TABLE .. SET ACCESS METHOD (Michael Paquier) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add support for event triggers that fire at connection time (Konstantin Knizhnik, Mikhail Gribkov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add support for event triggers that fire at connection time (Konstantin Knizhnik, Mikhail Gribkov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add event trigger support for REINDEX (Garrett Thornburg, Jian He) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Add event trigger support for REINDEX (Garrett Thornburg, Jian He) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow parenthesized syntax for CLUSTER options if a table name is not specified (Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands #] Allow parenthesized syntax for CLUSTER options if a table name is not specified (Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands # / E.10.3.2.1. EXPLAIN #] Allow EXPLAIN to report optimizer memory usage (Ashutosh Bapat) § The option is called MEMORY .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands # / E.10.3.2.1. EXPLAIN #] Allow EXPLAIN to report optimizer memory usage (Ashutosh Bapat) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands # / E.10.3.2.1. EXPLAIN #] Add EXPLAIN option SERIALIZE to report the cost of converting data for network transmission (Stepan Rutz, Matthias van de Meent) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands # / E.10.3.2.1. EXPLAIN #] Add EXPLAIN option SERIALIZE to report the cost of converting data for network transmission (Stepan Rutz, Matthias van de Meent) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands # / E.10.3.2.1. EXPLAIN #] Add local I/O block read/write timing statistics to EXPLAIN 's BUFFERS output (Nazir Bilal Yavuz) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands # / E.10.3.2.1. EXPLAIN #] Add local I/O block read/write timing statistics to EXPLAIN 's BUFFERS output (Nazir Bilal Yavuz) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands # / E.10.3.2.1. EXPLAIN #] Improve EXPLAIN 's display of SubPlan nodes and output parameters (Tom Lane, Dean Rasheed) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands # / E.10.3.2.1. EXPLAIN #] Improve EXPLAIN 's display of SubPlan nodes and output parameters (Tom Lane, Dean Rasheed) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands # / E.10.3.2.1. EXPLAIN #] Add JIT deform_counter details to EXPLAIN (Dmitry Dolgov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.2. Utility Commands # / E.10.3.2.1. EXPLAIN #] Add JIT deform_counter details to EXPLAIN (Dmitry Dolgov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.3. Data Types #] Allow the interval data type to support +/-infinity values (Joseph Koshakow, Jian He, Ashutosh Bapat) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.3. Data Types #] Allow the interval data type to support +/-infinity values (Joseph Koshakow, Jian He, Ashutosh Bapat) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.3. Data Types #] Allow the use of an ENUM added via ALTER TYPE if the type was created in the same transaction (Tom Lane) § This was previously disallowed.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.3. Data Types #] Allow the use of an ENUM added via ALTER TYPE if the type was created in the same transaction (Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.3. Data Types #] This was previously disallowed.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.4. MERGE #] Allow MERGE to modify updatable views (Dean Rasheed) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.4. MERGE #] Allow MERGE to modify updatable views (Dean Rasheed) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.4. MERGE #] Add WHEN NOT MATCHED BY SOURCE to MERGE (Dean Rasheed) § WHEN NOT MATCHED on target rows was already supported.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.4. MERGE #] Add WHEN NOT MATCHED BY SOURCE to MERGE (Dean Rasheed) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.4. MERGE #] WHEN NOT MATCHED on target rows was already supported.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.4. MERGE #] Allow MERGE to use the RETURNING clause (Dean Rasheed) § The new RETURNING function merge_action() reports on the DML that generated the row.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.4. MERGE #] Allow MERGE to use the RETURNING clause (Dean Rasheed) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.4. MERGE #] The new RETURNING function merge_action() reports on the DML that generated the row.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add function JSON_TABLE() to convert JSON data to a table representation (Nikita Glukhov, Teodor Sigaev, Oleg Bartunov, Alexander Korotkov, Andrew Dunstan, Amit Langote, Jian He) § § This function can be used in the FROM clause of SELECT queries as a tuple source.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add function JSON_TABLE() to convert JSON data to a table representation (Nikita Glukhov, Teodor Sigaev, Oleg Bartunov, Alexander Korotkov, Andrew Dunstan, Amit Langote, Jian He) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] This function can be used in the FROM clause of SELECT queries as a tuple source.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add SQL/JSON constructor functions JSON() , JSON_SCALAR() , and JSON_SERIALIZE() (Nikita Glukhov, Teodor Sigaev, Oleg Bartunov, Alexander Korotkov, Andrew Dunstan, Amit Langote) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add SQL/JSON constructor functions JSON() , JSON_SCALAR() , and JSON_SERIALIZE() (Nikita Glukhov, Teodor Sigaev, Oleg Bartunov, Alexander Korotkov, Andrew Dunstan, Amit Langote) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add SQL/JSON query functions JSON_EXISTS() , JSON_QUERY() , and JSON_VALUE() (Nikita Glukhov, Teodor Sigaev, Oleg Bartunov, Alexander Korotkov, Andrew Dunstan, Amit Langote, Peter Eisentraut, Jian He) § § § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add SQL/JSON query functions JSON_EXISTS() , JSON_QUERY() , and JSON_VALUE() (Nikita Glukhov, Teodor Sigaev, Oleg Bartunov, Alexander Korotkov, Andrew Dunstan, Amit Langote, Peter Eisentraut, Jian He) § § § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add jsonpath methods to convert JSON values to other JSON data types (Jeevan Chalke) § The jsonpath methods are .bigint() , .boolean() , .date() , .decimal([precision [, scale]]) , .integer() , .number() , .string() , .time() , .time_tz() , .timestamp() , and .timestamp_tz() .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add jsonpath methods to convert JSON values to other JSON data types (Jeevan Chalke) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] The jsonpath methods are .bigint() , .boolean() , .date() , .decimal([precision [, scale]]) , .integer() , .number() , .string() , .time() , .time_tz() , .timestamp() , and .timestamp_tz() .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add to_timestamp() time zone format specifiers (Tom Lane) § TZ accepts time zone abbreviations or numeric offsets, while OF accepts only numeric offsets.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add to_timestamp() time zone format specifiers (Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] TZ accepts time zone abbreviations or numeric offsets, while OF accepts only numeric offsets.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Allow the session time zone to be specified by AT LOCAL (Vik Fearing) § This is useful when converting adding and removing time zones from time stamps values, rather than specifying the literal session time zone.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Allow the session time zone to be specified by AT LOCAL (Vik Fearing) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] This is useful when converting adding and removing time zones from time stamps values, rather than specifying the literal session time zone.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add functions uuid_extract_timestamp() and uuid_extract_version() to return UUID information (Andrey Borodin) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add functions uuid_extract_timestamp() and uuid_extract_version() to return UUID information (Andrey Borodin) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add functions to generate random numbers in a specified range (Dean Rasheed) § The functions are random(min, max) and they take values of type integer , bigint , and numeric .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add functions to generate random numbers in a specified range (Dean Rasheed) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] The functions are random(min, max) and they take values of type integer , bigint , and numeric .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add functions to convert integers to binary and octal strings (Eric Radman, Nathan Bossart) § The functions are to_bin() and to_oct() .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add functions to convert integers to binary and octal strings (Eric Radman, Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] The functions are to_bin() and to_oct() .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add Unicode informational functions (Jeff Davis) § Function unicode_version() returns the Unicode version, icu_unicode_version() returns the ICU version, and unicode_assigned() returns if the characters are assigned Unicode codepoints.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add Unicode informational functions (Jeff Davis) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Function unicode_version() returns the Unicode version, icu_unicode_version() returns the ICU version, and unicode_assigned() returns if the characters are assigned Unicode codepoints.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add function xmltext() to convert text to a single XML text node (Jim Jones) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add function xmltext() to convert text to a single XML text node (Jim Jones) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add function to_regtypemod() to return the type modifier of a type specification (David Wheeler, Erik Wienhold) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add function to_regtypemod() to return the type modifier of a type specification (David Wheeler, Erik Wienhold) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add pg_basetype() function to return a domain's base type (Steve Chavez) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add pg_basetype() function to return a domain's base type (Steve Chavez) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add function pg_column_toast_chunk_id() to return a value's TOAST identifier (Yugo Nagata) § This returns NULL if the value is not stored in TOAST .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] Add function pg_column_toast_chunk_id() to return a value's TOAST identifier (Yugo Nagata) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.5. Functions #] This returns NULL if the value is not stored in TOAST .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.6. PL/pgSQL #] Allow plpgsql %TYPE and %ROWTYPE specifications to represent arrays of non-array types (Quan Zongliang, Pavel Stehule) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.6. PL/pgSQL #] Allow plpgsql %TYPE and %ROWTYPE specifications to represent arrays of non-array types (Quan Zongliang, Pavel Stehule) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.6. PL/pgSQL #] Allow plpgsql %TYPE specification to reference composite column (Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.6. PL/pgSQL #] Allow plpgsql %TYPE specification to reference composite column (Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq function to change role passwords (Joe Conway) § The new function, PQchangePassword() , hashes the new password before sending it to the server.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq function to change role passwords (Joe Conway) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] The new function, PQchangePassword() , hashes the new password before sending it to the server.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq functions to close portals and prepared statements (Jelte Fennema-Nio) § The functions are PQclosePrepared() , PQclosePortal() , PQsendClosePrepared() , and PQsendClosePortal() .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq functions to close portals and prepared statements (Jelte Fennema-Nio) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] The functions are PQclosePrepared() , PQclosePortal() , PQsendClosePrepared() , and PQsendClosePortal() .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq API which allows for blocking and non-blocking cancel requests , with encryption if already in use (Jelte Fennema-Nio) § Previously only blocking, unencrypted cancel requests were supported.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq API which allows for blocking and non-blocking cancel requests , with encryption if already in use (Jelte Fennema-Nio) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Previously only blocking, unencrypted cancel requests were supported.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq function PQsocketPoll() to allow polling of network sockets (Tristan Partin, Tom Lane) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq function PQsocketPoll() to allow polling of network sockets (Tristan Partin, Tom Lane) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq function PQsendPipelineSync() to send a pipeline synchronization point (Anton Kirilov) § This is similar to PQpipelineSync() but it does not flush to the server unless the size threshold of the output buffer is reached.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq function PQsendPipelineSync() to send a pipeline synchronization point (Anton Kirilov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] This is similar to PQpipelineSync() but it does not flush to the server unless the size threshold of the output buffer is reached.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq function PQsetChunkedRowsMode() to allow retrieval of results in chunks (Daniel Vérité) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Add libpq function PQsetChunkedRowsMode() to allow retrieval of results in chunks (Daniel Vérité) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Allow TLS connections without requiring a network round-trip negotiation (Greg Stark, Heikki Linnakangas, Peter Eisentraut, Michael Paquier, Daniel Gustafsson) § § § § § § § § This is enabled with the client-side option sslnegotiation=direct , requires ALPN , and only works on PostgreSQL 17 and later servers.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] Allow TLS connections without requiring a network round-trip negotiation (Greg Stark, Heikki Linnakangas, Peter Eisentraut, Michael Paquier, Daniel Gustafsson) § § § § § § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.7. libpq #] This is enabled with the client-side option sslnegotiation=direct , requires ALPN , and only works on PostgreSQL 17 and later servers.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Improve psql display of default and empty privileges (Erik Wienhold, Laurenz Albe) § Command \dp now displays (none) for empty privileges; default still displays as empty.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Improve psql display of default and empty privileges (Erik Wienhold, Laurenz Albe) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Command \dp now displays (none) for empty privileges; default still displays as empty.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Have backslash commands honor \pset null (Erik Wienhold, Laurenz Albe) § Previously \pset null was ignored.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Have backslash commands honor \pset null (Erik Wienhold, Laurenz Albe) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Previously \pset null was ignored.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Allow psql 's \watch to stop after a minimum number of rows returned (Greg Sabino Mullane) § The parameter is min_rows .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Allow psql 's \watch to stop after a minimum number of rows returned (Greg Sabino Mullane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Allow psql connection attempts to be canceled with control-C (Tristan Partin) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Allow psql connection attempts to be canceled with control-C (Tristan Partin) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Allow psql to honor FETCH_COUNT for non- SELECT queries (Daniel Vérité) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Allow psql to honor FETCH_COUNT for non- SELECT queries (Daniel Vérité) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Improve psql tab completion (Dagfinn Ilmari Mannsåker, Gilles Darold, Christoph Heiss, Steve Chavez, Vignesh C, Pavel Borisov, Jian He) § § § § § § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.8. psql #] Improve psql tab completion (Dagfinn Ilmari Mannsåker, Gilles Darold, Christoph Heiss, Steve Chavez, Vignesh C, Pavel Borisov, Jian He) § § § § § § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add application pg_walsummary to dump WAL summary files (Robert Haas) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add application pg_walsummary to dump WAL summary files (Robert Haas) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow pg_dump 's large objects to be restorable in batches (Tom Lane) § This allows the restoration of many large objects to avoid transaction limits and to be restored in parallel.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow pg_dump 's large objects to be restorable in batches (Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] This allows the restoration of many large objects to avoid transaction limits and to be restored in parallel.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add pg_dump option --exclude-extension (Ayush Vatsa) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add pg_dump option --exclude-extension (Ayush Vatsa) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow pg_dump , pg_dumpall , and pg_restore to specify include/exclude objects in a file (Pavel Stehule, Daniel Gustafsson) § The option is called --filter .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow pg_dump , pg_dumpall , and pg_restore to specify include/exclude objects in a file (Pavel Stehule, Daniel Gustafsson) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] The option is called --filter .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add the --sync-method parameter to several client applications (Justin Pryzby, Nathan Bossart) § The applications are initdb , pg_basebackup , pg_checksums , pg_dump , pg_rewind , and pg_upgrade .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add the --sync-method parameter to several client applications (Justin Pryzby, Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] The applications are initdb , pg_basebackup , pg_checksums , pg_dump , pg_rewind , and pg_upgrade .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add pg_restore option --transaction-size to allow object restores in transaction batches (Tom Lane) § This allows the performance benefits of transaction batches without the problems of excessively large transaction blocks.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add pg_restore option --transaction-size to allow object restores in transaction batches (Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] This allows the performance benefits of transaction batches without the problems of excessively large transaction blocks.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Change pgbench debug mode option from -d to --debug (Greg Sabino Mullane) § Option -d is now used for the database name, and the new --dbname option can be used as well.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Change pgbench debug mode option from -d to --debug (Greg Sabino Mullane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Option -d is now used for the database name, and the new --dbname option can be used as well.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add pgbench option --exit-on-abort to exit after any client aborts (Yugo Nagata) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add pgbench option --exit-on-abort to exit after any client aborts (Yugo Nagata) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add pgbench command \syncpipeline to allow sending of sync messages (Anthonin Bonnefoy) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add pgbench command \syncpipeline to allow sending of sync messages (Anthonin Bonnefoy) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow pg_archivecleanup to remove backup history files (Atsushi Torikoshi) § The option is --clean-backup-history .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow pg_archivecleanup to remove backup history files (Atsushi Torikoshi) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] The option is --clean-backup-history .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add some long options to pg_archivecleanup (Atsushi Torikoshi) § The long options are --debug , --dry-run , and --strip-extension .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add some long options to pg_archivecleanup (Atsushi Torikoshi) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] The long options are --debug , --dry-run , and --strip-extension .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow pg_basebackup and pg_receivewal to use dbname in their connection specification (Jelte Fennema-Nio) § This is useful for connection poolers that are sensitive to the database name.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow pg_basebackup and pg_receivewal to use dbname in their connection specification (Jelte Fennema-Nio) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] This is useful for connection poolers that are sensitive to the database name.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add pg_upgrade option --copy-file-range (Thomas Munro) § This is supported on Linux and FreeBSD .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Add pg_upgrade option --copy-file-range (Thomas Munro) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] This is supported on Linux and FreeBSD .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow reindexdb --index to process indexes from different tables in parallel (Maxim Orlov, Svetlana Derevyanko, Alexander Korotkov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow reindexdb --index to process indexes from different tables in parallel (Maxim Orlov, Svetlana Derevyanko, Alexander Korotkov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow reindexdb , vacuumdb , and clusterdb to process objects in all databases matching a pattern (Nathan Bossart) § § § The new option --all controls this behavior.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] Allow reindexdb , vacuumdb , and clusterdb to process objects in all databases matching a pattern (Nathan Bossart) § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.9. Server Applications #] The new option --all controls this behavior.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove support for OpenSSL 1.0.1 (Michael Paquier) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove support for OpenSSL 1.0.1 (Michael Paquier) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Allow tests to pass in OpenSSL FIPS mode (Peter Eisentraut) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Allow tests to pass in OpenSSL FIPS mode (Peter Eisentraut) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Use CPU AVX -512 instructions for bit counting (Paul Amonson, Nathan Bossart, Ants Aasma) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Use CPU AVX -512 instructions for bit counting (Paul Amonson, Nathan Bossart, Ants Aasma) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Require LLVM version 10 or later (Thomas Munro) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Require LLVM version 10 or later (Thomas Munro) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Use native CRC instructions on 64-bit LoongArch CPUs (Xudong Yang) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Use native CRC instructions on 64-bit LoongArch CPUs (Xudong Yang) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove AIX support (Heikki Linnakangas) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove AIX support (Heikki Linnakangas) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove the Microsoft Visual Studio -specific PostgreSQL build option (Michael Paquier) § Meson is now the only available method for Visual Studio builds.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove the Microsoft Visual Studio -specific PostgreSQL build option (Michael Paquier) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Meson is now the only available method for Visual Studio builds.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove configure option --disable-thread-safety (Thomas Munro, Heikki Linnakangas) § § We now assume all supported platforms have sufficient thread support.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove configure option --disable-thread-safety (Thomas Munro, Heikki Linnakangas) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] We now assume all supported platforms have sufficient thread support.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove configure option --with-CC (Heikki Linnakangas) § Setting the CC environment variable is now the only supported method for specifying the compiler.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove configure option --with-CC (Heikki Linnakangas) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Setting the CC environment variable is now the only supported method for specifying the compiler.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] User-defined data type receive functions will no longer receive their data null-terminated (David Rowley) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] User-defined data type receive functions will no longer receive their data null-terminated (David Rowley) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Add incremental JSON parser for use with huge JSON documents (Andrew Dunstan) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Add incremental JSON parser for use with huge JSON documents (Andrew Dunstan) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Convert top-level README file to Markdown (Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Convert top-level README file to Markdown (Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove no longer needed top-level INSTALL file (Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove no longer needed top-level INSTALL file (Tom Lane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove make 's distprep option (Peter Eisentraut) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Remove make 's distprep option (Peter Eisentraut) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Add make support for Android shared libraries (Peter Eisentraut) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Add make support for Android shared libraries (Peter Eisentraut) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Add backend support for injection points (Michael Paquier) § § § § This is used for server debugging and they must be enabled at server compile time.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Add backend support for injection points (Michael Paquier) § § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] This is used for server debugging and they must be enabled at server compile time.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Add dynamic shared memory registry (Nathan Bossart) § This allows shared libraries which are not initialized at startup to coordinate dynamic shared memory access.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Add dynamic shared memory registry (Nathan Bossart) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] This allows shared libraries which are not initialized at startup to coordinate dynamic shared memory access.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Fix emit_log_hook to use the same time value as other log records for the same query (Kambam Vinay, Michael Paquier) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Fix emit_log_hook to use the same time value as other log records for the same query (Kambam Vinay, Michael Paquier) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Improve documentation for using jsonpath for predicate checks (David Wheeler) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.10. Source Code #] Improve documentation for using jsonpath for predicate checks (David Wheeler) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow joins with non-join qualifications to be pushed down to foreign servers and custom scans (Richard Guo, Etsuro Fujita) § Foreign data wrappers and custom scans will need to be modified to handle these cases.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow joins with non-join qualifications to be pushed down to foreign servers and custom scans (Richard Guo, Etsuro Fujita) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Foreign data wrappers and custom scans will need to be modified to handle these cases.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow pushdown of EXISTS and IN subqueries to postgres_fdw foreign servers (Alexander Pyhalov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow pushdown of EXISTS and IN subqueries to postgres_fdw foreign servers (Alexander Pyhalov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Increase the default foreign data wrapper tuple cost (David Rowley, Umair Shahid) § § This value is used by the optimizer.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Increase the default foreign data wrapper tuple cost (David Rowley, Umair Shahid) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] This value is used by the optimizer.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow dblink database operations to be interrupted (Noah Misch) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow dblink database operations to be interrupted (Noah Misch) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow the creation of hash indexes on ltree columns (Tommy Pavlicek) § This also enables hash join and hash aggregation on ltree columns.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow the creation of hash indexes on ltree columns (Tommy Pavlicek) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] This also enables hash join and hash aggregation on ltree columns.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow unaccent character translation rules to contain whitespace and quotes (Michael Paquier) § The syntax for the unaccent.rules file has changed.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow unaccent character translation rules to contain whitespace and quotes (Michael Paquier) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] The syntax for the unaccent.rules file has changed.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow amcheck to check for unique constraint violations using new option --checkunique (Anastasia Lubennikova, Pavel Borisov, Maxim Orlov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow amcheck to check for unique constraint violations using new option --checkunique (Anastasia Lubennikova, Pavel Borisov, Maxim Orlov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow citext tests to pass in OpenSSL FIPS mode (Peter Eisentraut) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow citext tests to pass in OpenSSL FIPS mode (Peter Eisentraut) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow pgcrypto tests to pass in OpenSSL FIPS mode (Peter Eisentraut) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow pgcrypto tests to pass in OpenSSL FIPS mode (Peter Eisentraut) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Remove some unused SPI macros (Bharath Rupireddy) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Remove some unused SPI macros (Bharath Rupireddy) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow ALTER OPERATOR to set more optimization attributes (Tommy Pavlicek) § This is useful for extensions.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow ALTER OPERATOR to set more optimization attributes (Tommy Pavlicek) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] This is useful for extensions.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow extensions to define custom wait events (Masahiro Ikeda) § § § § Custom wait events have been added to postgres_fdw and dblink .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Allow extensions to define custom wait events (Masahiro Ikeda) § § § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Custom wait events have been added to postgres_fdw and dblink .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Add pg_buffercache function pg_buffercache_evict() to allow shared buffer eviction (Palak Chaturvedi, Thomas Munro) § This is useful for testing.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules #] Add pg_buffercache function pg_buffercache_evict() to allow shared buffer eviction (Palak Chaturvedi, Thomas Munro) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Replace CALL parameters in pg_stat_statements with placeholders (Sami Imseih) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Replace CALL parameters in pg_stat_statements with placeholders (Sami Imseih) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Replace savepoint names stored in pg_stat_statements with placeholders (Greg Sabino Mullane) § This greatly reduces the number of entries needed to record SAVEPOINT , RELEASE SAVEPOINT , and ROLLBACK TO SAVEPOINT commands.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Replace savepoint names stored in pg_stat_statements with placeholders (Greg Sabino Mullane) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] This greatly reduces the number of entries needed to record SAVEPOINT , RELEASE SAVEPOINT , and ROLLBACK TO SAVEPOINT commands.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Replace the two-phase commit GID s stored in pg_stat_statements with placeholders (Michael Paquier) § This greatly reduces the number of entries needed to record PREPARE TRANSACTION , COMMIT PREPARED , and ROLLBACK PREPARED .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Replace the two-phase commit GID s stored in pg_stat_statements with placeholders (Michael Paquier) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] This greatly reduces the number of entries needed to record PREPARE TRANSACTION , COMMIT PREPARED , and ROLLBACK PREPARED .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Track DEALLOCATE in pg_stat_statements (Dagfinn Ilmari Mannsåker, Michael Paquier) § DEALLOCATE names are stored in pg_stat_statements as placeholders.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Track DEALLOCATE in pg_stat_statements (Dagfinn Ilmari Mannsåker, Michael Paquier) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] DEALLOCATE names are stored in pg_stat_statements as placeholders.
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Add local I/O block read/write timing statistics columns of pg_stat_statements (Nazir Bilal Yavuz) § § The new columns are local_blk_read_time and local_blk_write_time .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Add local I/O block read/write timing statistics columns of pg_stat_statements (Nazir Bilal Yavuz) § §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] The new columns are local_blk_read_time and local_blk_write_time .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Add JIT deform_counter details to pg_stat_statements (Dmitry Dolgov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Add JIT deform_counter details to pg_stat_statements (Dmitry Dolgov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Add optional fourth argument ( minmax_only ) to pg_stat_statements_reset() to allow for the resetting of only min/max statistics (Andrei Zubkov) § This argument defaults to false .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Add optional fourth argument ( minmax_only ) to pg_stat_statements_reset() to allow for the resetting of only min/max statistics (Andrei Zubkov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] This argument defaults to false .
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Add pg_stat_statements columns stats_since and minmax_stats_since to track entry creation time and last min/max reset time (Andrei Zubkov) §
+[E.10. Release 17 # / E.10.3. Changes # / E.10.3.11. Additional Modules # / E.10.3.11.1. pg_stat_statements #] Add pg_stat_statements columns stats_since and minmax_stats_since to track entry creation time and last min/max reset time (Andrei Zubkov) §
+[E.10. Release 17 # / E.10.4. Acknowledgments #] The following individuals (in alphabetical order) have contributed to this release as patch authors, committers, reviewers, testers, or reporters of issues.

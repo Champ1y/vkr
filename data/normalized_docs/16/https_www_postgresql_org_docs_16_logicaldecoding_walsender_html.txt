@@ -1,0 +1,8 @@
+[49.3. Streaming Replication Protocol Interface #] CREATE_REPLICATION_SLOT slot_name LOGICAL output_plugin
+[49.3. Streaming Replication Protocol Interface #] CREATE_REPLICATION_SLOT slot_name LOGICAL output_plugin
+[49.3. Streaming Replication Protocol Interface #] DROP_REPLICATION_SLOT slot_name [ WAIT ]
+[49.3. Streaming Replication Protocol Interface #] DROP_REPLICATION_SLOT slot_name [ WAIT ]
+[49.3. Streaming Replication Protocol Interface #] START_REPLICATION SLOT slot_name LOGICAL ...
+[49.3. Streaming Replication Protocol Interface #] START_REPLICATION SLOT slot_name LOGICAL ...
+[49.3. Streaming Replication Protocol Interface #] are used to create, drop, and stream changes from a replication slot, respectively. These commands are only available over a replication connection; they cannot be used via SQL. See Section 55.4 for details on these commands.
+[49.3. Streaming Replication Protocol Interface #] The command pg_recvlogical can be used to control logical decoding over a streaming replication connection. (It uses these commands internally.)
