@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../../lib/codemirror/lib/codemirror.css" rel="stylesheet">
+    <link href="../../lib/perfect-scrollbar/min/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="../../lib/splitter/splitter.css" rel="stylesheet">
+    <link href="../../css/jquery/jquery-ui-1.10.3.custom.min.css " rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <!-- temporary downgrade to 1.10.2 due to popup drag bugs with 1.10.3-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="../../lib/codemirror/lib/codemirror.js"></script>
+    <script src="../../lib/perfect-scrollbar/min/perfect-scrollbar.with-mousewheel.min.js"></script>
+    <script src="../../lib/codemirror/mode/sql/sql.js"></script>
+    <script src="../../js/browser.js"></script>
+    <script src="../../lib/splitter/splitter.js"></script>
+    <script src="../../js/site.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+    <!-- Navbar
+      ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+
+    <div class="container">
+
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="substr.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">String</a> <span class="divider">/</span></li>
+            <li class="active">Translate</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="../recursive/">Next Category</a></p></div>
+      </div>
+
+
+    <!-- Typography
+    ================================================== -->
+    <section id="typography">
+      <div class="page-header">
+        <h1>
+	<span style="float:left">
+Clean up telephone numbers        </span>
+	<span style="float:right">
+	<img src="../../assets/tick2.svg" class="headertick"></img>
+
+	</span>
+        <div style="clear:both"></div>
+        </h1>
+      </div>
+
+      <div class="row" style="margin-bottom:10px">
+        <div class="span8">
+          <h3>Question</h3>
+The telephone numbers in the database are very inconsistently formatted.  You'd like to print a list of member ids and numbers that have had '-','(',')', and ' ' characters removed.  Order by member id.        </div>
+      </div>
+      <div class="row">
+      <div class="span12">
+      <div id=splittercontainerouter>
+        <div id="schemareminder" class="btn btn-primary" onClick="schema();">
+          <div>Schema reminder <span id="schemareminderarrow">&#x25BC;</span></div>
+        </div>
+        <div id="schemaremindercontents">
+          <img id="schemareminderimage" src="../../img/schema-horizontal.svg" alt="DB schema" width="840"></img>
+        </div>
+        <div id=splittercontainer>
+          <div id="expres" ondblclick="setOptimalExpectedResultsSize()">
+            <div style="overflow-x:hidden;">
+              <div style="display: inline-block; min-width:1000px;">
+                <h3>Expected Results</h3>
+                <div style="width:auto; display:inline-block">
+                  <table id="exprestable" class="demo table table-bordered table-striped" style="width:auto;">
+<thead><tr>
+<th>memid</th>
+<th>telephone</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0000000000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>5555555555</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5555555555</td>
+</tr>
+<tr>
+<td>3</td>
+<td>8446930723</td>
+</tr>
+<tr>
+<td>4</td>
+<td>8339424710</td>
+</tr>
+<tr>
+<td>5</td>
+<td>8440784130</td>
+</tr>
+<tr>
+<td>6</td>
+<td>8223549973</td>
+</tr>
+<tr>
+<td>7</td>
+<td>8337764001</td>
+</tr>
+<tr>
+<td>8</td>
+<td>8114332547</td>
+</tr>
+<tr>
+<td>9</td>
+<td>8331603900</td>
+</tr>
+<tr>
+<td>10</td>
+<td>8555425251</td>
+</tr>
+<tr>
+<td>11</td>
+<td>8445368036</td>
+</tr>
+<tr>
+<td>12</td>
+<td>8440765141</td>
+</tr>
+<tr>
+<td>13</td>
+<td>8550160163</td>
+</tr>
+<tr>
+<td>14</td>
+<td>8221633254</td>
+</tr>
+<tr>
+<td>15</td>
+<td>8334993527</td>
+</tr>
+<tr>
+<td>16</td>
+<td>8339410824</td>
+</tr>
+<tr>
+<td>17</td>
+<td>8114096734</td>
+</tr>
+<tr>
+<td>20</td>
+<td>8119721377</td>
+</tr>
+<tr>
+<td>21</td>
+<td>8226612898</td>
+</tr>
+<tr>
+<td>22</td>
+<td>8224992232</td>
+</tr>
+<tr>
+<td>24</td>
+<td>8224131470</td>
+</tr>
+<tr>
+<td>26</td>
+<td>8445368036</td>
+</tr>
+<tr>
+<td>27</td>
+<td>8229898876</td>
+</tr>
+<tr>
+<td>28</td>
+<td>8557559876</td>
+</tr>
+<tr>
+<td>29</td>
+<td>8558943758</td>
+</tr>
+<tr>
+<td>30</td>
+<td>8559419786</td>
+</tr>
+<tr>
+<td>33</td>
+<td>8226655327</td>
+</tr>
+<tr>
+<td>35</td>
+<td>8997206978</td>
+</tr>
+<tr>
+<td>36</td>
+<td>8117324816</td>
+</tr>
+<tr>
+<td>37</td>
+<td>8225773541</td>
+</tr>
+</tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div id="codediv">
+            <div id="youranswerdiv" ondblclick="setOptimalYourAnswerSize()">
+                    <h3 style="min-width:200px;">Your Answer<span id="youranswertickspan"><img src="../../assets/cross.svg" class="youranswertick"></img></span>
+                <span id="youranswerbuttons">
+                  <a id="hintbtn" class="youranswerbutton btn btn-primary btn-small" onClick="hint();">Hint</a>
+                  <a id="helpbtn" class="youranswerbutton btn btn-primary btn-small" onClick="help();" title="[Alt-h]">Help</a>
+                  <a id="querybtn" class="youranswerbutton btn btn-primary btn-small" onClick="save();">Save</a>
+                  <a id="savebtn" class="youranswerbutton btn btn-primary btn-small" onClick="query();" title="[Alt-r]">Run Query</a>
+                </span>
+              </h3>
+              <div style="clear:both;">
+  	      <div id="codewrapper">
+                  <form>
+                    <textarea id="code" name="code"></textarea>
+                  </form>
+                </div>
+  	    </div>
+            </div>
+            <div id="yourresultsdiv" ondblclick="setOptimalYourResultsSize()">
+              <div>
+                <table id="yourresultstable" class="demo table table-bordered table-striped"></table>
+                <pre id="yourresultserror"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span12">
+          <h3>Answers and Discussion <a id="answerbtn" class="inactive btn btn-primary btn-small" style="margin: 5px" onClick="toggleAnswers();">Show</a></h3>
+          <pre id="querydiv" class="answerdiv prettyprint lang-sql">
+select memid, translate(telephone, '-() ', '') as telephone
+    from cd.members
+    order by memid;          </pre>
+          <div class="row">
+            <div class="span8 answerdiv">
+<p>The most direct solution is probably the <span class="code">TRANSLATE</span> function, which can be used to replace characters in a string.  You pass it three strings: the value you want altered, the characters to replace, and the characters you want them replaced with.  In our case, we want all the characters deleted, so our third parameter is an empty string.</p>
+<p>As is often the way with strings, we can also use regular expressions to solve our problem.  The <span class="code">REGEXP_REPLACE</span> function provides what we're looking for: we simply pass a regex that matches all non-digit characters, and replace them with nothing, as shown below.  The 'g' flag tells the function to replace as many instances of the pattern as it can find.  This solution is perhaps more robust, as it cleans out more bad formatting.</p>
+</div></div><div class="row"><div class="span12 answerdiv" style="opacity:0;"><div><pre class="secondaryanswerdiv prettyprint lang-sql">
+select memid, regexp_replace(telephone, '[^0-9]', '', 'g') as telephone
+    from cd.members
+    order by memid;
+</pre></div></div></div><div class="row"><div class="span8 answerdiv" style="opacity:0;">
+<p>Making automated use of free-formatted text data can be a chore.  Ideally you want to avoid having to constantly write code to clean up the data before using it, so you should consider having your database enforce correct formatting for you. You can do this using a <a href="http://www.postgresql.org/docs/current/static/ddl-constraints.html"><span class="code">CHECK</span></a> constraint on your column, which allow you to reject any poorly-formatted entry.  It's tempting to perform this kind of validation in the application layer, and this is certainly a valid approach.  As a general rule, if your database is getting used by multiple applications, favour pushing more of your checks down into the database to ensure consistent behaviour between the apps.</p>
+<p>Occasionally, adding a constraint isn't feasible.  You may, for example, have two different legacy applications asserting differently formatted information.  If you're unable to alter the applications, you have a couple of options to consider.  Firstly, you can define a <a href="http://www.postgresql.org/docs/current/static/sql-createtrigger.html">trigger</a> on your table.  This allows you to intercept data before (or after) it gets asserted to your table, and normalise it into a single format.  Alternatively, you could build a <a href="http://www.postgresql.org/docs/current/static/sql-createview.html">view</a> over your table that cleans up information on the fly, as it's read out.  Newer applications can read from the view and benefit from more reliably formatted information.</p>
+<p></p>            </div>
+          </div>
+        </div>
+      </div>
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="substr.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">String</a> <span class="divider">/</span></li>
+            <li class="active">Translate</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="../recursive/">Next Category</a></p></div>
+      </div>
+    </div><!-- /container -->
+      <div id="hint" title="Hint">
+Consider the <span class="code">TRANSLATE</span> or <span class="code">REGEXP_REPLACE</span> functions.
+      </div>
+      <div id="help" title="Help">
+        <div id="helpcontent">
+	  <h4>Keyboard shortcuts:</h4>
+	  <ul>
+	    <li><b>Alt-h</b>: Show/Hide Help menu
+	    <li><b>Alt-r</b>: Run query
+	    <li><b>Alt-x</b>: Run selected text as query
+	    <li><b>Alt-s</b>: Run query by cursor (delimited by whitespace/semi-colon)
+	  </ul>
+	  <hr />
+	  <h4>Other hints:</h4>
+	    <ul>
+	      <li>You can double click on each of the panes of Expected Result/Your answer to quickly resize them.
+	      <li>If you have trouble remembering the database schema, you can leave this popup open while you work on your answer.
+	      <li>Don't forget to use the hint button if you're stuck!
+	    </ul>
+	  <hr />
+	</div>
+      </div>
+
+
+    <script>
+        var App = {};
+	App.sorted = 1;
+	App.pageID = "87cecbca-14fa-11e4-a0c7-8b4e1f3cc8a8";
+        App.writeable = 0;
+        App.tableToReturn = "";
+	App.jsonResults = sortJSONResults([["0","0000000000"],["1","5555555555"],["2","5555555555"],["3","8446930723"],["4","8339424710"],["5","8440784130"],["6","8223549973"],["7","8337764001"],["8","8114332547"],["9","8331603900"],["10","8555425251"],["11","8445368036"],["12","8440765141"],["13","8550160163"],["14","8221633254"],["15","8334993527"],["16","8339410824"],["17","8114096734"],["20","8119721377"],["21","8226612898"],["22","8224992232"],["24","8224131470"],["26","8445368036"],["27","8229898876"],["28","8557559876"],["29","8558943758"],["30","8559419786"],["33","8226655327"],["35","8997206978"],["36","8117324816"],["37","8225773541"]]);
+    </script>
+
+    <script src="../../js/prettify/run_prettify.js?lang=sql"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+</html>

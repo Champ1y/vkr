@@ -1,0 +1,42 @@
+{
+  "corpus_layout": {
+    "official": "corpus/postgres/html/{16,17,18}/",
+    "supplementary_curated": "corpus/tutorial/curated/{16,17,18}/",
+    "external_registry": "corpus/tutorial/external_registry/"
+  },
+  "retrieval_rules": {
+    "answer": [
+      "official"
+    ],
+    "tutorial_extended_false": [
+      "official"
+    ],
+    "tutorial_extended_true": [
+      "official",
+      "supplementary"
+    ],
+    "hard_rule": "supplementary не заменяет official и не должен быть единственным основанием для уверенного ответа"
+  },
+  "added_remaining_topics": [
+    "psql_cheatsheet",
+    "ddl_constraints_and_keys",
+    "schemas_and_search_path",
+    "postgresql_conf_basics",
+    "import_export_copy_csv",
+    "transactions_and_locks_basics",
+    "monitoring_pg_stat_activity",
+    "cancel_terminate_queries",
+    "index_design_patterns",
+    "query_performance_checklist",
+    "full_text_search_basics",
+    "window_functions_basics",
+    "cte_subqueries_views",
+    "partitioning_basics",
+    "extensions_basics",
+    "row_level_security_basics",
+    "streaming_replication_overview",
+    "docker_postgresql_basics",
+    "pgvector_for_rag_project",
+    "safe_rag_answering_rules"
+  ]
+}

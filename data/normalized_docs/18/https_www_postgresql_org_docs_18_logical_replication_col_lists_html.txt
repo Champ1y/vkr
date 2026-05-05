@@ -16,12 +16,49 @@
 [29.5. Column Lists # / 29.5.1. Examples #] Create a publication p1 . A column list is defined for table t1 to reduce the number of columns that will be replicated. Notice that the order of column names in the column list does not matter.
 [29.5. Column Lists # / 29.5.1. Examples #] /* pub # */ CREATE PUBLICATION p1 FOR TABLE t1 (id, b, a, d);
 [29.5. Column Lists # / 29.5.1. Examples #] psql can be used to show the column lists (if defined) for each publication.
-[29.5. Column Lists # / 29.5.1. Examples #] /* pub # */ \dRp+ Publication p1 Owner | All tables | Inserts | Updates | Deletes | Truncates | Generated columns | Via root ----------+------------+---------+---------+---------+-----------+-------------------+---------- postgres | f | t | t | t | t | none | f Tables: "public.t1" (id, a, b, d)
+[29.5. Column Lists # / 29.5.1. Examples #] /* pub # */ \dRp+
+                                         Publication p1
+  Owner   | All tables | Inserts | Updates | Deletes | Truncates | Generated columns | Via root
+----------+------------+---------+---------+---------+-----------+-------------------+----------
+ postgres | f          | t       | t       | t       | t         | none              | f
+Tables:
+    "public.t1" (id, a, b, d)
 [29.5. Column Lists # / 29.5.1. Examples #] psql can be used to show the column lists (if defined) for each table.
-[29.5. Column Lists # / 29.5.1. Examples #] /* pub # */ \d t1 Table "public.t1" Column | Type | Collation | Nullable | Default --------+---------+-----------+----------+--------- id | integer | | not null | a | text | | | b | text | | | c | text | | | d | text | | | e | text | | | Indexes: "t1_pkey" PRIMARY KEY, btree (id) Publications: "p1" (id, a, b, d)
+[29.5. Column Lists # / 29.5.1. Examples #] /* pub # */ \d t1
+                 Table "public.t1"
+ Column |  Type   | Collation | Nullable | Default
+--------+---------+-----------+----------+---------
+ id     | integer |           | not null |
+ a      | text    |           |          |
+ b      | text    |           |          |
+ c      | text    |           |          |
+ d      | text    |           |          |
+ e      | text    |           |          |
+Indexes:
+    "t1_pkey" PRIMARY KEY, btree (id)
+Publications:
+    "p1" (id, a, b, d)
 [29.5. Column Lists # / 29.5.1. Examples #] On the subscriber node, create a table t1 which now only needs a subset of the columns that were on the publisher table t1 , and also create the subscription s1 that subscribes to the publication p1 .
-[29.5. Column Lists # / 29.5.1. Examples #] /* sub # */ CREATE TABLE t1(id int, b text, a text, d text, PRIMARY KEY(id)); /* sub # */ CREATE SUBSCRIPTION s1 /* sub - */ CONNECTION 'host=localhost dbname=test_pub application_name=s1' /* sub - */ PUBLICATION p1;
+[29.5. Column Lists # / 29.5.1. Examples #] /* sub # */ CREATE TABLE t1(id int, b text, a text, d text, PRIMARY KEY(id));
+/* sub # */ CREATE SUBSCRIPTION s1
+/* sub - */ CONNECTION 'host=localhost dbname=test_pub application_name=s1'
+/* sub - */ PUBLICATION p1;
 [29.5. Column Lists # / 29.5.1. Examples #] On the publisher node, insert some rows to table t1 .
-[29.5. Column Lists # / 29.5.1. Examples #] /* pub # */ INSERT INTO t1 VALUES(1, 'a-1', 'b-1', 'c-1', 'd-1', 'e-1'); /* pub # */ INSERT INTO t1 VALUES(2, 'a-2', 'b-2', 'c-2', 'd-2', 'e-2'); /* pub # */ INSERT INTO t1 VALUES(3, 'a-3', 'b-3', 'c-3', 'd-3', 'e-3'); /* pub # */ SELECT * FROM t1 ORDER BY id; id | a | b | c | d | e ----+-----+-----+-----+-----+----- 1 | a-1 | b-1 | c-1 | d-1 | e-1 2 | a-2 | b-2 | c-2 | d-2 | e-2 3 | a-3 | b-3 | c-3 | d-3 | e-3 (3 rows)
+[29.5. Column Lists # / 29.5.1. Examples #] /* pub # */ INSERT INTO t1 VALUES(1, 'a-1', 'b-1', 'c-1', 'd-1', 'e-1');
+/* pub # */ INSERT INTO t1 VALUES(2, 'a-2', 'b-2', 'c-2', 'd-2', 'e-2');
+/* pub # */ INSERT INTO t1 VALUES(3, 'a-3', 'b-3', 'c-3', 'd-3', 'e-3');
+/* pub # */ SELECT * FROM t1 ORDER BY id;
+ id |  a  |  b  |  c  |  d  |  e
+----+-----+-----+-----+-----+-----
+  1 | a-1 | b-1 | c-1 | d-1 | e-1
+  2 | a-2 | b-2 | c-2 | d-2 | e-2
+  3 | a-3 | b-3 | c-3 | d-3 | e-3
+(3 rows)
 [29.5. Column Lists # / 29.5.1. Examples #] Only data from the column list of publication p1 is replicated.
-[29.5. Column Lists # / 29.5.1. Examples #] /* sub # */ SELECT * FROM t1 ORDER BY id; id | b | a | d ----+-----+-----+----- 1 | b-1 | a-1 | d-1 2 | b-2 | a-2 | d-2 3 | b-3 | a-3 | d-3 (3 rows)
+[29.5. Column Lists # / 29.5.1. Examples #] /* sub # */ SELECT * FROM t1 ORDER BY id;
+ id |  b  |  a  |  d
+----+-----+-----+-----
+  1 | b-1 | a-1 | d-1
+  2 | b-2 | a-2 | d-2
+  3 | b-3 | a-3 | d-3
+(3 rows)

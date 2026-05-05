@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../../lib/codemirror/lib/codemirror.css" rel="stylesheet">
+    <link href="../../lib/perfect-scrollbar/min/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="../../lib/splitter/splitter.css" rel="stylesheet">
+    <link href="../../css/jquery/jquery-ui-1.10.3.custom.min.css " rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <!-- temporary downgrade to 1.10.2 due to popup drag bugs with 1.10.3-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="../../lib/codemirror/lib/codemirror.js"></script>
+    <script src="../../lib/perfect-scrollbar/min/perfect-scrollbar.with-mousewheel.min.js"></script>
+    <script src="../../lib/codemirror/mode/sql/sql.js"></script>
+    <script src="../../js/browser.js"></script>
+    <script src="../../lib/splitter/splitter.js"></script>
+    <script src="../../js/site.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+    <!-- Navbar
+      ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+
+    <div class="container">
+
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="fachours2.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Aggregates</a> <span class="divider">/</span></li>
+            <li class="active">Fachoursbymonth3</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="fachours3.html">Next Exercise</a></p></div>
+      </div>
+
+
+    <!-- Typography
+    ================================================== -->
+    <section id="typography">
+      <div class="page-header">
+        <h1>
+	<span style="float:left">
+List the total slots booked per facility per month, part 2        </span>
+	<span style="float:right">
+	<img src="../../assets/tick2.svg" class="headertick"></img>
+
+	</span>
+        <div style="clear:both"></div>
+        </h1>
+      </div>
+
+      <div class="row" style="margin-bottom:10px">
+        <div class="span8">
+          <h3>Question</h3>
+Produce a list of the total number of slots booked per facility per month in the year of 2012.  In this version, include output rows containing totals for all months per facility, and a total for all months for all facilities.  The output table should consist of facility id, month and slots, sorted by the id and month.  When calculating the aggregated values for all months and all facids, return null values in the month and facid columns.        </div>
+      </div>
+      <div class="row">
+      <div class="span12">
+      <div id=splittercontainerouter>
+        <div id="schemareminder" class="btn btn-primary" onClick="schema();">
+          <div>Schema reminder <span id="schemareminderarrow">&#x25BC;</span></div>
+        </div>
+        <div id="schemaremindercontents">
+          <img id="schemareminderimage" src="../../img/schema-horizontal.svg" alt="DB schema" width="840"></img>
+        </div>
+        <div id=splittercontainer>
+          <div id="expres" ondblclick="setOptimalExpectedResultsSize()">
+            <div style="overflow-x:hidden;">
+              <div style="display: inline-block; min-width:1000px;">
+                <h3>Expected Results</h3>
+                <div style="width:auto; display:inline-block">
+                  <table id="exprestable" class="demo table table-bordered table-striped" style="width:auto;">
+<thead><tr>
+<th>facid</th>
+<th>month</th>
+<th>slots</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>7</td>
+<td>270</td>
+</tr>
+<tr>
+<td>0</td>
+<td>8</td>
+<td>459</td>
+</tr>
+<tr>
+<td>0</td>
+<td>9</td>
+<td>591</td>
+</tr>
+<tr>
+<td>0</td>
+<td></td>
+<td>1320</td>
+</tr>
+<tr>
+<td>1</td>
+<td>7</td>
+<td>207</td>
+</tr>
+<tr>
+<td>1</td>
+<td>8</td>
+<td>483</td>
+</tr>
+<tr>
+<td>1</td>
+<td>9</td>
+<td>588</td>
+</tr>
+<tr>
+<td>1</td>
+<td></td>
+<td>1278</td>
+</tr>
+<tr>
+<td>2</td>
+<td>7</td>
+<td>180</td>
+</tr>
+<tr>
+<td>2</td>
+<td>8</td>
+<td>459</td>
+</tr>
+<tr>
+<td>2</td>
+<td>9</td>
+<td>570</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>1209</td>
+</tr>
+<tr>
+<td>3</td>
+<td>7</td>
+<td>104</td>
+</tr>
+<tr>
+<td>3</td>
+<td>8</td>
+<td>304</td>
+</tr>
+<tr>
+<td>3</td>
+<td>9</td>
+<td>422</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td>830</td>
+</tr>
+<tr>
+<td>4</td>
+<td>7</td>
+<td>264</td>
+</tr>
+<tr>
+<td>4</td>
+<td>8</td>
+<td>492</td>
+</tr>
+<tr>
+<td>4</td>
+<td>9</td>
+<td>648</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td>1404</td>
+</tr>
+<tr>
+<td>5</td>
+<td>7</td>
+<td>24</td>
+</tr>
+<tr>
+<td>5</td>
+<td>8</td>
+<td>82</td>
+</tr>
+<tr>
+<td>5</td>
+<td>9</td>
+<td>122</td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td>228</td>
+</tr>
+<tr>
+<td>6</td>
+<td>7</td>
+<td>164</td>
+</tr>
+<tr>
+<td>6</td>
+<td>8</td>
+<td>400</td>
+</tr>
+<tr>
+<td>6</td>
+<td>9</td>
+<td>540</td>
+</tr>
+<tr>
+<td>6</td>
+<td></td>
+<td>1104</td>
+</tr>
+<tr>
+<td>7</td>
+<td>7</td>
+<td>156</td>
+</tr>
+<tr>
+<td>7</td>
+<td>8</td>
+<td>326</td>
+</tr>
+<tr>
+<td>7</td>
+<td>9</td>
+<td>426</td>
+</tr>
+<tr>
+<td>7</td>
+<td></td>
+<td>908</td>
+</tr>
+<tr>
+<td>8</td>
+<td>7</td>
+<td>117</td>
+</tr>
+<tr>
+<td>8</td>
+<td>8</td>
+<td>322</td>
+</tr>
+<tr>
+<td>8</td>
+<td>9</td>
+<td>471</td>
+</tr>
+<tr>
+<td>8</td>
+<td></td>
+<td>910</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>9191</td>
+</tr>
+</tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div id="codediv">
+            <div id="youranswerdiv" ondblclick="setOptimalYourAnswerSize()">
+                    <h3 style="min-width:200px;">Your Answer<span id="youranswertickspan"><img src="../../assets/cross.svg" class="youranswertick"></img></span>
+                <span id="youranswerbuttons">
+                  <a id="hintbtn" class="youranswerbutton btn btn-primary btn-small" onClick="hint();">Hint</a>
+                  <a id="helpbtn" class="youranswerbutton btn btn-primary btn-small" onClick="help();" title="[Alt-h]">Help</a>
+                  <a id="querybtn" class="youranswerbutton btn btn-primary btn-small" onClick="save();">Save</a>
+                  <a id="savebtn" class="youranswerbutton btn btn-primary btn-small" onClick="query();" title="[Alt-r]">Run Query</a>
+                </span>
+              </h3>
+              <div style="clear:both;">
+  	      <div id="codewrapper">
+                  <form>
+                    <textarea id="code" name="code"></textarea>
+                  </form>
+                </div>
+  	    </div>
+            </div>
+            <div id="yourresultsdiv" ondblclick="setOptimalYourResultsSize()">
+              <div>
+                <table id="yourresultstable" class="demo table table-bordered table-striped"></table>
+                <pre id="yourresultserror"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span12">
+          <h3>Answers and Discussion <a id="answerbtn" class="inactive btn btn-primary btn-small" style="margin: 5px" onClick="toggleAnswers();">Show</a></h3>
+          <pre id="querydiv" class="answerdiv prettyprint lang-sql">
+select facid, extract(month from starttime) as month, sum(slots) as slots
+	from cd.bookings
+	where
+		starttime >= '2012-01-01'
+		and starttime < '2013-01-01'
+	group by rollup(facid, month)
+order by facid, month;          </pre>
+          <div class="row">
+            <div class="span8 answerdiv">
+<p>When we are doing data analysis, we sometimes want to perform multiple levels of aggregation to allow ourselves to 'zoom' in and out to different depths. In this case, we might be looking at each facility's overall usage, but then want to dive in to see how they've performed on a per-month basis. Using the SQL we know so far, it's quite cumbersome to produce a single query that does what we want - we effectively have to resort to concatenating multiple queries using UNION ALL:</p>
+
+</div></div><div class="row"><div class="span12 answerdiv" style="opacity:0;"><div><pre class="secondaryanswerdiv prettyprint lang-sql">select facid, extract(month from starttime) as month, sum(slots) as slots
+    from cd.bookings
+    where
+        starttime >= '2012-01-01'
+        and starttime < '2013-01-01'
+    group by facid, month
+union all
+select facid, null, sum(slots) as slots
+    from cd.bookings
+    where
+        starttime >= '2012-01-01'
+        and starttime < '2013-01-01'
+    group by facid
+union all
+select null, null, sum(slots) as slots
+    from cd.bookings
+    where
+        starttime >= '2012-01-01'
+        and starttime < '2013-01-01'
+order by facid, month;</pre></div></div></div><div class="row"><div class="span8 answerdiv" style="opacity:0;">
+
+<p>As you can see, each subquery performs a different level of aggregation, and we just combine the results. We can clean this up a lot by factoring out commonalities using a CTE:</p>
+
+</div></div><div class="row"><div class="span12 answerdiv" style="opacity:0;"><div><pre class="secondaryanswerdiv prettyprint lang-sql">
+with bookings as (
+	select facid, extract(month from starttime) as month, slots
+	from cd.bookings
+	where
+		starttime >= '2012-01-01'
+		and starttime < '2013-01-01'
+)
+select facid, month, sum(slots) from bookings group by facid, month
+union all
+select facid, null, sum(slots) from bookings group by facid
+union all
+select null, null, sum(slots) from bookings
+order by facid, month;
+</pre></div></div></div><div class="row"><div class="span8 answerdiv" style="opacity:0;">
+
+<p>This version is not excessively hard on the eyes, but it becomes cumbersome as the number of aggregation columns increases. Fortunately, PostgreSQL 9.5 introduced support for the <span class="code">ROLLUP</span> operator, which we've used to simplify our accepted answer.</p>
+
+<p><span class="code">ROLLUP</span> produces a hierarchy of aggregations in the order passed into it: for example, <span class="code">ROLLUP(facid, month)</span> outputs aggregations on (facid, month), (facid), and (). If we wanted an aggregation of all facilities for a month (instead of all months for a facility) we'd have to reverse the order, using <span class="code">ROLLUP(month, facid)</span>. Alternatively, if we instead want all possible permutations of the columns we pass in, we can use <span class="code">CUBE</span> rather than <span class="code">ROLLUP</span>. This will produce (facid, month), (month), (facid), and ().</p>
+
+<p><span class="code">ROLLUP</span> and <span class="code">CUBE</span> are special cases of <span class="code">GROUPING SETS</span>. <span class="code">GROUPING SETS</span> allow you to specify the exact aggregation permutations you want: you could, for example, ask for just (facid, month) and (facid), skipping the top-level aggregation.</p>            </div>
+          </div>
+        </div>
+      </div>
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="fachours2.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Aggregates</a> <span class="divider">/</span></li>
+            <li class="active">Fachoursbymonth3</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="fachours3.html">Next Exercise</a></p></div>
+      </div>
+    </div><!-- /container -->
+      <div id="hint" title="Hint">
+Look up Postgres' <span class="code">ROLLUP</span> operator.
+      </div>
+      <div id="help" title="Help">
+        <div id="helpcontent">
+	  <h4>Keyboard shortcuts:</h4>
+	  <ul>
+	    <li><b>Alt-h</b>: Show/Hide Help menu
+	    <li><b>Alt-r</b>: Run query
+	    <li><b>Alt-x</b>: Run selected text as query
+	    <li><b>Alt-s</b>: Run query by cursor (delimited by whitespace/semi-colon)
+	  </ul>
+	  <hr />
+	  <h4>Other hints:</h4>
+	    <ul>
+	      <li>You can double click on each of the panes of Expected Result/Your answer to quickly resize them.
+	      <li>If you have trouble remembering the database schema, you can leave this popup open while you work on your answer.
+	      <li>Don't forget to use the hint button if you're stuck!
+	    </ul>
+	  <hr />
+	</div>
+      </div>
+
+
+    <script>
+        var App = {};
+	App.sorted = 1;
+	App.pageID = "7737A2D8-5BF5-40E9-8486-9396D8D7B098";
+        App.writeable = 0;
+        App.tableToReturn = "";
+	App.jsonResults = sortJSONResults([["0","7","270"],["0","8","459"],["0","9","591"],["0","","1320"],["1","7","207"],["1","8","483"],["1","9","588"],["1","","1278"],["2","7","180"],["2","8","459"],["2","9","570"],["2","","1209"],["3","7","104"],["3","8","304"],["3","9","422"],["3","","830"],["4","7","264"],["4","8","492"],["4","9","648"],["4","","1404"],["5","7","24"],["5","8","82"],["5","9","122"],["5","","228"],["6","7","164"],["6","8","400"],["6","9","540"],["6","","1104"],["7","7","156"],["7","8","326"],["7","9","426"],["7","","908"],["8","7","117"],["8","8","322"],["8","9","471"],["8","","910"],["","","9191"]]);
+    </script>
+
+    <script src="../../js/prettify/run_prettify.js?lang=sql"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+</html>

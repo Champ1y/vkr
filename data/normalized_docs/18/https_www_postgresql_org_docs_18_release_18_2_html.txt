@@ -26,7 +26,6 @@
 [E.2. Release 18.2 # / E.2.2. Changes #] Index-related routines in ltree used a different implementation of case-folding than the primary operators did. Their behavior was equivalent only if the default collation provider was libc and the encoding was single-byte.
 [E.2. Release 18.2 # / E.2.2. Changes #] To fix, change the code to use case-folding with the database's default collation. This change will require reindexing indexes on ltree columns (regardless of the index access method) unless the database uses libc as collation provider and its encoding is single-byte. Without that, searches of such indexes will fail to locate relevant entries.
 [E.2. Release 18.2 # / E.2.2. Changes #] When using ALTER TABLE ... ADD CONSTRAINT to add a not-null constraint with an explicit name, if the column is already marked NOT NULL, require that the provided name match the existing constraint name (Álvaro Herrera, Srinath Reddy Sadipiralla) §
-[E.2. Release 18.2 # / E.2.2. Changes #] When using ALTER TABLE ... ADD CONSTRAINT to add a not-null constraint with an explicit name, if the column is already marked NOT NULL, require that the provided name match the existing constraint name (Álvaro Herrera, Srinath Reddy Sadipiralla) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Don't allow CTE references in sub-selects to determine semantic levels of aggregate functions (Tom Lane) § This change undoes a change made two minor releases ago, instead throwing an error if a sub-select references a CTE that's below the semantic level that standard SQL rules would assign to the aggregate based on contained column references and aggregates. The attempted fix turned out to cause problems of its own, and it's unclear what to do instead. Since sub-selects within aggregates are disallowed altogether by the SQL standard, treating such cases as errors seems sufficient.
 [E.2. Release 18.2 # / E.2.2. Changes #] Don't allow CTE references in sub-selects to determine semantic levels of aggregate functions (Tom Lane) §
 [E.2. Release 18.2 # / E.2.2. Changes #] This change undoes a change made two minor releases ago, instead throwing an error if a sub-select references a CTE that's below the semantic level that standard SQL rules would assign to the aggregate based on contained column references and aggregates. The attempted fix turned out to cause problems of its own, and it's unclear what to do instead. Since sub-selects within aggregates are disallowed altogether by the SQL standard, treating such cases as errors seems sufficient.
@@ -39,7 +38,6 @@
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix failure when all children of a partitioned target table of an update or delete have been pruned (Amit Langote) § In such cases, the executor could report “ could not find junk ctid column ” errors, even though nothing needs to be done.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix failure when all children of a partitioned target table of an update or delete have been pruned (Amit Langote) §
 [E.2. Release 18.2 # / E.2.2. Changes #] In such cases, the executor could report “ could not find junk ctid column ” errors, even though nothing needs to be done.
-[E.2. Release 18.2 # / E.2.2. Changes #] Fix expression evaluation bug for a sub-select within an array subscript (Andres Freund) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix expression evaluation bug for a sub-select within an array subscript (Andres Freund) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix text substring search for non-deterministic collations (Laurenz Albe) § When using a non-deterministic collation, we failed to detect a match occurring at the very end of the searched string.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix text substring search for non-deterministic collations (Laurenz Albe) §
@@ -91,11 +89,9 @@
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix incorrect handling of incremental backups of large tables (Robert Haas, Oleg Tkachenko) §
 [E.2. Release 18.2 # / E.2.2. Changes #] If a table exceeding 1GB (or in general, the installation's segment size) is truncated by VACUUM between the base backup and the incremental backup, pg_combinebackup could fail with an error about “ truncation block length in excess of segment size ” . This prevented restoring the incremental backup.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix potential backend process crash at process exit due to trying to release a lock in an already-unmapped shared memory segment (Rahila Syed) §
-[E.2. Release 18.2 # / E.2.2. Changes #] Fix potential backend process crash at process exit due to trying to release a lock in an already-unmapped shared memory segment (Rahila Syed) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix race condition in async I/O code (Andres Freund) § It was possible for the result code of an asynchronous I/O operation to be overwritten before it was fetched.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix race condition in async I/O code (Andres Freund) §
 [E.2. Release 18.2 # / E.2.2. Changes #] It was possible for the result code of an asynchronous I/O operation to be overwritten before it was fetched.
-[E.2. Release 18.2 # / E.2.2. Changes #] Guard against incorrect truncation of the multixact log after a crash (Heikki Linnakangas) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Guard against incorrect truncation of the multixact log after a crash (Heikki Linnakangas) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix possibly mis-encoded result of pg_stat_get_backend_activity() (Chao Li) § The shared-memory buffer holding a session's activity string can end with an incomplete multibyte character. Readers are supposed to truncate off any such incomplete character, but this function failed to do so.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix possibly mis-encoded result of pg_stat_get_backend_activity() (Chao Li) §
@@ -116,8 +112,6 @@
 [E.2. Release 18.2 # / E.2.2. Changes #] Allow retrying initialization of a DSM registry entry (Nathan Bossart) §
 [E.2. Release 18.2 # / E.2.2. Changes #] If we fail partway through initialization of a dynamic shared memory entry, allow the next attempt to use that entry to retry initialization. Previously the entry was left in a permanently-failed state.
 [E.2. Release 18.2 # / E.2.2. Changes #] Avoid failure of NUMA status views when a page has been swapped out (Tomas Vondra) §
-[E.2. Release 18.2 # / E.2.2. Changes #] Avoid failure of NUMA status views when a page has been swapped out (Tomas Vondra) §
-[E.2. Release 18.2 # / E.2.2. Changes #] Avoid “ operation not permitted ” errors when querying NUMA page status with older libnuma versions (Tomas Vondra) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Avoid “ operation not permitted ” errors when querying NUMA page status with older libnuma versions (Tomas Vondra) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Fail recovery if WAL does not exist back to the redo point indicated by the checkpoint record (Nitin Jadhav) § Add an explicit check for this before starting recovery, so that no harm is done and a useful error message is provided. Previously, recovery might crash or corrupt the database in this situation.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fail recovery if WAL does not exist back to the redo point indicated by the checkpoint record (Nitin Jadhav) §
@@ -144,7 +138,6 @@
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix logical replication slotsync worker processes to handle LOCK_TIMEOUT signals correctly (Zhijie Hou) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Previously, timeout signals were effectively ignored.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix possible failure with “ unexpected data beyond EOF ” during restart of a streaming replica server (Anthonin Bonnefoy) §
-[E.2. Release 18.2 # / E.2.2. Changes #] Fix possible failure with “ unexpected data beyond EOF ” during restart of a streaming replica server (Anthonin Bonnefoy) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix error reporting for SQL/JSON path type mismatches (Jian He) § The code could produce a “ cache lookup failed for type 0 ” error instead of the intended complaint about the path expression not being of the right type.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix error reporting for SQL/JSON path type mismatches (Jian He) §
 [E.2. Release 18.2 # / E.2.2. Changes #] The code could produce a “ cache lookup failed for type 0 ” error instead of the intended complaint about the path expression not being of the right type.
@@ -155,11 +148,9 @@
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix assorted minor errors in error messages (Man Zeng, Tianchen Zhang) § § § § §
 [E.2. Release 18.2 # / E.2.2. Changes #] For example, an error report about mismatched timeline number in a backup manifest showed the starting timeline number where it meant to show the ending timeline number.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix failure to perform function inlining when doing JIT compilation with LLVM version 17 or later (Anthonin Bonnefoy) §
-[E.2. Release 18.2 # / E.2.2. Changes #] Fix failure to perform function inlining when doing JIT compilation with LLVM version 17 or later (Anthonin Bonnefoy) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Adjust our JIT code to work with LLVM 21 (Holger Hoffstätte) § The previous coding failed to compile on aarch64 machines.
 [E.2. Release 18.2 # / E.2.2. Changes #] Adjust our JIT code to work with LLVM 21 (Holger Hoffstätte) §
 [E.2. Release 18.2 # / E.2.2. Changes #] The previous coding failed to compile on aarch64 machines.
-[E.2. Release 18.2 # / E.2.2. Changes #] Fix aarch64-specific code to build with old (RHEL7-era) system header files (Tom Lane) § §
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix aarch64-specific code to build with old (RHEL7-era) system header files (Tom Lane) § §
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix incorrect configure probe for io_uring_queue_init_mem() (Masahiko Sawada) § This error resulted in failure to optimize async I/O buffer allocations in autotools-based builds, though the code did work when building with meson. The main impact of the omission was slower-than-necessary backend process exits.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix incorrect configure probe for io_uring_queue_init_mem() (Masahiko Sawada) §
@@ -171,10 +162,7 @@
 [E.2. Release 18.2 # / E.2.2. Changes #] Honor open() 's O_CLOEXEC flag on Windows (Bryan Green, Thomas Munro) § § §
 [E.2. Release 18.2 # / E.2.2. Changes #] Make this flag work like it does on POSIX platforms, so that we don't leak file handles into child processes such as COPY TO/FROM PROGRAM . While that leakage hasn't caused many problems, it seems undesirable.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix failure to parse long options on the server command line in Solaris executables built with meson (Tom Lane) §
-[E.2. Release 18.2 # / E.2.2. Changes #] Fix failure to parse long options on the server command line in Solaris executables built with meson (Tom Lane) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Support process title changes on GNU/Hurd (Michael Banck) §
-[E.2. Release 18.2 # / E.2.2. Changes #] Support process title changes on GNU/Hurd (Michael Banck) §
-[E.2. Release 18.2 # / E.2.2. Changes #] Fix psql 's tab completion for VACUUM option values (Yugo Nagata) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix psql 's tab completion for VACUUM option values (Yugo Nagata) §
 [E.2. Release 18.2 # / E.2.2. Changes #] In psql command prompts, do not show a value for %P (pipeline status) when there is no server connection (Chao Li) § This makes %P act like other prompt escape sequences whose values depend on the active connection.
 [E.2. Release 18.2 # / E.2.2. Changes #] In psql command prompts, do not show a value for %P (pipeline status) when there is no server connection (Chao Li) §
@@ -215,7 +203,6 @@
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix multibyte-encoding issue in contrib/ltree (Jeff Davis) § The previous coding could pass an incomplete multibyte character to lower() , probably resulting in incorrect behavior.
 [E.2. Release 18.2 # / E.2.2. Changes #] Fix multibyte-encoding issue in contrib/ltree (Jeff Davis) §
 [E.2. Release 18.2 # / E.2.2. Changes #] The previous coding could pass an incomplete multibyte character to lower() , probably resulting in incorrect behavior.
-[E.2. Release 18.2 # / E.2.2. Changes #] Avoid crash in contrib/pg_stat_statements when an IN list contains both constants and non-constant expressions (Sami Imseih) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Avoid crash in contrib/pg_stat_statements when an IN list contains both constants and non-constant expressions (Sami Imseih) §
 [E.2. Release 18.2 # / E.2.2. Changes #] Update time zone data files to tzdata release 2025c (Tom Lane) § The only change is in historical data for pre-1976 timestamps in Baja California.
 [E.2. Release 18.2 # / E.2.2. Changes #] Update time zone data files to tzdata release 2025c (Tom Lane) §

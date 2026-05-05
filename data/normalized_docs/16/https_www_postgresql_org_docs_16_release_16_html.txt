@@ -1,17 +1,10 @@
 [E.14. Release 16 # / E.14.1. Overview #] PostgreSQL 16 contains many new features and enhancements, including:
 [E.14. Release 16 # / E.14.1. Overview #] Allow parallelization of FULL and internal right OUTER hash joins
-[E.14. Release 16 # / E.14.1. Overview #] Allow parallelization of FULL and internal right OUTER hash joins
-[E.14. Release 16 # / E.14.1. Overview #] Allow logical replication from standby servers
 [E.14. Release 16 # / E.14.1. Overview #] Allow logical replication from standby servers
 [E.14. Release 16 # / E.14.1. Overview #] Allow logical replication subscribers to apply large transactions in parallel
-[E.14. Release 16 # / E.14.1. Overview #] Allow logical replication subscribers to apply large transactions in parallel
-[E.14. Release 16 # / E.14.1. Overview #] Allow monitoring of I/O statistics using the new pg_stat_io view
 [E.14. Release 16 # / E.14.1. Overview #] Allow monitoring of I/O statistics using the new pg_stat_io view
 [E.14. Release 16 # / E.14.1. Overview #] Add SQL/JSON constructors and identity functions
-[E.14. Release 16 # / E.14.1. Overview #] Add SQL/JSON constructors and identity functions
 [E.14. Release 16 # / E.14.1. Overview #] Improve performance of vacuum freezing
-[E.14. Release 16 # / E.14.1. Overview #] Improve performance of vacuum freezing
-[E.14. Release 16 # / E.14.1. Overview #] Add support for regular expression matching of user and database names in pg_hba.conf , and user names in pg_ident.conf
 [E.14. Release 16 # / E.14.1. Overview #] Add support for regular expression matching of user and database names in pg_hba.conf , and user names in pg_ident.conf
 [E.14. Release 16 # / E.14.1. Overview #] The above items and other new features of PostgreSQL 16 are explained in more detail in the sections below.
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] A dump/restore using pg_dumpall or use of pg_upgrade or logical replication is required for those wishing to migrate data from any previous release. See Section 19.6 for general information on migrating to new major releases.
@@ -20,7 +13,6 @@
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Change assignment rules for PL/pgSQL bound cursor variables (Tom Lane) §
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Previously, the string value of such variables was set to match the variable name during cursor assignment; now it will be assigned during OPEN , and will not match the variable name. To restore the previous behavior, assign the desired portal name to the cursor variable before OPEN .
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Disallow NULLS NOT DISTINCT indexes for primary keys (Daniel Gustafsson) §
-[E.14. Release 16 # / E.14.2. Migration to Version 16 #] Disallow NULLS NOT DISTINCT indexes for primary keys (Daniel Gustafsson) §
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Change REINDEX DATABASE and reindexdb to not process indexes on system catalogs (Simon Riggs) § § Processing such indexes is still possible using REINDEX SYSTEM and reindexdb --system .
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Change REINDEX DATABASE and reindexdb to not process indexes on system catalogs (Simon Riggs) § §
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Processing such indexes is still possible using REINDEX SYSTEM and reindexdb --system .
@@ -28,10 +20,7 @@
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Tighten GENERATED expression restrictions on inherited and partitioned tables (Amit Langote, Tom Lane) §
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Columns of parent/partitioned and child/partition tables must all have the same generation status, though now the actual generation expressions can be different.
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Remove pg_walinspect functions pg_get_wal_records_info_till_end_of_wal() and pg_get_wal_stats_till_end_of_wal() (Bharath Rupireddy) §
-[E.14. Release 16 # / E.14.2. Migration to Version 16 #] Remove pg_walinspect functions pg_get_wal_records_info_till_end_of_wal() and pg_get_wal_stats_till_end_of_wal() (Bharath Rupireddy) §
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Rename server variable force_parallel_mode to debug_parallel_query (David Rowley) § §
-[E.14. Release 16 # / E.14.2. Migration to Version 16 #] Rename server variable force_parallel_mode to debug_parallel_query (David Rowley) § §
-[E.14. Release 16 # / E.14.2. Migration to Version 16 #] Remove the ability to create views manually with ON SELECT rules (Tom Lane) §
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Remove the ability to create views manually with ON SELECT rules (Tom Lane) §
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Remove the server variable vacuum_defer_cleanup_age (Andres Freund) § This has been unnecessary since hot_standby_feedback and replication slots were added.
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Remove the server variable vacuum_defer_cleanup_age (Andres Freund) §
@@ -49,49 +38,33 @@
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Restrict the privileges of CREATEROLE and its ability to modify other roles (Robert Haas) § §
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Previously roles with CREATEROLE privileges could change many aspects of any non-superuser role. Such changes, including adding members, now require the role requesting the change to have ADMIN OPTION permission. For example, they can now change the CREATEDB , REPLICATION , and BYPASSRLS properties only if they also have those permissions.
 [E.14. Release 16 # / E.14.2. Migration to Version 16 #] Remove symbolic links for the postmaster binary (Peter Eisentraut) §
-[E.14. Release 16 # / E.14.2. Migration to Version 16 #] Remove symbolic links for the postmaster binary (Peter Eisentraut) §
 [E.14. Release 16 # / E.14.3. Changes #] Below you will find a detailed account of the changes between PostgreSQL 16 and the previous major release.
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Allow incremental sorts in more cases, including DISTINCT (David Rowley) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Allow incremental sorts in more cases, including DISTINCT (David Rowley) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Add the ability for aggregates having ORDER BY or DISTINCT to use pre-sorted data (David Rowley) § § § The new server variable enable_presorted_aggregate can be used to disable this.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Add the ability for aggregates having ORDER BY or DISTINCT to use pre-sorted data (David Rowley) § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] The new server variable enable_presorted_aggregate can be used to disable this.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Allow memoize atop a UNION ALL (Richard Guo) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Allow memoize atop a UNION ALL (Richard Guo) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Allow anti-joins to be performed with the non-nullable input as the inner relation (Richard Guo) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Allow anti-joins to be performed with the non-nullable input as the inner relation (Richard Guo) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Allow parallelization of FULL and internal right OUTER hash joins (Melanie Plageman, Thomas Munro) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Allow parallelization of FULL and internal right OUTER hash joins (Melanie Plageman, Thomas Munro) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Improve the accuracy of GIN index access optimizer costs (Ronan Dunklau) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.1. Optimizer #] Improve the accuracy of GIN index access optimizer costs (Ronan Dunklau) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow more efficient addition of heap and index pages (Andres Freund) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow more efficient addition of heap and index pages (Andres Freund) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] During non-freeze operations, perform page freezing where appropriate (Peter Geoghegan) § § § This makes full-table freeze vacuums less necessary.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] During non-freeze operations, perform page freezing where appropriate (Peter Geoghegan) § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] This makes full-table freeze vacuums less necessary.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow window functions to use the faster ROWS mode internally when RANGE mode is active but unnecessary (David Rowley) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow window functions to use the faster ROWS mode internally when RANGE mode is active but unnecessary (David Rowley) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow optimization of always-increasing window functions ntile() , cume_dist() and percent_rank() (David Rowley) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow optimization of always-increasing window functions ntile() , cume_dist() and percent_rank() (David Rowley) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow aggregate functions string_agg() and array_agg() to be parallelized (David Rowley) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow aggregate functions string_agg() and array_agg() to be parallelized (David Rowley) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Improve performance by caching RANGE and LIST partition lookups (Amit Langote, Hou Zhijie, David Rowley) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Improve performance by caching RANGE and LIST partition lookups (Amit Langote, Hou Zhijie, David Rowley) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow control of the shared buffer usage by vacuum and analyze (Melanie Plageman) § § § The VACUUM / ANALYZE option is BUFFER_USAGE_LIMIT , and the vacuumdb option is --buffer-usage-limit . The default value is set by server variable vacuum_buffer_usage_limit , which also controls autovacuum.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow control of the shared buffer usage by vacuum and analyze (Melanie Plageman) § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] The VACUUM / ANALYZE option is BUFFER_USAGE_LIMIT , and the vacuumdb option is --buffer-usage-limit . The default value is set by server variable vacuum_buffer_usage_limit , which also controls autovacuum.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Support wal_sync_method=fdatasync on Windows (Thomas Munro) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Support wal_sync_method=fdatasync on Windows (Thomas Munro) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow HOT updates if only BRIN -indexed columns are updated (Matthias van de Meent, Josef Simanek, Tomas Vondra) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow HOT updates if only BRIN -indexed columns are updated (Matthias van de Meent, Josef Simanek, Tomas Vondra) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Improve the speed of updating the process title (David Rowley) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Improve the speed of updating the process title (David Rowley) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow xid / subxid searches and ASCII string detection to use vector operations (Nathan Bossart, John Naylor) § § § § ASCII detection is particularly useful for COPY FROM . Vector operations are also used for some C array searches.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Allow xid / subxid searches and ASCII string detection to use vector operations (Nathan Bossart, John Naylor) § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] ASCII detection is particularly useful for COPY FROM . Vector operations are also used for some C array searches.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Reduce overhead of memory allocations (Andres Freund, David Rowley) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.2. General Performance #] Reduce overhead of memory allocations (Andres Freund, David Rowley) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add system view pg_stat_io view to track I/O statistics (Melanie Plageman) § § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add system view pg_stat_io view to track I/O statistics (Melanie Plageman) § § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Record statistics on the last sequential and index scans on tables (Dave Page) § This information appears in pg_stat_*_tables and pg_stat_*_indexes .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Record statistics on the last sequential and index scans on tables (Dave Page) §
@@ -103,20 +76,15 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add speculative lock information to the pg_locks system view (Masahiko Sawada, Noriyoshi Shinoda) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] The transaction id is displayed in the transactionid column and the speculative insertion token is displayed in the objid column.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add the display of prepared statement result types to the pg_prepared_statements view (Dagfinn Ilmari Mannsåker) § §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add the display of prepared statement result types to the pg_prepared_statements view (Dagfinn Ilmari Mannsåker) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Create subscription statistics entries at subscription creation time so stats_reset is accurate (Andres Freund) § Previously entries were created only when the first statistics were reported.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Create subscription statistics entries at subscription creation time so stats_reset is accurate (Andres Freund) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Previously entries were created only when the first statistics were reported.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Correct the I/O accounting for temp relation writes shown in pg_stat_database (Melanie Plageman) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Correct the I/O accounting for temp relation writes shown in pg_stat_database (Melanie Plageman) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add function pg_stat_get_backend_subxact() to report on a session's subtransaction cache (Dilip Kumar) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add function pg_stat_get_backend_subxact() to report on a session's subtransaction cache (Dilip Kumar) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Have pg_stat_get_backend_idset() , pg_stat_get_backend_activity() , and related functions use the unchanging backend id (Nathan Bossart) § Previously the index values might change during the lifetime of the session.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Have pg_stat_get_backend_idset() , pg_stat_get_backend_activity() , and related functions use the unchanging backend id (Nathan Bossart) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Previously the index values might change during the lifetime of the session.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Report stand-alone backends with a special backend type (Melanie Plageman) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Report stand-alone backends with a special backend type (Melanie Plageman) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add wait event SpinDelay to report spinlock sleep delays (Andres Freund) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add wait event SpinDelay to report spinlock sleep delays (Andres Freund) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Create new wait event DSMAllocate to indicate waiting for dynamic shared memory allocation (Thomas Munro) § Previously this type of wait was reported as DSMFillZeroWrite , which was also used by mmap() allocations.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Create new wait event DSMAllocate to indicate waiting for dynamic shared memory allocation (Thomas Munro) §
@@ -125,10 +93,7 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add the database name to the process title of logical WAL senders (Tatsuhiro Nakamori) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Physical WAL senders do not display a database name.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add checkpoint and REDO LSN information to log_checkpoints messages (Bharath Rupireddy, Kyotaro Horiguchi) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Add checkpoint and REDO LSN information to log_checkpoints messages (Bharath Rupireddy, Kyotaro Horiguchi) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Provide additional details during client certificate failures (Jacob Champion) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.3. Monitoring #] Provide additional details during client certificate failures (Jacob Champion) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.4. Privileges #] Add predefined role pg_create_subscription with permission to create subscriptions (Robert Haas) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.4. Privileges #] Add predefined role pg_create_subscription with permission to create subscriptions (Robert Haas) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.4. Privileges #] Allow subscriptions to not require passwords (Robert Haas) § § § This is accomplished with the option password_required=false .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.4. Privileges #] Allow subscriptions to not require passwords (Robert Haas) § § §
@@ -176,8 +141,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Add support for Kerberos credential delegation (Stephen Frost) § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] This is enabled with server variable gss_accept_delegation and libpq connection parameter gssdelegation .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Allow the SCRAM iteration count to be set with server variable scram_iterations (Daniel Gustafsson) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Allow the SCRAM iteration count to be set with server variable scram_iterations (Daniel Gustafsson) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Improve performance of server variable management (Tom Lane) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Improve performance of server variable management (Tom Lane) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Tighten restrictions on which server variables can be reset (Masahiko Sawada) § Previously, while certain variables, like transaction_isolation , were not affected by RESET ALL , they could be individually reset in inappropriate situations.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Tighten restrictions on which server variables can be reset (Masahiko Sawada) §
@@ -185,7 +148,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Move various postgresql.conf items into new categories (Shinya Kato) § This also affects the categories displayed in the pg_settings view.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Move various postgresql.conf items into new categories (Shinya Kato) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] This also affects the categories displayed in the pg_settings view.
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Prevent configuration file recursion beyond 10 levels (Julien Rouhaud) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Prevent configuration file recursion beyond 10 levels (Julien Rouhaud) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Allow autovacuum to more frequently honor changes to delay settings (Melanie Plageman) § § Rather than honor changes only at the start of each relation, honor them at the start of each block.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Allow autovacuum to more frequently honor changes to delay settings (Melanie Plageman) § §
@@ -200,7 +162,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Allow the postmaster to terminate children with an abort signal (Tom Lane) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] This allows collection of a core dump for a stuck child process. This is controlled by send_abort_for_crash and send_abort_for_kill . The postmaster's -T switch is now the same as setting send_abort_for_crash .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Remove the non-functional postmaster -n option (Tom Lane) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Remove the non-functional postmaster -n option (Tom Lane) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Allow the server to reserve backend slots for roles with pg_use_reserved_connections membership (Nathan Bossart) § The number of reserved slots is set by server variable reserved_connections .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Allow the server to reserve backend slots for roles with pg_use_reserved_connections membership (Nathan Bossart) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] The number of reserved slots is set by server variable reserved_connections .
@@ -210,7 +171,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Add debug_io_direct setting for developer usage (Thomas Munro, Andres Freund, Bharath Rupireddy) § § While primarily for developers, wal_sync_method=open_sync / open_datasync has been modified to not use direct I/O with wal_level=minimal ; this is now enabled with debug_io_direct=wal .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Add debug_io_direct setting for developer usage (Thomas Munro, Andres Freund, Bharath Rupireddy) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] While primarily for developers, wal_sync_method=open_sync / open_datasync has been modified to not use direct I/O with wal_level=minimal ; this is now enabled with debug_io_direct=wal .
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Add function pg_split_walfile_name() to report the segment and timeline values of WAL file names (Bharath Rupireddy) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.5. Server Configuration #] Add function pg_split_walfile_name() to report the segment and timeline values of WAL file names (Bharath Rupireddy) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.6. pg_hba.conf #] Add support for regular expression matching on database and role entries in pg_hba.conf (Bertrand Drouvot) § Regular expression patterns are prefixed with a slash. Database and role names that begin with slashes need to be double-quoted if referenced in pg_hba.conf .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.6. pg_hba.conf #] Add support for regular expression matching on database and role entries in pg_hba.conf (Bertrand Drouvot) §
@@ -222,8 +182,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.6. pg_hba.conf #] Allow include files in pg_hba.conf and pg_ident.conf (Julien Rouhaud) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.6. pg_hba.conf #] These are controlled by include , include_if_exists , and include_dir . System views pg_hba_file_rules and pg_ident_file_mappings now display the file name.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.6. pg_hba.conf #] Allow pg_hba.conf tokens to be of unlimited length (Tom Lane) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.6. pg_hba.conf #] Allow pg_hba.conf tokens to be of unlimited length (Tom Lane) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.6. pg_hba.conf #] Add rule and map numbers to the system view pg_hba_file_rules (Julien Rouhaud) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.6. pg_hba.conf #] Add rule and map numbers to the system view pg_hba_file_rules (Julien Rouhaud) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.7. Localization #] Determine the default encoding from the locale when using ICU (Jeff Davis) § Previously the default was always UTF-8 .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.1. Server # / E.14.3.1.7. Localization #] Determine the default encoding from the locale when using ICU (Jeff Davis) §
@@ -265,8 +223,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.2. Logical Replication #] Have wal_retrieve_retry_interval operate on a per-subscription basis (Nathan Bossart) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.2. Logical Replication #] Previously the retry time was applied globally. This also adds wait events > LogicalRepLauncherDSA and LogicalRepLauncherHash .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Add EXPLAIN option GENERIC_PLAN to display the generic plan for a parameterized query (Laurenz Albe) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Add EXPLAIN option GENERIC_PLAN to display the generic plan for a parameterized query (Laurenz Albe) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow a COPY FROM value to map to a column's DEFAULT (Israel Barth Rubio) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow a COPY FROM value to map to a column's DEFAULT (Israel Barth Rubio) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow COPY into foreign tables to add rows in batches (Andrey Lepikhov, Etsuro Fujita) § This is controlled by the postgres_fdw option batch_size .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow COPY into foreign tables to add rows in batches (Andrey Lepikhov, Etsuro Fujita) §
@@ -274,7 +230,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow the STORAGE type to be specified by CREATE TABLE (Teodor Sigaev, Aleksander Alekseev) § § Previously only ALTER TABLE could control this.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow the STORAGE type to be specified by CREATE TABLE (Teodor Sigaev, Aleksander Alekseev) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Previously only ALTER TABLE could control this.
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow truncate triggers on foreign tables (Yugo Nagata) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow truncate triggers on foreign tables (Yugo Nagata) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow VACUUM and vacuumdb to only process TOAST tables (Nathan Bossart) § This is accomplished by having VACUUM turn off PROCESS_MAIN or by vacuumdb using the --no-process-main option.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow VACUUM and vacuumdb to only process TOAST tables (Nathan Bossart) §
@@ -286,7 +241,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Change REINDEX DATABASE and REINDEX SYSTEM to no longer require an argument (Simon Riggs) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Previously the database name had to be specified.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow CREATE STATISTICS to generate a statistics name if none is specified (Simon Riggs) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.3. Utility Commands #] Allow CREATE STATISTICS to generate a statistics name if none is specified (Simon Riggs) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] Allow non-decimal integer literals (Peter Eisentraut) § For example, 0x42F , 0o273 , and 0b100101 .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] Allow non-decimal integer literals (Peter Eisentraut) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] For example, 0x42F , 0o273 , and 0b100101 .
@@ -297,14 +251,9 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] Allow underscores in integer and numeric constants (Peter Eisentraut, Dean Rasheed) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] This can improve readability for long strings of digits.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] Accept the spelling +infinity in datetime input (Vik Fearing) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] Accept the spelling +infinity in datetime input (Vik Fearing) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] Prevent the specification of epoch and infinity together with other fields in datetime strings (Joseph Koshakow) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] Prevent the specification of epoch and infinity together with other fields in datetime strings (Joseph Koshakow) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] Remove undocumented support for date input in the form Y year M month D day (Joseph Koshakow) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] Remove undocumented support for date input in the form Y year M month D day (Joseph Koshakow) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] Add functions pg_input_is_valid() and pg_input_error_info() to check for type conversion errors (Tom Lane) § §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.4. Data Types #] Add functions pg_input_is_valid() and pg_input_error_info() to check for type conversion errors (Tom Lane) § §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.5. General Queries #] Allow subqueries in the FROM clause to omit aliases (Dean Rasheed) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.5. General Queries #] Allow subqueries in the FROM clause to omit aliases (Dean Rasheed) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.5. General Queries #] Add support for enhanced numeric literals in SQL/JSON paths (Peter Eisentraut) § For example, allow hexadecimal, octal, and binary integers and underscores between digits.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.5. General Queries #] Add support for enhanced numeric literals in SQL/JSON paths (Peter Eisentraut) §
@@ -316,8 +265,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add SQL/JSON object checks (Nikita Glukhov, Teodor Sigaev, Oleg Bartunov, Alexander Korotkov, Amit Langote, Andrew Dunstan) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] The IS JSON checks include checks for values, arrays, objects, scalars, and unique keys.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Allow JSON string parsing to use vector operations (John Naylor) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Allow JSON string parsing to use vector operations (John Naylor) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Improve the handling of full text highlighting function ts_headline() for OR and NOT expressions (Tom Lane) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Improve the handling of full text highlighting function ts_headline() for OR and NOT expressions (Tom Lane) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add functions to add, subtract, and generate timestamptz values in a specified time zone (Przemyslaw Sztoch, Gurjeet Singh) § The functions are date_add() , date_subtract() , and generate_series() .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add functions to add, subtract, and generate timestamptz values in a specified time zone (Przemyslaw Sztoch, Gurjeet Singh) §
@@ -329,24 +276,15 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add server variable SYSTEM_USER (Bertrand Drouvot) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] This reports the authentication method and its authenticated user.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add functions array_sample() and array_shuffle() (Martin Kalcher) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add functions array_sample() and array_shuffle() (Martin Kalcher) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add aggregate function ANY_VALUE() which returns any value from a set (Vik Fearing) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add aggregate function ANY_VALUE() which returns any value from a set (Vik Fearing) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add function random_normal() to supply normally-distributed random numbers (Paul Ramsey) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add function random_normal() to supply normally-distributed random numbers (Paul Ramsey) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add error function erf() and its complement erfc() (Dean Rasheed) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add error function erf() and its complement erfc() (Dean Rasheed) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Improve the accuracy of numeric power() for integer exponents (Dean Rasheed) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Improve the accuracy of numeric power() for integer exponents (Dean Rasheed) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add XMLSERIALIZE() option INDENT to pretty-print its output (Jim Jones) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add XMLSERIALIZE() option INDENT to pretty-print its output (Jim Jones) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Change pg_collation_actual_version() to return a reasonable value for the default collation (Jeff Davis) § Previously it returned NULL .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Change pg_collation_actual_version() to return a reasonable value for the default collation (Jeff Davis) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Allow pg_read_file() and pg_read_binary_file() to ignore missing files (Kyotaro Horiguchi) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Allow pg_read_file() and pg_read_binary_file() to ignore missing files (Kyotaro Horiguchi) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add byte specification ( B ) to pg_size_bytes() (Peter Eisentraut) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Add byte specification ( B ) to pg_size_bytes() (Peter Eisentraut) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Allow to_reg * functions to accept numeric OID s as input (Tom Lane) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.6. Functions #] Allow to_reg * functions to accept numeric OID s as input (Tom Lane) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.7. PL/pgSQL #] Add the ability to get the current function's OID in PL/pgSQL (Pavel Stehule) § This is accomplished with GET DIAGNOSTICS variable = PG_ROUTINE_OID .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.7. PL/pgSQL #] Add the ability to get the current function's OID in PL/pgSQL (Pavel Stehule) §
@@ -376,7 +314,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Allow psql 's access privilege commands to show system objects (Nathan Bossart) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] The options are \dpS and \zS .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Add FOREIGN designation to psql \d+ for foreign table children and partitions (Ian Lawrence Barwick) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Add FOREIGN designation to psql \d+ for foreign table children and partitions (Ian Lawrence Barwick) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Prevent \df+ from showing function source code (Isaac Morland) § Function bodies are more easily viewed with \sf .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Prevent \df+ from showing function source code (Isaac Morland) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Function bodies are more easily viewed with \sf .
@@ -387,18 +324,14 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Allow psql \watch to limit the number of executions (Andrey Borodin) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] The \watch options can now be named when specified.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Detect invalid values for psql \watch , and allow zero to specify no delay (Andrey Borodin) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Detect invalid values for psql \watch , and allow zero to specify no delay (Andrey Borodin) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Allow psql scripts to obtain the exit status of shell commands and queries (Corey Huinker, Tom Lane) § § The new psql control variables are SHELL_ERROR and SHELL_EXIT_CODE .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Allow psql scripts to obtain the exit status of shell commands and queries (Corey Huinker, Tom Lane) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] The new psql control variables are SHELL_ERROR and SHELL_EXIT_CODE .
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Various psql tab completion improvements (Vignesh C, Aleksander Alekseev, Dagfinn Ilmari Mannsåker, Shi Yu, Michael Paquier, Ken Kato, Peter Smith) § § § § § § § § § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.1. psql #] Various psql tab completion improvements (Vignesh C, Aleksander Alekseev, Dagfinn Ilmari Mannsåker, Shi Yu, Michael Paquier, Ken Kato, Peter Smith) § § § § § § § § § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.2. pg_dump #] Add pg_dump control of dumping child tables and partitions (Gilles Darold) § The new options are --table-and-children , --exclude-table-and-children , and --exclude-table-data-and-children .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.2. pg_dump #] Add pg_dump control of dumping child tables and partitions (Gilles Darold) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.2. pg_dump #] The new options are --table-and-children , --exclude-table-and-children , and --exclude-table-data-and-children .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.2. pg_dump #] Add LZ4 and Zstandard compression to pg_dump (Georgios Kokolatos, Justin Pryzby)
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.2. pg_dump #] Add LZ4 and Zstandard compression to pg_dump (Georgios Kokolatos, Justin Pryzby)
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.2. pg_dump #] Allow pg_dump and pg_basebackup to use long mode for compression (Justin Pryzby) § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.2. pg_dump #] Allow pg_dump and pg_basebackup to use long mode for compression (Justin Pryzby) § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.2. pg_dump #] Improve pg_dump to accept a more consistent compression syntax (Georgios Kokolatos) § Options like --compress=gzip:5 .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.9. Client Applications # / E.14.3.9.2. pg_dump #] Improve pg_dump to accept a more consistent compression syntax (Georgios Kokolatos) §
@@ -415,7 +348,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Allow control of vacuumdb schema processing (Gilles Darold) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] These are controlled by options --schema and --exclude-schema .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Use new VACUUM options to improve the performance of vacuumdb (Tom Lane, Nathan Bossart) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Use new VACUUM options to improve the performance of vacuumdb (Tom Lane, Nathan Bossart) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Have pg_upgrade set the new cluster's locale and encoding (Jeff Davis) § This removes the requirement that the new cluster be created with the same locale and encoding settings.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Have pg_upgrade set the new cluster's locale and encoding (Jeff Davis) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] This removes the requirement that the new cluster be created with the same locale and encoding settings.
@@ -425,12 +357,8 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Improve pg_basebackup to accept numeric compression options (Georgios Kokolatos, Michael Paquier) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Options like --compress=server-5 are now supported.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Fix pg_basebackup to handle tablespaces stored in the PGDATA directory (Robert Haas) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Fix pg_basebackup to handle tablespaces stored in the PGDATA directory (Robert Haas) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Add pg_waldump option --save-fullpage to dump full page images (David Christensen) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Add pg_waldump option --save-fullpage to dump full page images (David Christensen) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Allow pg_waldump options -t / --timeline to accept hexadecimal values (Peter Eisentraut) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Allow pg_waldump options -t / --timeline to accept hexadecimal values (Peter Eisentraut) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Add support for progress reporting to pg_verifybackup (Masahiko Sawada) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Add support for progress reporting to pg_verifybackup (Masahiko Sawada) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Allow pg_rewind to properly track timeline changes (Heikki Linnakangas) § § Previously if pg_rewind was run after a timeline switch but before a checkpoint was issued, it might incorrectly determine that a rewind was unnecessary.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.10. Server Applications #] Allow pg_rewind to properly track timeline changes (Heikki Linnakangas) § §
@@ -442,8 +370,6 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Build ICU support by default (Jeff Davis) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] This removes build flag --with-icu and adds flag --without-icu .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Add support for SSE2 (Streaming SIMD Extensions 2) vector operations on x86-64 architectures (John Naylor) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Add support for SSE2 (Streaming SIMD Extensions 2) vector operations on x86-64 architectures (John Naylor) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Add support for Advanced SIMD (Single Instruction Multiple Data) ( NEON ) instructions on ARM architectures (Nathan Bossart) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Add support for Advanced SIMD (Single Instruction Multiple Data) ( NEON ) instructions on ARM architectures (Nathan Bossart) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Have Windows binaries built with MSVC use RandomizedBaseAddress ( ASLR ) (Michael Paquier) § This was already enabled on MinGW builds.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Have Windows binaries built with MSVC use RandomizedBaseAddress ( ASLR ) (Michael Paquier) §
@@ -455,20 +381,12 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Require Windows 10 or newer versions (Michael Paquier, Juan José Santamaría Flecha) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Previously Windows Vista and Windows XP were supported.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Require Perl version 5.14 or later (John Naylor) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Require Perl version 5.14 or later (John Naylor) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Require Bison version 2.3 or later (John Naylor) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Require Bison version 2.3 or later (John Naylor) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Require Flex version 2.5.35 or later (John Naylor) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Require Flex version 2.5.35 or later (John Naylor) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Require MIT Kerberos for GSSAPI support (Stephen Frost) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Require MIT Kerberos for GSSAPI support (Stephen Frost) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Remove support for Visual Studio 2013 (Michael Paquier) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Remove support for Visual Studio 2013 (Michael Paquier) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Remove support for HP-UX (Thomas Munro) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Remove support for HP-UX (Thomas Munro) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Remove support for HP/Intel Itanium (Thomas Munro) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Remove support for HP/Intel Itanium (Thomas Munro) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Remove support for M68K , M88K , M32R , and SuperH CPU architectures (Thomas Munro) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Remove support for M68K , M88K , M32R , and SuperH CPU architectures (Thomas Munro) § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Remove libpq support for SCM credential authentication (Michael Paquier) § Backend support for this authentication method was removed in PostgresSQL 9.1.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Remove libpq support for SCM credential authentication (Michael Paquier) §
@@ -486,14 +404,9 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Add pgindent options (Andrew Dunstan) § § § § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] The new options are --show-diff , --silent-diff , --commit , and --help , and allow multiple --exclude options. Also require the typedef file to be explicitly specified. Options --code-base and --build were also removed.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Add pg_bsd_indent source code to the main tree (Tom Lane) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Add pg_bsd_indent source code to the main tree (Tom Lane) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Improve make_ctags and make_etags (Yugo Nagata) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Improve make_ctags and make_etags (Yugo Nagata) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Adjust pg_attribute columns for efficiency (Peter Eisentraut) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.11. Source Code #] Adjust pg_attribute columns for efficiency (Peter Eisentraut) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Improve use of extension-based indexes on boolean columns (Zongliang Quan, Tom Lane) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Improve use of extension-based indexes on boolean columns (Zongliang Quan, Tom Lane) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add support for Daitch-Mokotoff Soundex to fuzzystrmatch (Dag Lem) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add support for Daitch-Mokotoff Soundex to fuzzystrmatch (Dag Lem) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Allow auto_explain to log values passed to parameterized statements (Dagfinn Ilmari Mannsåker) § This affects queries using server-side PREPARE / EXECUTE and client-side parse/bind. Logging is controlled by auto_explain.log_parameter_max_length ; by default query parameters will be logged with no length restriction.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Allow auto_explain to log values passed to parameterized statements (Dagfinn Ilmari Mannsåker) §
@@ -502,32 +415,24 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Have auto_explain 's log_verbose mode honor the value of compute_query_id (Atsushi Torikoshi) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Previously even if compute_query_id was enabled, log_verbose was not showing the query identifier.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Change the maximum length of ltree labels from 256 to 1000 and allow hyphens (Garen Torikian) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Change the maximum length of ltree labels from 256 to 1000 and allow hyphens (Garen Torikian) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Have pg_stat_statements normalize constants used in utility commands (Michael Paquier) § Previously constants appeared instead of placeholders, e.g., $1 .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Have pg_stat_statements normalize constants used in utility commands (Michael Paquier) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Previously constants appeared instead of placeholders, e.g., $1 .
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add pg_walinspect function pg_get_wal_block_info() to report WAL block information (Michael Paquier, Melanie Plageman, Bharath Rupireddy) § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add pg_walinspect function pg_get_wal_block_info() to report WAL block information (Michael Paquier, Melanie Plageman, Bharath Rupireddy) § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Change how pg_walinspect functions pg_get_wal_records_info() and pg_get_wal_stats() interpret ending LSN s (Bharath Rupireddy) § Previously ending LSN s which represent nonexistent WAL locations would generate an error, while they will now be interpreted as the end of the WAL .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Change how pg_walinspect functions pg_get_wal_records_info() and pg_get_wal_stats() interpret ending LSN s (Bharath Rupireddy) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Previously ending LSN s which represent nonexistent WAL locations would generate an error, while they will now be interpreted as the end of the WAL .
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add detailed descriptions of WAL records in pg_walinspect and pg_waldump (Melanie Plageman, Peter Geoghegan) § § § §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add detailed descriptions of WAL records in pg_walinspect and pg_waldump (Melanie Plageman, Peter Geoghegan) § § § §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add pageinspect function bt_multi_page_stats() to report statistics on multiple pages (Hamid Akhtar) § This is similar to bt_page_stats() except it can report on a range of pages.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add pageinspect function bt_multi_page_stats() to report statistics on multiple pages (Hamid Akhtar) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] This is similar to bt_page_stats() except it can report on a range of pages.
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add empty range output column to pageinspect function brin_page_items() (Tomas Vondra) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add empty range output column to pageinspect function brin_page_items() (Tomas Vondra) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Redesign archive modules to be more flexible (Nathan Bossart) § Initialization changes will require modules written for older versions of Postgres to be updated.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Redesign archive modules to be more flexible (Nathan Bossart) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Initialization changes will require modules written for older versions of Postgres to be updated.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Correct inaccurate pg_stat_statements row tracking extended query protocol statements (Sami Imseih) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Correct inaccurate pg_stat_statements row tracking extended query protocol statements (Sami Imseih) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add pg_buffercache function pg_buffercache_usage_counts() to report usage totals (Nathan Bossart) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add pg_buffercache function pg_buffercache_usage_counts() to report usage totals (Nathan Bossart) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add pg_buffercache function pg_buffercache_summary() to report summarized buffer statistics (Melih Mutlu) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Add pg_buffercache function pg_buffercache_summary() to report summarized buffer statistics (Melih Mutlu) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Allow the schemas of required extensions to be referenced in extension scripts using the new syntax @extschema:referenced_extension_name@ (Regina Obe) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Allow the schemas of required extensions to be referenced in extension scripts using the new syntax @extschema:referenced_extension_name@ (Regina Obe) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Allow required extensions to be marked as non-relocatable using no_relocate (Regina Obe) § This allows @extschema:referenced_extension_name@ to be treated as a constant for the lifetime of the extension.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules #] Allow required extensions to be marked as non-relocatable using no_relocate (Regina Obe) §
@@ -539,7 +444,366 @@
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules # / E.14.3.12.1. postgres_fdw #] Make ANALYZE on foreign postgres_fdw tables more efficient (Tomas Vondra) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules # / E.14.3.12.1. postgres_fdw #] The postgres_fdw option analyze_sampling controls the sampling method.
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules # / E.14.3.12.1. postgres_fdw #] Restrict shipment of reg * type constants in postgres_fdw to those referencing built-in objects or extensions marked as shippable (Tom Lane) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules # / E.14.3.12.1. postgres_fdw #] Restrict shipment of reg * type constants in postgres_fdw to those referencing built-in objects or extensions marked as shippable (Tom Lane) §
-[E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules # / E.14.3.12.1. postgres_fdw #] Have postgres_fdw and dblink handle interrupts during connection establishment (Andres Freund) §
 [E.14. Release 16 # / E.14.3. Changes # / E.14.3.12. Additional Modules # / E.14.3.12.1. postgres_fdw #] Have postgres_fdw and dblink handle interrupts during connection establishment (Andres Freund) §
 [E.14. Release 16 # / E.14.4. Acknowledgments #] The following individuals (in alphabetical order) have contributed to this release as patch authors, committers, reviewers, testers, or reporters of issues.
+[E.14. Release 16 # / E.14.4. Acknowledgments #] Abhijit Menon-Sen
+Adam Mackler
+Adrian Klaver
+Ahsan Hadi
+Ajin Cherian
+Ajit Awekar
+Alan Hodgson
+Aleksander Alekseev
+Alex Denman
+Alex Kozhemyakin
+Alexander Korolev
+Alexander Korotkov
+Alexander Lakhin
+Alexander Pyhalov
+Alexey Borzov
+Alexey Ermakov
+Alexey Makhmutov
+Álvaro Herrera
+Amit Kapila
+Amit Khandekar
+Amit Langote
+Amul Sul
+Anastasia Lubennikova
+Anban Company
+Andreas Dijkman
+Andreas Karlsson
+Andreas Scherbaum
+Andrei Zubkov
+Andres Freund
+Andrew Alsup
+Andrew Bille
+Andrew Dunstan
+Andrew Gierth
+Andrew Kesper
+Andrey Borodin
+Andrey Lepikhov
+Andrey Sokolov
+Ankit Kumar Pandey
+Ante Kresic
+Anton Melnikov
+Anton Sidyakin
+Anton Voloshin
+Antonin Houska
+Arne Roland
+Artem Anisimov
+Arthur Zakirov
+Ashutosh Bapat
+Ashutosh Sharma
+Asim Praveen
+Atsushi Torikoshi
+Ayaki Tachikake
+Balazs Szilfai
+Benoit Lobréau
+Bernd Helmle
+Bertrand Drouvot
+Bharath Rupireddy
+Bilva Sanaba
+Bob Krier
+Boris Zentner
+Brad Nicholson
+Brar Piening
+Bruce Momjian
+Bruno da Silva
+Carl Sopchak
+Cary Huang
+Changhong Fei
+Chris Travers
+Christoph Berg
+Christophe Pettus
+Corey Huinker
+Craig Ringer
+Curt Kolovson
+Dag Lem
+Dagfinn Ilmari Mannsåker
+Daniel Gustafsson
+Daniel Vérité
+Daniel Watzinger
+Daniel Westermann
+Daniele Varrazzo
+Daniil Anisimov
+Danny Shemesh
+Dave Page
+David Christensen
+David G. Johnston
+David Geier
+David Gilman
+David Kimura
+David Rowley
+David Steele
+David Turon
+David Zhang
+Davinder Singh
+Dean Rasheed
+Denis Laxalde
+Dilip Kumar
+Dimos Stamatakis
+Dmitriy Kuzmin
+Dmitry Astapov
+Dmitry Dolgov
+Dmitry Koval
+Dong Wook Lee
+Dongming Liu
+Drew DeVault
+Duncan Sands
+Ed Maste
+Egor Chindyaskin
+Ekaterina Kiryanova
+Elena Indrupskaya
+Emmanuel Quincerot
+Eric Mutta
+Erik Rijkers
+Erki Eessaar
+Erwin Brandstetter
+Etsuro Fujita
+Eugeny Zhuzhnev
+Euler Taveira
+Evan Jones
+Evgeny Morozov
+Fabrízio de Royes Mello
+Farias de Oliveira
+Florin Irion
+Franz-Josef Färber
+Garen Torikian
+Georgios Kokolatos
+Gilles Darold
+Greg Stark
+Guillaume Lelarge
+Gunnar Bluth
+Gunnar Morling
+Gurjeet Singh
+Haiyang Wang
+Haiying Tang
+Hamid Akhtar
+Hans Buschmann
+Hao Wu
+Hayato Kuroda
+Heath Lord
+Heikki Linnakangas
+Himanshu Upadhyaya
+Hisahiro Kauchi
+Hongyu Song
+Hubert Lubaczewski
+Hung Nguyen
+Ian Barwick
+Ibrar Ahmed
+Ilya Gladyshev
+Ilya Nenashev
+Isaac Morland
+Israel Barth Rubio
+Jacob Champion
+Jacob Speidel
+Jaime Casanova
+Jakub Wartak
+James Coleman
+James Inform
+James Vanns
+Jan Wieck
+Japin Li
+Jeevan Ladhe
+Jeff Davis
+Jeff Janes
+Jehan-Guillaume de Rorthais
+Jelte Fennema
+Jian He
+Jim Jones
+Jinbao Chen
+Joe Conway
+Joel Jacobson
+John Naylor
+Jonathan Katz
+Josef Simanek
+Joseph Koshakow
+Juan José Santamaría Flecha
+Julien Rouhaud
+Julien Roze
+Junwang Zhao
+Justin Pryzby
+Justin Zhang
+Karina Litskevich
+Karl O. Pinc
+Keisuke Kuroda
+Ken Kato
+Kevin McKibbin
+Kieran McCusker
+Kirk Wolak
+Konstantin Knizhnik
+Koshi Shibagaki
+Kotaro Kawamoto
+Kui Liu
+Kyotaro Horiguchi
+Lakshmi Narayanan Sreethar
+Laurence Parry
+Laurenz Albe
+Luca Ferrari
+Lukas Fittl
+Maciek Sakrejda
+Magnus Hagander
+Maja Zaloznik
+Marcel Hofstetter
+Marina Polyakova
+Mark Dilger
+Marko Tiikkaja
+Markus Winand
+Martijn van Oosterhout
+Martin Jurca
+Martin Kalcher
+Mary Xu
+Masahiko Sawada
+Masahiro Ikeda
+Masao Fujii
+Mason Sharp
+Matheus Alcantara
+Mats Kindahl
+Matthias van de Meent
+Matthijs van der Vleuten
+Maxim Orlov
+Maxim Yablokov
+Mehmet Emin Karakas
+Melanie Plageman
+Melih Mutlu
+Micah Gates
+Michael Banck
+Michael Paquier
+Michail Nikolaev
+Michel Pelletier
+Mike Oh
+Mikhail Gribkov
+Mingli Zhang
+Miroslav Bendik
+Mitsuru Hinata
+Myo Wai Thant
+Naeem Akhter
+Naoki Okano
+Nathan Bossart
+Nazir Bilal Yavuz
+Neha Sharma
+Nick Babadzhanian
+Nicola Contu
+Nikhil Shetty
+Nikita Glukhov
+Nikolay Samokhvalov
+Nikolay Shaplov
+Nishant Sharma
+Nitin Jadhav
+Noah Misch
+Noboru Saito
+Noriyoshi Shinoda
+Nuko Yokohama
+Oleg Bartunov
+Oleg Tselebrovskiy
+Olly Betts
+Onder Kalaci
+Onur Tirtir
+Pablo Federico
+Palle Girgensohn
+Paul Guo
+Paul Jungwirth
+Paul Ramsey
+Pavel Borisov
+Pavel Kulakov
+Pavel Luzanov
+Pavel Stehule
+Peifeng Qiu
+Peter Eisentraut
+Peter Geoghegan
+Peter Smith
+Phil Florent
+Philippe Godfrin
+Platon Pronko
+Przemyslaw Sztoch
+Rachel Heaton
+Ranier Vilela
+Regina Obe
+Reid Thompson
+Reiner Peterke
+Richard Guo
+Riivo Kolka
+Rishu Bagga
+Robert Haas
+Robert Sjöblom
+Robert Treat
+Roberto Mello
+Robins Tharakan
+Roman Zharkov
+Ronan Dunklau
+Rushabh Lathia
+Ryo Matsumura
+Samay Sharma
+Sami Imseih
+Sandeep Thakkar
+Sandro Santilli
+Sebastien Flaesch
+Sébastien Lardière
+Sehrope Sarkuni
+Sergey Belyashov
+Sergey Pankov
+Sergey Shinderuk
+Shi Yu
+Shinya Kato
+Sho Kato
+Shruthi Gowda
+Shveta Mallik
+Simon Riggs
+Sindy Senorita
+Sirisha Chamarthi
+Sravan Kumar
+Stéphane Tachoires
+Stephen Frost
+Steve Chavez
+Stone Tickle
+Sven Klemm
+Takamichi Osumi
+Takeshi Ideriha
+Tatsuhiro Nakamori
+Tatsuo Ishii
+Teja Mupparti
+Tender Wang
+Teodor Sigaev
+Thiago Nunes
+Thom Brown
+Thomas Habets
+Thomas Mc Kay
+Thomas Munro
+Tim Carey-Smith
+Tim Field
+Timo Stolz
+Tom Lane
+Tomas Vondra
+Tor Erik Linnerud
+Torsten Förtsch
+Tristan Partin
+Troy Frericks
+Tushar Ahuja
+Valerie Woolard
+Vibhor Kumar
+Victor Spirin
+Victoria Shepard
+Vignesh C
+Vik Fearing
+Vitaly Burovoy
+Vitaly Davydov
+Wang Wei
+Wenjing Zeng
+Whale Song
+Will Mortensen
+Wolfgang Walther
+Xin Wen
+Xing Guo
+Xingwang Xu
+XueJing Zhao
+Yanliang Lei
+Youmiu Mo
+Yugo Nagata
+Yura Sokolov
+Yuta Katsuragi
+Zhen Mingyang
+Zheng Li
+Zhihong Yu
+Zhijie Hou
+Zongliang Quan
+Zuming Jiang

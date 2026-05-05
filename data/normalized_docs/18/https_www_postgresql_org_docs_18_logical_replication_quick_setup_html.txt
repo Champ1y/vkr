@@ -2,7 +2,7 @@
 [29.14. Quick Setup #] wal_level = logical
 [29.14. Quick Setup #] The other required settings have default values that are sufficient for a basic setup.
 [29.14. Quick Setup #] pg_hba.conf needs to be adjusted to allow replication (the values here depend on your actual network configuration and user you want to use for connecting):
-[29.14. Quick Setup #] host all repuser 0.0.0.0/0 scram-sha-256
+[29.14. Quick Setup #] host     all     repuser     0.0.0.0/0     scram-sha-256
 [29.14. Quick Setup #] Then on the publisher database:
 [29.14. Quick Setup #] CREATE PUBLICATION mypub FOR TABLE users, departments;
 [29.14. Quick Setup #] And on the subscriber database:

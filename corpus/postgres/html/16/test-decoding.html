@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 16: F.45. test_decoding — SQL-based test/example module for WAL logical decoding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/16/test-decoding.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:06:59" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.45. test_decoding — SQL-based test/example module for WAL logical decoding" />
+  <meta property="og:description" content="F.45.&amp;nbsp;test_decoding — SQL-based test/example module for WAL logical decoding # test_decoding is an example of a logical decoding output plugin. …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?290b0238" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?290b0238">
+
+  <script src="/media/js/theme.js?290b0238"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/test-decoding.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/16/index.html">PostgreSQL 16</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/test-decoding.html" title="PostgreSQL 18 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding" >Current</a>
+                          (<a href="/docs/18/test-decoding.html" title="PostgreSQL 18 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding" >18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/test-decoding.html" title="PostgreSQL 17 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/test-decoding.html" title="PostgreSQL 16 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding" class="docs-version-selected">16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/test-decoding.html" title="PostgreSQL 15 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/test-decoding.html" title="PostgreSQL 14 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/test-decoding.html" title="PostgreSQL devel - F.45. test_decoding — SQL-based test/example module for WAL logical decoding"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/test-decoding.html" title="PostgreSQL 13 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/test-decoding.html" title="PostgreSQL 12 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/test-decoding.html" title="PostgreSQL 11 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/test-decoding.html" title="PostgreSQL 10 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/test-decoding.html" title="PostgreSQL 9.6 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/test-decoding.html" title="PostgreSQL 9.5 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/test-decoding.html" title="PostgreSQL 9.4 - F.45. test_decoding — SQL-based test/example module for WAL logical decoding"  rel="nofollow">9.4</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/16/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.45.&nbsp;test_decoding — SQL-based test/example module for WAL logical decoding</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="tcn.html" title="F.44.&nbsp;tcn — a trigger function to notify listeners of changes to table content">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules and Extensions">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules and Extensions</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 16.13 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="tsm-system-rows.html" title="F.46.&nbsp;tsm_system_rows —  the SYSTEM_ROWS sampling method for TABLESAMPLE">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="TEST-DECODING">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.45.&nbsp;test_decoding — SQL-based test/example module for WAL logical decoding <a href="#TEST-DECODING" class="id_link">#</a></h2>
+      </div>
+    </div>
+  </div><a id="id-1.11.7.55.2" class="indexterm" name="id-1.11.7.55.2"></a>
+  <p><code class="filename">test_decoding</code> is an example of a logical decoding output plugin. It doesn't do anything especially useful, but can serve as a starting point for developing your own output plugin.</p>
+  <p><code class="filename">test_decoding</code> receives WAL through the logical decoding mechanism and decodes it into text representations of the operations performed.</p>
+  <p>Typical output from this plugin, used over the SQL logical decoding interface, might be:</p>
+  <pre class="programlisting">
+postgres=# SELECT * FROM pg_logical_slot_get_changes('test_slot', NULL, NULL, 'include-xids', '0');
+   lsn     | xid |                       data
+-----------+-----+--------------------------------------------------
+ 0/16D30F8 | 691 | BEGIN
+ 0/16D32A0 | 691 | table public.data: INSERT: id[int4]:2 data[text]:'arg'
+ 0/16D32A0 | 691 | table public.data: INSERT: id[int4]:3 data[text]:'demo'
+ 0/16D32A0 | 691 | COMMIT
+ 0/16D32D8 | 692 | BEGIN
+ 0/16D3398 | 692 | table public.data: DELETE: id[int4]:2
+ 0/16D3398 | 692 | table public.data: DELETE: id[int4]:3
+ 0/16D3398 | 692 | COMMIT
+(8 rows)
+</pre>
+  <p>We can also get the changes of the in-progress transaction, and the typical output might be:</p>
+  <pre class="programlisting">
+postgres[33712]=#* SELECT * FROM pg_logical_slot_get_changes('test_slot', NULL, NULL, 'stream-changes', '1');
+    lsn    | xid |                       data
+-----------+-----+--------------------------------------------------
+ 0/16B21F8 | 503 | opening a streamed block for transaction TXN 503
+ 0/16B21F8 | 503 | streaming change for TXN 503
+ 0/16B2300 | 503 | streaming change for TXN 503
+ 0/16B2408 | 503 | streaming change for TXN 503
+ 0/16BEBA0 | 503 | closing a streamed block for transaction TXN 503
+ 0/16B21F8 | 503 | opening a streamed block for transaction TXN 503
+ 0/16BECA8 | 503 | streaming change for TXN 503
+ 0/16BEDB0 | 503 | streaming change for TXN 503
+ 0/16BEEB8 | 503 | streaming change for TXN 503
+ 0/16BEBA0 | 503 | closing a streamed block for transaction TXN 503
+(10 rows)
+</pre>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="tcn.html" title="F.44.&nbsp;tcn — a trigger function to notify listeners of changes to table content">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules and Extensions">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="tsm-system-rows.html" title="F.46.&nbsp;tsm_system_rows —  the SYSTEM_ROWS sampling method for TABLESAMPLE">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">F.44.&nbsp;tcn — a trigger function to notify listeners of changes to table content&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 16.13 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.46.&nbsp;tsm_system_rows — the <code class="literal">SYSTEM_ROWS</code> sampling method for <code class="literal">TABLESAMPLE</code></td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/16/test-decoding.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?290b0238"></script>
+
+  </body>
+</html>

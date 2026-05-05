@@ -1,0 +1,211 @@
+{
+  "source_role": "external_troubleshooting_whitelist",
+  "corpus_type": "supplementary",
+  "usage_rule": "Использовать только как низкоприоритетный troubleshooting/FAQ слой в tutorial + extended_mode; facts require official backing.",
+  "kept_pages_count": 25,
+  "kept_pages": [
+    {
+      "page": "Binary_Replication_Tutorial",
+      "source_file": "html/postgres_wiki_install_guides/wiki/Binary_Replication_Tutorial.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Binary_Replication_Tutorial.html",
+      "size_bytes": 43163,
+      "sha256": "16812f12a715f5a38def8c808fb99292c485d7acb39a0259207345de3a70852c"
+    },
+    {
+      "page": "Client_Authentication",
+      "source_file": "html/postgres_wiki_faq/wiki/Client_Authentication.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Client_Authentication.html",
+      "size_bytes": 17278,
+      "sha256": "177a25443f91acfac57ca33f453a9e8294442402ef88478166fc996dde8efc0a"
+    },
+    {
+      "page": "Detailed_installation_guides",
+      "source_file": "html/postgres_wiki_main/wiki/Detailed_installation_guides.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Detailed_installation_guides.html",
+      "size_bytes": 22193,
+      "sha256": "3f0771e63808a42780485c7052189d5dd1dd7e9438ff1304801d1bd2be6ff473"
+    },
+    {
+      "page": "Disk_Usage",
+      "source_file": "html/postgres_wiki_install_guides/wiki/Disk_Usage.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Disk_Usage.html",
+      "size_bytes": 56327,
+      "sha256": "8b57ca7cd792ee9ea533f5569d523ba9e984e3ca1825ee6f8a275b9580244c6c"
+    },
+    {
+      "page": "FAQ",
+      "source_file": "html/postgres_wiki_main/wiki/FAQ.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/FAQ.html",
+      "size_bytes": 122469,
+      "sha256": "a7aff40ddaa0df85f2b707eaaa7775add030f159a4e33f0e3bec0610f24ee2e4"
+    },
+    {
+      "page": "Fixing_Sequences",
+      "source_file": "html/postgres_wiki_faq/wiki/Fixing_Sequences.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Fixing_Sequences.html",
+      "size_bytes": 30578,
+      "sha256": "b8c03dd0f01538fa7337b024936c3630002b0088dbefe80d6b1e7617b40686b1"
+    },
+    {
+      "page": "Frequently_Asked_Questions",
+      "source_file": "html/postgres_wiki_main/wiki/Frequently_Asked_Questions.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Frequently_Asked_Questions.html",
+      "size_bytes": 16220,
+      "sha256": "32902333c49e433519aeb5f09f359b57d7f378298be0bf3772a28d3b2835c8a0"
+    },
+    {
+      "page": "Index_Maintenance",
+      "source_file": "html/postgres_wiki_install_guides/wiki/Index_Maintenance.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Index_Maintenance.html",
+      "size_bytes": 67414,
+      "sha256": "ea3a04f37cbdf96b85b87a1667fa8082bb381206b272f7fe1f27b4534af514b7"
+    },
+    {
+      "page": "Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT",
+      "source_file": "html/postgres_wiki_install_guides/wiki/Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT.html",
+      "size_bytes": 56346,
+      "sha256": "d04540b41faeb870ff7c47675a690de96acce6c69c52610849361173f3f7881c"
+    },
+    {
+      "page": "Lock_Monitoring",
+      "source_file": "html/postgres_wiki_install_guides/wiki/Lock_Monitoring.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Lock_Monitoring.html",
+      "size_bytes": 42690,
+      "sha256": "371250470557ed8e8c028ba9ea14cd0d63f2eacd3aa493bb33d6d9a393930b9f"
+    },
+    {
+      "page": "Logging_Difficult_Queries",
+      "source_file": "html/postgres_wiki_main/wiki/Logging_Difficult_Queries.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Logging_Difficult_Queries.html",
+      "size_bytes": 15476,
+      "sha256": "4709a90a50801fd68e1aa4d4642aa74ecc94063c7d4d08f56c65a9245881c8be"
+    },
+    {
+      "page": "Monitoring",
+      "source_file": "html/postgres_wiki_install_guides/wiki/Monitoring.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Monitoring.html",
+      "size_bytes": 44100,
+      "sha256": "004a8c026c1ead87f2c4cf44a363882dd49d0ca64454137f5661d43beb658733"
+    },
+    {
+      "page": "Number_Of_Database_Connections",
+      "source_file": "html/postgres_wiki_faq/wiki/Number_Of_Database_Connections.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Number_Of_Database_Connections.html",
+      "size_bytes": 22309,
+      "sha256": "b50e5293c96b5ef3b40df625f78150967cad57544c5491196b17f542f6feee29"
+    },
+    {
+      "page": "Performance_Analysis_Tools",
+      "source_file": "html/postgres_wiki_install_guides/wiki/Performance_Analysis_Tools.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Performance_Analysis_Tools.html",
+      "size_bytes": 34103,
+      "sha256": "358631d327eb599b809ecdc91dd96930a118fac1a29c46f3f0c4154a58eb674e"
+    },
+    {
+      "page": "Pgpass",
+      "source_file": "html/postgres_wiki_faq/wiki/Pgpass.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Pgpass.html",
+      "size_bytes": 13268,
+      "sha256": "31dd03ce4cf5a4f83f59459492f33cbaa82e8422a46fb37a1ab2f4a7fb0eac01"
+    },
+    {
+      "page": "Planner_Statistics",
+      "source_file": "html/postgres_wiki_install_guides/wiki/Planner_Statistics.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Planner_Statistics.html",
+      "size_bytes": 14416,
+      "sha256": "7973047d6b2307b69cd7f42abe1f3e910831148887597fdf89f654cb1d8ca24e"
+    },
+    {
+      "page": "Simple_Configuration_Recommendation",
+      "source_file": "html/postgres_wiki_install_guides/wiki/Simple_Configuration_Recommendation.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Simple_Configuration_Recommendation.html",
+      "size_bytes": 24632,
+      "sha256": "1eb71d0179a93cb7c21bd2a4e95055e8fdbd3c83dad63e6fd8ad5edbf379635c"
+    },
+    {
+      "page": "SlowQueryQuestions",
+      "source_file": "html/postgres_wiki_faq/wiki/SlowQueryQuestions.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/SlowQueryQuestions.html",
+      "size_bytes": 26553,
+      "sha256": "97829c7409efc74ea753c62f807a16257372a8fd2bc8b742127bee772de5d680"
+    },
+    {
+      "page": "Slow_Query_Questions",
+      "source_file": "html/postgres_wiki_faq/wiki/Slow_Query_Questions.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Slow_Query_Questions.html",
+      "size_bytes": 26148,
+      "sha256": "297ec449ff8cf80b579af5848b03b4d5169ef87fc9594da137b76d60e087a3e0"
+    },
+    {
+      "page": "Streaming_Replication",
+      "source_file": "html/postgres_wiki_faq/wiki/Streaming_Replication.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Streaming_Replication.html",
+      "size_bytes": 41902,
+      "sha256": "106e12c669312d3202fae38fd4857ef03a735d512306620e352c3d53b59ba8f9"
+    },
+    {
+      "page": "Tuning_Your_PostgreSQL_Server",
+      "source_file": "html/postgres_wiki_install_guides/wiki/Tuning_Your_PostgreSQL_Server/pt_BR.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Tuning_Your_PostgreSQL_Server.html",
+      "size_bytes": 44797,
+      "sha256": "686fcbd39cf8844bbbc2085b46e527fe09593166281953103d25f9a5bfbbf007"
+    },
+    {
+      "page": "Using_EXPLAIN",
+      "source_file": "html/postgres_wiki_faq/wiki/Using_EXPLAIN.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Using_EXPLAIN.html",
+      "size_bytes": 20547,
+      "sha256": "260f24fd2ba25b6845d2064c7b1275635d7f50aed06af4735f967d038854819b"
+    },
+    {
+      "page": "VACUUM_FULL",
+      "source_file": "html/postgres_wiki_faq/wiki/VACUUM_FULL.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/VACUUM_FULL.html",
+      "size_bytes": 29636,
+      "sha256": "99a0102d39871be8d5ea3ca7b70cfa8085a7a7912ab9b2ab4bdfd565f1f43fbd"
+    },
+    {
+      "page": "Vacuuming",
+      "source_file": "html/postgres_wiki_install_guides/wiki/Vacuuming.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Vacuuming.html",
+      "size_bytes": 15245,
+      "sha256": "fa9007fafa13bc515703e6c46ade79368c872ac3c69ecdb5e40ea5867658764a"
+    },
+    {
+      "page": "Warm_Standby",
+      "source_file": "html/postgres_wiki_faq/wiki/Warm_Standby.html",
+      "target_file": "html/postgres_wiki_whitelist/wiki/Warm_Standby.html",
+      "size_bytes": 20757,
+      "sha256": "fcb24af80570328700022f61238127b052cb96c391dd3474e935854e74759308"
+    }
+  ],
+  "removed_from_original_count": 294,
+  "whitelist": [
+    "Binary_Replication_Tutorial",
+    "Client_Authentication",
+    "Detailed_installation_guides",
+    "Disk_Usage",
+    "FAQ",
+    "Fixing_Sequences",
+    "Frequently_Asked_Questions",
+    "Index_Maintenance",
+    "Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT",
+    "Lock_Monitoring",
+    "Logging_Difficult_Queries",
+    "Monitoring",
+    "Number_Of_Database_Connections",
+    "Performance_Analysis_Tools",
+    "Pgpass",
+    "Planner_Statistics",
+    "Simple_Configuration_Recommendation",
+    "SlowQueryQuestions",
+    "Slow_Query_Questions",
+    "Streaming_Replication",
+    "Tuning_Your_PostgreSQL_Server",
+    "Using_EXPLAIN",
+    "VACUUM_FULL",
+    "Vacuuming",
+    "Warm_Standby"
+  ]
+}

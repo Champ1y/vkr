@@ -1,0 +1,682 @@
+{
+  "created_at": "2026-05-04T12:28:36+00:00",
+  "mode": "apply",
+  "root": "/home/arz/Desktop/RAG_postgres/corpus/tutorial",
+  "target": "/home/arz/Desktop/RAG_postgres/corpus/tutorial/processed_html/pgexercises",
+  "checked_files": 72,
+  "changed_files": 59,
+  "total_removed_lines": 108,
+  "backup_root": "/home/arz/Desktop/RAG_postgres/corpus/tutorial/_backup_before_pgexercises_boilerplate_clean_v2",
+  "results": [
+    {
+      "path": "processed_html/pgexercises/gettingstarted.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/index.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "getting started"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/index.md"
+    },
+    {
+      "path": "processed_html/pgexercises/options.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/classify.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/classify.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/count.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "aggregates"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/count.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/count2.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/count2.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/count3.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/count3.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/countmembers.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/countmembers.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/fachours.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours1a.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/fachours1a.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours2.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/fachours2.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours3.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/fachours3.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours4.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/fachours4.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachoursbymonth.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/fachoursbymonth.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachoursbymonth2.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/fachoursbymonth2.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachoursbymonth3.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/fachoursbymonth3.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/facrev.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/facrev.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/facrev2.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/facrev2.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/facrev3.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/facrev3.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/index.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/members1.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/members1.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/nbooking.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/nbooking.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/nummembers.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/nummembers.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/payback.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/payback.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/rankmembers.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "aggregates",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/rankmembers.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/rollingavg.md",
+      "changed": true,
+      "removed_lines": 3,
+      "removed_terms": [
+        "aggregates",
+        "date",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/aggregates/rollingavg.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/agg.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "basic",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/agg.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/agg2.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "basic",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/agg2.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/classify.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "basic",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/classify.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/date.md",
+      "changed": true,
+      "removed_lines": 3,
+      "removed_terms": [
+        "basic",
+        "date",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/date.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/index.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/selectall.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "basic"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/selectall.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/selectspecific.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "basic",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/selectspecific.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/union.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "basic",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/union.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/unique.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "basic",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/unique.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "basic",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/where.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where2.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "basic",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/where2.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where3.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "basic",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/where3.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where4.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "basic",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/basic/where4.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/bookingspermonth.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "date",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/date/bookingspermonth.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/daysinmonth.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "date",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/date/daysinmonth.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/daysremaining.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "date",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/date/daysremaining.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/endtimes.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "date",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/date/endtimes.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/index.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/interval.md",
+      "changed": true,
+      "removed_lines": 3,
+      "removed_terms": [
+        "date",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/date/interval.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/series.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "date",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/date/series.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/timestamp.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "date"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/date/timestamp.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/utilisationpermonth.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "date",
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/date/utilisationpermonth.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/index.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/self.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/joins/self.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/self2.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/joins/self2.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/simplejoin.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/simplejoin2.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/joins/simplejoin2.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/sub.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/joins/sub.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/threejoin2.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/joins/threejoin2.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/tjsub.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/joins/tjsub.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/recursive/getdownward.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "home",
+        "recursive"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/recursive/getdownward.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/recursive/getupwardall.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "home",
+        "recursive"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/recursive/getupwardall.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/recursive/index.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/case.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "home",
+        "string"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/string/case.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/index.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/like.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "home",
+        "string"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/string/like.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/pad.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "home",
+        "string"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/string/pad.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/reg.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "home",
+        "string"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/string/reg.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/translate.md",
+      "changed": true,
+      "removed_lines": 2,
+      "removed_terms": [
+        "home",
+        "string"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/string/translate.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/deletewh.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/deletewh2.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/index.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/insert.md",
+      "changed": false,
+      "removed_lines": 0,
+      "removed_terms": [],
+      "backup_path": null
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/insert2.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/updates/insert2.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/insert3.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/updates/insert3.md"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/updatemultiple.md",
+      "changed": true,
+      "removed_lines": 1,
+      "removed_terms": [
+        "home"
+      ],
+      "backup_path": "_backup_before_pgexercises_boilerplate_clean_v2/processed_html/pgexercises/questions/updates/updatemultiple.md"
+    }
+  ]
+}

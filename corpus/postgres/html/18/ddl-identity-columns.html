@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 18: 5.3. Identity Columns</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/18/ddl-identity-columns.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:07:09" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="5.3. Identity Columns" />
+  <meta property="og:description" content="5.3.&amp;nbsp;Identity Columns # An identity column is a special column that is generated automatically from an implicit sequence. It can …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?290b0238" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?290b0238">
+
+  <script src="/media/js/theme.js?290b0238"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/ddl-identity-columns.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/18/index.html">PostgreSQL 18</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/ddl-identity-columns.html" title="PostgreSQL 18 - 5.3. Identity Columns" class="docs-version-selected">Current</a>
+                          (<a href="/docs/18/ddl-identity-columns.html" title="PostgreSQL 18 - 5.3. Identity Columns" class="docs-version-selected">18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/ddl-identity-columns.html" title="PostgreSQL 17 - 5.3. Identity Columns" >17</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/ddl-identity-columns.html" title="PostgreSQL devel - 5.3. Identity Columns"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/18/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">5.3.&nbsp;Identity Columns</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="ddl-default.html" title="5.2.&nbsp;Default Values">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="ddl.html" title="Chapter&nbsp;5.&nbsp;Data Definition">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;5.&nbsp;Data Definition</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="ddl-generated-columns.html" title="5.4.&nbsp;Generated Columns">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="DDL-IDENTITY-COLUMNS">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">5.3.&nbsp;Identity Columns <a href="#DDL-IDENTITY-COLUMNS" class="id_link">#</a></h2>
+      </div>
+    </div>
+  </div><a id="id-1.5.4.5.2" class="indexterm" name="id-1.5.4.5.2"></a>
+  <p>An identity column is a special column that is generated automatically from an implicit sequence. It can be used to generate key values.</p>
+  <p>To create an identity column, use the <code class="literal">GENERATED ... AS IDENTITY</code> clause in <code class="command">CREATE TABLE</code>, for example:</p>
+  <pre class="programlisting">
+CREATE TABLE people (
+    id bigint <span class="emphasis"><strong>GENERATED ALWAYS AS IDENTITY</strong></span>,
+    ...,
+);
+</pre>
+  <p>or alternatively</p>
+  <pre class="programlisting">
+CREATE TABLE people (
+    id bigint <span class="emphasis"><strong>GENERATED BY DEFAULT AS IDENTITY</strong></span>,
+    ...,
+);
+</pre>
+  <p>See <a class="xref" href="sql-createtable.html" title="CREATE TABLE"><span class="refentrytitle">CREATE TABLE</span></a> for more details.</p>
+  <p>If an <code class="command">INSERT</code> command is executed on the table with the identity column and no value is explicitly specified for the identity column, then a value generated by the implicit sequence is inserted. For example, with the above definitions and assuming additional appropriate columns, writing</p>
+  <pre class="programlisting">
+INSERT INTO people (name, address) VALUES ('A', 'foo');
+INSERT INTO people (name, address) VALUES ('B', 'bar');
+</pre>
+  <p>would generate values for the <code class="literal">id</code> column starting at 1 and result in the following table data:</p>
+  <pre class="screen">
+ id | name | address
+----+------+---------
+  1 | A    | foo
+  2 | B    | bar
+</pre>
+  <p>Alternatively, the keyword <code class="literal">DEFAULT</code> can be specified in place of a value to explicitly request the sequence-generated value, like</p>
+  <pre class="programlisting">
+INSERT INTO people (id, name, address) VALUES (<span class="emphasis"><strong>DEFAULT</strong></span>, 'C', 'baz');
+</pre>
+  <p>Similarly, the keyword <code class="literal">DEFAULT</code> can be used in <code class="command">UPDATE</code> commands.</p>
+  <p>Thus, in many ways, an identity column behaves like a column with a default value.</p>
+  <p>The clauses <code class="literal">ALWAYS</code> and <code class="literal">BY DEFAULT</code> in the column definition determine how explicitly user-specified values are handled in <code class="command">INSERT</code> and <code class="command">UPDATE</code> commands. In an <code class="command">INSERT</code> command, if <code class="literal">ALWAYS</code> is selected, a user-specified value is only accepted if the <code class="command">INSERT</code> statement specifies <code class="literal">OVERRIDING SYSTEM VALUE</code>. If <code class="literal">BY DEFAULT</code> is selected, then the user-specified value takes precedence. Thus, using <code class="literal">BY DEFAULT</code> results in a behavior more similar to default values, where the default value can be overridden by an explicit value, whereas <code class="literal">ALWAYS</code> provides some more protection against accidentally inserting an explicit value.</p>
+  <p>The data type of an identity column must be one of the data types supported by sequences. (See <a class="xref" href="sql-createsequence.html" title="CREATE SEQUENCE"><span class="refentrytitle">CREATE SEQUENCE</span></a>.) The properties of the associated sequence may be specified when creating an identity column (see <a class="xref" href="sql-createtable.html" title="CREATE TABLE"><span class="refentrytitle">CREATE TABLE</span></a>) or changed afterwards (see <a class="xref" href="sql-altertable.html" title="ALTER TABLE"><span class="refentrytitle">ALTER TABLE</span></a>).</p>
+  <p>An identity column is automatically marked as <code class="literal">NOT NULL</code>. An identity column, however, does not guarantee uniqueness. (A sequence normally returns unique values, but a sequence could be reset, or values could be inserted manually into the identity column, as discussed above.) Uniqueness would need to be enforced using a <code class="literal">PRIMARY KEY</code> or <code class="literal">UNIQUE</code> constraint.</p>
+  <p>In table inheritance hierarchies, identity columns and their properties in a child table are independent of those in its parent tables. A child table does not inherit identity columns or their properties automatically from the parent. During <code class="command">INSERT</code> or <code class="command">UPDATE</code>, a column is treated as an identity column if that column is an identity column in the table named in the statement, and the corresponding identity properties are applied.</p>
+  <p>Partitions inherit identity columns from the partitioned table. They cannot have their own identity columns. The properties of a given identity column are consistent across all the partitions in the partition hierarchy.</p>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="ddl-default.html" title="5.2.&nbsp;Default Values">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="ddl.html" title="Chapter&nbsp;5.&nbsp;Data Definition">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="ddl-generated-columns.html" title="5.4.&nbsp;Generated Columns">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">5.2.&nbsp;Default Values&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;5.4.&nbsp;Generated Columns</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/18/ddl-identity-columns.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?290b0238"></script>
+
+  </body>
+</html>

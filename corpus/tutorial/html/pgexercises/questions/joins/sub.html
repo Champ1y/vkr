@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../../lib/codemirror/lib/codemirror.css" rel="stylesheet">
+    <link href="../../lib/perfect-scrollbar/min/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="../../lib/splitter/splitter.css" rel="stylesheet">
+    <link href="../../css/jquery/jquery-ui-1.10.3.custom.min.css " rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <!-- temporary downgrade to 1.10.2 due to popup drag bugs with 1.10.3-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="../../lib/codemirror/lib/codemirror.js"></script>
+    <script src="../../lib/perfect-scrollbar/min/perfect-scrollbar.with-mousewheel.min.js"></script>
+    <script src="../../lib/codemirror/mode/sql/sql.js"></script>
+    <script src="../../js/browser.js"></script>
+    <script src="../../lib/splitter/splitter.js"></script>
+    <script src="../../js/site.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+    <!-- Navbar
+      ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+
+    <div class="container">
+
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="threejoin2.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Joins</a> <span class="divider">/</span></li>
+            <li class="active">Sub</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="tjsub.html">Next Exercise</a></p></div>
+      </div>
+
+
+    <!-- Typography
+    ================================================== -->
+    <section id="typography">
+      <div class="page-header">
+        <h1>
+	<span style="float:left">
+Produce a list of all members, along with their recommender, using no joins.        </span>
+	<span style="float:right">
+	<img src="../../assets/tick2.svg" class="headertick"></img>
+
+	</span>
+        <div style="clear:both"></div>
+        </h1>
+      </div>
+
+      <div class="row" style="margin-bottom:10px">
+        <div class="span8">
+          <h3>Question</h3>
+How can you output a list of all members, including the individual who recommended them (if any), without using any joins? Ensure that there are no duplicates in the list, and that each firstname + surname pairing is formatted as a column and ordered.        </div>
+      </div>
+      <div class="row">
+      <div class="span12">
+      <div id=splittercontainerouter>
+        <div id="schemareminder" class="btn btn-primary" onClick="schema();">
+          <div>Schema reminder <span id="schemareminderarrow">&#x25BC;</span></div>
+        </div>
+        <div id="schemaremindercontents">
+          <img id="schemareminderimage" src="../../img/schema-horizontal.svg" alt="DB schema" width="840"></img>
+        </div>
+        <div id=splittercontainer>
+          <div id="expres" ondblclick="setOptimalExpectedResultsSize()">
+            <div style="overflow-x:hidden;">
+              <div style="display: inline-block; min-width:1000px;">
+                <h3>Expected Results</h3>
+                <div style="width:auto; display:inline-block">
+                  <table id="exprestable" class="demo table table-bordered table-striped" style="width:auto;">
+<thead><tr>
+<th>member</th>
+<th>recommender</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Anna Mackenzie</td>
+<td>Darren Smith</td>
+</tr>
+<tr>
+<td>Anne Baker</td>
+<td>Ponder Stibbons</td>
+</tr>
+<tr>
+<td>Burton Tracy</td>
+<td></td>
+</tr>
+<tr>
+<td>Charles Owen</td>
+<td>Darren Smith</td>
+</tr>
+<tr>
+<td>Darren Smith</td>
+<td></td>
+</tr>
+<tr>
+<td>David Farrell</td>
+<td></td>
+</tr>
+<tr>
+<td>David Jones</td>
+<td>Janice Joplette</td>
+</tr>
+<tr>
+<td>David Pinker</td>
+<td>Jemima Farrell</td>
+</tr>
+<tr>
+<td>Douglas Jones</td>
+<td>David Jones</td>
+</tr>
+<tr>
+<td>Erica Crumpet</td>
+<td>Tracy Smith</td>
+</tr>
+<tr>
+<td>Florence Bader</td>
+<td>Ponder Stibbons</td>
+</tr>
+<tr>
+<td>GUEST GUEST</td>
+<td></td>
+</tr>
+<tr>
+<td>Gerald Butters</td>
+<td>Darren Smith</td>
+</tr>
+<tr>
+<td>Henrietta Rumney</td>
+<td>Matthew Genting</td>
+</tr>
+<tr>
+<td>Henry Worthington-Smyth</td>
+<td>Tracy Smith</td>
+</tr>
+<tr>
+<td>Hyacinth Tupperware</td>
+<td></td>
+</tr>
+<tr>
+<td>Jack Smith</td>
+<td>Darren Smith</td>
+</tr>
+<tr>
+<td>Janice Joplette</td>
+<td>Darren Smith</td>
+</tr>
+<tr>
+<td>Jemima Farrell</td>
+<td></td>
+</tr>
+<tr>
+<td>Joan Coplin</td>
+<td>Timothy Baker</td>
+</tr>
+<tr>
+<td>John Hunt</td>
+<td>Millicent Purview</td>
+</tr>
+<tr>
+<td>Matthew Genting</td>
+<td>Gerald Butters</td>
+</tr>
+<tr>
+<td>Millicent Purview</td>
+<td>Tracy Smith</td>
+</tr>
+<tr>
+<td>Nancy Dare</td>
+<td>Janice Joplette</td>
+</tr>
+<tr>
+<td>Ponder Stibbons</td>
+<td>Burton Tracy</td>
+</tr>
+<tr>
+<td>Ramnaresh Sarwin</td>
+<td>Florence Bader</td>
+</tr>
+<tr>
+<td>Tim Boothe</td>
+<td>Tim Rownam</td>
+</tr>
+<tr>
+<td>Tim Rownam</td>
+<td></td>
+</tr>
+<tr>
+<td>Timothy Baker</td>
+<td>Jemima Farrell</td>
+</tr>
+<tr>
+<td>Tracy Smith</td>
+<td></td>
+</tr>
+</tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div id="codediv">
+            <div id="youranswerdiv" ondblclick="setOptimalYourAnswerSize()">
+                    <h3 style="min-width:200px;">Your Answer<span id="youranswertickspan"><img src="../../assets/cross.svg" class="youranswertick"></img></span>
+                <span id="youranswerbuttons">
+                  <a id="hintbtn" class="youranswerbutton btn btn-primary btn-small" onClick="hint();">Hint</a>
+                  <a id="helpbtn" class="youranswerbutton btn btn-primary btn-small" onClick="help();" title="[Alt-h]">Help</a>
+                  <a id="querybtn" class="youranswerbutton btn btn-primary btn-small" onClick="save();">Save</a>
+                  <a id="savebtn" class="youranswerbutton btn btn-primary btn-small" onClick="query();" title="[Alt-r]">Run Query</a>
+                </span>
+              </h3>
+              <div style="clear:both;">
+  	      <div id="codewrapper">
+                  <form>
+                    <textarea id="code" name="code"></textarea>
+                  </form>
+                </div>
+  	    </div>
+            </div>
+            <div id="yourresultsdiv" ondblclick="setOptimalYourResultsSize()">
+              <div>
+                <table id="yourresultstable" class="demo table table-bordered table-striped"></table>
+                <pre id="yourresultserror"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span12">
+          <h3>Answers and Discussion <a id="answerbtn" class="inactive btn btn-primary btn-small" style="margin: 5px" onClick="toggleAnswers();">Show</a></h3>
+          <pre id="querydiv" class="answerdiv prettyprint lang-sql">
+select distinct mems.firstname || ' ' ||  mems.surname as member,
+	(select recs.firstname || ' ' || recs.surname as recommender 
+		from cd.members recs 
+		where recs.memid = mems.recommendedby
+	)
+	from 
+		cd.members mems
+order by member;          </pre>
+          <div class="row">
+            <div class="span8 answerdiv">
+<p>This exercise marks the introduction of subqueries.  Subqueries are, as the name implies, queries within a query.  They're commonly used with aggregates, to answer questions like 'get me all the details of the member who has spent the most hours on Tennis Court 1'.</p>
+<p>In this case, we're simply using the subquery to emulate an outer join.  For every value of member, the subquery is run once to find the name of the individual who recommended them (if any).  A subquery that uses information from the outer query in this way (and thus has to be run for each row in the result set) is known as a <i>correlated subquery</i>.</p>            </div>
+          </div>
+        </div>
+      </div>
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="threejoin2.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Joins</a> <span class="divider">/</span></li>
+            <li class="active">Sub</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="tjsub.html">Next Exercise</a></p></div>
+      </div>
+    </div><!-- /container -->
+      <div id="hint" title="Hint">
+Answering this question correctly requires the use of a <i>subquery</i>
+      </div>
+      <div id="help" title="Help">
+        <div id="helpcontent">
+	  <h4>Keyboard shortcuts:</h4>
+	  <ul>
+	    <li><b>Alt-h</b>: Show/Hide Help menu
+	    <li><b>Alt-r</b>: Run query
+	    <li><b>Alt-x</b>: Run selected text as query
+	    <li><b>Alt-s</b>: Run query by cursor (delimited by whitespace/semi-colon)
+	  </ul>
+	  <hr />
+	  <h4>Other hints:</h4>
+	    <ul>
+	      <li>You can double click on each of the panes of Expected Result/Your answer to quickly resize them.
+	      <li>If you have trouble remembering the database schema, you can leave this popup open while you work on your answer.
+	      <li>Don't forget to use the hint button if you're stuck!
+	    </ul>
+	  <hr />
+	</div>
+      </div>
+
+
+    <script>
+        var App = {};
+	App.sorted = 1;
+	App.pageID = "699A3656-42C9-40AE-A56D-54DD6905FDEF";
+        App.writeable = 0;
+        App.tableToReturn = "";
+	App.jsonResults = sortJSONResults([["Anna Mackenzie","Darren Smith"],["Anne Baker","Ponder Stibbons"],["Burton Tracy",""],["Charles Owen","Darren Smith"],["Darren Smith",""],["David Farrell",""],["David Jones","Janice Joplette"],["David Pinker","Jemima Farrell"],["Douglas Jones","David Jones"],["Erica Crumpet","Tracy Smith"],["Florence Bader","Ponder Stibbons"],["GUEST GUEST",""],["Gerald Butters","Darren Smith"],["Henrietta Rumney","Matthew Genting"],["Henry Worthington-Smyth","Tracy Smith"],["Hyacinth Tupperware",""],["Jack Smith","Darren Smith"],["Janice Joplette","Darren Smith"],["Jemima Farrell",""],["Joan Coplin","Timothy Baker"],["John Hunt","Millicent Purview"],["Matthew Genting","Gerald Butters"],["Millicent Purview","Tracy Smith"],["Nancy Dare","Janice Joplette"],["Ponder Stibbons","Burton Tracy"],["Ramnaresh Sarwin","Florence Bader"],["Tim Boothe","Tim Rownam"],["Tim Rownam",""],["Timothy Baker","Jemima Farrell"],["Tracy Smith",""]]);
+    </script>
+
+    <script src="../../js/prettify/run_prettify.js?lang=sql"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+</html>

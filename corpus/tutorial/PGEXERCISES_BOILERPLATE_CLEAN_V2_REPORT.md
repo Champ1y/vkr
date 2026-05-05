@@ -1,0 +1,69 @@
+# PGExercises Boilerplate Clean V2 Report
+
+- mode: `apply`
+- checked_files: `72`
+- changed_files: `59`
+- total_removed_lines: `108`
+- backup_root: `/home/arz/Desktop/RAG_postgres/corpus/tutorial/_backup_before_pgexercises_boilerplate_clean_v2`
+
+## Changed files
+
+- `processed_html/pgexercises/index.md` — removed_lines=1, terms=getting started
+- `processed_html/pgexercises/questions/aggregates/classify.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/count.md` — removed_lines=1, terms=aggregates
+- `processed_html/pgexercises/questions/aggregates/count2.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/count3.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/countmembers.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/fachours.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/fachours1a.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/fachours2.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/fachours3.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/fachours4.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/fachoursbymonth.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/fachoursbymonth2.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/fachoursbymonth3.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/facrev.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/facrev2.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/facrev3.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/members1.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/nbooking.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/nummembers.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/payback.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/rankmembers.md` — removed_lines=2, terms=aggregates, home
+- `processed_html/pgexercises/questions/aggregates/rollingavg.md` — removed_lines=3, terms=aggregates, date, home
+- `processed_html/pgexercises/questions/basic/agg.md` — removed_lines=2, terms=basic, home
+- `processed_html/pgexercises/questions/basic/agg2.md` — removed_lines=2, terms=basic, home
+- `processed_html/pgexercises/questions/basic/classify.md` — removed_lines=2, terms=basic, home
+- `processed_html/pgexercises/questions/basic/date.md` — removed_lines=3, terms=basic, date, home
+- `processed_html/pgexercises/questions/basic/selectall.md` — removed_lines=1, terms=basic
+- `processed_html/pgexercises/questions/basic/selectspecific.md` — removed_lines=2, terms=basic, home
+- `processed_html/pgexercises/questions/basic/union.md` — removed_lines=2, terms=basic, home
+- `processed_html/pgexercises/questions/basic/unique.md` — removed_lines=2, terms=basic, home
+- `processed_html/pgexercises/questions/basic/where.md` — removed_lines=2, terms=basic, home
+- `processed_html/pgexercises/questions/basic/where2.md` — removed_lines=2, terms=basic, home
+- `processed_html/pgexercises/questions/basic/where3.md` — removed_lines=2, terms=basic, home
+- `processed_html/pgexercises/questions/basic/where4.md` — removed_lines=2, terms=basic, home
+- `processed_html/pgexercises/questions/date/bookingspermonth.md` — removed_lines=2, terms=date, home
+- `processed_html/pgexercises/questions/date/daysinmonth.md` — removed_lines=2, terms=date, home
+- `processed_html/pgexercises/questions/date/daysremaining.md` — removed_lines=2, terms=date, home
+- `processed_html/pgexercises/questions/date/endtimes.md` — removed_lines=2, terms=date, home
+- `processed_html/pgexercises/questions/date/interval.md` — removed_lines=3, terms=date, home
+- `processed_html/pgexercises/questions/date/series.md` — removed_lines=2, terms=date, home
+- `processed_html/pgexercises/questions/date/timestamp.md` — removed_lines=1, terms=date
+- `processed_html/pgexercises/questions/date/utilisationpermonth.md` — removed_lines=2, terms=date, home
+- `processed_html/pgexercises/questions/joins/self.md` — removed_lines=1, terms=home
+- `processed_html/pgexercises/questions/joins/self2.md` — removed_lines=1, terms=home
+- `processed_html/pgexercises/questions/joins/simplejoin2.md` — removed_lines=1, terms=home
+- `processed_html/pgexercises/questions/joins/sub.md` — removed_lines=1, terms=home
+- `processed_html/pgexercises/questions/joins/threejoin2.md` — removed_lines=1, terms=home
+- `processed_html/pgexercises/questions/joins/tjsub.md` — removed_lines=1, terms=home
+- `processed_html/pgexercises/questions/recursive/getdownward.md` — removed_lines=2, terms=home, recursive
+- `processed_html/pgexercises/questions/recursive/getupwardall.md` — removed_lines=2, terms=home, recursive
+- `processed_html/pgexercises/questions/string/case.md` — removed_lines=2, terms=home, string
+- `processed_html/pgexercises/questions/string/like.md` — removed_lines=2, terms=home, string
+- `processed_html/pgexercises/questions/string/pad.md` — removed_lines=2, terms=home, string
+- `processed_html/pgexercises/questions/string/reg.md` — removed_lines=2, terms=home, string
+- `processed_html/pgexercises/questions/string/translate.md` — removed_lines=2, terms=home, string
+- `processed_html/pgexercises/questions/updates/insert2.md` — removed_lines=1, terms=home
+- `processed_html/pgexercises/questions/updates/insert3.md` — removed_lines=1, terms=home
+- `processed_html/pgexercises/questions/updates/updatemultiple.md` — removed_lines=1, terms=home

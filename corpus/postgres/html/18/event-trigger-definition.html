@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 18: 38.1. Overview of Event Trigger Behavior</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/18/event-trigger-definition.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:07:09" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="38.1. Overview of Event Trigger Behavior" />
+  <meta property="og:description" content="38.1.&amp;nbsp;Overview of Event Trigger Behavior # 38.1.1. login 38.1.2. ddl_command_start 38.1.3. ddl_command_end 38.1.4. sql_drop 38.1.5. table_rewrite 38.1.6. Event Triggers in …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?290b0238" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?290b0238">
+
+  <script src="/media/js/theme.js?290b0238"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/event-trigger-definition.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/18/index.html">PostgreSQL 18</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/event-trigger-definition.html" title="PostgreSQL 18 - 38.1. Overview of Event Trigger Behavior" class="docs-version-selected">Current</a>
+                          (<a href="/docs/18/event-trigger-definition.html" title="PostgreSQL 18 - 38.1. Overview of Event Trigger Behavior" class="docs-version-selected">18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/event-trigger-definition.html" title="PostgreSQL 17 - 38.1. Overview of Event Trigger Behavior" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/event-trigger-definition.html" title="PostgreSQL 16 - 38.1. Overview of Event Trigger Behavior" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/event-trigger-definition.html" title="PostgreSQL 15 - 38.1. Overview of Event Trigger Behavior" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/event-trigger-definition.html" title="PostgreSQL 14 - 38.1. Overview of Event Trigger Behavior" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/event-trigger-definition.html" title="PostgreSQL devel - 38.1. Overview of Event Trigger Behavior"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/event-trigger-definition.html" title="PostgreSQL 13 - 38.1. Overview of Event Trigger Behavior"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/event-trigger-definition.html" title="PostgreSQL 12 - 38.1. Overview of Event Trigger Behavior"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/event-trigger-definition.html" title="PostgreSQL 11 - 38.1. Overview of Event Trigger Behavior"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/event-trigger-definition.html" title="PostgreSQL 10 - 38.1. Overview of Event Trigger Behavior"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/event-trigger-definition.html" title="PostgreSQL 9.6 - 38.1. Overview of Event Trigger Behavior"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/event-trigger-definition.html" title="PostgreSQL 9.5 - 38.1. Overview of Event Trigger Behavior"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/event-trigger-definition.html" title="PostgreSQL 9.4 - 38.1. Overview of Event Trigger Behavior"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/event-trigger-definition.html" title="PostgreSQL 9.3 - 38.1. Overview of Event Trigger Behavior"  rel="nofollow">9.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/18/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">38.1.&nbsp;Overview of Event Trigger Behavior</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="event-triggers.html" title="Chapter&nbsp;38.&nbsp;Event Triggers">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="event-triggers.html" title="Chapter&nbsp;38.&nbsp;Event Triggers">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;38.&nbsp;Event Triggers</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="event-trigger-interface.html" title="38.2.&nbsp;Writing Event Trigger Functions in C">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="EVENT-TRIGGER-DEFINITION">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">38.1.&nbsp;Overview of Event Trigger Behavior <a href="#EVENT-TRIGGER-DEFINITION" class="id_link">#</a></h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="event-trigger-definition.html#EVENT-TRIGGER-LOGIN">38.1.1. login</a></span></dt>
+      <dt><span class="sect2"><a href="event-trigger-definition.html#EVENT-TRIGGER-DDL_COMMAND_START">38.1.2. ddl_command_start</a></span></dt>
+      <dt><span class="sect2"><a href="event-trigger-definition.html#EVENT-TRIGGER-DDL_COMMAND_END">38.1.3. ddl_command_end</a></span></dt>
+      <dt><span class="sect2"><a href="event-trigger-definition.html#EVENT-TRIGGER-SQL_DROP">38.1.4. sql_drop</a></span></dt>
+      <dt><span class="sect2"><a href="event-trigger-definition.html#EVENT-TRIGGER-TABLE_REWRITE">38.1.5. table_rewrite</a></span></dt>
+      <dt><span class="sect2"><a href="event-trigger-definition.html#EVENT-TRIGGER-ABORTED-TRANSACTIONS">38.1.6. Event Triggers in Aborted Transactions</a></span></dt>
+      <dt><span class="sect2"><a href="event-trigger-definition.html#EVENT-TRIGGER-CREATING">38.1.7. Creating Event Triggers</a></span></dt>
+    </dl>
+  </div>
+  <p>An event trigger fires whenever the event with which it is associated occurs in the database in which it is defined. Currently, the supported events are <code class="literal">login</code>, <code class="literal">ddl_command_start</code>, <code class="literal">ddl_command_end</code>, <code class="literal">table_rewrite</code> and <code class="literal">sql_drop</code>. Support for additional events may be added in future releases.</p>
+  <div class="sect2" id="EVENT-TRIGGER-LOGIN">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">38.1.1.&nbsp;login <a href="#EVENT-TRIGGER-LOGIN" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <p>The <code class="literal">login</code> event occurs when an authenticated user logs into the system. Any bug in a trigger procedure for this event may prevent successful login to the system. Such bugs may be worked around by setting <a class="xref" href="runtime-config-client.html#GUC-EVENT-TRIGGERS">event_triggers</a> to <code class="literal">false</code> either in a connection string or configuration file. Alternatively, you can restart the system in single-user mode (as event triggers are disabled in this mode). See the <a class="xref" href="app-postgres.html" title="postgres"><span class="refentrytitle"><span class="application">postgres</span></span></a> reference page for details about using single-user mode. The <code class="literal">login</code> event will also fire on standby servers. To prevent servers from becoming inaccessible, such triggers must avoid writing anything to the database when running on a standby. Also, it's recommended to avoid long-running queries in <code class="literal">login</code> event triggers. Note that, for instance, canceling a connection in <span class="application">psql</span> will not cancel the in-progress <code class="literal">login</code> trigger.</p>
+    <p>For an example on how to use the <code class="literal">login</code> event trigger, see <a class="xref" href="event-trigger-database-login-example.html" title="38.5.&nbsp;A Database Login Event Trigger Example">Section&nbsp;38.5</a>.</p>
+  </div>
+  <div class="sect2" id="EVENT-TRIGGER-DDL_COMMAND_START">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">38.1.2.&nbsp;ddl_command_start <a href="#EVENT-TRIGGER-DDL_COMMAND_START" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <p>The <code class="literal">ddl_command_start</code> event occurs just before the execution of a DDL command. DDL commands in this context are:</p>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">
+          <p><code class="literal">CREATE</code></p>
+        </li>
+        <li class="listitem">
+          <p><code class="literal">ALTER</code></p>
+        </li>
+        <li class="listitem">
+          <p><code class="literal">DROP</code></p>
+        </li>
+        <li class="listitem">
+          <p><code class="literal">COMMENT</code></p>
+        </li>
+        <li class="listitem">
+          <p><code class="literal">GRANT</code></p>
+        </li>
+        <li class="listitem">
+          <p><code class="literal">IMPORT FOREIGN SCHEMA</code></p>
+        </li>
+        <li class="listitem">
+          <p><code class="literal">REINDEX</code></p>
+        </li>
+        <li class="listitem">
+          <p><code class="literal">REFRESH MATERIALIZED VIEW</code></p>
+        </li>
+        <li class="listitem">
+          <p><code class="literal">REVOKE</code></p>
+        </li>
+        <li class="listitem">
+          <p><code class="literal">SECURITY LABEL</code></p>
+        </li>
+      </ul>
+    </div>
+    <p><code class="literal">ddl_command_start</code> also occurs just before the execution of a <code class="literal">SELECT INTO</code> command, since this is equivalent to <code class="literal">CREATE TABLE AS</code>.</p>
+    <p>As an exception, this event does not occur for DDL commands targeting shared objects:</p>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">
+          <p>databases</p>
+        </li>
+        <li class="listitem">
+          <p>roles (role definitions and role memberships)</p>
+        </li>
+        <li class="listitem">
+          <p>tablespaces</p>
+        </li>
+        <li class="listitem">
+          <p>parameter privileges</p>
+        </li>
+        <li class="listitem">
+          <p><code class="command">ALTER SYSTEM</code></p>
+        </li>
+      </ul>
+    </div>
+    <p>This event also does not occur for commands targeting event triggers themselves.</p>
+    <p>No check whether the affected object exists or doesn't exist is performed before the event trigger fires.</p>
+  </div>
+  <div class="sect2" id="EVENT-TRIGGER-DDL_COMMAND_END">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">38.1.3.&nbsp;ddl_command_end <a href="#EVENT-TRIGGER-DDL_COMMAND_END" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <p>The <code class="literal">ddl_command_end</code> event occurs just after the execution of the same set of commands as <code class="literal">ddl_command_start</code>. To obtain more details on the <acronym class="acronym">DDL</acronym> operations that took place, use the set-returning function <code class="literal">pg_event_trigger_ddl_commands()</code> from the <code class="literal">ddl_command_end</code> event trigger code (see <a class="xref" href="functions-event-triggers.html" title="9.30.&nbsp;Event Trigger Functions">Section&nbsp;9.30</a>). Note that the trigger fires after the actions have taken place (but before the transaction commits), and thus the system catalogs can be read as already changed.</p>
+  </div>
+  <div class="sect2" id="EVENT-TRIGGER-SQL_DROP">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">38.1.4.&nbsp;sql_drop <a href="#EVENT-TRIGGER-SQL_DROP" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <p>The <code class="literal">sql_drop</code> event occurs just before the <code class="literal">ddl_command_end</code> event trigger for any operation that drops database objects. Note that besides the obvious <code class="literal">DROP</code> commands, some <code class="literal">ALTER</code> commands can also trigger an <code class="literal">sql_drop</code> event.</p>
+    <p>To list the objects that have been dropped, use the set-returning function <code class="literal">pg_event_trigger_dropped_objects()</code> from the <code class="literal">sql_drop</code> event trigger code (see <a class="xref" href="functions-event-triggers.html" title="9.30.&nbsp;Event Trigger Functions">Section&nbsp;9.30</a>). Note that the trigger is executed after the objects have been deleted from the system catalogs, so it's not possible to look them up anymore.</p>
+  </div>
+  <div class="sect2" id="EVENT-TRIGGER-TABLE_REWRITE">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">38.1.5.&nbsp;table_rewrite <a href="#EVENT-TRIGGER-TABLE_REWRITE" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <p>The <code class="literal">table_rewrite</code> event occurs just before a table is rewritten by some actions of the commands <code class="literal">ALTER TABLE</code> and <code class="literal">ALTER TYPE</code>. While other control statements are available to rewrite a table, like <code class="literal">CLUSTER</code> and <code class="literal">VACUUM</code>, the <code class="literal">table_rewrite</code> event is not triggered by them. To find the OID of the table that was rewritten, use the function <code class="literal">pg_event_trigger_table_rewrite_oid()</code>, to discover the reason(s) for the rewrite, use the function <code class="literal">pg_event_trigger_table_rewrite_reason()</code> (see <a class="xref" href="functions-event-triggers.html" title="9.30.&nbsp;Event Trigger Functions">Section&nbsp;9.30</a>).</p>
+  </div>
+  <div class="sect2" id="EVENT-TRIGGER-ABORTED-TRANSACTIONS">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">38.1.6.&nbsp;Event Triggers in Aborted Transactions <a href="#EVENT-TRIGGER-ABORTED-TRANSACTIONS" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <p>Event triggers (like other functions) cannot be executed in an aborted transaction. Thus, if a DDL command fails with an error, any associated <code class="literal">ddl_command_end</code> triggers will not be executed. Conversely, if a <code class="literal">ddl_command_start</code> trigger fails with an error, no further event triggers will fire, and no attempt will be made to execute the command itself. Similarly, if a <code class="literal">ddl_command_end</code> trigger fails with an error, the effects of the DDL statement will be rolled back, just as they would be in any other case where the containing transaction aborts.</p>
+  </div>
+  <div class="sect2" id="EVENT-TRIGGER-CREATING">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">38.1.7.&nbsp;Creating Event Triggers <a href="#EVENT-TRIGGER-CREATING" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <p>Event triggers are created using the command <a class="xref" href="sql-createeventtrigger.html" title="CREATE EVENT TRIGGER"><span class="refentrytitle">CREATE EVENT TRIGGER</span></a>. In order to create an event trigger, you must first create a function with the special return type <code class="literal">event_trigger</code>. This function need not (and may not) return a value; the return type serves merely as a signal that the function is to be invoked as an event trigger.</p>
+    <p>If more than one event trigger is defined for a particular event, they will fire in alphabetical order by trigger name.</p>
+    <p>A trigger definition can also specify a <code class="literal">WHEN</code> condition so that, for example, a <code class="literal">ddl_command_start</code> trigger can be fired only for particular commands which the user wishes to intercept. A common use of such triggers is to restrict the range of DDL operations which users may perform.</p>
+  </div>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="event-triggers.html" title="Chapter&nbsp;38.&nbsp;Event Triggers">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="event-triggers.html" title="Chapter&nbsp;38.&nbsp;Event Triggers">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="event-trigger-interface.html" title="38.2.&nbsp;Writing Event Trigger Functions in C">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">Chapter&nbsp;38.&nbsp;Event Triggers&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;38.2.&nbsp;Writing Event Trigger Functions in C</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/18/event-trigger-definition.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?290b0238"></script>
+
+  </body>
+</html>

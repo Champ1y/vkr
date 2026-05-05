@@ -55,8 +55,6 @@
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix incorrect handling of incremental backups of large tables (Robert Haas, Oleg Tkachenko) §
 [E.2. Release 17.8 # / E.2.2. Changes #] If a table exceeding 1GB (or in general, the installation's segment size) is truncated by VACUUM between the base backup and the incremental backup, pg_combinebackup could fail with an error about “ truncation block length in excess of segment size ” . This prevented restoring the incremental backup.
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix potential backend process crash at process exit due to trying to release a lock in an already-unmapped shared memory segment (Rahila Syed) §
-[E.2. Release 17.8 # / E.2.2. Changes #] Fix potential backend process crash at process exit due to trying to release a lock in an already-unmapped shared memory segment (Rahila Syed) §
-[E.2. Release 17.8 # / E.2.2. Changes #] Guard against incorrect truncation of the multixact log after a crash (Heikki Linnakangas) §
 [E.2. Release 17.8 # / E.2.2. Changes #] Guard against incorrect truncation of the multixact log after a crash (Heikki Linnakangas) §
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix possibly mis-encoded result of pg_stat_get_backend_activity() (Chao Li) § The shared-memory buffer holding a session's activity string can end with an incomplete multibyte character. Readers are supposed to truncate off any such incomplete character, but this function failed to do so.
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix possibly mis-encoded result of pg_stat_get_backend_activity() (Chao Li) §
@@ -101,7 +99,6 @@
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix logical replication slotsync worker processes to handle LOCK_TIMEOUT signals correctly (Zhijie Hou) §
 [E.2. Release 17.8 # / E.2.2. Changes #] Previously, timeout signals were effectively ignored.
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix possible failure with “ unexpected data beyond EOF ” during restart of a streaming replica server (Anthonin Bonnefoy) §
-[E.2. Release 17.8 # / E.2.2. Changes #] Fix possible failure with “ unexpected data beyond EOF ” during restart of a streaming replica server (Anthonin Bonnefoy) §
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix error reporting for SQL/JSON path type mismatches (Jian He) § The code could produce a “ cache lookup failed for type 0 ” error instead of the intended complaint about the path expression not being of the right type.
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix error reporting for SQL/JSON path type mismatches (Jian He) §
 [E.2. Release 17.8 # / E.2.2. Changes #] The code could produce a “ cache lookup failed for type 0 ” error instead of the intended complaint about the path expression not being of the right type.
@@ -111,7 +108,6 @@
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix assorted minor errors in error messages (Man Zeng, Tianchen Zhang) § § § § § For example, an error report about mismatched timeline number in a backup manifest showed the starting timeline number where it meant to show the ending timeline number.
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix assorted minor errors in error messages (Man Zeng, Tianchen Zhang) § § § § §
 [E.2. Release 17.8 # / E.2.2. Changes #] For example, an error report about mismatched timeline number in a backup manifest showed the starting timeline number where it meant to show the ending timeline number.
-[E.2. Release 17.8 # / E.2.2. Changes #] Fix failure to perform function inlining when doing JIT compilation with LLVM version 17 or later (Anthonin Bonnefoy) §
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix failure to perform function inlining when doing JIT compilation with LLVM version 17 or later (Anthonin Bonnefoy) §
 [E.2. Release 17.8 # / E.2.2. Changes #] Adjust our JIT code to work with LLVM 21 (Holger Hoffstätte) § The previous coding failed to compile on aarch64 machines.
 [E.2. Release 17.8 # / E.2.2. Changes #] Adjust our JIT code to work with LLVM 21 (Holger Hoffstätte) §
@@ -123,8 +119,6 @@
 [E.2. Release 17.8 # / E.2.2. Changes #] Honor open() 's O_CLOEXEC flag on Windows (Bryan Green, Thomas Munro) § § §
 [E.2. Release 17.8 # / E.2.2. Changes #] Make this flag work like it does on POSIX platforms, so that we don't leak file handles into child processes such as COPY TO/FROM PROGRAM . While that leakage hasn't caused many problems, it seems undesirable.
 [E.2. Release 17.8 # / E.2.2. Changes #] Fix failure to parse long options on the server command line in Solaris executables built with meson (Tom Lane) §
-[E.2. Release 17.8 # / E.2.2. Changes #] Fix failure to parse long options on the server command line in Solaris executables built with meson (Tom Lane) §
-[E.2. Release 17.8 # / E.2.2. Changes #] Support process title changes on GNU/Hurd (Michael Banck) §
 [E.2. Release 17.8 # / E.2.2. Changes #] Support process title changes on GNU/Hurd (Michael Banck) §
 [E.2. Release 17.8 # / E.2.2. Changes #] Avoid pg_dump assertion failure in binary-upgrade mode (Vignesh C) § Failure to handle subscription-relation objects in the object sorting code triggered an assertion, though there were no serious ill effects in production builds.
 [E.2. Release 17.8 # / E.2.2. Changes #] Avoid pg_dump assertion failure in binary-upgrade mode (Vignesh C) §

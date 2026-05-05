@@ -1,0 +1,17 @@
+{
+  "source": "pgexercises",
+  "kept_path": "html/pgexercises",
+  "authority": "exercise_layer",
+  "usage_rule": "Использовать для SQL practice only; not for administration, backup, replication, authentication.",
+  "included_files_count": 51,
+  "expected_topics": [
+    "basic",
+    "joins",
+    "aggregates",
+    "date",
+    "string",
+    "recursive",
+    "updates"
+  ],
+  "note": "Исходный пользовательский archive содержал не все HTML exercise pages. Недостающие practical coverage закрывается curated/sql_practice_tasks.ru.md; при необходимости можно отдельно докачать полный PGExercises."
+}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ app_name }} — История</title>
+  <link rel="stylesheet" href="/static/style.css?v=20260425d" />
+</head>
+<body>
+  <main class="container">
+
+    <header class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">История запросов</h1>
+        <p class="hero-subtitle">Ранее заданные вопросы и полученные ответы</p>
+      </div>
+      <a class="btn btn-secondary nav-link" href="/">Новый запрос</a>
+    </header>
+
+    <section class="card history-card">
+      <div class="history-header">
+        <h2 class="history-title">Последние запросы</h2>
+        <div class="history-actions">
+          <button id="refresh-btn" class="btn btn-secondary" type="button">Обновить</button>
+          <a class="btn btn-secondary" href="/">Новый запрос</a>
+        </div>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </section>
+
+  </main>
+
+  <script src="/static/history.js?v=20260425d"></script>
+</body>
+</html>

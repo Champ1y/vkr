@@ -15,7 +15,6 @@
 [E.5. Release 16.9 # / E.5.2. Changes #] The code failed to account for decompression results not being identical to the input objects, which would result in failure to add some of the data to the merged summary, leading to missed rows in index searches.
 [E.5. Release 16.9 # / E.5.2. Changes #] This mistake was present back to v14 where BRIN bloom indexes were introduced, but this code path was only rarely reached then. It's substantially more likely to be hit in v17 because parallel index builds now use the code.
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix unexpected “ attribute has wrong type ” errors in UPDATE , DELETE , and MERGE queries that use whole-row table references to views or functions in FROM (Tom Lane) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Fix unexpected “ attribute has wrong type ” errors in UPDATE , DELETE , and MERGE queries that use whole-row table references to views or functions in FROM (Tom Lane) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix MERGE into a partitioned table with DO NOTHING actions (Tender Wang) § Some cases failed with “ unknown action in MERGE WHEN clause ” errors.
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix MERGE into a partitioned table with DO NOTHING actions (Tender Wang) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Some cases failed with “ unknown action in MERGE WHEN clause ” errors.
@@ -32,15 +31,11 @@
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix ARRAY( subquery ) and ARRAY[ expression, ... ] constructs to produce sane results when the input is of type int2vector or oidvector (Tom Lane) §
 [E.5. Release 16.9 # / E.5.2. Changes #] This patch restores the behavior that existed before PostgreSQL 9.5: the result is of type int2vector[] or oidvector[] .
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix possible erroneous reports of invalid affixes while parsing Ispell dictionaries (Jacob Brazeal) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Fix possible erroneous reports of invalid affixes while parsing Ispell dictionaries (Jacob Brazeal) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix ALTER TABLE ADD COLUMN to correctly handle the case of a domain type that has a default (Jian He, Tom Lane, Tender Wang) § § If a domain type has a default, adding a column of that type (without any explicit DEFAULT clause) failed to install the domain's default value in existing rows, instead leaving the new column null.
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix ALTER TABLE ADD COLUMN to correctly handle the case of a domain type that has a default (Jian He, Tom Lane, Tender Wang) § §
 [E.5. Release 16.9 # / E.5.2. Changes #] If a domain type has a default, adding a column of that type (without any explicit DEFAULT clause) failed to install the domain's default value in existing rows, instead leaving the new column null.
 [E.5. Release 16.9 # / E.5.2. Changes #] Repair misbehavior when there are duplicate column names in a foreign key constraint's ON DELETE SET DEFAULT or SET NULL action (Tom Lane) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Repair misbehavior when there are duplicate column names in a foreign key constraint's ON DELETE SET DEFAULT or SET NULL action (Tom Lane) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Improve the error message for disallowed attempts to alter the properties of a foreign key constraint (Álvaro Herrera) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Improve the error message for disallowed attempts to alter the properties of a foreign key constraint (Álvaro Herrera) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Avoid error when resetting the relhassubclass flag of a temporary table that's marked ON COMMIT DELETE ROWS (Noah Misch) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Avoid error when resetting the relhassubclass flag of a temporary table that's marked ON COMMIT DELETE ROWS (Noah Misch) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Add missing deparsing of the INDENT option of XMLSERIALIZE() (Jim Jones) § § Previously, views or rules using XMLSERIALIZE(... INDENT) were dumped without the INDENT clause, causing incorrect results after restore.
 [E.5. Release 16.9 # / E.5.2. Changes #] Add missing deparsing of the INDENT option of XMLSERIALIZE() (Jim Jones) § §
@@ -58,7 +53,6 @@
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix performance issues in GIN index search startup when there are many search keys (Tom Lane, Vinod Sridharan) § §
 [E.5. Release 16.9 # / E.5.2. Changes #] An indexable clause with many keys (for example, jsonbcol ?| array[...] with tens of thousands of array elements) took O(N 2 ) time to start up, and was uncancelable for that interval too.
 [E.5. Release 16.9 # / E.5.2. Changes #] Detect missing support procedures in a BRIN index operator class, and report an error instead of crashing (Álvaro Herrera) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Detect missing support procedures in a BRIN index operator class, and report an error instead of crashing (Álvaro Herrera) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Respond to interrupts (such as query cancel) while waiting for asynchronous subplans of an Append plan node (Heikki Linnakangas) § Previously, nothing would happen until one of the subplans becomes ready.
 [E.5. Release 16.9 # / E.5.2. Changes #] Respond to interrupts (such as query cancel) while waiting for asynchronous subplans of an Append plan node (Heikki Linnakangas) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Previously, nothing would happen until one of the subplans becomes ready.
@@ -69,14 +63,9 @@
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix race condition in handling of synchronous_standby_names immediately after startup (Melnikov Maksim, Michael Paquier) §
 [E.5. Release 16.9 # / E.5.2. Changes #] For a short period after system startup, backends might fail to wait for synchronous commit even though synchronous_standby_names is enabled.
 [E.5. Release 16.9 # / E.5.2. Changes #] Avoid infinite loop if scram_iterations is set to INT_MAX (Kevin K Biju) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Avoid infinite loop if scram_iterations is set to INT_MAX (Kevin K Biju) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Avoid possible crashes due to double transformation of json_array() 's subquery (Tom Lane) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Avoid possible crashes due to double transformation of json_array() 's subquery (Tom Lane) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix pg_strtof() to not crash with null endptr (Alexander Lakhin, Tom Lane) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Fix pg_strtof() to not crash with null endptr (Alexander Lakhin, Tom Lane) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix crash after out-of-memory in certain GUC assignments (Daniel Gustafsson) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Fix crash after out-of-memory in certain GUC assignments (Daniel Gustafsson) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Avoid crash when a Snowball stemmer encounters an out-of-memory condition (Maksim Korotkov) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Avoid crash when a Snowball stemmer encounters an out-of-memory condition (Maksim Korotkov) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Disallow copying of invalidated replication slots (Shlok Kyal) § This prevents trouble when the invalid slot points to WAL that's already been removed.
 [E.5. Release 16.9 # / E.5.2. Changes #] Disallow copying of invalidated replication slots (Shlok Kyal) §
@@ -94,7 +83,6 @@
 [E.5. Release 16.9 # / E.5.2. Changes #] Prevent incorrect reset of replication origin when an apply worker encounters an error but the error is caught and does not result in worker exit (Hayato Kuroda) §
 [E.5. Release 16.9 # / E.5.2. Changes #] This mistake could allow duplicate data to be applied.
 [E.5. Release 16.9 # / E.5.2. Changes #] Avoid duplicate snapshot creation in logical replication index lookups (Heikki Linnakangas) § §
-[E.5. Release 16.9 # / E.5.2. Changes #] Avoid duplicate snapshot creation in logical replication index lookups (Heikki Linnakangas) § §
 [E.5. Release 16.9 # / E.5.2. Changes #] Improve detection of mixed-origin subscriptions (Hou Zhijie, Shlok Kyal) § Subscription creation gives a warning if a subscribed-to table is also being followed through other publications, since that could cause duplicate data to be received. This change improves that logic to also detect cases where a partition parent or child table is the one being followed through another publication.
 [E.5. Release 16.9 # / E.5.2. Changes #] Improve detection of mixed-origin subscriptions (Hou Zhijie, Shlok Kyal) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Subscription creation gives a warning if a subscribed-to table is also being followed through other publications, since that could cause duplicate data to be received. This change improves that logic to also detect cases where a partition parent or child table is the one being followed through another publication.
@@ -102,12 +90,8 @@
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix wrong checkpoint details in error message about incorrect recovery timeline choice (David Steele) §
 [E.5. Release 16.9 # / E.5.2. Changes #] If the requested recovery timeline is not reachable, the reported checkpoint and timeline should be the values read from the backup_label, if there is one. This message previously reported values from the control file, which is correct when recovering from the control file without a backup_label, but not when there is a backup_label.
 [E.5. Release 16.9 # / E.5.2. Changes #] Remove incorrect assertion in pgstat_report_stat() (Michael Paquier) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Remove incorrect assertion in pgstat_report_stat() (Michael Paquier) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Fix overly-strict assertion in gistFindCorrectParent() (Heikki Linnakangas) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix overly-strict assertion in gistFindCorrectParent() (Heikki Linnakangas) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Fix rare assertion failure in standby servers when the primary is restarted (Heikki Linnakangas) §
-[E.5. Release 16.9 # / E.5.2. Changes #] Fix rare assertion failure in standby servers when the primary is restarted (Heikki Linnakangas) §
-[E.5. Release 16.9 # / E.5.2. Changes #] In PL/pgSQL, avoid “ unexpected plan node type ” error when a scrollable cursor is defined on a simple SELECT expression query (Andrei Lepikhov) §
 [E.5. Release 16.9 # / E.5.2. Changes #] In PL/pgSQL, avoid “ unexpected plan node type ” error when a scrollable cursor is defined on a simple SELECT expression query (Andrei Lepikhov) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Don't try to drop individual index partitions in pg_dump 's --clean mode (Jian He) § The server rejects such DROP commands. That has no real consequences, since the partitions will go away anyway in the subsequent DROP s of either their parent tables or their partitioned index. However, the error reported for the attempted drop causes problems when restoring in --single-transaction mode.
 [E.5. Release 16.9 # / E.5.2. Changes #] Don't try to drop individual index partitions in pg_dump 's --clean mode (Jian He) §
@@ -121,7 +105,6 @@
 [E.5. Release 16.9 # / E.5.2. Changes #] Allow contrib/dblink queries to be interrupted by query cancel (Noah Misch) § This change back-patches a v17-era fix. It prevents possible hangs in CREATE DATABASE and DROP DATABASE due to failure to detect deadlocks.
 [E.5. Release 16.9 # / E.5.2. Changes #] Allow contrib/dblink queries to be interrupted by query cancel (Noah Misch) §
 [E.5. Release 16.9 # / E.5.2. Changes #] This change back-patches a v17-era fix. It prevents possible hangs in CREATE DATABASE and DROP DATABASE due to failure to detect deadlocks.
-[E.5. Release 16.9 # / E.5.2. Changes #] Avoid crashing with corrupt input data in contrib/pageinspect 's heap_page_items() (Dmitry Kovalenko) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Avoid crashing with corrupt input data in contrib/pageinspect 's heap_page_items() (Dmitry Kovalenko) §
 [E.5. Release 16.9 # / E.5.2. Changes #] Prevent assertion failure in contrib/pg_freespacemap 's pg_freespacemap() (Tender Wang) § Applying pg_freespacemap() to a relation lacking storage (such as a view) caused an assertion failure, although there was no ill effect in non-assert builds. Add an error check to reject that case.
 [E.5. Release 16.9 # / E.5.2. Changes #] Prevent assertion failure in contrib/pg_freespacemap 's pg_freespacemap() (Tender Wang) §

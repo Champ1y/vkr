@@ -1,0 +1,44 @@
+{
+  "retrieval_modes": {
+    "answer": [
+      "official"
+    ],
+    "tutorial_extended_false": [
+      "official"
+    ],
+    "tutorial_extended_true": [
+      "official",
+      "supplementary"
+    ]
+  },
+  "raw_html_indexable": false,
+  "processed_html_indexable": true,
+  "curated_markdown_indexable": true,
+  "official_required_for_factual_answers": true,
+  "index_globs": [
+    "corpus/postgres/html/**/*.html",
+    "corpus/tutorial/curated/**/*.md",
+    "corpus/tutorial/processed_html/**/*.md"
+  ],
+  "do_not_index_globs": [
+    "corpus/tutorial/html/**/*.html",
+    "corpus/tutorial/external_registry/**",
+    "corpus/tutorial/scripts/**",
+    "corpus/tutorial/*REPORT*",
+    "corpus/tutorial/*MANIFEST*",
+    "corpus/tutorial/**/__pycache__/**",
+    "corpus/tutorial/**/*.pyc",
+    "corpus/tutorial/**/_backup*/**",
+    "official/html/**",
+    "**/*.bak",
+    "**/download_manifest.jsonl.bak*"
+  ],
+  "rules": [
+    "answer mode uses official corpus only",
+    "tutorial extended=false uses official corpus only",
+    "tutorial extended=true can use official + supplementary",
+    "supplementary never replaces official",
+    "fact claims must be backed by official docs of selected major version",
+    "do not embed raw HTML directly; use processed_html"
+  ]
+}

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../../lib/codemirror/lib/codemirror.css" rel="stylesheet">
+    <link href="../../lib/perfect-scrollbar/min/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="../../lib/splitter/splitter.css" rel="stylesheet">
+    <link href="../../css/jquery/jquery-ui-1.10.3.custom.min.css " rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <!-- temporary downgrade to 1.10.2 due to popup drag bugs with 1.10.3-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="../../lib/codemirror/lib/codemirror.js"></script>
+    <script src="../../lib/perfect-scrollbar/min/perfect-scrollbar.with-mousewheel.min.js"></script>
+    <script src="../../lib/codemirror/mode/sql/sql.js"></script>
+    <script src="../../js/browser.js"></script>
+    <script src="../../lib/splitter/splitter.js"></script>
+    <script src="../../js/site.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+    <!-- Navbar
+      ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+
+    <div class="container">
+
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="classify.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Aggregates</a> <span class="divider">/</span></li>
+            <li class="active">Payback</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="rollingavg.html">Next Exercise</a></p></div>
+      </div>
+
+
+    <!-- Typography
+    ================================================== -->
+    <section id="typography">
+      <div class="page-header">
+        <h1>
+	<span style="float:left">
+Calculate the payback time for each facility        </span>
+	<span style="float:right">
+	<img src="../../assets/tick2.svg" class="headertick"></img>
+
+	</span>
+        <div style="clear:both"></div>
+        </h1>
+      </div>
+
+      <div class="row" style="margin-bottom:10px">
+        <div class="span8">
+          <h3>Question</h3>
+Based on the 3 complete months of data so far, calculate the amount of time each facility will take to repay its cost of ownership.  Remember to take into account ongoing monthly maintenance.  Output facility name and payback time in months, order by facility name.  Don't worry about differences in month lengths, we're only looking for a rough value here!        </div>
+      </div>
+      <div class="row">
+      <div class="span12">
+      <div id=splittercontainerouter>
+        <div id="schemareminder" class="btn btn-primary" onClick="schema();">
+          <div>Schema reminder <span id="schemareminderarrow">&#x25BC;</span></div>
+        </div>
+        <div id="schemaremindercontents">
+          <img id="schemareminderimage" src="../../img/schema-horizontal.svg" alt="DB schema" width="840"></img>
+        </div>
+        <div id=splittercontainer>
+          <div id="expres" ondblclick="setOptimalExpectedResultsSize()">
+            <div style="overflow-x:hidden;">
+              <div style="display: inline-block; min-width:1000px;">
+                <h3>Expected Results</h3>
+                <div style="width:auto; display:inline-block">
+                  <table id="exprestable" class="demo table table-bordered table-striped" style="width:auto;">
+<thead><tr>
+<th>name</th>
+<th>months</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Badminton Court</td>
+<td>6.8317677198975235</td>
+</tr>
+<tr>
+<td>Massage Room 1</td>
+<td>0.18885741265344664778</td>
+</tr>
+<tr>
+<td>Massage Room 2</td>
+<td>1.7621145374449339</td>
+</tr>
+<tr>
+<td>Pool Table</td>
+<td>5.3333333333333333</td>
+</tr>
+<tr>
+<td>Snooker Table</td>
+<td>6.9230769230769231</td>
+</tr>
+<tr>
+<td>Squash Court</td>
+<td>1.1339582703356516</td>
+</tr>
+<tr>
+<td>Table Tennis</td>
+<td>6.4000000000000000</td>
+</tr>
+<tr>
+<td>Tennis Court 1</td>
+<td>2.2624434389140271</td>
+</tr>
+<tr>
+<td>Tennis Court 2</td>
+<td>1.7505470459518600</td>
+</tr>
+</tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div id="codediv">
+            <div id="youranswerdiv" ondblclick="setOptimalYourAnswerSize()">
+                    <h3 style="min-width:200px;">Your Answer<span id="youranswertickspan"><img src="../../assets/cross.svg" class="youranswertick"></img></span>
+                <span id="youranswerbuttons">
+                  <a id="hintbtn" class="youranswerbutton btn btn-primary btn-small" onClick="hint();">Hint</a>
+                  <a id="helpbtn" class="youranswerbutton btn btn-primary btn-small" onClick="help();" title="[Alt-h]">Help</a>
+                  <a id="querybtn" class="youranswerbutton btn btn-primary btn-small" onClick="save();">Save</a>
+                  <a id="savebtn" class="youranswerbutton btn btn-primary btn-small" onClick="query();" title="[Alt-r]">Run Query</a>
+                </span>
+              </h3>
+              <div style="clear:both;">
+  	      <div id="codewrapper">
+                  <form>
+                    <textarea id="code" name="code"></textarea>
+                  </form>
+                </div>
+  	    </div>
+            </div>
+            <div id="yourresultsdiv" ondblclick="setOptimalYourResultsSize()">
+              <div>
+                <table id="yourresultstable" class="demo table table-bordered table-striped"></table>
+                <pre id="yourresultserror"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span12">
+          <h3>Answers and Discussion <a id="answerbtn" class="inactive btn btn-primary btn-small" style="margin: 5px" onClick="toggleAnswers();">Show</a></h3>
+          <pre id="querydiv" class="answerdiv prettyprint lang-sql">
+select 	facs.name as name,
+	facs.initialoutlay/((sum(case
+			when memid = 0 then slots * facs.guestcost
+			else slots * membercost
+		end)/3) - facs.monthlymaintenance) as months
+	from cd.bookings bks
+	inner join cd.facilities facs
+		on bks.facid = facs.facid
+	group by facs.facid
+order by name;          </pre>
+          <div class="row">
+            <div class="span8 answerdiv">
+<p>In contrast to all our recent exercises, there's no need to use window functions to solve this problem: it's just a bit of maths involving monthly revenue, initial outlay, and monthly maintenance.  Again, for production code you might want to clarify what's going on a little here using a subquery (although since we've hard-coded the number of months, putting this into production is unlikely!).  A tidied-up version might look like:</p>
+
+</div></div><div class="row"><div class="span12 answerdiv" style="opacity:0;"><div><pre class="secondaryanswerdiv prettyprint lang-sql">
+select 	name, 
+	initialoutlay / (monthlyrevenue - monthlymaintenance) as repaytime 
+	from 
+		(select facs.name as name, 
+			facs.initialoutlay as initialoutlay,
+			facs.monthlymaintenance as monthlymaintenance,
+			sum(case
+				when memid = 0 then slots * facs.guestcost
+				else slots * membercost
+			end)/3 as monthlyrevenue
+		from cd.bookings bks
+		inner join cd.facilities facs
+			on bks.facid = facs.facid
+		group by facs.facid
+	) as subq
+order by name;
+</pre></div></div></div><div class="row"><div class="span8 answerdiv" style="opacity:0;">
+
+<p>But, I hear you ask, what would an automatic version of this look like?  One that didn't need to have a hard-coded number of months in it?  That's a little more complicated, and involves some date arithmetic.  I've factored that out into a CTE to make it a little more clear.</p>
+
+</div></div><div class="row"><div class="span12 answerdiv" style="opacity:0;"><div><pre class="secondaryanswerdiv prettyprint lang-sql">
+with monthdata as (
+	select 	mincompletemonth,
+		maxcompletemonth,
+		(extract(year from maxcompletemonth)*12) +
+			extract(month from maxcompletemonth) -
+			(extract(year from mincompletemonth)*12) -
+			extract(month from mincompletemonth) as nummonths 
+	from (
+		select 	date_trunc('month', 
+				(select max(starttime) from cd.bookings)) as maxcompletemonth,
+			date_trunc('month', 
+				(select min(starttime) from cd.bookings)) as mincompletemonth
+	) as subq
+)
+select 	name, 
+	initialoutlay / (monthlyrevenue - monthlymaintenance) as repaytime 
+	
+	from
+		(select facs.name as name,
+			facs.initialoutlay as initialoutlay,
+			facs.monthlymaintenance as monthlymaintenance,
+			sum(case
+				when memid = 0 then slots * facs.guestcost
+				else slots * membercost
+			end)/(select nummonths from monthdata) as monthlyrevenue
+			
+			from cd.bookings bks
+			inner join cd.facilities facs
+				on bks.facid = facs.facid
+			where bks.starttime < (select maxcompletemonth from monthdata)
+			group by facs.facid
+		) as subq
+order by name;
+</pre></div></div></div><div class="row"><div class="span8 answerdiv" style="opacity:0;">
+
+<p>This code restricts the data that goes in to complete months.  It does this by selecting the maximum date, rounding down to the month, and stripping out all dates larger than that.  Even this code is not completely-complete.  It doesn't handle the case of a facility making a loss.  Fixing that is not too hard, and is left as (another) exercise for the reader!</p>            </div>
+          </div>
+        </div>
+      </div>
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="classify.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Aggregates</a> <span class="divider">/</span></li>
+            <li class="active">Payback</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="rollingavg.html">Next Exercise</a></p></div>
+      </div>
+    </div><!-- /container -->
+      <div id="hint" title="Hint">
+There's no need to use window functions to solve this problem.  Hard-code the number of months for an easy time, calculate them for a tougher one.
+      </div>
+      <div id="help" title="Help">
+        <div id="helpcontent">
+	  <h4>Keyboard shortcuts:</h4>
+	  <ul>
+	    <li><b>Alt-h</b>: Show/Hide Help menu
+	    <li><b>Alt-r</b>: Run query
+	    <li><b>Alt-x</b>: Run selected text as query
+	    <li><b>Alt-s</b>: Run query by cursor (delimited by whitespace/semi-colon)
+	  </ul>
+	  <hr />
+	  <h4>Other hints:</h4>
+	    <ul>
+	      <li>You can double click on each of the panes of Expected Result/Your answer to quickly resize them.
+	      <li>If you have trouble remembering the database schema, you can leave this popup open while you work on your answer.
+	      <li>Don't forget to use the hint button if you're stuck!
+	    </ul>
+	  <hr />
+	</div>
+      </div>
+
+
+    <script>
+        var App = {};
+	App.sorted = 1;
+	App.pageID = "185D4EC4-A501-4CB8-ABA3-04CD964A1CF6";
+        App.writeable = 0;
+        App.tableToReturn = "";
+	App.jsonResults = sortJSONResults([["Badminton Court","6.8317677198975235"],["Massage Room 1","0.18885741265344664778"],["Massage Room 2","1.7621145374449339"],["Pool Table","5.3333333333333333"],["Snooker Table","6.9230769230769231"],["Squash Court","1.1339582703356516"],["Table Tennis","6.4000000000000000"],["Tennis Court 1","2.2624434389140271"],["Tennis Court 2","1.7505470459518600"]]);
+    </script>
+
+    <script src="../../js/prettify/run_prettify.js?lang=sql"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+</html>

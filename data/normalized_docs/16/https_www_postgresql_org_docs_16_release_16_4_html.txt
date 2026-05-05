@@ -12,7 +12,6 @@
 [E.10. Release 16.4 # / E.10.2. Changes #] Prevent infinite loop in VACUUM (Melanie Plageman) §
 [E.10. Release 16.4 # / E.10.2. Changes #] After a disconnected standby server with an old running transaction reconnected to the primary, it was possible for VACUUM on the primary to get confused about which tuples are removable, resulting in an infinite loop.
 [E.10. Release 16.4 # / E.10.2. Changes #] Fix failure after attaching a table as a partition, if the table had previously had inheritance children (Álvaro Herrera) §
-[E.10. Release 16.4 # / E.10.2. Changes #] Fix failure after attaching a table as a partition, if the table had previously had inheritance children (Álvaro Herrera) §
 [E.10. Release 16.4 # / E.10.2. Changes #] Fix ALTER TABLE DETACH PARTITION for cases involving inconsistent index-based constraints (Álvaro Herrera, Tender Wang) § § When a partitioned table has an index that is not associated with a constraint, but a partition has an equivalent index that is, then detaching the partition would misbehave, leaving the ex-partition's constraint with an incorrect coninhcount value. This would cause trouble during any further manipulations of that constraint.
 [E.10. Release 16.4 # / E.10.2. Changes #] Fix ALTER TABLE DETACH PARTITION for cases involving inconsistent index-based constraints (Álvaro Herrera, Tender Wang) § §
 [E.10. Release 16.4 # / E.10.2. Changes #] When a partitioned table has an index that is not associated with a constraint, but a partition has an equivalent index that is, then detaching the partition would misbehave, leaving the ex-partition's constraint with an incorrect coninhcount value. This would cause trouble during any further manipulations of that constraint.
@@ -37,7 +36,6 @@
 [E.10. Release 16.4 # / E.10.2. Changes #] Fix over-aggressive clamping of the scale argument in round(numeric) and trunc(numeric) (Dean Rasheed) § These functions clamped their scale argument to +/-2000, but there are valid use-cases for it to be larger; the functions returned incorrect results in such cases. Instead clamp to the actual allowed range of type numeric .
 [E.10. Release 16.4 # / E.10.2. Changes #] Fix over-aggressive clamping of the scale argument in round(numeric) and trunc(numeric) (Dean Rasheed) §
 [E.10. Release 16.4 # / E.10.2. Changes #] These functions clamped their scale argument to +/-2000, but there are valid use-cases for it to be larger; the functions returned incorrect results in such cases. Instead clamp to the actual allowed range of type numeric .
-[E.10. Release 16.4 # / E.10.2. Changes #] Fix result for pg_size_pretty() when applied to the smallest possible bigint value (Joseph Koshakow) §
 [E.10. Release 16.4 # / E.10.2. Changes #] Fix result for pg_size_pretty() when applied to the smallest possible bigint value (Joseph Koshakow) §
 [E.10. Release 16.4 # / E.10.2. Changes #] Prevent pg_sequence_last_value() from failing on unlogged sequences on standby servers and on temporary sequences of other sessions (Nathan Bossart) § Make it return NULL in these cases instead of throwing an error.
 [E.10. Release 16.4 # / E.10.2. Changes #] Prevent pg_sequence_last_value() from failing on unlogged sequences on standby servers and on temporary sequences of other sessions (Nathan Bossart) §
@@ -97,7 +95,6 @@
 [E.10. Release 16.4 # / E.10.2. Changes #] Prevent incorrect initialization of logical replication slots (Masahiko Sawada) §
 [E.10. Release 16.4 # / E.10.2. Changes #] In some cases a replication slot's start point within the WAL stream could be set to a point within a transaction, leading to assertion failures or incorrect decoding results.
 [E.10. Release 16.4 # / E.10.2. Changes #] Avoid “ can only drop stats once ” error during replication slot creation and drop (Floris Van Nee) §
-[E.10. Release 16.4 # / E.10.2. Changes #] Avoid “ can only drop stats once ” error during replication slot creation and drop (Floris Van Nee) §
 [E.10. Release 16.4 # / E.10.2. Changes #] Fix resource leakage in logical replication WAL sender (Hou Zhijie) § The walsender process leaked memory when publishing changes to a partitioned table whose partitions have row types physically different from the partitioned table's.
 [E.10. Release 16.4 # / E.10.2. Changes #] Fix resource leakage in logical replication WAL sender (Hou Zhijie) §
 [E.10. Release 16.4 # / E.10.2. Changes #] The walsender process leaked memory when publishing changes to a partitioned table whose partitions have row types physically different from the partitioned table's.
@@ -138,7 +135,6 @@
 [E.10. Release 16.4 # / E.10.2. Changes #] Avoid non-thread-safe usage of strerror() in libpq (Peter Eisentraut) §
 [E.10. Release 16.4 # / E.10.2. Changes #] Certain error messages returned by OpenSSL could become garbled in multi-threaded applications.
 [E.10. Release 16.4 # / E.10.2. Changes #] Avoid memory leak within pg_dump during a binary upgrade (Daniel Gustafsson) §
-[E.10. Release 16.4 # / E.10.2. Changes #] Avoid memory leak within pg_dump during a binary upgrade (Daniel Gustafsson) §
 [E.10. Release 16.4 # / E.10.2. Changes #] Ensure that pg_restore -l reports dependent TOC entries correctly (Tom Lane) § If -l was specified together with selective-restore options such as -n or -N , dependent TOC entries such as comments would be omitted from the listing, even when an actual restore would have selected them.
 [E.10. Release 16.4 # / E.10.2. Changes #] Ensure that pg_restore -l reports dependent TOC entries correctly (Tom Lane) §
 [E.10. Release 16.4 # / E.10.2. Changes #] If -l was specified together with selective-restore options such as -n or -N , dependent TOC entries such as comments would be omitted from the listing, even when an actual restore would have selected them.
@@ -155,6 +151,4 @@
 [E.10. Release 16.4 # / E.10.2. Changes #] Avoid clashing with system-provided <regex.h> headers (Thomas Munro) §
 [E.10. Release 16.4 # / E.10.2. Changes #] This fixes a compilation failure on macOS version 15 and up.
 [E.10. Release 16.4 # / E.10.2. Changes #] Fix otherwise-harmless assertion failure in Memoize cost estimation (David Rowley) §
-[E.10. Release 16.4 # / E.10.2. Changes #] Fix otherwise-harmless assertion failure in Memoize cost estimation (David Rowley) §
-[E.10. Release 16.4 # / E.10.2. Changes #] Fix otherwise-harmless assertion failures in REINDEX CONCURRENTLY applied to an SP-GiST index (Tom Lane) §
 [E.10. Release 16.4 # / E.10.2. Changes #] Fix otherwise-harmless assertion failures in REINDEX CONCURRENTLY applied to an SP-GiST index (Tom Lane) §

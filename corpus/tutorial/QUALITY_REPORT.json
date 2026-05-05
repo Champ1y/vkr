@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-05-04T12:06:37.013233Z",
+  "corpus_root": "/home/arz/Desktop/RAG_postgres/corpus/tutorial",
+  "counts": {
+    "total_files": 330,
+    "curated_md_files": 102,
+    "raw_html_files": 95,
+    "processed_html_md_files": 95,
+    "pgexercises_raw_html_files": 72,
+    "wiki_raw_html_files": 23,
+    "external_registry_files": 7,
+    "scripts_count": 6,
+    "json_files": 11,
+    "sql_files": 1,
+    "official_html_files_16": 1167,
+    "official_html_files_17": 1141,
+    "official_html_files_18": 1146,
+    "indexable_files_count": 197,
+    "non_indexable_archive_files_count": 95
+  },
+  "validation": {
+    "placeholders_empty": true,
+    "docs_placeholder_empty": true,
+    "wiki_junk_paths_empty": true,
+    "all_curated_have_yaml": true,
+    "all_curated_have_official_backing": true,
+    "all_processed_have_yaml": true,
+    "raw_html_indexable_false": true,
+    "processed_html_indexable_true": true,
+    "manifest_self_hash_excluded": true
+  },
+  "errors_count": 0,
+  "errors": [],
+  "details": {
+    "placeholder_hits": [],
+    "docs_placeholder_hits": [],
+    "wiki_junk_paths": [],
+    "curated_missing_yaml": [],
+    "curated_missing_official_backing": [],
+    "processed_missing_yaml": [],
+    "raw_html_indexable_bad": [],
+    "processed_not_indexable_bad": []
+  },
+  "indexing_policy_summary": {
+    "raw_html_indexable": false,
+    "processed_html_indexable": true,
+    "curated_markdown_indexable": true,
+    "official_required_for_factual_answers": true
+  },
+  "strict_audit_updated_at": "2026-05-05T11:33:35+00:00",
+  "strict_validator": {
+    "ready_for_chunking_and_embeddings": true,
+    "errors_count": 0,
+    "warnings_count": 0,
+    "summary": {
+      "official_html_16": 1167,
+      "official_html_17": 1141,
+      "official_html_18": 1146,
+      "curated_md_files": 102,
+      "processed_html_md_files": 95,
+      "raw_tutorial_html_files_not_for_indexing": 95,
+      "broken_official_backing_count": 0,
+      "forbidden_curated_hits_count": 0,
+      "processed_missing_source_url_count": 0,
+      "processed_source_url_mismatch_count": 0,
+      "pgexercises_boilerplate_count": 0,
+      "pgexercises_manifest_error_rows_count": 0,
+      "pycache_dirs_count": 0,
+      "pyc_files_count": 0,
+      "bak_files_count": 0,
+      "ingestion_policy_exists": true
+    },
+    "top_errors": [],
+    "top_warnings": []
+  },
+  "warnings_count": 0,
+  "CORPUS_READY_FOR_CHUNKING_AND_EMBEDDINGS": true
+}

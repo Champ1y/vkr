@@ -1,0 +1,31 @@
+{
+  "modes": {
+    "answer": {
+      "allowed_corpus_type": [
+        "official"
+      ],
+      "supplementary_allowed": false
+    },
+    "tutorial_extended_false": {
+      "allowed_corpus_type": [
+        "official"
+      ],
+      "supplementary_allowed": false
+    },
+    "tutorial_extended_true": {
+      "allowed_corpus_type": [
+        "official",
+        "supplementary"
+      ],
+      "supplementary_allowed": true
+    }
+  },
+  "hard_rules": [
+    "official corpus is the source of truth",
+    "supplementary corpus explains and teaches, but does not replace official docs",
+    "version guard must filter official docs by selected PostgreSQL major version",
+    "external wiki pages are low-priority troubleshooting hints",
+    "PGExercises is SQL practice only",
+    "Neon selected URLs are pedagogical references only"
+  ]
+}

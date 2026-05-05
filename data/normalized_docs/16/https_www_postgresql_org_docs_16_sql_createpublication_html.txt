@@ -1,22 +1,71 @@
 [CREATE PUBLICATION] CREATE PUBLICATION — define a new publication
-[Synopsis] CREATE PUBLICATION name [ FOR ALL TABLES | FOR publication_object [, ... ] ] [ WITH ( publication_parameter [= value ] [, ... ] ) ] where publication_object is one of: TABLE table_and_columns [, ... ] TABLES IN SCHEMA { schema_name | CURRENT_SCHEMA } [, ... ] and table_and_columns is: [ ONLY ] table_name [ * ] [ ( column_name [, ... ] ) ] [ WHERE ( expression ) ]
+[Synopsis] CREATE PUBLICATION
+name
+
+    [ FOR ALL TABLES
+      | FOR
+publication_object
+ [, ... ] ]
+    [ WITH (
+publication_parameter
+ [=
+value
+] [, ... ] ) ]
+
+where
+publication_object
+ is one of:
+
+    TABLE
+table_and_columns
+ [, ... ]
+    TABLES IN SCHEMA {
+schema_name
+ | CURRENT_SCHEMA } [, ... ]
+
+and
+table_and_columns
+ is:
+
+    [ ONLY ]
+table_name
+ [ * ] [ (
+column_name
+ [, ... ] ) ] [ WHERE (
+expression
+ ) ]
 [Description] CREATE PUBLICATION adds a new publication into the current database. The publication name must be distinct from the name of any existing publication in the current database.
 [Description] A publication is essentially a group of tables whose data changes are intended to be replicated through logical replication. See Section 31.1 for details about how publications fit into the logical replication setup.
+[Parameters] name
 [Parameters] The name of the new publication.
+[Parameters] FOR TABLE
 [Parameters] Specifies a list of tables to add to the publication. If ONLY is specified before the table name, only that table is added to the publication. If ONLY is not specified, the table and all its descendant tables (if any) are added. Optionally, * can be specified after the table name to explicitly indicate that descendant tables are included. This does not apply to a partitioned table, however. The partitions of a partitioned table are always implicitly considered part of the publication, so they are never explicitly added to the publication.
 [Parameters] If the optional WHERE clause is specified, it defines a row filter expression. Rows for which the expression evaluates to false or null will not be published. Note that parentheses are required around the expression. It has no effect on TRUNCATE commands.
 [Parameters] When a column list is specified, only the named columns are replicated. If no column list is specified, all columns of the table are replicated through this publication, including any columns added later. It has no effect on TRUNCATE commands. See Section 31.4 for details about column lists.
 [Parameters] Only persistent base tables and partitioned tables can be part of a publication. Temporary tables, unlogged tables, foreign tables, materialized views, and regular views cannot be part of a publication.
 [Parameters] Specifying a column list when the publication also publishes FOR TABLES IN SCHEMA is not supported.
 [Parameters] When a partitioned table is added to a publication, all of its existing and future partitions are implicitly considered to be part of the publication. So, even operations that are performed directly on a partition are also published via publications that its ancestors are part of.
+[Parameters] FOR ALL TABLES
 [Parameters] Marks the publication as one that replicates changes for all tables in the database, including tables created in the future.
+[Parameters] FOR TABLES IN SCHEMA
 [Parameters] Marks the publication as one that replicates changes for all tables in the specified list of schemas, including tables created in the future.
 [Parameters] Specifying a schema when the publication also publishes a table with a column list is not supported.
 [Parameters] Only persistent base tables and partitioned tables present in the schema will be included as part of the publication. Temporary tables, unlogged tables, foreign tables, materialized views, and regular views from the schema will not be part of the publication.
 [Parameters] When a partitioned table is published via schema level publication, all of its existing and future partitions are implicitly considered to be part of the publication, regardless of whether they are from the publication schema or not. So, even operations that are performed directly on a partition are also published via publications that its ancestors are part of.
+[Parameters] WITH (
+publication_parameter
+ [=
+value
+] [, ... ] )
+[Parameters] publication_parameter
+[Parameters] value
 [Parameters] This clause specifies optional parameters for a publication. The following parameters are supported:
+[Parameters] publish
+[Parameters] string
 [Parameters] This parameter determines which DML operations will be published by the new publication to the subscribers. The value is comma-separated list of operations. The allowed operations are insert , update , delete , and truncate . The default is to publish all actions, and so the default value for this option is 'insert, update, delete, truncate' .
 [Parameters] This parameter only affects DML operations. In particular, the initial data synchronization (see Section 31.7.1 ) for logical replication does not take this parameter into account when copying existing table data.
+[Parameters] publish_via_partition_root
+[Parameters] boolean
 [Parameters] This parameter controls how changes to a partitioned table (or any of its partitions) are published. When set to true , changes are published using the identity and schema of the root partitioned table. When set to false (the default), changes are published using the identity and schema of the individual partitions where the changes actually occurred. Enabling this option allows the changes to be replicated into a non-partitioned table or into a partitioned table whose partition structure differs from that of the publisher.
 [Parameters] There can be a case where a subscription combines multiple publications. If a partitioned table is published by any subscribed publications which set publish_via_partition_root = true , changes on this partitioned table (or on its partitions) will be published using the identity and schema of this partitioned table rather than that of the individual partitions.
 [Parameters] This parameter also affects how row filters and column lists are chosen for partitions; see below for details.
@@ -44,7 +93,8 @@
 [Examples] Create a publication that publishes all changes in all tables:
 [Examples] CREATE PUBLICATION alltables FOR ALL TABLES;
 [Examples] Create a publication that only publishes INSERT operations in one table:
-[Examples] CREATE PUBLICATION insert_only FOR TABLE mydata WITH (publish = 'insert');
+[Examples] CREATE PUBLICATION insert_only FOR TABLE mydata
+    WITH (publish = 'insert');
 [Examples] Create a publication that publishes all changes for tables users , departments and all changes for all the tables present in the schema production :
 [Examples] CREATE PUBLICATION production_publication FOR TABLE users, departments, TABLES IN SCHEMA production;
 [Examples] Create a publication that publishes all changes for all the tables present in the schemas marketing and sales :

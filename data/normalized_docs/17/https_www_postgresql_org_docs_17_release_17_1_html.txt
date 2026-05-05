@@ -23,7 +23,26 @@
 [E.9. Release 17.1 # / E.9.2. Changes #] If the referenced table is partitioned, then different catalog entries are needed for a referencing table that is stand-alone versus one that is a partition. ATTACH/DETACH PARTITION commands failed to perform this conversion correctly. In particular, after DETACH the now stand-alone table would be missing foreign-key enforcement triggers, which could result in the table later containing rows that fail the foreign-key constraint. A subsequent re- ATTACH could fail with surprising errors, too.
 [E.9. Release 17.1 # / E.9.2. Changes #] The way to fix this is to do ALTER TABLE DROP CONSTRAINT on the now stand-alone table for each faulty constraint, and then re-add the constraint. If re-adding the constraint fails, then some erroneous data has crept in. You will need to manually re-establish consistency between the referencing and referenced tables, then re-add the constraint.
 [E.9. Release 17.1 # / E.9.2. Changes #] This query can be used to identify broken constraints and construct the commands needed to recreate them:
-[E.9. Release 17.1 # / E.9.2. Changes #] SELECT conrelid::pg_catalog.regclass AS "constrained table", conname AS constraint, confrelid::pg_catalog.regclass AS "references", pg_catalog.format('ALTER TABLE %s DROP CONSTRAINT %I;', conrelid::pg_catalog.regclass, conname) AS "drop", pg_catalog.format('ALTER TABLE %s ADD CONSTRAINT %I %s;', conrelid::pg_catalog.regclass, conname, pg_catalog.pg_get_constraintdef(oid)) AS "add" FROM pg_catalog.pg_constraint c WHERE contype = 'f' AND conparentid = 0 AND (SELECT count(*) FROM pg_catalog.pg_constraint c2 WHERE c2.conparentid = c.oid) <> ((SELECT count(*) FROM pg_catalog.pg_inherits i WHERE (i.inhparent = c.conrelid OR i.inhparent = c.confrelid) AND EXISTS (SELECT 1 FROM pg_catalog.pg_partitioned_table WHERE partrelid = i.inhparent)) + CASE WHEN pg_catalog.pg_partition_root(conrelid) = confrelid THEN (SELECT count(*) FROM pg_catalog.pg_partition_tree(confrelid) WHERE level = 1) ELSE 0 END);
+[E.9. Release 17.1 # / E.9.2. Changes #] SELECT conrelid::pg_catalog.regclass AS "constrained table",
+       conname AS constraint,
+       confrelid::pg_catalog.regclass AS "references",
+       pg_catalog.format('ALTER TABLE %s DROP CONSTRAINT %I;',
+                         conrelid::pg_catalog.regclass, conname) AS "drop",
+       pg_catalog.format('ALTER TABLE %s ADD CONSTRAINT %I %s;',
+                         conrelid::pg_catalog.regclass, conname,
+                         pg_catalog.pg_get_constraintdef(oid)) AS "add"
+FROM pg_catalog.pg_constraint c
+WHERE contype = 'f' AND conparentid = 0 AND
+   (SELECT count(*) FROM pg_catalog.pg_constraint c2
+    WHERE c2.conparentid = c.oid) <>
+   ((SELECT count(*) FROM pg_catalog.pg_inherits i
+    WHERE (i.inhparent = c.conrelid OR i.inhparent = c.confrelid) AND
+      EXISTS (SELECT 1 FROM pg_catalog.pg_partitioned_table
+              WHERE partrelid = i.inhparent)) +
+    CASE WHEN pg_catalog.pg_partition_root(conrelid) = confrelid THEN
+              (SELECT count(*) FROM pg_catalog.pg_partition_tree(confrelid)
+                WHERE level = 1)
+         ELSE 0 END);
 [E.9. Release 17.1 # / E.9.2. Changes #] Since it is possible that one or more of the ADD CONSTRAINT steps will fail, you should save the query's output in a file and then attempt to perform each step.
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix test for C locale when LC_COLLATE is different from LC_CTYPE (Jeff Davis) § When using libc as the default collation provider, the test to see if C locale is in use for collation accidentally checked LC_CTYPE not LC_COLLATE . This has no impact in the typical case where those settings are the same, nor if both are not C (nor its alias POSIX ). However, if LC_CTYPE is C while LC_COLLATE is some other locale, wrong query answers could ensue, and corruption of indexes on strings was possible. Users of databases with such settings should reindex affected indexes after installing this update. The converse case with LC_COLLATE being C while LC_CTYPE is some other locale would cause performance degradation, but no actual errors.
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix test for C locale when LC_COLLATE is different from LC_CTYPE (Jeff Davis) §
@@ -35,25 +54,19 @@
 [E.9. Release 17.1 # / E.9.2. Changes #] Avoid planner failure after converting an IS NULL test on a NOT NULL column to constant FALSE (Richard Guo) §
 [E.9. Release 17.1 # / E.9.2. Changes #] This bug typically led to errors such as “ variable not found in subplan target lists ” .
 [E.9. Release 17.1 # / E.9.2. Changes #] Avoid possible planner crash while inlining a SQL function whose arguments contain certain array-related constructs (Tom Lane, Nathan Bossart) §
-[E.9. Release 17.1 # / E.9.2. Changes #] Avoid possible planner crash while inlining a SQL function whose arguments contain certain array-related constructs (Tom Lane, Nathan Bossart) §
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix possible wrong answers or “ wrong varnullingrels ” planner errors for MERGE ... WHEN NOT MATCHED BY SOURCE actions (Dean Rasheed) § §
-[E.9. Release 17.1 # / E.9.2. Changes #] Fix possible wrong answers or “ wrong varnullingrels ” planner errors for MERGE ... WHEN NOT MATCHED BY SOURCE actions (Dean Rasheed) § §
-[E.9. Release 17.1 # / E.9.2. Changes #] Fix possible “ could not find pathkey item to sort ” error when the output of a UNION ALL member query needs to be sorted, and the sort column is an expression (Andrei Lepikhov, Tom Lane) §
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix possible “ could not find pathkey item to sort ” error when the output of a UNION ALL member query needs to be sorted, and the sort column is an expression (Andrei Lepikhov, Tom Lane) §
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix edge case in B-tree ScalarArrayOp index scans (Peter Geoghegan) § When a scrollable cursor with a plan of this kind was backed up to its starting point and then run forward again, wrong answers were possible.
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix edge case in B-tree ScalarArrayOp index scans (Peter Geoghegan) §
 [E.9. Release 17.1 # / E.9.2. Changes #] When a scrollable cursor with a plan of this kind was backed up to its starting point and then run forward again, wrong answers were possible.
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix assertion failure or confusing error message for COPY ( query ) TO ... , when the query is rewritten by a DO INSTEAD NOTIFY rule (Tender Wang, Tom Lane) §
-[E.9. Release 17.1 # / E.9.2. Changes #] Fix assertion failure or confusing error message for COPY ( query ) TO ... , when the query is rewritten by a DO INSTEAD NOTIFY rule (Tender Wang, Tom Lane) §
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix validation of COPY 's FORCE_NOT_NULL and FORCE_NULL options (Joel Jacobson) § Some incorrect usages are now rejected as they should be.
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix validation of COPY 's FORCE_NOT_NULL and FORCE_NULL options (Joel Jacobson) §
 [E.9. Release 17.1 # / E.9.2. Changes #] Some incorrect usages are now rejected as they should be.
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix server crash when a json_objectagg() call contains a volatile function (Amit Langote) §
-[E.9. Release 17.1 # / E.9.2. Changes #] Fix server crash when a json_objectagg() call contains a volatile function (Amit Langote) §
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix detection of skewed data during parallel hash join (Thomas Munro) § After repartitioning the inner side of a hash join because one partition has accumulated too many tuples, we check to see if all the partition's tuples went into the same child partition, which suggests that they all have the same hash value and further repartitioning cannot improve matters. This check malfunctioned in some cases, allowing repeated futile repartitioning which would eventually end in a resource-exhaustion error.
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix detection of skewed data during parallel hash join (Thomas Munro) §
 [E.9. Release 17.1 # / E.9.2. Changes #] After repartitioning the inner side of a hash join because one partition has accumulated too many tuples, we check to see if all the partition's tuples went into the same child partition, which suggests that they all have the same hash value and further repartitioning cannot improve matters. This check malfunctioned in some cases, allowing repeated futile repartitioning which would eventually end in a resource-exhaustion error.
-[E.9. Release 17.1 # / E.9.2. Changes #] Avoid crash when ALTER DATABASE SET is used to set a server parameter that requires search-path-based lookup, such as default_text_search_config (Jeff Davis) §
 [E.9. Release 17.1 # / E.9.2. Changes #] Avoid crash when ALTER DATABASE SET is used to set a server parameter that requires search-path-based lookup, such as default_text_search_config (Jeff Davis) §
 [E.9. Release 17.1 # / E.9.2. Changes #] Avoid repeated lookups of opclasses and collations while creating a new index on a partitioned table (Tom Lane) § This was problematic mainly because some of the lookups would be done with a restricted search_path , leading to unexpected failures if the CREATE INDEX command referenced objects outside pg_catalog . This fix also prevents comments on the parent partitioned index from being copied to child indexes.
 [E.9. Release 17.1 # / E.9.2. Changes #] Avoid repeated lookups of opclasses and collations while creating a new index on a partitioned table (Tom Lane) §
@@ -88,7 +101,6 @@
 [E.9. Release 17.1 # / E.9.2. Changes #] Ignore not-yet-defined Portals in the pg_cursors view (Tom Lane) §
 [E.9. Release 17.1 # / E.9.2. Changes #] It is possible for user-defined code that inspects this view to be called while a new cursor is being set up, and if that happens a null pointer dereference would ensue. Avoid the problem by defining the view to exclude incompletely-set-up cursors.
 [E.9. Release 17.1 # / E.9.2. Changes #] Avoid “ unexpected table_index_fetch_tuple call during logical decoding ” error while decoding a transaction involving insertion of a column default value (Takeshi Ideriha, Hou Zhijie) § §
-[E.9. Release 17.1 # / E.9.2. Changes #] Avoid “ unexpected table_index_fetch_tuple call during logical decoding ” error while decoding a transaction involving insertion of a column default value (Takeshi Ideriha, Hou Zhijie) § §
 [E.9. Release 17.1 # / E.9.2. Changes #] Reduce memory consumption of logical decoding (Masahiko Sawada) § Use a smaller default block size to store tuple data received during logical replication. This reduces memory wastage, which has been reported to be severe while processing long-running transactions, even leading to out-of-memory failures.
 [E.9. Release 17.1 # / E.9.2. Changes #] Reduce memory consumption of logical decoding (Masahiko Sawada) §
 [E.9. Release 17.1 # / E.9.2. Changes #] Use a smaller default block size to store tuple data received during logical replication. This reduces memory wastage, which has been reported to be severe while processing long-running transactions, even leading to out-of-memory failures.
@@ -110,7 +122,6 @@
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix failure to find replication password in ~/.pgpass (Tom Lane) § pg_basebackup and pg_receivewal failed to match an entry in ~/.pgpass that had replication in the database name field, if no -d or --dbname switch was supplied. This resulted in an unexpected prompt for password.
 [E.9. Release 17.1 # / E.9.2. Changes #] Fix failure to find replication password in ~/.pgpass (Tom Lane) §
 [E.9. Release 17.1 # / E.9.2. Changes #] pg_basebackup and pg_receivewal failed to match an entry in ~/.pgpass that had replication in the database name field, if no -d or --dbname switch was supplied. This resulted in an unexpected prompt for password.
-[E.9. Release 17.1 # / E.9.2. Changes #] In pg_combinebackup , throw an error if an incremental backup file is present in a directory that is supposed to contain a full backup (Robert Haas) §
 [E.9. Release 17.1 # / E.9.2. Changes #] In pg_combinebackup , throw an error if an incremental backup file is present in a directory that is supposed to contain a full backup (Robert Haas) §
 [E.9. Release 17.1 # / E.9.2. Changes #] In pg_combinebackup , don't construct filenames containing double slashes (Robert Haas) § This caused no functional problems, but the duplicate slashes were visible in error messages, which could create confusion.
 [E.9. Release 17.1 # / E.9.2. Changes #] In pg_combinebackup , don't construct filenames containing double slashes (Robert Haas) §

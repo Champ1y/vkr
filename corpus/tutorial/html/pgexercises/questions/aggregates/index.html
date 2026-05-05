@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <script>
+      var App = {};
+      App.pageIDs = ["E7789C0F-CEB2-4D7B-8897-8D8CA5478F7D","0F0BAA3C-9FA0-47DC-8A8F-1FBA363E5DE0","494C7BF9-F6D0-464F-A8A4-9C6814C6FF4A","2049E915-DDB0-4E1E-BEB1-37731FA22C3A","C875DDEF-6559-4E2A-979E-AB8EA43E1B3F","9D932BE5-29DC-4B4B-A418-00E9E9751CF1","54410370-8C3A-4A1D-ADF7-1CFFE8810C28","B3124FAB-CD6E-44DD-ACDB-3D5B9DE4AFFA","43D1F46E-9701-439A-8982-617C7410FE89","FD4B1491-C3D6-4E46-90B0-1B6CB861C505","D9CE3ED7-8B51-4B36-8E05-298C8205EFB4","7737A2D8-5BF5-40E9-8486-9396D8D7B098","3B453BF9-ABD5-4C48-8EB5-3627FF8AAAA5","CF73B932-CE2E-4FE4-AA8E-D00976DFC45B","1DAA4B87-48BB-49A3-AC62-EB2EC1A11FB2","09229A41-91FA-4D34-BF5D-6380F7E27AF1","B1370BB1-673C-4FC6-AFC7-DC19E55F0576","8E69FABF-A485-48B5-AF08-0B6A0524FC3C","487D2223-28C4-4DB9-8DCD-F5E31490782D","AAD28EA4-D02C-49AB-B065-7A229D5BBE09","185D4EC4-A501-4CB8-ABA3-04CD964A1CF6","7CFB33CF-40F0-49C8-B0A5-8F3F99D3F99F"];
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/listing.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+
+  <!-- Navbar
+    ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+  
+    <div class="container">
+    
+      <div class="page-header">
+        <h1>
+Aggregation          <a href="count.html" class="btn btn-primary btn-large" style="margin-left: 50px;">Begin!</a>
+        </h1>
+      </div>
+    
+      <div class="row" style="margin-bottom:30px">
+        <div class="span8">
+          <p>
+<p>Aggregation is one of those capabilities that really make you appreciate the power of relational database systems.  It allows you to move beyond merely persisting your data, into the realm of asking truly interesting questions that can be used to inform decision making.  This category covers aggregation at length, making use of standard grouping as well as more recent window functions.</p>
+<p>If you struggle with these questions, I strongly recommend <a href="http://shop.oreilly.com/product/9780596007270.do">Learning SQL</a>, by Alan Beaulieu and <a href="http://shop.oreilly.com/product/9780596009762.do">SQL Cookbook</a> by Anthony Molinaro.  In fact, get the latter anyway - it'll take you beyond anything you find on this site, and on multiple different database systems to boot.</p>          </p>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span10">
+          <ul class="topiclisting">
+<li><span class="listingitem"><a class="listlink" href='count.html'>Count the number of facilities</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='count2.html'>Count the number of expensive facilities</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='count3.html'>Count the number of recommendations each member makes.</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='fachours.html'>List the total slots booked per facility</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='fachoursbymonth.html'>List the total slots booked per facility in a given month</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='fachoursbymonth2.html'>List the total slots booked per facility per month</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='members1.html'>Find the count of members who have made at least one booking</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='fachours1a.html'>List facilities with more than 1000 slots booked</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='facrev.html'>Find the total revenue of each facility</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='facrev2.html'>Find facilities with a total revenue less than 1000</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='fachours2.html'>Output the facility id that has the highest number of slots booked</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='fachoursbymonth3.html'>List the total slots booked per facility per month, part 2</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='fachours3.html'>List the total hours booked per named facility</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='nbooking.html'>List each member's first booking after September 1st 2012</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='countmembers.html'>Produce a list of member names, with each row containing the total member count</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='nummembers.html'>Produce a numbered list of members</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='fachours4.html'>Output the facility id that has the highest number of slots booked, again</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='rankmembers.html'>Rank members by (rounded) hours used</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='facrev3.html'>Find the top three revenue generating facilities</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='classify.html'>Classify facilities by value</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='payback.html'>Calculate the payback time for each facility</a></span></li>
+<li><span class="listingitem"><a class="listlink" href='rollingavg.html'>Calculate a rolling average of total revenue</a></span></li>
+          </ul>
+        </div>
+    
+      </div><!-- /container -->
+    </div>  
+  
+      <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/bootstrap.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+  
+  </body>
+</html>

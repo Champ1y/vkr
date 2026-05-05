@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-05-04T12:34:53Z",
+  "mode": "apply",
+  "root": "/home/arz/Desktop/RAG_postgres/corpus",
+  "deleted_files": [],
+  "deleted_dirs": [],
+  "would_delete_files": [],
+  "would_delete_dirs": [],
+  "remaining_pycache_dirs": [],
+  "remaining_pyc_files": [],
+  "backup_pgexercises_remaining": false,
+  "warnings": [],
+  "service_files_clean": true
+}

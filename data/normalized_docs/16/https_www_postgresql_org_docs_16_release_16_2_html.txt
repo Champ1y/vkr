@@ -38,7 +38,6 @@
 [E.12. Release 16.2 # / E.12.2. Changes #] Avoid requesting an oversize shared-memory area in parallel hash join (Thomas Munro, Andrei Lepikhov, Alexander Korotkov) § §
 [E.12. Release 16.2 # / E.12.2. Changes #] The limiting value was too large, allowing “ invalid DSA memory alloc request size ” errors to occur with sufficiently large expected hash table sizes.
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix corruption of local buffer state when an error occurs while trying to extend a temporary table (Tender Wang) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Fix corruption of local buffer state when an error occurs while trying to extend a temporary table (Tender Wang) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix use of wrong tuple slot while evaluating DISTINCT aggregates that have multiple arguments (David Rowley) § This mistake could lead to errors such as “ attribute 1 of type record has wrong type ” .
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix use of wrong tuple slot while evaluating DISTINCT aggregates that have multiple arguments (David Rowley) §
 [E.12. Release 16.2 # / E.12.2. Changes #] This mistake could lead to errors such as “ attribute 1 of type record has wrong type ” .
@@ -51,7 +50,6 @@
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix possible failure during ALTER TABLE ADD COLUMN on a complex inheritance tree (Tender Wang) § If a grandchild table would inherit the new column via multiple intermediate parents, the command failed with “ tuple already updated by self ” .
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix possible failure during ALTER TABLE ADD COLUMN on a complex inheritance tree (Tender Wang) §
 [E.12. Release 16.2 # / E.12.2. Changes #] If a grandchild table would inherit the new column via multiple intermediate parents, the command failed with “ tuple already updated by self ” .
-[E.12. Release 16.2 # / E.12.2. Changes #] Fix problems with duplicate token names in ALTER TEXT SEARCH CONFIGURATION ... MAPPING commands (Tender Wang, Michael Paquier) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix problems with duplicate token names in ALTER TEXT SEARCH CONFIGURATION ... MAPPING commands (Tender Wang, Michael Paquier) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix DROP ROLE with duplicate role names (Michael Paquier) § Previously this led to a “ tuple already updated by self ” failure. Instead, ignore the duplicate.
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix DROP ROLE with duplicate role names (Michael Paquier) §
@@ -73,7 +71,6 @@
 [E.12. Release 16.2 # / E.12.2. Changes #] Some cases that should cause an out-of-range error produced an incorrect result instead.
 [E.12. Release 16.2 # / E.12.2. Changes #] Add more checks for overflow in interval_mul() and interval_div() (Dean Rasheed) § Some cases that should cause an out-of-range error produced an incorrect result instead.
 [E.12. Release 16.2 # / E.12.2. Changes #] Add more checks for overflow in interval_mul() and interval_div() (Dean Rasheed) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Some cases that should cause an out-of-range error produced an incorrect result instead.
 [E.12. Release 16.2 # / E.12.2. Changes #] Allow scram_SaltedPassword() to be interrupted (Bowen Shi) § With large scram_iterations values, this function could take a long time to run. Allow it to be interrupted by query cancel requests.
 [E.12. Release 16.2 # / E.12.2. Changes #] Allow scram_SaltedPassword() to be interrupted (Bowen Shi) §
 [E.12. Release 16.2 # / E.12.2. Changes #] With large scram_iterations values, this function could take a long time to run. Allow it to be interrupted by query cancel requests.
@@ -86,7 +83,6 @@
 [E.12. Release 16.2 # / E.12.2. Changes #] Match collation too when matching an existing index to a new partitioned index (Peter Eisentraut) § Previously we could accept an index that has a different collation from the corresponding element of the partition key, possibly leading to misbehavior.
 [E.12. Release 16.2 # / E.12.2. Changes #] Match collation too when matching an existing index to a new partitioned index (Peter Eisentraut) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Previously we could accept an index that has a different collation from the corresponding element of the partition key, possibly leading to misbehavior.
-[E.12. Release 16.2 # / E.12.2. Changes #] Avoid failure if a child index is dropped concurrently with REINDEX INDEX on a partitioned index (Fei Changhong) § §
 [E.12. Release 16.2 # / E.12.2. Changes #] Avoid failure if a child index is dropped concurrently with REINDEX INDEX on a partitioned index (Fei Changhong) § §
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix insufficient locking when cleaning up an incomplete split of a GIN index's internal page (Fei Changhong, Heikki Linnakangas) § The code tried to do this with shared rather than exclusive lock on the buffer. This could lead to index corruption if two processes attempted the cleanup concurrently.
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix insufficient locking when cleaning up an incomplete split of a GIN index's internal page (Fei Changhong, Heikki Linnakangas) §
@@ -143,10 +139,7 @@
 [E.12. Release 16.2 # / E.12.2. Changes #] Be more wary about OpenSSL not setting errno on error (Tom Lane) §
 [E.12. Release 16.2 # / E.12.2. Changes #] If errno isn't set, assume the cause of the reported failure is read EOF. This fixes rare cases of strange error reports like “ could not accept SSL connection: Success ” .
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix file descriptor leakage when a foreign data wrapper's ForeignAsyncRequest function fails (Heikki Linnakangas) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Fix file descriptor leakage when a foreign data wrapper's ForeignAsyncRequest function fails (Heikki Linnakangas) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix minor memory leak in connection string validation for CREATE SUBSCRIPTION (Jeff Davis) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Fix minor memory leak in connection string validation for CREATE SUBSCRIPTION (Jeff Davis) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Report ENOMEM errors from file-related system calls as ERRCODE_OUT_OF_MEMORY , not ERRCODE_INTERNAL_ERROR (Alexander Kuzmenkov) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Report ENOMEM errors from file-related system calls as ERRCODE_OUT_OF_MEMORY , not ERRCODE_INTERNAL_ERROR (Alexander Kuzmenkov) §
 [E.12. Release 16.2 # / E.12.2. Changes #] In PL/pgSQL , support SQL commands that are CREATE FUNCTION / CREATE PROCEDURE with SQL-standard bodies (Tom Lane) § Previously, such cases failed with parsing errors due to the semicolon(s) appearing in the function body.
 [E.12. Release 16.2 # / E.12.2. Changes #] In PL/pgSQL , support SQL commands that are CREATE FUNCTION / CREATE PROCEDURE with SQL-standard bodies (Tom Lane) §
@@ -157,7 +150,6 @@
 [E.12. Release 16.2 # / E.12.2. Changes #] Make libpq 's PQsendFlushRequest() function flush the client output buffer under the same rules as other PQsend functions (Jelte Fennema-Nio) § In pipeline mode, it may still be necessary to call PQflush() as well; but this change removes some inconsistency.
 [E.12. Release 16.2 # / E.12.2. Changes #] Make libpq 's PQsendFlushRequest() function flush the client output buffer under the same rules as other PQsend functions (Jelte Fennema-Nio) §
 [E.12. Release 16.2 # / E.12.2. Changes #] In pipeline mode, it may still be necessary to call PQflush() as well; but this change removes some inconsistency.
-[E.12. Release 16.2 # / E.12.2. Changes #] Avoid race condition when libpq initializes OpenSSL support concurrently in two different threads (Willi Mann, Michael Paquier) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Avoid race condition when libpq initializes OpenSSL support concurrently in two different threads (Willi Mann, Michael Paquier) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix timing-dependent failure in GSSAPI data transmission (Tom Lane) § When using GSSAPI encryption in non-blocking mode, libpq sometimes failed with “ GSSAPI caller failed to retransmit all data needing to be retried ” .
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix timing-dependent failure in GSSAPI data transmission (Tom Lane) §
@@ -172,15 +164,11 @@
 [E.12. Release 16.2 # / E.12.2. Changes #] In pg_dump , don't dump an extended statistics object if its underlying table isn't being dumped (Rian McGuire, Tom Lane) §
 [E.12. Release 16.2 # / E.12.2. Changes #] This conforms to the behavior for other dependent objects such as indexes.
 [E.12. Release 16.2 # / E.12.2. Changes #] Properly detect out-of-memory in one code path in pg_dump (Daniel Gustafsson) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Properly detect out-of-memory in one code path in pg_dump (Daniel Gustafsson) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Make it an error for a pgbench script to end with an open pipeline (Anthonin Bonnefoy) § Previously, pgbench would behave oddly if a \startpipeline command lacked a matching \endpipeline . This seems like a scripting mistake rather than a case that pgbench needs to handle nicely, so throw an error.
 [E.12. Release 16.2 # / E.12.2. Changes #] Make it an error for a pgbench script to end with an open pipeline (Anthonin Bonnefoy) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Previously, pgbench would behave oddly if a \startpipeline command lacked a matching \endpipeline . This seems like a scripting mistake rather than a case that pgbench needs to handle nicely, so throw an error.
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix crash in contrib/intarray if an array with an element equal to INT_MAX is inserted into a gist__int_ops index (Alexander Lakhin, Tom Lane) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Fix crash in contrib/intarray if an array with an element equal to INT_MAX is inserted into a gist__int_ops index (Alexander Lakhin, Tom Lane) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Report a better error when contrib/pageinspect 's hash_bitmap_info() function is applied to a partitioned hash index (Alexander Lakhin, Michael Paquier) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Report a better error when contrib/pageinspect 's hash_bitmap_info() function is applied to a partitioned hash index (Alexander Lakhin, Michael Paquier) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Report a better error when contrib/pgstattuple 's pgstathashindex() function is applied to a partitioned hash index (Alexander Lakhin) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Report a better error when contrib/pgstattuple 's pgstathashindex() function is applied to a partitioned hash index (Alexander Lakhin) §
 [E.12. Release 16.2 # / E.12.2. Changes #] On Windows, suppress autorun options when launching subprocesses in pg_ctl and pg_regress (Kyotaro Horiguchi) § § When launching a child process via cmd.exe , pass the /D flag to prevent executing any autorun commands specified in the registry. This avoids possibly-surprising side effects.
 [E.12. Release 16.2 # / E.12.2. Changes #] On Windows, suppress autorun options when launching subprocesses in pg_ctl and pg_regress (Kyotaro Horiguchi) § §
@@ -189,13 +177,9 @@
 [E.12. Release 16.2 # / E.12.2. Changes #] Move is_valid_ascii() from mb/pg_wchar.h to utils/ascii.h (Jubilee Young) §
 [E.12. Release 16.2 # / E.12.2. Changes #] This change avoids the need to include <simd.h> in pg_wchar.h , which was causing problems for some third-party code.
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix compilation failures with libxml2 version 2.12.0 and later (Tom Lane) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Fix compilation failures with libxml2 version 2.12.0 and later (Tom Lane) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Fix compilation failure of WAL_DEBUG code on Windows (Bharath Rupireddy) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Fix compilation failure of WAL_DEBUG code on Windows (Bharath Rupireddy) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Suppress compiler warnings from Python's header files (Peter Eisentraut, Tom Lane) § § Our preferred compiler options provoke warnings about constructs appearing in recent versions of Python's header files. When using gcc , we can suppress these warnings with a pragma.
 [E.12. Release 16.2 # / E.12.2. Changes #] Suppress compiler warnings from Python's header files (Peter Eisentraut, Tom Lane) § §
 [E.12. Release 16.2 # / E.12.2. Changes #] Our preferred compiler options provoke warnings about constructs appearing in recent versions of Python's header files. When using gcc , we can suppress these warnings with a pragma.
 [E.12. Release 16.2 # / E.12.2. Changes #] Avoid deprecation warning when compiling with LLVM 18 (Thomas Munro) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Avoid deprecation warning when compiling with LLVM 18 (Thomas Munro) §
-[E.12. Release 16.2 # / E.12.2. Changes #] Update time zone data files to tzdata release 2024a for DST law changes in Greenland, Kazakhstan, and Palestine, plus corrections for the Antarctic stations Casey and Vostok. Also historical corrections for Vietnam, Toronto, and Miquelon. (Tom Lane) §
 [E.12. Release 16.2 # / E.12.2. Changes #] Update time zone data files to tzdata release 2024a for DST law changes in Greenland, Kazakhstan, and Palestine, plus corrections for the Antarctic stations Casey and Vostok. Also historical corrections for Vietnam, Toronto, and Miquelon. (Tom Lane) §

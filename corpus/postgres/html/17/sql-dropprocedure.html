@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 17: DROP PROCEDURE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/17/sql-dropprocedure.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:07:05" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="DROP PROCEDURE" />
+  <meta property="og:description" content="DROP PROCEDURE DROP PROCEDURE — remove a procedure Synopsis DROP PROCEDURE [ IF EXISTS ] name [ ( [ [ …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?290b0238" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?290b0238">
+
+  <script src="/media/js/theme.js?290b0238"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/sql-dropprocedure.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/17/index.html">PostgreSQL 17</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-dropprocedure.html" title="PostgreSQL 18 - DROP PROCEDURE" >Current</a>
+                          (<a href="/docs/18/sql-dropprocedure.html" title="PostgreSQL 18 - DROP PROCEDURE" >18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/sql-dropprocedure.html" title="PostgreSQL 17 - DROP PROCEDURE" class="docs-version-selected">17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-dropprocedure.html" title="PostgreSQL 16 - DROP PROCEDURE" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-dropprocedure.html" title="PostgreSQL 15 - DROP PROCEDURE" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-dropprocedure.html" title="PostgreSQL 14 - DROP PROCEDURE" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-dropprocedure.html" title="PostgreSQL devel - DROP PROCEDURE"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/sql-dropprocedure.html" title="PostgreSQL 13 - DROP PROCEDURE"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/sql-dropprocedure.html" title="PostgreSQL 12 - DROP PROCEDURE"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-dropprocedure.html" title="PostgreSQL 11 - DROP PROCEDURE"  rel="nofollow">11</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/17/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">DROP PROCEDURE</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-droppolicy.html" title="DROP POLICY">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 17.9 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-droppublication.html" title="DROP PUBLICATION">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-DROPPROCEDURE">
+  <div class="titlepage"></div><a id="id-1.9.3.124.1" class="indexterm" name="id-1.9.3.124.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">DROP PROCEDURE</span></h2>
+    <p>DROP PROCEDURE — remove a procedure</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+DROP PROCEDURE [ IF EXISTS ] <em class="replaceable"><code>name</code></em> [ ( [ [ <em class="replaceable"><code>argmode</code></em> ] [ <em class="replaceable"><code>argname</code></em> ] <em class="replaceable"><code>argtype</code></em> [, ...] ] ) ] [, ...]
+    [ CASCADE | RESTRICT ]
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.124.5">
+    <h2>Description</h2>
+    <p><code class="command">DROP PROCEDURE</code> removes the definition of one or more existing procedures. To execute this command the user must be the owner of the procedure(s). The argument types to the procedure(s) usually must be specified, since several different procedures can exist with the same name and different argument lists.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.124.6">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><code class="literal">IF EXISTS</code></span></dt>
+        <dd>
+          <p>Do not throw an error if the procedure does not exist. A notice is issued in this case.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>name</code></em></span></dt>
+        <dd>
+          <p>The name (optionally schema-qualified) of an existing procedure.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>argmode</code></em></span></dt>
+        <dd>
+          <p>The mode of an argument: <code class="literal">IN</code>, <code class="literal">OUT</code>, <code class="literal">INOUT</code>, or <code class="literal">VARIADIC</code>. If omitted, the default is <code class="literal">IN</code> (but see below).</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>argname</code></em></span></dt>
+        <dd>
+          <p>The name of an argument. Note that <code class="command">DROP PROCEDURE</code> does not actually pay any attention to argument names, since only the argument data types are used to determine the procedure's identity.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>argtype</code></em></span></dt>
+        <dd>
+          <p>The data type(s) of the procedure's arguments (optionally schema-qualified), if any. See below for details.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">CASCADE</code></span></dt>
+        <dd>
+          <p>Automatically drop objects that depend on the procedure, and in turn all objects that depend on those objects (see <a class="xref" href="ddl-depend.html" title="5.15.&nbsp;Dependency Tracking">Section&nbsp;5.15</a>).</p>
+        </dd>
+        <dt><span class="term"><code class="literal">RESTRICT</code></span></dt>
+        <dd>
+          <p>Refuse to drop the procedure if any objects depend on it. This is the default.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="SQL-DROPPROCEDURE-NOTES">
+    <h2>Notes</h2>
+    <p>If there is only one procedure of the given name, the argument list can be omitted. Omit the parentheses too in this case.</p>
+    <p>In <span class="productname">PostgreSQL</span>, it's sufficient to list the input (including <code class="literal">INOUT</code>) arguments, because no two routines of the same name are allowed to share the same input-argument list. Moreover, the <code class="command">DROP</code> command will not actually check that you wrote the types of <code class="literal">OUT</code> arguments correctly; so any arguments that are explicitly marked <code class="literal">OUT</code> are just noise. But writing them is recommendable for consistency with the corresponding <code class="command">CREATE</code> command.</p>
+    <p>For compatibility with the SQL standard, it is also allowed to write all the argument data types (including those of <code class="literal">OUT</code> arguments) without any <em class="replaceable"><code>argmode</code></em> markers. When this is done, the types of the procedure's <code class="literal">OUT</code> argument(s) <span class="emphasis"><em>will</em></span> be verified against the command. This provision creates an ambiguity, in that when the argument list contains no <em class="replaceable"><code>argmode</code></em> markers, it's unclear which rule is intended. The <code class="command">DROP</code> command will attempt the lookup both ways, and will throw an error if two different procedures are found. To avoid the risk of such ambiguity, it's recommendable to write <code class="literal">IN</code> markers explicitly rather than letting them be defaulted, thus forcing the traditional <span class="productname">PostgreSQL</span> interpretation to be used.</p>
+    <p>The lookup rules just explained are also used by other commands that act on existing procedures, such as <code class="command">ALTER PROCEDURE</code> and <code class="command">COMMENT ON PROCEDURE</code>.</p>
+  </div>
+  <div class="refsect1" id="SQL-DROPPROCEDURE-EXAMPLES">
+    <h2>Examples</h2>
+    <p>If there is only one procedure <code class="literal">do_db_maintenance</code>, this command is sufficient to drop it:</p>
+    <pre class="programlisting">
+DROP PROCEDURE do_db_maintenance;
+</pre>
+    <p>Given this procedure definition:</p>
+    <pre class="programlisting">
+CREATE PROCEDURE do_db_maintenance(IN target_schema text, OUT results text) ...
+</pre>
+    <p>any one of these commands would work to drop it:</p>
+    <pre class="programlisting">
+DROP PROCEDURE do_db_maintenance(IN target_schema text, OUT results text);
+DROP PROCEDURE do_db_maintenance(IN text, OUT text);
+DROP PROCEDURE do_db_maintenance(IN text);
+DROP PROCEDURE do_db_maintenance(text);
+DROP PROCEDURE do_db_maintenance(text, text);  -- potentially ambiguous
+</pre>
+    <p>However, the last example would be ambiguous if there is also, say,</p>
+    <pre class="programlisting">
+CREATE PROCEDURE do_db_maintenance(IN target_schema text, IN options text) ...
+</pre>
+  </div>
+  <div class="refsect1" id="SQL-DROPPROCEDURE-COMPATIBILITY">
+    <h2>Compatibility</h2>
+    <p>This command conforms to the SQL standard, with these <span class="productname">PostgreSQL</span> extensions:</p>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">
+          <p>The standard only allows one procedure to be dropped per command.</p>
+        </li>
+        <li class="listitem">
+          <p>The <code class="literal">IF EXISTS</code> option is an extension.</p>
+        </li>
+        <li class="listitem">
+          <p>The ability to specify argument modes and names is an extension, and the lookup rules differ when modes are given.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.3.124.10">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-createprocedure.html" title="CREATE PROCEDURE"><span class="refentrytitle">CREATE PROCEDURE</span></a>, <a class="xref" href="sql-alterprocedure.html" title="ALTER PROCEDURE"><span class="refentrytitle">ALTER PROCEDURE</span></a>, <a class="xref" href="sql-dropfunction.html" title="DROP FUNCTION"><span class="refentrytitle">DROP FUNCTION</span></a>, <a class="xref" href="sql-droproutine.html" title="DROP ROUTINE"><span class="refentrytitle">DROP ROUTINE</span></a></span>
+  </div>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-droppolicy.html" title="DROP POLICY">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-droppublication.html" title="DROP PUBLICATION">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">DROP POLICY&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 17.9 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;DROP PUBLICATION</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/17/sql-dropprocedure.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?290b0238"></script>
+
+  </body>
+</html>

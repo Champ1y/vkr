@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 18: CREATE EVENT TRIGGER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/18/sql-createeventtrigger.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:07:09" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="CREATE EVENT TRIGGER" />
+  <meta property="og:description" content="CREATE EVENT TRIGGER CREATE EVENT TRIGGER — define a new event trigger Synopsis CREATE EVENT TRIGGER name ON event [ …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?97ba32d2" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?97ba32d2">
+
+  <script src="/media/js/theme.js?97ba32d2"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/sql-createeventtrigger.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/18/index.html">PostgreSQL 18</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-createeventtrigger.html" title="PostgreSQL 18 - CREATE EVENT TRIGGER" class="docs-version-selected">Current</a>
+                          (<a href="/docs/18/sql-createeventtrigger.html" title="PostgreSQL 18 - CREATE EVENT TRIGGER" class="docs-version-selected">18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/sql-createeventtrigger.html" title="PostgreSQL 17 - CREATE EVENT TRIGGER" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-createeventtrigger.html" title="PostgreSQL 16 - CREATE EVENT TRIGGER" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-createeventtrigger.html" title="PostgreSQL 15 - CREATE EVENT TRIGGER" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-createeventtrigger.html" title="PostgreSQL 14 - CREATE EVENT TRIGGER" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-createeventtrigger.html" title="PostgreSQL devel - CREATE EVENT TRIGGER"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/sql-createeventtrigger.html" title="PostgreSQL 13 - CREATE EVENT TRIGGER"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/sql-createeventtrigger.html" title="PostgreSQL 12 - CREATE EVENT TRIGGER"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-createeventtrigger.html" title="PostgreSQL 11 - CREATE EVENT TRIGGER"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-createeventtrigger.html" title="PostgreSQL 10 - CREATE EVENT TRIGGER"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-createeventtrigger.html" title="PostgreSQL 9.6 - CREATE EVENT TRIGGER"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-createeventtrigger.html" title="PostgreSQL 9.5 - CREATE EVENT TRIGGER"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/sql-createeventtrigger.html" title="PostgreSQL 9.4 - CREATE EVENT TRIGGER"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/sql-createeventtrigger.html" title="PostgreSQL 9.3 - CREATE EVENT TRIGGER"  rel="nofollow">9.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/18/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">CREATE EVENT TRIGGER</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-createdomain.html" title="CREATE DOMAIN">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-createextension.html" title="CREATE EXTENSION">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-CREATEEVENTTRIGGER">
+  <div class="titlepage"></div><a id="id-1.9.3.63.1" class="indexterm" name="id-1.9.3.63.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">CREATE EVENT TRIGGER</span></h2>
+    <p>CREATE EVENT TRIGGER — define a new event trigger</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+CREATE EVENT TRIGGER <em class="replaceable"><code>name</code></em>
+    ON <em class="replaceable"><code>event</code></em>
+    [ WHEN <em class="replaceable"><code>filter_variable</code></em> IN (<em class="replaceable"><code>filter_value</code></em> [, ... ]) [ AND ... ] ]
+    EXECUTE { FUNCTION | PROCEDURE } <em class="replaceable"><code>function_name</code></em>()
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.63.5">
+    <h2>Description</h2>
+    <p><code class="command">CREATE EVENT TRIGGER</code> creates a new event trigger. Whenever the designated event occurs and the <code class="literal">WHEN</code> condition associated with the trigger, if any, is satisfied, the trigger function will be executed. For a general introduction to event triggers, see <a class="xref" href="event-triggers.html" title="Chapter&nbsp;38.&nbsp;Event Triggers">Chapter&nbsp;38</a>. The user who creates an event trigger becomes its owner.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.63.6">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><em class="replaceable"><code>name</code></em></span></dt>
+        <dd>
+          <p>The name to give the new trigger. This name must be unique within the database.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>event</code></em></span></dt>
+        <dd>
+          <p>The name of the event that triggers a call to the given function. See <a class="xref" href="event-trigger-definition.html" title="38.1.&nbsp;Overview of Event Trigger Behavior">Section&nbsp;38.1</a> for more information on event names.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>filter_variable</code></em></span></dt>
+        <dd>
+          <p>The name of a variable used to filter events. This makes it possible to restrict the firing of the trigger to a subset of the cases in which it is supported. Currently the only supported <em class="replaceable"><code>filter_variable</code></em> is <code class="literal">TAG</code>.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>filter_value</code></em></span></dt>
+        <dd>
+          <p>A list of values for the associated <em class="replaceable"><code>filter_variable</code></em> for which the trigger should fire. For <code class="literal">TAG</code>, this means a list of command tags (e.g., <code class="literal">'DROP FUNCTION'</code>).</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>function_name</code></em></span></dt>
+        <dd>
+          <p>A user-supplied function that is declared as taking no argument and returning type <code class="literal">event_trigger</code>.</p>
+          <p>In the syntax of <code class="literal">CREATE EVENT TRIGGER</code>, the keywords <code class="literal">FUNCTION</code> and <code class="literal">PROCEDURE</code> are equivalent, but the referenced function must in any case be a function, not a procedure. The use of the keyword <code class="literal">PROCEDURE</code> here is historical and deprecated.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="SQL-CREATEEVENTTRIGGER-NOTES">
+    <h2>Notes</h2>
+    <p>Only superusers can create event triggers.</p>
+    <p>Event triggers are disabled in single-user mode (see <a class="xref" href="app-postgres.html" title="postgres"><span class="refentrytitle"><span class="application">postgres</span></span></a>) as well as when <a class="xref" href="runtime-config-client.html#GUC-EVENT-TRIGGERS">event_triggers</a> is set to <code class="literal">false</code>. If an erroneous event trigger disables the database so much that you can't even drop the trigger, restart with <a class="xref" href="runtime-config-client.html#GUC-EVENT-TRIGGERS">event_triggers</a> set to <code class="literal">false</code> to temporarily disable event triggers, or in single-user mode, and you'll be able to do that.</p>
+  </div>
+  <div class="refsect1" id="SQL-CREATEEVENTTRIGGER-EXAMPLES">
+    <h2>Examples</h2>
+    <p>Forbid the execution of any <a class="link" href="ddl.html" title="Chapter&nbsp;5.&nbsp;Data Definition">DDL</a> command:</p>
+    <pre class="programlisting">
+CREATE OR REPLACE FUNCTION abort_any_command()
+  RETURNS event_trigger
+ LANGUAGE plpgsql
+  AS $$
+BEGIN
+  RAISE EXCEPTION 'command % is disabled', tg_tag;
+END;
+$$;
+
+CREATE EVENT TRIGGER abort_ddl ON ddl_command_start
+   EXECUTE FUNCTION abort_any_command();
+</pre>
+  </div>
+  <div class="refsect1" id="SQL-CREATEEVENTTRIGGER-COMPATIBILITY">
+    <h2>Compatibility</h2>
+    <p>There is no <code class="command">CREATE EVENT TRIGGER</code> statement in the SQL standard.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.63.10">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-altereventtrigger.html" title="ALTER EVENT TRIGGER"><span class="refentrytitle">ALTER EVENT TRIGGER</span></a>, <a class="xref" href="sql-dropeventtrigger.html" title="DROP EVENT TRIGGER"><span class="refentrytitle">DROP EVENT TRIGGER</span></a>, <a class="xref" href="sql-createfunction.html" title="CREATE FUNCTION"><span class="refentrytitle">CREATE FUNCTION</span></a></span>
+  </div>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-createdomain.html" title="CREATE DOMAIN">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-createextension.html" title="CREATE EXTENSION">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">CREATE DOMAIN&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;CREATE EXTENSION</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/18/sql-createeventtrigger.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?97ba32d2"></script>
+
+  </body>
+</html>

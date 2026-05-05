@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 18: 61.3. Genetic Query Optimization (GEQO) in PostgreSQL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/18/geqo-pg-intro.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2026-02-26T14:07:09" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="61.3. Genetic Query Optimization (GEQO) in PostgreSQL" />
+  <meta property="og:description" content="61.3.&amp;nbsp;Genetic Query Optimization (GEQO) in PostgreSQL # 61.3.1. Generating Possible Plans with GEQO 61.3.2. Future Implementation Tasks for PostgreSQL GEQO …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?97ba32d2" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?97ba32d2">
+
+  <script src="/media/js/theme.js?97ba32d2"></script>
+
+  
+
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/geqo-pg-intro.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 26, 2026: <a href="/about/news/postgresql-183-179-1613-1517-and-1422-released-3246/">
+  PostgreSQL 18.3, 17.9, 16.13, 15.17, and 14.22 Released!
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/18/index.html">PostgreSQL 18</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/geqo-pg-intro.html" title="PostgreSQL 18 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL" class="docs-version-selected">Current</a>
+                          (<a href="/docs/18/geqo-pg-intro.html" title="PostgreSQL 18 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL" class="docs-version-selected">18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/geqo-pg-intro.html" title="PostgreSQL 17 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/geqo-pg-intro.html" title="PostgreSQL 16 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/geqo-pg-intro.html" title="PostgreSQL 15 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/geqo-pg-intro.html" title="PostgreSQL 14 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/geqo-pg-intro.html" title="PostgreSQL devel - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/geqo-pg-intro.html" title="PostgreSQL 13 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/geqo-pg-intro.html" title="PostgreSQL 12 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/geqo-pg-intro.html" title="PostgreSQL 11 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/geqo-pg-intro.html" title="PostgreSQL 10 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/geqo-pg-intro.html" title="PostgreSQL 9.6 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/geqo-pg-intro.html" title="PostgreSQL 9.5 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/geqo-pg-intro.html" title="PostgreSQL 9.4 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/geqo-pg-intro.html" title="PostgreSQL 9.3 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/geqo-pg-intro.html" title="PostgreSQL 9.2 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/geqo-pg-intro.html" title="PostgreSQL 9.1 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/geqo-pg-intro.html" title="PostgreSQL 9.0 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/geqo-pg-intro.html" title="PostgreSQL 8.4 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/geqo-pg-intro.html" title="PostgreSQL 8.3 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/geqo-pg-intro.html" title="PostgreSQL 8.2 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/geqo-pg-intro.html" title="PostgreSQL 8.1 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/geqo-pg-intro.html" title="PostgreSQL 8.0 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/geqo-pg-intro.html" title="PostgreSQL 7.4 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/geqo-pg-intro.html" title="PostgreSQL 7.3 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/geqo-pg-intro.html" title="PostgreSQL 7.2 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">7.2</a>
+                    
+                       / 
+                      <a href="/docs/7.1/geqo-pg-intro.html" title="PostgreSQL 7.1 - 61.3. Genetic Query Optimization (GEQO) in PostgreSQL"  rel="nofollow">7.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/18/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">61.3.&nbsp;Genetic Query Optimization (<acronym class="acronym">GEQO</acronym>) in PostgreSQL</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="geqo-intro2.html" title="61.2.&nbsp;Genetic Algorithms">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="geqo.html" title="Chapter&nbsp;61.&nbsp;Genetic Query Optimizer">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;61.&nbsp;Genetic Query Optimizer</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="geqo-biblio.html" title="61.4.&nbsp;Further Reading">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="GEQO-PG-INTRO">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">61.3.&nbsp;Genetic Query Optimization (<acronym class="acronym">GEQO</acronym>) in PostgreSQL <a href="#GEQO-PG-INTRO" class="id_link">#</a></h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="geqo-pg-intro.html#GEQO-PG-INTRO-GEN-POSSIBLE-PLANS">61.3.1. Generating Possible Plans with <acronym class="acronym">GEQO</acronym></a></span></dt>
+      <dt><span class="sect2"><a href="geqo-pg-intro.html#GEQO-FUTURE">61.3.2. Future Implementation Tasks for <span class="productname">PostgreSQL</span> <acronym class="acronym">GEQO</acronym></a></span></dt>
+    </dl>
+  </div>
+  <p>The <acronym class="acronym">GEQO</acronym> module approaches the query optimization problem as though it were the well-known traveling salesman problem (<acronym class="acronym">TSP</acronym>). Possible query plans are encoded as integer strings. Each string represents the join order from one relation of the query to the next. For example, the join tree</p>
+  <pre class="literallayout">
+   /\
+  /\ 2
+ /\ 3
+4  1
+</pre>
+  <p>is encoded by the integer string '4-1-3-2', which means, first join relation '4' and '1', then '3', and then '2', where 1, 2, 3, 4 are relation IDs within the <span class="productname">PostgreSQL</span> optimizer.</p>
+  <p>Specific characteristics of the <acronym class="acronym">GEQO</acronym> implementation in <span class="productname">PostgreSQL</span> are:</p>
+  <div class="itemizedlist">
+    <ul class="itemizedlist compact" style="list-style-type: bullet;">
+      <li class="listitem" style="list-style-type: disc">
+        <p>Usage of a <em class="firstterm">steady state</em> <acronym class="acronym">GA</acronym> (replacement of the least fit individuals in a population, not whole-generational replacement) allows fast convergence towards improved query plans. This is essential for query handling with reasonable time;</p>
+      </li>
+      <li class="listitem" style="list-style-type: disc">
+        <p>Usage of <em class="firstterm">edge recombination crossover</em> which is especially suited to keep edge losses low for the solution of the <acronym class="acronym">TSP</acronym> by means of a <acronym class="acronym">GA</acronym>;</p>
+      </li>
+      <li class="listitem" style="list-style-type: disc">
+        <p>Mutation as genetic operator is deprecated so that no repair mechanisms are needed to generate legal <acronym class="acronym">TSP</acronym> tours.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Parts of the <acronym class="acronym">GEQO</acronym> module are adapted from D. Whitley's Genitor algorithm.</p>
+  <p>The <acronym class="acronym">GEQO</acronym> module allows the <span class="productname">PostgreSQL</span> query optimizer to support large join queries effectively through non-exhaustive search.</p>
+  <div class="sect2" id="GEQO-PG-INTRO-GEN-POSSIBLE-PLANS">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">61.3.1.&nbsp;Generating Possible Plans with <acronym class="acronym">GEQO</acronym> <a href="#GEQO-PG-INTRO-GEN-POSSIBLE-PLANS" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <p>The <acronym class="acronym">GEQO</acronym> planning process uses the standard planner code to generate plans for scans of individual relations. Then join plans are developed using the genetic approach. As shown above, each candidate join plan is represented by a sequence in which to join the base relations. In the initial stage, the <acronym class="acronym">GEQO</acronym> code simply generates some possible join sequences at random. For each join sequence considered, the standard planner code is invoked to estimate the cost of performing the query using that join sequence. (For each step of the join sequence, all three possible join strategies are considered; and all the initially-determined relation scan plans are available. The estimated cost is the cheapest of these possibilities.) Join sequences with lower estimated cost are considered <span class="quote">“<span class="quote">more fit</span>”</span> than those with higher cost. The genetic algorithm discards the least fit candidates. Then new candidates are generated by combining genes of more-fit candidates — that is, by using randomly-chosen portions of known low-cost join sequences to create new sequences for consideration. This process is repeated until a preset number of join sequences have been considered; then the best one found at any time during the search is used to generate the finished plan.</p>
+    <p>This process is inherently nondeterministic, because of the randomized choices made during both the initial population selection and subsequent <span class="quote">“<span class="quote">mutation</span>”</span> of the best candidates. To avoid surprising changes of the selected plan, each run of the GEQO algorithm restarts its random number generator with the current <a class="xref" href="runtime-config-query.html#GUC-GEQO-SEED">geqo_seed</a> parameter setting. As long as <code class="varname">geqo_seed</code> and the other GEQO parameters are kept fixed, the same plan will be generated for a given query (and other planner inputs such as statistics). To experiment with different search paths, try changing <code class="varname">geqo_seed</code>.</p>
+  </div>
+  <div class="sect2" id="GEQO-FUTURE">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">61.3.2.&nbsp;Future Implementation Tasks for <span class="productname">PostgreSQL</span> <acronym class="acronym">GEQO</acronym> <a href="#GEQO-FUTURE" class="id_link">#</a></h3>
+        </div>
+      </div>
+    </div>
+    <p>Work is still needed to improve the genetic algorithm parameter settings. In file <code class="filename">src/backend/optimizer/geqo/geqo_main.c</code>, routines <code class="function">gimme_pool_size</code> and <code class="function">gimme_number_generations</code>, we have to find a compromise for the parameter settings to satisfy two competing demands:</p>
+    <div class="itemizedlist">
+      <ul class="itemizedlist compact" style="list-style-type: disc;">
+        <li class="listitem">
+          <p>Optimality of the query plan</p>
+        </li>
+        <li class="listitem">
+          <p>Computing time</p>
+        </li>
+      </ul>
+    </div>
+    <p>In the current implementation, the fitness of each candidate join sequence is estimated by running the standard planner's join selection and cost estimation code from scratch. To the extent that different candidates use similar sub-sequences of joins, a great deal of work will be repeated. This could be made significantly faster by retaining cost estimates for sub-joins. The problem is to avoid expending unreasonable amounts of memory on retaining that state.</p>
+    <p>At a more basic level, it is not clear that solving query optimization with a GA algorithm designed for TSP is appropriate. In the TSP case, the cost associated with any substring (partial tour) is independent of the rest of the tour, but this is certainly not true for query optimization. Thus it is questionable whether edge recombination crossover is the most effective mutation procedure.</p>
+  </div>
+</div>
+<div class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="geqo-intro2.html" title="61.2.&nbsp;Genetic Algorithms">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="geqo.html" title="Chapter&nbsp;61.&nbsp;Genetic Query Optimizer">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="geqo-biblio.html" title="61.4.&nbsp;Further Reading">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">61.2.&nbsp;Genetic Algorithms&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 18.3 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;61.4.&nbsp;Further Reading</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/18/geqo-pg-intro.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?97ba32d2"></script>
+
+  </body>
+</html>

@@ -49,8 +49,6 @@
 [E.2. Release 16.12 # / E.2.2. Changes #] Fix issues around in-place catalog updates (Noah Misch) § § §
 [E.2. Release 16.12 # / E.2.2. Changes #] Send a nontransactional invalidation message for an in-place update, since such an update will survive transaction rollback. Also ensure that the update is WAL-logged before other sessions can see it. These fixes primarily prevent scenarios in which relations' frozen-XID attributes become inconsistent, possibly allowing premature CLOG truncation and subsequent “ could not access status of transaction ” errors.
 [E.2. Release 16.12 # / E.2.2. Changes #] Fix potential backend process crash at process exit due to trying to release a lock in an already-unmapped shared memory segment (Rahila Syed) §
-[E.2. Release 16.12 # / E.2.2. Changes #] Fix potential backend process crash at process exit due to trying to release a lock in an already-unmapped shared memory segment (Rahila Syed) §
-[E.2. Release 16.12 # / E.2.2. Changes #] Guard against incorrect truncation of the multixact log after a crash (Heikki Linnakangas) §
 [E.2. Release 16.12 # / E.2.2. Changes #] Guard against incorrect truncation of the multixact log after a crash (Heikki Linnakangas) §
 [E.2. Release 16.12 # / E.2.2. Changes #] Fix possibly mis-encoded result of pg_stat_get_backend_activity() (Chao Li) § The shared-memory buffer holding a session's activity string can end with an incomplete multibyte character. Readers are supposed to truncate off any such incomplete character, but this function failed to do so.
 [E.2. Release 16.12 # / E.2.2. Changes #] Fix possibly mis-encoded result of pg_stat_get_backend_activity() (Chao Li) §
@@ -89,14 +87,12 @@
 [E.2. Release 16.12 # / E.2.2. Changes #] Don't advance logical replication progress after a parallel worker apply failure (Zhijie Hou) §
 [E.2. Release 16.12 # / E.2.2. Changes #] The previous behavior allowed transactions to be lost by a subscriber.
 [E.2. Release 16.12 # / E.2.2. Changes #] Fix possible failure with “ unexpected data beyond EOF ” during restart of a streaming replica server (Anthonin Bonnefoy) §
-[E.2. Release 16.12 # / E.2.2. Changes #] Fix possible failure with “ unexpected data beyond EOF ” during restart of a streaming replica server (Anthonin Bonnefoy) §
 [E.2. Release 16.12 # / E.2.2. Changes #] Fix erroneous tracking of column position when parsing partition range bounds (myzhen) § This could, for example, lead to the wrong column name being cited in error messages about casting partition bound values to the column's data type.
 [E.2. Release 16.12 # / E.2.2. Changes #] Fix erroneous tracking of column position when parsing partition range bounds (myzhen) §
 [E.2. Release 16.12 # / E.2.2. Changes #] This could, for example, lead to the wrong column name being cited in error messages about casting partition bound values to the column's data type.
 [E.2. Release 16.12 # / E.2.2. Changes #] Fix assorted minor errors in error messages (Man Zeng, Tianchen Zhang) § § § For example, an error report about mismatched timeline number in a backup manifest showed the starting timeline number where it meant to show the ending timeline number.
 [E.2. Release 16.12 # / E.2.2. Changes #] Fix assorted minor errors in error messages (Man Zeng, Tianchen Zhang) § § §
 [E.2. Release 16.12 # / E.2.2. Changes #] For example, an error report about mismatched timeline number in a backup manifest showed the starting timeline number where it meant to show the ending timeline number.
-[E.2. Release 16.12 # / E.2.2. Changes #] Fix failure to perform function inlining when doing JIT compilation with LLVM version 17 or later (Anthonin Bonnefoy) §
 [E.2. Release 16.12 # / E.2.2. Changes #] Fix failure to perform function inlining when doing JIT compilation with LLVM version 17 or later (Anthonin Bonnefoy) §
 [E.2. Release 16.12 # / E.2.2. Changes #] Adjust our JIT code to work with LLVM 21 (Holger Hoffstätte) § The previous coding failed to compile on aarch64 machines.
 [E.2. Release 16.12 # / E.2.2. Changes #] Adjust our JIT code to work with LLVM 21 (Holger Hoffstätte) §
@@ -108,8 +104,6 @@
 [E.2. Release 16.12 # / E.2.2. Changes #] Honor open() 's O_CLOEXEC flag on Windows (Bryan Green, Thomas Munro) § § §
 [E.2. Release 16.12 # / E.2.2. Changes #] Make this flag work like it does on POSIX platforms, so that we don't leak file handles into child processes such as COPY TO/FROM PROGRAM . While that leakage hasn't caused many problems, it seems undesirable.
 [E.2. Release 16.12 # / E.2.2. Changes #] Fix failure to parse long options on the server command line in Solaris executables built with meson (Tom Lane) §
-[E.2. Release 16.12 # / E.2.2. Changes #] Fix failure to parse long options on the server command line in Solaris executables built with meson (Tom Lane) §
-[E.2. Release 16.12 # / E.2.2. Changes #] Support process title changes on GNU/Hurd (Michael Banck) §
 [E.2. Release 16.12 # / E.2.2. Changes #] Support process title changes on GNU/Hurd (Michael Banck) §
 [E.2. Release 16.12 # / E.2.2. Changes #] Make pg_resetwal print the updated value when changing OldestXID (Heikki Linnakangas) § It already did that for every other variable it can change.
 [E.2. Release 16.12 # / E.2.2. Changes #] Make pg_resetwal print the updated value when changing OldestXID (Heikki Linnakangas) §

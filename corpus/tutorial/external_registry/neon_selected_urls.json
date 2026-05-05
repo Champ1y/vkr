@@ -1,0 +1,22 @@
+{
+  "source": "neon_selected",
+  "authority": "external_pedagogical",
+  "usage_rule": "Не индексировать landing page целиком. Индексировать только selected lesson pages, если они будут скачаны отдельно. В текущем ready-corpus Neon представлен registry, а SQL/JSON/индексы закрыты curated notes.",
+  "selected_urls": [
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-data-types/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-create-table/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-primary-key/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-foreign-key/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-joins/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-group-by/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-having/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-subquery/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-cte/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-transaction/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-indexes/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-explain/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-json/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-jsonb/",
+    "https://neon.com/postgresql/postgresql-tutorial/postgresql-sequences/"
+  ]
+}

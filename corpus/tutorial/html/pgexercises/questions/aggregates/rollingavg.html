@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../../lib/codemirror/lib/codemirror.css" rel="stylesheet">
+    <link href="../../lib/perfect-scrollbar/min/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="../../lib/splitter/splitter.css" rel="stylesheet">
+    <link href="../../css/jquery/jquery-ui-1.10.3.custom.min.css " rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <!-- temporary downgrade to 1.10.2 due to popup drag bugs with 1.10.3-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="../../lib/codemirror/lib/codemirror.js"></script>
+    <script src="../../lib/perfect-scrollbar/min/perfect-scrollbar.with-mousewheel.min.js"></script>
+    <script src="../../lib/codemirror/mode/sql/sql.js"></script>
+    <script src="../../js/browser.js"></script>
+    <script src="../../lib/splitter/splitter.js"></script>
+    <script src="../../js/site.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+    <!-- Navbar
+      ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+
+    <div class="container">
+
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="payback.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Aggregates</a> <span class="divider">/</span></li>
+            <li class="active">Rollingavg</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="../date/">Next Category</a></p></div>
+      </div>
+
+
+    <!-- Typography
+    ================================================== -->
+    <section id="typography">
+      <div class="page-header">
+        <h1>
+	<span style="float:left">
+Calculate a rolling average of total revenue        </span>
+	<span style="float:right">
+	<img src="../../assets/tick2.svg" class="headertick"></img>
+
+	</span>
+        <div style="clear:both"></div>
+        </h1>
+      </div>
+
+      <div class="row" style="margin-bottom:10px">
+        <div class="span8">
+          <h3>Question</h3>
+For each day in August 2012, calculate a rolling average of total revenue over the previous 15 days.  Output should contain date and revenue columns, sorted by the date.  Remember to account for the possibility of a day having zero revenue.  This one's a bit tough, so don't be afraid to check out the hint!        </div>
+      </div>
+      <div class="row">
+      <div class="span12">
+      <div id=splittercontainerouter>
+        <div id="schemareminder" class="btn btn-primary" onClick="schema();">
+          <div>Schema reminder <span id="schemareminderarrow">&#x25BC;</span></div>
+        </div>
+        <div id="schemaremindercontents">
+          <img id="schemareminderimage" src="../../img/schema-horizontal.svg" alt="DB schema" width="840"></img>
+        </div>
+        <div id=splittercontainer>
+          <div id="expres" ondblclick="setOptimalExpectedResultsSize()">
+            <div style="overflow-x:hidden;">
+              <div style="display: inline-block; min-width:1000px;">
+                <h3>Expected Results</h3>
+                <div style="width:auto; display:inline-block">
+                  <table id="exprestable" class="demo table table-bordered table-striped" style="width:auto;">
+<thead><tr>
+<th>date</th>
+<th>revenue</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2012-08-01</td>
+<td>1126.8333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-02</td>
+<td>1153.0000000000000000</td>
+</tr>
+<tr>
+<td>2012-08-03</td>
+<td>1162.9000000000000000</td>
+</tr>
+<tr>
+<td>2012-08-04</td>
+<td>1177.3666666666666667</td>
+</tr>
+<tr>
+<td>2012-08-05</td>
+<td>1160.9333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-06</td>
+<td>1185.4000000000000000</td>
+</tr>
+<tr>
+<td>2012-08-07</td>
+<td>1182.8666666666666667</td>
+</tr>
+<tr>
+<td>2012-08-08</td>
+<td>1172.6000000000000000</td>
+</tr>
+<tr>
+<td>2012-08-09</td>
+<td>1152.4666666666666667</td>
+</tr>
+<tr>
+<td>2012-08-10</td>
+<td>1175.0333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-11</td>
+<td>1176.6333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-12</td>
+<td>1195.6666666666666667</td>
+</tr>
+<tr>
+<td>2012-08-13</td>
+<td>1218.0000000000000000</td>
+</tr>
+<tr>
+<td>2012-08-14</td>
+<td>1247.4666666666666667</td>
+</tr>
+<tr>
+<td>2012-08-15</td>
+<td>1274.1000000000000000</td>
+</tr>
+<tr>
+<td>2012-08-16</td>
+<td>1281.2333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-17</td>
+<td>1324.4666666666666667</td>
+</tr>
+<tr>
+<td>2012-08-18</td>
+<td>1373.7333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-19</td>
+<td>1406.0666666666666667</td>
+</tr>
+<tr>
+<td>2012-08-20</td>
+<td>1427.0666666666666667</td>
+</tr>
+<tr>
+<td>2012-08-21</td>
+<td>1450.3333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-22</td>
+<td>1539.7000000000000000</td>
+</tr>
+<tr>
+<td>2012-08-23</td>
+<td>1567.3000000000000000</td>
+</tr>
+<tr>
+<td>2012-08-24</td>
+<td>1592.3333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-25</td>
+<td>1615.0333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-26</td>
+<td>1631.2000000000000000</td>
+</tr>
+<tr>
+<td>2012-08-27</td>
+<td>1659.4333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-28</td>
+<td>1687.0000000000000000</td>
+</tr>
+<tr>
+<td>2012-08-29</td>
+<td>1684.6333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-30</td>
+<td>1657.9333333333333333</td>
+</tr>
+<tr>
+<td>2012-08-31</td>
+<td>1703.4000000000000000</td>
+</tr>
+</tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div id="codediv">
+            <div id="youranswerdiv" ondblclick="setOptimalYourAnswerSize()">
+                    <h3 style="min-width:200px;">Your Answer<span id="youranswertickspan"><img src="../../assets/cross.svg" class="youranswertick"></img></span>
+                <span id="youranswerbuttons">
+                  <a id="hintbtn" class="youranswerbutton btn btn-primary btn-small" onClick="hint();">Hint</a>
+                  <a id="helpbtn" class="youranswerbutton btn btn-primary btn-small" onClick="help();" title="[Alt-h]">Help</a>
+                  <a id="querybtn" class="youranswerbutton btn btn-primary btn-small" onClick="save();">Save</a>
+                  <a id="savebtn" class="youranswerbutton btn btn-primary btn-small" onClick="query();" title="[Alt-r]">Run Query</a>
+                </span>
+              </h3>
+              <div style="clear:both;">
+  	      <div id="codewrapper">
+                  <form>
+                    <textarea id="code" name="code"></textarea>
+                  </form>
+                </div>
+  	    </div>
+            </div>
+            <div id="yourresultsdiv" ondblclick="setOptimalYourResultsSize()">
+              <div>
+                <table id="yourresultstable" class="demo table table-bordered table-striped"></table>
+                <pre id="yourresultserror"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span12">
+          <h3>Answers and Discussion <a id="answerbtn" class="inactive btn btn-primary btn-small" style="margin: 5px" onClick="toggleAnswers();">Show</a></h3>
+          <pre id="querydiv" class="answerdiv prettyprint lang-sql">
+select 	dategen.date,
+	(
+		-- correlated subquery that, for each day fed into it,
+		-- finds the average revenue for the last 15 days
+		select sum(case
+			when memid = 0 then slots * facs.guestcost
+			else slots * membercost
+		end) as rev
+
+		from cd.bookings bks
+		inner join cd.facilities facs
+			on bks.facid = facs.facid
+		where bks.starttime > dategen.date - interval '14 days'
+			and bks.starttime < dategen.date + interval '1 day'
+	)/15 as revenue
+	from
+	(
+		-- generates a list of days in august
+		select 	cast(generate_series(timestamp '2012-08-01',
+			'2012-08-31','1 day') as date) as date
+	)  as dategen
+order by dategen.date;          </pre>
+          <div class="row">
+            <div class="span8 answerdiv">
+<p>There's at least two equally good solutions to this question.  I've put the simplest to write as the answer, but there's also a more flexible solution that uses window functions.</p>
+
+<p>Let's look at the selected answer first.  When I read SQL queries, I tend to read the <span class="code">SELECT</span> part of the statement last - the <span class="code">FROM</span> and <span class="code">WHERE</span> parts tend to be more interesting.  So, what do we have in our <span class="code">FROM</span>?  A call to the <span class="code">GENERATE_SERIES</span> function.  This does pretty much what it says on the tin - generates a series of values.  You can specify a start value, a stop value, and an increment.  It works for integer types and dates - although, as you can see, we need to be explicit about what types are going into and out of the function.  Try removing the casts, and seeing the result!</p>
+
+<p>So, we've generated a timestamp for each day in August.  Now, for each day, we need to generate our average.  We can do this using a <i>correlated subquery</i>.  If you remember, a correlated subquery is a subquery that uses values from the outer query.  This means that it gets executed once for each result row in the outer query.  This is in contrast to an uncorrelated subquery, which only has to be executed once.</p>
+
+<p>If we look at our correlated subquery, we can see that it's correlated on the dategen.date field.  It produces a sum of revenue for this day and the 14 days prior to it, and then divides that sum by 15.  This produces the output we're looking for!</p>
+
+<p>I mentioned that there's a window function-based solution for this problem as well - you can see it below.  The approach we use for this is generating a list of revenue for each day, and then using window function aggregation over that list.  The nice thing about this method is that once you have the per-day revenue, you can produce a wide range of results quite easily - you might, for example, want rolling averages for the previous month, 15 days, and 5 days.  This is easy to do using this method, and rather harder using conventional aggregation.</p>
+
+</div></div><div class="row"><div class="span12 answerdiv" style="opacity:0;"><div><pre class="secondaryanswerdiv prettyprint lang-sql">
+select date, avgrev from (
+	-- AVG over this row and the 14 rows before it.
+	select 	dategen.date as date,
+		avg(revdata.rev) over(order by dategen.date rows 14 preceding) as avgrev
+	from
+		-- generate a list of days.  This ensures that a row gets generated
+		-- even if the day has 0 revenue.  Note that we generate days before
+		-- the start of october - this is because our window function needs
+		-- to know the revenue for those days for its calculations.
+		(select
+			cast(generate_series(timestamp '2012-07-10', '2012-08-31','1 day') as date) as date
+		)  as dategen
+		left outer join
+			-- left join to a table of per-day revenue
+			(select cast(bks.starttime as date) as date,
+				sum(case
+					when memid = 0 then slots * facs.guestcost
+					else slots * membercost
+				end) as rev
+
+				from cd.bookings bks
+				inner join cd.facilities facs
+					on bks.facid = facs.facid
+				group by cast(bks.starttime as date)
+			) as revdata
+			on dategen.date = revdata.date
+	) as subq
+	where date >= '2012-08-01'
+order by date;
+</pre></div></div></div><div class="row"><div class="span8 answerdiv" style="opacity:0;">
+
+<p>You'll note that we've been wanting to work out daily revenue quite frequently.  Rather than inserting that calculation into all our queries, which is rather messy (and will cause us a big headache if we ever change our schema), we probably want to store that information somewhere.  Your first thought might be to calculate information and store it somewhere for later use.  This is a common tactic for large data warehouses, but it can cause us some problems - if we ever go back and edit our data, we need to remember to recalculate.  For non-enormous-scale data like we're looking at here, we can just create a view instead.  A view is essentially a stored query that looks exactly like a table.  Under the covers, the DBMS just subsititutes in the relevant portion of the view definition when you select data from it.  They're very easy to create, as you can see below:</p>
+
+</div></div><div class="row"><div class="span12 answerdiv" style="opacity:0;"><div><pre class="secondaryanswerdiv prettyprint lang-sql">
+create or replace view cd.dailyrevenue as
+	select 	cast(bks.starttime as date) as date,
+		sum(case
+			when memid = 0 then slots * facs.guestcost
+			else slots * membercost
+		end) as rev
+
+		from cd.bookings bks
+		inner join cd.facilities facs
+			on bks.facid = facs.facid
+		group by cast(bks.starttime as date);
+</pre></div></div></div><div class="row"><div class="span8 answerdiv" style="opacity:0;">
+
+<p>You can see that this makes our query an awful lot simpler!</p>
+
+
+</div></div><div class="row"><div class="span12 answerdiv" style="opacity:0;"><div><pre class="secondaryanswerdiv prettyprint lang-sql">
+select date, avgrev from (
+	select  dategen.date as date,
+		avg(revdata.rev) over(order by dategen.date rows 14 preceding) as avgrev
+	from		
+		(select
+			cast(generate_series(timestamp '2012-07-10', '2012-08-31','1 day') as date) as date
+		)  as dategen
+		left outer join
+			cd.dailyrevenue as revdata on dategen.date = revdata.date
+		) as subq
+	where date >= '2012-08-01'
+order by date;
+</pre></div></div></div><div class="row"><div class="span8 answerdiv" style="opacity:0;">
+
+<p>As well as storing frequently-used query fragments, views can be used for a variety of purposes, including restricting access to certain columns of a table.</p>            </div>
+          </div>
+        </div>
+      </div>
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="payback.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Aggregates</a> <span class="divider">/</span></li>
+            <li class="active">Rollingavg</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="../date/">Next Category</a></p></div>
+      </div>
+    </div><!-- /container -->
+      <div id="hint" title="Hint">
+You'll need to generate a list of days: check out <span class="code">GENERATE_SERIES</span> for that.  You can then solve this problem using aggregate functions or window functions.
+      </div>
+      <div id="help" title="Help">
+        <div id="helpcontent">
+	  <h4>Keyboard shortcuts:</h4>
+	  <ul>
+	    <li><b>Alt-h</b>: Show/Hide Help menu
+	    <li><b>Alt-r</b>: Run query
+	    <li><b>Alt-x</b>: Run selected text as query
+	    <li><b>Alt-s</b>: Run query by cursor (delimited by whitespace/semi-colon)
+	  </ul>
+	  <hr />
+	  <h4>Other hints:</h4>
+	    <ul>
+	      <li>You can double click on each of the panes of Expected Result/Your answer to quickly resize them.
+	      <li>If you have trouble remembering the database schema, you can leave this popup open while you work on your answer.
+	      <li>Don't forget to use the hint button if you're stuck!
+	    </ul>
+	  <hr />
+	</div>
+      </div>
+
+
+    <script>
+        var App = {};
+	App.sorted = 1;
+	App.pageID = "7CFB33CF-40F0-49C8-B0A5-8F3F99D3F99F";
+        App.writeable = 0;
+        App.tableToReturn = "";
+	App.jsonResults = sortJSONResults([["2012-08-01","1126.8333333333333333"],["2012-08-02","1153.0000000000000000"],["2012-08-03","1162.9000000000000000"],["2012-08-04","1177.3666666666666667"],["2012-08-05","1160.9333333333333333"],["2012-08-06","1185.4000000000000000"],["2012-08-07","1182.8666666666666667"],["2012-08-08","1172.6000000000000000"],["2012-08-09","1152.4666666666666667"],["2012-08-10","1175.0333333333333333"],["2012-08-11","1176.6333333333333333"],["2012-08-12","1195.6666666666666667"],["2012-08-13","1218.0000000000000000"],["2012-08-14","1247.4666666666666667"],["2012-08-15","1274.1000000000000000"],["2012-08-16","1281.2333333333333333"],["2012-08-17","1324.4666666666666667"],["2012-08-18","1373.7333333333333333"],["2012-08-19","1406.0666666666666667"],["2012-08-20","1427.0666666666666667"],["2012-08-21","1450.3333333333333333"],["2012-08-22","1539.7000000000000000"],["2012-08-23","1567.3000000000000000"],["2012-08-24","1592.3333333333333333"],["2012-08-25","1615.0333333333333333"],["2012-08-26","1631.2000000000000000"],["2012-08-27","1659.4333333333333333"],["2012-08-28","1687.0000000000000000"],["2012-08-29","1684.6333333333333333"],["2012-08-30","1657.9333333333333333"],["2012-08-31","1703.4000000000000000"]]);
+    </script>
+
+    <script src="../../js/prettify/run_prettify.js?lang=sql"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+</html>

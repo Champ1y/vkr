@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-05-05T11:33:35+00:00",
+  "corpus_root": "/app/corpus",
+  "ready_for_chunking_and_embeddings": true,
+  "errors_count": 0,
+  "warnings_count": 0,
+  "summary": {
+    "official_html_16": 1167,
+    "official_html_17": 1141,
+    "official_html_18": 1146,
+    "curated_md_files": 102,
+    "processed_html_md_files": 95,
+    "raw_tutorial_html_files_not_for_indexing": 95,
+    "broken_official_backing_count": 0,
+    "forbidden_curated_hits_count": 0,
+    "processed_missing_source_url_count": 0,
+    "processed_source_url_mismatch_count": 0,
+    "pgexercises_boilerplate_count": 0,
+    "pgexercises_manifest_error_rows_count": 0,
+    "pycache_dirs_count": 0,
+    "pyc_files_count": 0,
+    "bak_files_count": 0,
+    "ingestion_policy_exists": true
+  },
+  "details": {
+    "official": {
+      "16": 1167,
+      "17": 1141,
+      "18": 1146
+    },
+    "curated": {
+      "curated_md_files": 102,
+      "broken_official_backing_count": 0,
+      "broken_official_backing": [],
+      "forbidden_curated_hits_count": 0,
+      "forbidden_curated_hits": []
+    },
+    "processed_html": {
+      "processed_md_files": 95,
+      "missing_source_url_count": 0,
+      "missing_source_url": [],
+      "source_url_mismatch_count": 0,
+      "source_url_mismatch": [],
+      "pgexercises_boilerplate_count": 0,
+      "pgexercises_boilerplate_files": []
+    },
+    "pgexercises_manifest": {
+      "pgexercises_manifest_exists": true,
+      "error_rows_count": 0,
+      "missing_pages_count": 0,
+      "existing_error_pages_count": 0,
+      "error_rows": []
+    },
+    "service_junk": {
+      "pycache_dirs_count": 0,
+      "pycache_dirs": [],
+      "pyc_files_count": 0,
+      "pyc_files": [],
+      "bak_files_count": 0,
+      "bak_files": [],
+      "backup_dirs_count": 0,
+      "backup_dirs": []
+    },
+    "ingestion_policy": {
+      "exists": true,
+      "missing_index_rules": [],
+      "missing_do_not_index_rules": []
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

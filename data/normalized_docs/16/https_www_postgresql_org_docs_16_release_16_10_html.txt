@@ -65,7 +65,6 @@
 [E.4. Release 16.10 # / E.4.2. Changes #] Fix potentially-incorrect decompression of LZ4-compressed archive data (Mikhail Gribkov) §
 [E.4. Release 16.10 # / E.4.2. Changes #] This error seems to manifest only with not-very-compressible input data, which may explain why it escaped detection.
 [E.4. Release 16.10 # / E.4.2. Changes #] Avoid a rare scenario where a btree index scan could mark the wrong index entries as dead (Peter Geoghegan) §
-[E.4. Release 16.10 # / E.4.2. Changes #] Avoid a rare scenario where a btree index scan could mark the wrong index entries as dead (Peter Geoghegan) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Avoid re-distributing cache invalidation messages from other transactions during logical replication (vignesh C) § Our previous round of minor releases included a bug fix to ensure that replication receiver processes would respond to cross-process cache invalidation messages, preventing them from using stale catalog data while performing replication updates. However, the fix unintentionally made them also redistribute those messages again, leading to an exponential increase in the number of invalidation messages, which would often end in a memory allocation failure. Fix by not redistributing received messages.
 [E.4. Release 16.10 # / E.4.2. Changes #] Avoid re-distributing cache invalidation messages from other transactions during logical replication (vignesh C) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Our previous round of minor releases included a bug fix to ensure that replication receiver processes would respond to cross-process cache invalidation messages, preventing them from using stale catalog data while performing replication updates. However, the fix unintentionally made them also redistribute those messages again, leading to an exponential increase in the number of invalidation messages, which would often end in a memory allocation failure. Fix by not redistributing received messages.
@@ -88,18 +87,14 @@
 [E.4. Release 16.10 # / E.4.2. Changes #] Do not let cascading logical WAL senders try to send data that's beyond what has been replayed on their standby server (Alexey Makhmutov) §
 [E.4. Release 16.10 # / E.4.2. Changes #] This avoids a situation where such WAL senders could get stuck at standby server shutdown, waiting for replay work that will not happen because the server's startup process is already shut down.
 [E.4. Release 16.10 # / E.4.2. Changes #] Fix per-relation memory leakage in autovacuum (Tom Lane) §
-[E.4. Release 16.10 # / E.4.2. Changes #] Fix per-relation memory leakage in autovacuum (Tom Lane) §
-[E.4. Release 16.10 # / E.4.2. Changes #] Fix session-lifespan memory leaks in XMLSERIALIZE(... INDENT) (Dmitry Kovalenko, Tom Lane) § §
 [E.4. Release 16.10 # / E.4.2. Changes #] Fix session-lifespan memory leaks in XMLSERIALIZE(... INDENT) (Dmitry Kovalenko, Tom Lane) § §
 [E.4. Release 16.10 # / E.4.2. Changes #] Fix some places that might try to fetch toasted fields of system catalogs without any snapshot (Nathan Bossart) § This could result in an assertion failure or “ cannot fetch toast data without an active snapshot ” error.
 [E.4. Release 16.10 # / E.4.2. Changes #] Fix some places that might try to fetch toasted fields of system catalogs without any snapshot (Nathan Bossart) §
 [E.4. Release 16.10 # / E.4.2. Changes #] This could result in an assertion failure or “ cannot fetch toast data without an active snapshot ” error.
 [E.4. Release 16.10 # / E.4.2. Changes #] Avoid assertion failure during cross-table constraint updates (Tom Lane, Jian He) § §
-[E.4. Release 16.10 # / E.4.2. Changes #] Avoid assertion failure during cross-table constraint updates (Tom Lane, Jian He) § §
 [E.4. Release 16.10 # / E.4.2. Changes #] Remove faulty assertion that a command tag must have been determined by the end of PortalRunMulti() (Álvaro Herrera) § This failed in edge cases such as an empty prepared statement.
 [E.4. Release 16.10 # / E.4.2. Changes #] Remove faulty assertion that a command tag must have been determined by the end of PortalRunMulti() (Álvaro Herrera) §
 [E.4. Release 16.10 # / E.4.2. Changes #] This failed in edge cases such as an empty prepared statement.
-[E.4. Release 16.10 # / E.4.2. Changes #] Fix assertion failure in XMLTABLE parsing (Richard Guo) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Fix assertion failure in XMLTABLE parsing (Richard Guo) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Restore the ability to run PL/pgSQL expressions in parallel (Dipesh Dhameliya) § PL/pgSQL's notion of an “ expression ” is very broad, encompassing any SQL SELECT query that returns a single column and no more than one row. So there are cases, for example evaluation of an aggregate function, where the query involves significant work and it'd be useful to run it with parallel workers. This used to be possible, but a previous bug fix unintentionally disabled it.
 [E.4. Release 16.10 # / E.4.2. Changes #] Restore the ability to run PL/pgSQL expressions in parallel (Dipesh Dhameliya) §
@@ -123,7 +118,6 @@
 [E.4. Release 16.10 # / E.4.2. Changes #] Improve psql 's tab completion for COPY and \copy options (Atsushi Torikoshi) §
 [E.4. Release 16.10 # / E.4.2. Changes #] The same completions were offered for both COPY FROM and COPY TO , although some options are only valid for one case or the other. Distinguish these cases to provide more accurate suggestions.
 [E.4. Release 16.10 # / E.4.2. Changes #] Avoid assertion failure in pgbench when multiple pipeline sync messages are received (Fujii Masao) §
-[E.4. Release 16.10 # / E.4.2. Changes #] Avoid assertion failure in pgbench when multiple pipeline sync messages are received (Fujii Masao) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Ensure that pg_dump dumps comments on domain constraints in a valid order (Jian He) § In some cases the comment command could appear before creation of the constraint.
 [E.4. Release 16.10 # / E.4.2. Changes #] Ensure that pg_dump dumps comments on domain constraints in a valid order (Jian He) §
 [E.4. Release 16.10 # / E.4.2. Changes #] In some cases the comment command could appear before creation of the constraint.
@@ -134,8 +128,6 @@
 [E.4. Release 16.10 # / E.4.2. Changes #] In pg_upgrade , check for inconsistent inherited not-null constraints (Ali Akbar) § § § §
 [E.4. Release 16.10 # / E.4.2. Changes #] PostgreSQL versions before 18 allow an inherited column not-null constraint to be dropped. However, this results in a schema that cannot be restored, leading to failure in pg_upgrade . Detect such cases during pg_upgrade 's preflight checks to allow users to fix them before initiating the upgrade.
 [E.4. Release 16.10 # / E.4.2. Changes #] Avoid assertion failure if track_commit_timestamp is enabled during initdb (Hayato Kuroda, Andy Fan) §
-[E.4. Release 16.10 # / E.4.2. Changes #] Avoid assertion failure if track_commit_timestamp is enabled during initdb (Hayato Kuroda, Andy Fan) §
-[E.4. Release 16.10 # / E.4.2. Changes #] Fix pg_waldump to show information about dropped statistics in PREPARE TRANSACTION WAL records (Daniil Davydov) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Fix pg_waldump to show information about dropped statistics in PREPARE TRANSACTION WAL records (Daniil Davydov) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Avoid possible leak of the open connection during contrib/dblink connection establishment (Tom Lane) § In the rare scenario where we hit out-of-memory while inserting the new connection object into dblink's hashtable, the open connection would be leaked until end of session, leaving an idle session sitting on the remote server.
 [E.4. Release 16.10 # / E.4.2. Changes #] Avoid possible leak of the open connection during contrib/dblink connection establishment (Tom Lane) §
@@ -143,7 +135,6 @@
 [E.4. Release 16.10 # / E.4.2. Changes #] Make contrib/pg_prewarm cope with very large shared_buffers settings (Daria Shanina) § Autoprewarm failed with a memory allocation error if shared_buffers was larger than about 50 million buffers (400GB).
 [E.4. Release 16.10 # / E.4.2. Changes #] Make contrib/pg_prewarm cope with very large shared_buffers settings (Daria Shanina) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Autoprewarm failed with a memory allocation error if shared_buffers was larger than about 50 million buffers (400GB).
-[E.4. Release 16.10 # / E.4.2. Changes #] In contrib/pg_stat_statements , avoid leaving gaps in the set of parameter numbers used in a normalized query (Sami Imseih) §
 [E.4. Release 16.10 # / E.4.2. Changes #] In contrib/pg_stat_statements , avoid leaving gaps in the set of parameter numbers used in a normalized query (Sami Imseih) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Fix memory leakage in contrib/postgres_fdw 's DirectModify methods (Tom Lane) § The PGresult holding the results of the remote modify command would be leaked for the rest of the session if the query fails between invocations of the DirectModify methods, which could happen when there's RETURNING data to process.
 [E.4. Release 16.10 # / E.4.2. Changes #] Fix memory leakage in contrib/postgres_fdw 's DirectModify methods (Tom Lane) §
@@ -164,10 +155,7 @@
 [E.4. Release 16.10 # / E.4.2. Changes #] Make our usage of memset_s() conform strictly to the C11 standard (Tom Lane) § §
 [E.4. Release 16.10 # / E.4.2. Changes #] This avoids compile failures on some platforms.
 [E.4. Release 16.10 # / E.4.2. Changes #] Silence compatibility warning when using Meson to build with MSVC (Peter Eisentraut) §
-[E.4. Release 16.10 # / E.4.2. Changes #] Silence compatibility warning when using Meson to build with MSVC (Peter Eisentraut) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Prevent uninitialized-value compiler warnings in JSONB comparison code (Tom Lane) §
-[E.4. Release 16.10 # / E.4.2. Changes #] Prevent uninitialized-value compiler warnings in JSONB comparison code (Tom Lane) §
-[E.4. Release 16.10 # / E.4.2. Changes #] Avoid deprecation warnings when building with libxml2 2.14 and later (Michael Paquier) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Avoid deprecation warnings when building with libxml2 2.14 and later (Michael Paquier) §
 [E.4. Release 16.10 # / E.4.2. Changes #] Avoid problems when compiling pg_locale.h under C++ (John Naylor) § PostgreSQL header files generally need to be wrapped in extern "C" { ... } in order to be included in extensions written in C++. This failed for pg_locale.h because of its use of libicu headers, but we can work around that by suppressing C++-only declarations in those headers. C++ extensions that want to use libicu 's C++ APIs can do so by including the libicu headers ahead of pg_locale.h .
 [E.4. Release 16.10 # / E.4.2. Changes #] Avoid problems when compiling pg_locale.h under C++ (John Naylor) §

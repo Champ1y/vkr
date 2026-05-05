@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../../lib/codemirror/lib/codemirror.css" rel="stylesheet">
+    <link href="../../lib/perfect-scrollbar/min/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="../../lib/splitter/splitter.css" rel="stylesheet">
+    <link href="../../css/jquery/jquery-ui-1.10.3.custom.min.css " rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <!-- temporary downgrade to 1.10.2 due to popup drag bugs with 1.10.3-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="../../lib/codemirror/lib/codemirror.js"></script>
+    <script src="../../lib/perfect-scrollbar/min/perfect-scrollbar.with-mousewheel.min.js"></script>
+    <script src="../../lib/codemirror/mode/sql/sql.js"></script>
+    <script src="../../js/browser.js"></script>
+    <script src="../../lib/splitter/splitter.js"></script>
+    <script src="../../js/site.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+    <!-- Navbar
+      ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+
+    <div class="container">
+
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="fachours3.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Aggregates</a> <span class="divider">/</span></li>
+            <li class="active">Nbooking</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="countmembers.html">Next Exercise</a></p></div>
+      </div>
+
+
+    <!-- Typography
+    ================================================== -->
+    <section id="typography">
+      <div class="page-header">
+        <h1>
+	<span style="float:left">
+List each member's first booking after September 1st 2012        </span>
+	<span style="float:right">
+	<img src="../../assets/tick2.svg" class="headertick"></img>
+
+	</span>
+        <div style="clear:both"></div>
+        </h1>
+      </div>
+
+      <div class="row" style="margin-bottom:10px">
+        <div class="span8">
+          <h3>Question</h3>
+Produce a list of each member name, id, and their first booking after September 1st 2012.  Order by member ID.        </div>
+      </div>
+      <div class="row">
+      <div class="span12">
+      <div id=splittercontainerouter>
+        <div id="schemareminder" class="btn btn-primary" onClick="schema();">
+          <div>Schema reminder <span id="schemareminderarrow">&#x25BC;</span></div>
+        </div>
+        <div id="schemaremindercontents">
+          <img id="schemareminderimage" src="../../img/schema-horizontal.svg" alt="DB schema" width="840"></img>
+        </div>
+        <div id=splittercontainer>
+          <div id="expres" ondblclick="setOptimalExpectedResultsSize()">
+            <div style="overflow-x:hidden;">
+              <div style="display: inline-block; min-width:1000px;">
+                <h3>Expected Results</h3>
+                <div style="width:auto; display:inline-block">
+                  <table id="exprestable" class="demo table table-bordered table-striped" style="width:auto;">
+<thead><tr>
+<th>surname</th>
+<th>firstname</th>
+<th>memid</th>
+<th>starttime</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GUEST</td>
+<td>GUEST</td>
+<td>0</td>
+<td>2012-09-01 08:00:00</td>
+</tr>
+<tr>
+<td>Smith</td>
+<td>Darren</td>
+<td>1</td>
+<td>2012-09-01 09:00:00</td>
+</tr>
+<tr>
+<td>Smith</td>
+<td>Tracy</td>
+<td>2</td>
+<td>2012-09-01 11:30:00</td>
+</tr>
+<tr>
+<td>Rownam</td>
+<td>Tim</td>
+<td>3</td>
+<td>2012-09-01 16:00:00</td>
+</tr>
+<tr>
+<td>Joplette</td>
+<td>Janice</td>
+<td>4</td>
+<td>2012-09-01 15:00:00</td>
+</tr>
+<tr>
+<td>Butters</td>
+<td>Gerald</td>
+<td>5</td>
+<td>2012-09-02 12:30:00</td>
+</tr>
+<tr>
+<td>Tracy</td>
+<td>Burton</td>
+<td>6</td>
+<td>2012-09-01 15:00:00</td>
+</tr>
+<tr>
+<td>Dare</td>
+<td>Nancy</td>
+<td>7</td>
+<td>2012-09-01 12:30:00</td>
+</tr>
+<tr>
+<td>Boothe</td>
+<td>Tim</td>
+<td>8</td>
+<td>2012-09-01 08:30:00</td>
+</tr>
+<tr>
+<td>Stibbons</td>
+<td>Ponder</td>
+<td>9</td>
+<td>2012-09-01 11:00:00</td>
+</tr>
+<tr>
+<td>Owen</td>
+<td>Charles</td>
+<td>10</td>
+<td>2012-09-01 11:00:00</td>
+</tr>
+<tr>
+<td>Jones</td>
+<td>David</td>
+<td>11</td>
+<td>2012-09-01 09:30:00</td>
+</tr>
+<tr>
+<td>Baker</td>
+<td>Anne</td>
+<td>12</td>
+<td>2012-09-01 14:30:00</td>
+</tr>
+<tr>
+<td>Farrell</td>
+<td>Jemima</td>
+<td>13</td>
+<td>2012-09-01 09:30:00</td>
+</tr>
+<tr>
+<td>Smith</td>
+<td>Jack</td>
+<td>14</td>
+<td>2012-09-01 11:00:00</td>
+</tr>
+<tr>
+<td>Bader</td>
+<td>Florence</td>
+<td>15</td>
+<td>2012-09-01 10:30:00</td>
+</tr>
+<tr>
+<td>Baker</td>
+<td>Timothy</td>
+<td>16</td>
+<td>2012-09-01 15:00:00</td>
+</tr>
+<tr>
+<td>Pinker</td>
+<td>David</td>
+<td>17</td>
+<td>2012-09-01 08:30:00</td>
+</tr>
+<tr>
+<td>Genting</td>
+<td>Matthew</td>
+<td>20</td>
+<td>2012-09-01 18:00:00</td>
+</tr>
+<tr>
+<td>Mackenzie</td>
+<td>Anna</td>
+<td>21</td>
+<td>2012-09-01 08:30:00</td>
+</tr>
+<tr>
+<td>Coplin</td>
+<td>Joan</td>
+<td>22</td>
+<td>2012-09-02 11:30:00</td>
+</tr>
+<tr>
+<td>Sarwin</td>
+<td>Ramnaresh</td>
+<td>24</td>
+<td>2012-09-04 11:00:00</td>
+</tr>
+<tr>
+<td>Jones</td>
+<td>Douglas</td>
+<td>26</td>
+<td>2012-09-08 13:00:00</td>
+</tr>
+<tr>
+<td>Rumney</td>
+<td>Henrietta</td>
+<td>27</td>
+<td>2012-09-16 13:30:00</td>
+</tr>
+<tr>
+<td>Farrell</td>
+<td>David</td>
+<td>28</td>
+<td>2012-09-18 09:00:00</td>
+</tr>
+<tr>
+<td>Worthington-Smyth</td>
+<td>Henry</td>
+<td>29</td>
+<td>2012-09-19 09:30:00</td>
+</tr>
+<tr>
+<td>Purview</td>
+<td>Millicent</td>
+<td>30</td>
+<td>2012-09-19 11:30:00</td>
+</tr>
+<tr>
+<td>Tupperware</td>
+<td>Hyacinth</td>
+<td>33</td>
+<td>2012-09-20 08:00:00</td>
+</tr>
+<tr>
+<td>Hunt</td>
+<td>John</td>
+<td>35</td>
+<td>2012-09-23 14:00:00</td>
+</tr>
+<tr>
+<td>Crumpet</td>
+<td>Erica</td>
+<td>36</td>
+<td>2012-09-27 11:30:00</td>
+</tr>
+</tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div id="codediv">
+            <div id="youranswerdiv" ondblclick="setOptimalYourAnswerSize()">
+                    <h3 style="min-width:200px;">Your Answer<span id="youranswertickspan"><img src="../../assets/cross.svg" class="youranswertick"></img></span>
+                <span id="youranswerbuttons">
+                  <a id="hintbtn" class="youranswerbutton btn btn-primary btn-small" onClick="hint();">Hint</a>
+                  <a id="helpbtn" class="youranswerbutton btn btn-primary btn-small" onClick="help();" title="[Alt-h]">Help</a>
+                  <a id="querybtn" class="youranswerbutton btn btn-primary btn-small" onClick="save();">Save</a>
+                  <a id="savebtn" class="youranswerbutton btn btn-primary btn-small" onClick="query();" title="[Alt-r]">Run Query</a>
+                </span>
+              </h3>
+              <div style="clear:both;">
+  	      <div id="codewrapper">
+                  <form>
+                    <textarea id="code" name="code"></textarea>
+                  </form>
+                </div>
+  	    </div>
+            </div>
+            <div id="yourresultsdiv" ondblclick="setOptimalYourResultsSize()">
+              <div>
+                <table id="yourresultstable" class="demo table table-bordered table-striped"></table>
+                <pre id="yourresultserror"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span12">
+          <h3>Answers and Discussion <a id="answerbtn" class="inactive btn btn-primary btn-small" style="margin: 5px" onClick="toggleAnswers();">Show</a></h3>
+          <pre id="querydiv" class="answerdiv prettyprint lang-sql">
+select mems.surname, mems.firstname, mems.memid, min(bks.starttime) as starttime
+	from cd.bookings bks
+	inner join cd.members mems on
+		mems.memid = bks.memid
+	where starttime >= '2012-09-01'
+	group by mems.surname, mems.firstname, mems.memid
+order by mems.memid;          </pre>
+          <div class="row">
+            <div class="span8 answerdiv">
+<p>This answer demonstrates the use of aggregate functions on dates.  <span class="code">MIN</span> works exactly as you'd expect, pulling out the lowest possible date in the result set.  To make this work, we need to ensure that the result set only contains dates from September onwards.  We do this using the <span class="code">WHERE</span> clause.</p>
+
+<p>You might typically use a query like this to find a customer's next booking.  You can use this by replacing the date '2012-09-01' with the function <span class="code">now()</span></p>            </div>
+          </div>
+        </div>
+      </div>
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="fachours3.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Aggregates</a> <span class="divider">/</span></li>
+            <li class="active">Nbooking</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="countmembers.html">Next Exercise</a></p></div>
+      </div>
+    </div><!-- /container -->
+      <div id="hint" title="Hint">
+Take a look at the <span class="code">MIN</span> aggregate function
+      </div>
+      <div id="help" title="Help">
+        <div id="helpcontent">
+	  <h4>Keyboard shortcuts:</h4>
+	  <ul>
+	    <li><b>Alt-h</b>: Show/Hide Help menu
+	    <li><b>Alt-r</b>: Run query
+	    <li><b>Alt-x</b>: Run selected text as query
+	    <li><b>Alt-s</b>: Run query by cursor (delimited by whitespace/semi-colon)
+	  </ul>
+	  <hr />
+	  <h4>Other hints:</h4>
+	    <ul>
+	      <li>You can double click on each of the panes of Expected Result/Your answer to quickly resize them.
+	      <li>If you have trouble remembering the database schema, you can leave this popup open while you work on your answer.
+	      <li>Don't forget to use the hint button if you're stuck!
+	    </ul>
+	  <hr />
+	</div>
+      </div>
+
+
+    <script>
+        var App = {};
+	App.sorted = 1;
+	App.pageID = "CF73B932-CE2E-4FE4-AA8E-D00976DFC45B";
+        App.writeable = 0;
+        App.tableToReturn = "";
+	App.jsonResults = sortJSONResults([["GUEST","GUEST","0","2012-09-01 08:00:00"],["Smith","Darren","1","2012-09-01 09:00:00"],["Smith","Tracy","2","2012-09-01 11:30:00"],["Rownam","Tim","3","2012-09-01 16:00:00"],["Joplette","Janice","4","2012-09-01 15:00:00"],["Butters","Gerald","5","2012-09-02 12:30:00"],["Tracy","Burton","6","2012-09-01 15:00:00"],["Dare","Nancy","7","2012-09-01 12:30:00"],["Boothe","Tim","8","2012-09-01 08:30:00"],["Stibbons","Ponder","9","2012-09-01 11:00:00"],["Owen","Charles","10","2012-09-01 11:00:00"],["Jones","David","11","2012-09-01 09:30:00"],["Baker","Anne","12","2012-09-01 14:30:00"],["Farrell","Jemima","13","2012-09-01 09:30:00"],["Smith","Jack","14","2012-09-01 11:00:00"],["Bader","Florence","15","2012-09-01 10:30:00"],["Baker","Timothy","16","2012-09-01 15:00:00"],["Pinker","David","17","2012-09-01 08:30:00"],["Genting","Matthew","20","2012-09-01 18:00:00"],["Mackenzie","Anna","21","2012-09-01 08:30:00"],["Coplin","Joan","22","2012-09-02 11:30:00"],["Sarwin","Ramnaresh","24","2012-09-04 11:00:00"],["Jones","Douglas","26","2012-09-08 13:00:00"],["Rumney","Henrietta","27","2012-09-16 13:30:00"],["Farrell","David","28","2012-09-18 09:00:00"],["Worthington-Smyth","Henry","29","2012-09-19 09:30:00"],["Purview","Millicent","30","2012-09-19 11:30:00"],["Tupperware","Hyacinth","33","2012-09-20 08:00:00"],["Hunt","John","35","2012-09-23 14:00:00"],["Crumpet","Erica","36","2012-09-27 11:30:00"]]);
+    </script>
+
+    <script src="../../js/prettify/run_prettify.js?lang=sql"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+</html>

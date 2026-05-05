@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ app_name }}</title>
+  <link rel="stylesheet" href="/static/style.css?v=20260425d" />
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">Помощник по PostgreSQL</h1>
+        <p class="hero-subtitle">Точные ответы и обучающие материалы для выбранной версии PostgreSQL</p>
+      </div>
+      <a class="btn btn-secondary nav-link" href="/history">История запросов</a>
+    </header>
+
+    <section class="card query-card">
+      <form id="ask-form" class="form-grid" novalidate>
+        <div class="form-section">
+          <h2 class="form-section-title">Ваш вопрос</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="question" class="form-label">Текст запроса</label>
+          <textarea
+            id="question"
+            class="form-textarea"
+            rows="6"
+            placeholder="Например: как настроить логическую репликацию?"
+            required
+          ></textarea>
+          <p id="question-error" class="field-error" hidden></p>
+        </div>
+
+        <div class="form-section">
+          <h2 class="form-section-title">Параметры ответа</h2>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pg-version" class="form-label">Версия PostgreSQL</label>
+            <select id="pg-version" class="form-select" required></select>
+          </div>
+          <div class="form-group">
+            <label for="mode" class="form-label">Формат ответа</label>
+            <select id="mode" class="form-select" required>
+              <option value="answer">Краткий ответ</option>
+              <option value="tutorial">Обучающий режим</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="additional-settings" hidden>
+          <div class="form-section">
+            <h2 class="form-section-title">Дополнительные настройки</h2>
+          </div>
+
+          <div class="form-group extended-mode-panel" id="extended-group">
+            <div class="extended-mode-row">
+              <div class="toggle-copy">
+                <label for="extended-mode" class="toggle-title">
+                  <span class="toggle-marker" aria-hidden="true"></span>
+                  Расширенный учебный режим
+                </label>
+                <p class="toggle-subtext">Подключает дополнительные учебные материалы. Официальная документация остаётся основным источником.</p>
+              </div>
+              <label for="extended-mode" class="toggle-switch-hitarea" id="extended-label">
+                <input type="checkbox" id="extended-mode" class="toggle-input" />
+                <span class="toggle-track" aria-hidden="true"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button id="submit-btn" type="submit" class="btn btn-primary">
+            <span class="btn-spinner" aria-hidden="true"></span>
+            <span class="btn-text">Получить ответ</span>
+          </button>
+        </div>
+
+        <div id="error-box" class="alert alert-error" hidden role="alert"></div>
+      </form>
+    </section>
+
+    <section id="clarification-panel" class="card clarification-card" hidden>
+      <div class="clarification-header">
+        <div class="clarification-icon">?</div>
+        <h2 class="clarification-title">Нужно уточнение</h2>
+      </div>
+      <p id="clarification-question" class="clarification-text"></p>
+      <div class="clarification-form">
+        <label for="clarification-input" class="form-label">Ваше уточнение</label>
+        <textarea
+          id="clarification-input"
+          class="form-textarea"
+          rows="3"
+          placeholder="Введите уточнение..."
+        ></textarea>
+        <div class="form-actions">
+          <button id="clarification-btn" type="button" class="btn btn-primary">Продолжить</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="loading-panel" class="card loading-card" hidden>
+      <div class="skeleton-block">
+        <div class="skeleton-line skeleton-line-lg"></div>
+        <div class="skeleton-line skeleton-line-md"></div>
+        <div class="skeleton-spacer"></div>
+        <div class="skeleton-line skeleton-line-full"></div>
+        <div class="skeleton-line skeleton-line-full"></div>
+        <div class="skeleton-line skeleton-line-sm"></div>
+      </div>
+    </section>
+
+    <section id="result-panel" class="card result-card" hidden>
+      <div class="result-header">
+        <span id="result-badge" class="badge badge-default"></span>
+        <span id="result-version" class="badge badge-outline"></span>
+        <span id="result-extended" class="badge badge-warning" hidden></span>
+      </div>
+
+      <div id="answer-block" hidden>
+        <h3 class="result-section-heading">Ответ</h3>
+        <div class="answer-content">
+          <p id="answer-text"></p>
+        </div>
+      </div>
+
+      <div id="tutorial-block" hidden>
+        <section class="tutorial-section">
+          <h3 class="result-section-heading">Краткое объяснение</h3>
+          <div class="tutorial-summary" id="tutorial-summary"></div>
+        </section>
+
+        <section class="tutorial-section" id="prereq-section">
+          <h3 class="tutorial-section-title">Что нужно перед началом</h3>
+          <ul id="tutorial-prereq" class="tutorial-list"></ul>
+        </section>
+
+        <section class="tutorial-section" id="steps-section">
+          <h3 class="tutorial-section-title">Пошаговые действия</h3>
+          <ol id="tutorial-steps" class="tutorial-steps"></ol>
+        </section>
+
+        <section class="tutorial-section" id="notes-section">
+          <h3 class="tutorial-section-title">Замечания</h3>
+          <ul id="tutorial-notes" class="tutorial-list"></ul>
+        </section>
+      </div>
+
+      <details class="sources-details" id="sources-section" hidden>
+        <summary class="sources-summary">Использованные источники</summary>
+        <div id="sources" class="sources-list"></div>
+      </details>
+    </section>
+  </main>
+
+  <script src="/static/app.js?v=20260425d"></script>
+</body>
+</html>

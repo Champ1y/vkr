@@ -1,0 +1,2328 @@
+{
+  "generated_at": "2026-05-04T12:06:37.013233Z",
+  "name": "ideal_postgresql_tutorial_supplementary_corpus",
+  "root": "/home/arz/Desktop/RAG_postgres/corpus/tutorial",
+  "counts": {
+    "total_files": 330,
+    "curated_md_files": 102,
+    "raw_html_files": 95,
+    "processed_html_md_files": 95,
+    "pgexercises_raw_html_files": 72,
+    "wiki_raw_html_files": 23,
+    "external_registry_files": 7,
+    "scripts_count": 6,
+    "json_files": 11,
+    "sql_files": 1,
+    "official_html_files_16": 1167,
+    "official_html_files_17": 1141,
+    "official_html_files_18": 1146,
+    "indexable_files_count": 197,
+    "non_indexable_archive_files_count": 95
+  },
+  "self_hash_excluded": true,
+  "files": [
+    {
+      "path": "OFFICIAL_BACKING_FIX_REPORT.md",
+      "size_bytes": 2384,
+      "sha256": "e167365be637b687840418e94b5a7bb7541cd88ee1b8211e030f5dbbc1bbaf2a",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "PGEXERCISES_MANIFEST_AUDIT_REPORT.md",
+      "size_bytes": 2068,
+      "sha256": "7d10e965e1abd4d849f26841d8438818c5caa78c962bde3d4501fbdd44b3b4de",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "QUALITY_REPORT.json",
+      "size_bytes": 1283,
+      "sha256": "a3418ace744f208180c780f1104fa243ff4d68c4981c9bbcbeda06c7d9befb8c",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "README_IDEAL.md",
+      "size_bytes": 1844,
+      "sha256": "6cb930434f9a69b6e655d4b83ea662e199a9ccf496e0439f8e9c3da1a4821785",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/16/cancel_terminate_queries.ru.md",
+      "size_bytes": 8435,
+      "sha256": "3c4fe429ccf0a294fb76b8713bdff6f8992ef1c7c33647e5a4a73dfa5a935424",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/16/extensions_basics.ru.md",
+      "size_bytes": 7072,
+      "sha256": "3d7291ecce8ff9f3b0cb50a3a6a0ce3392c9dd99bff503c06c5f6d86cd140b48",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/16/monitoring_pg_stat_activity.ru.md",
+      "size_bytes": 8149,
+      "sha256": "e2f08073556ee569bfc29e43ee25f867280b3ed8ec669c743c388162e0a50fa9",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/16/replication_health_checks.ru.md",
+      "size_bytes": 6089,
+      "sha256": "61aedc35d90cdeb2aaab8721c87dbedc5f79109e9f0d971b2219f4d4288c9c48",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/16/streaming_replication_overview.ru.md",
+      "size_bytes": 8545,
+      "sha256": "3a2770444a76c068aeafc43f558546545a54ddd659bcf50af4b9d937d93a5107",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/17/cancel_terminate_queries.ru.md",
+      "size_bytes": 8435,
+      "sha256": "538cace946bd5910b98933d93344aa077e1c1d7b95192621126d7d46f01dc991",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/17/extensions_basics.ru.md",
+      "size_bytes": 7072,
+      "sha256": "fda3945f882c45f27cf3648d20cb287734af7d792f566dc698abfb46fb86f261",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/17/monitoring_pg_stat_activity.ru.md",
+      "size_bytes": 8149,
+      "sha256": "4a161093112fb00433e6e957f240a309698025fa956b1f88527e325067e7e85a",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/17/replication_health_checks.ru.md",
+      "size_bytes": 6089,
+      "sha256": "b831ece7dce31b44daa4151de290e99dd0cdaaf9f5921d3a54ff9f441ebdcac8",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/17/streaming_replication_overview.ru.md",
+      "size_bytes": 8545,
+      "sha256": "fa0e6a4d328aad422547b5397b300f3cecc263037b51a20f98b7d405ebd4a997",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/18/cancel_terminate_queries.ru.md",
+      "size_bytes": 8435,
+      "sha256": "51130665a960e22178c3f1d643540bb491cfbfebb587a9867fd4d7e5f5fa33c8",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/18/extensions_basics.ru.md",
+      "size_bytes": 7072,
+      "sha256": "e627154efab32b13c40feed2f06d1120c3e4fff08dacd8e66112b0d7b037b9de",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/18/monitoring_pg_stat_activity.ru.md",
+      "size_bytes": 8149,
+      "sha256": "b8a5b3abc22fef3c7d28c7bac733716c429819cc91a0d6146c97adaadcf5fba4",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/18/replication_health_checks.ru.md",
+      "size_bytes": 6089,
+      "sha256": "2e1d9561f3a59bb7f4d6d0656d4db8148daff16e37bf3643d93a58955b016541",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/18/streaming_replication_overview.ru.md",
+      "size_bytes": 8545,
+      "sha256": "a092574e49610f9c520234d7e1f2c0314e66fcf927a2e6149df268fdd23ad843",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "_backup_before_official_backing_fix/curated/18/vacuum_analyze_autovacuum.ru.md",
+      "size_bytes": 5892,
+      "sha256": "4e92ed46c91d59d5de34ae100f02f936f1700a94409a15129cdac98ed76a1367",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "curated/16/backup_restore_basics.ru.md",
+      "size_bytes": 6475,
+      "sha256": "5e6f551ee04a63f8593bad29fc383ac28c436320a3b4e1ea965455311f77bf83",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/cancel_terminate_queries.ru.md",
+      "size_bytes": 8480,
+      "sha256": "4e3cb925f790fa7234cd66272e8c8b8b00aa845209a12ccfa4b5e8f5185c4947",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/common_connection_errors.ru.md",
+      "size_bytes": 6001,
+      "sha256": "fbf55bf408857bc9b2b6b643088fd7845feb62d3c953b28fd32f0491767247fb",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/cte_subqueries_views.ru.md",
+      "size_bytes": 9120,
+      "sha256": "dce0016c00a4d637397d9c924902e78b890ea36ab8b9203091368c889e9affb0",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/ddl_constraints_and_keys.ru.md",
+      "size_bytes": 8015,
+      "sha256": "ec423c312aeb7f8237bb603911e13ad47ee6569cd6c57ec49a47b3c3be3f8451",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/docker_postgresql_basics.ru.md",
+      "size_bytes": 7241,
+      "sha256": "b387ef990a6061038ffda8b955008f9004070e7a3edadcfccfb49a61c72ce2b1",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/explain_and_indexes.ru.md",
+      "size_bytes": 5993,
+      "sha256": "9a9dd753b532559f54f0e0597dd98a1babc35e7260b816803551938d70ee1622",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/extensions_basics.ru.md",
+      "size_bytes": 7390,
+      "sha256": "72ff015042bc67cc8e12933538893f12135dacf5213d4ec57d8ce79866c9066e",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/first_start_and_connect.ru.md",
+      "size_bytes": 7453,
+      "sha256": "e3d3ee4bf839b25b5144db61e9d364e73a3d4bf1159f742d35ce2985ec14a553",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/full_text_search_basics.ru.md",
+      "size_bytes": 8561,
+      "sha256": "f54db1821bf77ce6160353a92a7a8f47a0640cc5e6ea784857bff1144f454321",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/import_export_copy_csv.ru.md",
+      "size_bytes": 8170,
+      "sha256": "155fa9157e081976c893813a0486e4b323855d5d31e47ad20969bd5aa6491223",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/index_design_patterns.ru.md",
+      "size_bytes": 8704,
+      "sha256": "7621bb3d4232d8c54834ebe78beb24b92433c882dec0a1914ab255e2fada12a8",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/json_jsonb_basics.ru.md",
+      "size_bytes": 6243,
+      "sha256": "2cb80194a6f158e8fa80023cf59af52fce61b8c1ef870ba8a56988b4ab235d74",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/logging_and_slow_queries.ru.md",
+      "size_bytes": 6166,
+      "sha256": "b806cf3399219463ca60ed627897fc9981fff13fb9235b695fad72a9d750220e",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/logical_replication_setup.ru.md",
+      "size_bytes": 7530,
+      "sha256": "6183d5bc6a62bb702ff55b99c2727c211a0f1006f8336836a46dfd3ce3183359",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/major_upgrade_notes.ru.md",
+      "size_bytes": 5426,
+      "sha256": "af5a51054b079e82ee82ed860403548ebffff92a09e435af8dcea40fa7c52af1",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/monitoring_pg_stat_activity.ru.md",
+      "size_bytes": 8131,
+      "sha256": "3437038f12de00bd4a5b960c16e8cfd13cb7b13f0c484f6e95410d78179db843",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/partitioning_basics.ru.md",
+      "size_bytes": 8607,
+      "sha256": "5c9e3c21ed7e4cb619515aacaeb88bf134d9a62406b61065f07ff22c9ede4e9e",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/pgvector_for_rag_project.ru.md",
+      "size_bytes": 9709,
+      "sha256": "d9c6850730b7eb781aa4de34b7e3d84538486eb2dfde71cbe2149109213e9286",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/postgresql_conf_basics.ru.md",
+      "size_bytes": 8652,
+      "sha256": "391cda16758be662fb13c22e9275912d9c574f5fe97421e49b4600895ba8ae14",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/psql_cheatsheet.ru.md",
+      "size_bytes": 8340,
+      "sha256": "f28ff27eb69e3d1e2b42fa9ab5c1f9ec333973108daa04b4a8a55a7cd9644dbe",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/query_performance_checklist.ru.md",
+      "size_bytes": 8585,
+      "sha256": "cadb2cd3a14e872425ab14ac140dabb66eb15f45d3f1c3c9cd0a107440fdf3d5",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/remote_access_pg_hba.ru.md",
+      "size_bytes": 6111,
+      "sha256": "4ae4f792e5ffbe04556b2a44191025950a59f9c17b091d3cf2a00019240c42df",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/replication_health_checks.ru.md",
+      "size_bytes": 6018,
+      "sha256": "74451dd5a24621f91ac89abea4f445f2a4c5f35d2d0fac75892f9a7e9091dc28",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/roles_users_and_databases.ru.md",
+      "size_bytes": 6859,
+      "sha256": "8cd398bf8f43e4ddb63c7e3868a5949abd87e6d070f310bf3d4349adc00230ca",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/row_level_security_basics.ru.md",
+      "size_bytes": 8725,
+      "sha256": "0547e15b4b2e70b0b7be9282d7862f573bd477c94de1e3b099c1c4ef36e223ee",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/safe_rag_answering_rules.ru.md",
+      "size_bytes": 9100,
+      "sha256": "c935ff21f88d8242cc281ba76835a114df06184f6c299eda6eef59f70a6dcaef",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/schemas_and_search_path.ru.md",
+      "size_bytes": 7888,
+      "sha256": "0588dfeaeaa26001bbbac06726c9ba6c9e29ef13027a9fc1cb4418ec091c6263",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/sql_learning_path.ru.md",
+      "size_bytes": 6184,
+      "sha256": "4f3a54ae7450cd166558783210cf770a1c439db969367b175404e8168dda617a",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/sql_practice_tasks.ru.md",
+      "size_bytes": 5882,
+      "sha256": "205d81f591d4fa107fcbffad0e00ba644f357ba42a6207c551e93f2e6b7c2bce",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/streaming_replication_overview.ru.md",
+      "size_bytes": 8693,
+      "sha256": "ac06ec8810bd22cccba17b04031ebfcbdcbffc128bc1ea4f581e8e7729c729d6",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/transactions_and_locks_basics.ru.md",
+      "size_bytes": 8916,
+      "sha256": "c69f3569f0007b2196c6efaf3b27719c0d24a7254f5503dcab89fb6f75f5d15c",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/vacuum_analyze_autovacuum.ru.md",
+      "size_bytes": 5892,
+      "sha256": "cdbf5ef2dc78cf71ff6b02470b5d86c41d8db4c1ed6dd275dfd7190d1348c1fd",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/16/window_functions_basics.ru.md",
+      "size_bytes": 8812,
+      "sha256": "7ff0055880288c3b08efb0c86514af55b4daa43233e2211721d7939b7411674e",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/backup_restore_basics.ru.md",
+      "size_bytes": 6475,
+      "sha256": "249d5de4bc4918fe1dc0809c096a710dc4a10a69408377b7c41752bee7643efc",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/cancel_terminate_queries.ru.md",
+      "size_bytes": 8480,
+      "sha256": "4bf9f68548297e04c75793647ceb0bc6ef3a5402a65dc1bfbe948cf9330ad52a",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/common_connection_errors.ru.md",
+      "size_bytes": 6001,
+      "sha256": "b7b0bd0d5d982a02ae3e2aff0ac60add30a214253c9990b8995f6436ef32122e",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/cte_subqueries_views.ru.md",
+      "size_bytes": 9120,
+      "sha256": "f11742741dbe47447f9ba42ceb1914c14999d0bd9f09b927ba51b45cf7e24495",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/ddl_constraints_and_keys.ru.md",
+      "size_bytes": 8015,
+      "sha256": "78fb6db20a361255a6bd2f42e54e18193012741399e83255f7de31cb261f37b3",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/docker_postgresql_basics.ru.md",
+      "size_bytes": 7241,
+      "sha256": "1b414527f6d14e5cc8b9b3003598e1d61efbcccdf6901996ccd13c3a942a7930",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/explain_and_indexes.ru.md",
+      "size_bytes": 5993,
+      "sha256": "79afb0dfce6679c7843a3efa955ff3fb306058752c671f81d0c104baa2947536",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/extensions_basics.ru.md",
+      "size_bytes": 7390,
+      "sha256": "ef009231595ddd41523f052c65d72093f30a380de345e4cf60a28b80286b05c1",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/first_start_and_connect.ru.md",
+      "size_bytes": 7453,
+      "sha256": "de6e367cb563d5ed5860060596247a2d01fd94c77759e5d9d04dc22542ed08fd",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/full_text_search_basics.ru.md",
+      "size_bytes": 8561,
+      "sha256": "7bfa13ccd79c682cd37491df3b8b1b1ceba7b3d14258a5f645b35e9bffd5dcc0",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/import_export_copy_csv.ru.md",
+      "size_bytes": 8170,
+      "sha256": "5235d646e36f59cdc49dc920dc07ff5dc30d86912953a9f88de91ef676be819e",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/index_design_patterns.ru.md",
+      "size_bytes": 8704,
+      "sha256": "2fb994fbef856d9390b2490d337257e2a8e8c1ff36ccb0a711e4e79b4cce9d88",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/json_jsonb_basics.ru.md",
+      "size_bytes": 6243,
+      "sha256": "4deb31afbfa0435378736102d0efa95f08c4a6773aa07503a9399ec1f1c9e5cc",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/logging_and_slow_queries.ru.md",
+      "size_bytes": 6166,
+      "sha256": "06edfbc9bf8ba1b9ec499aabac016eb1ace470ea33a3cf552e47c2ebf1534c43",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/logical_replication_setup.ru.md",
+      "size_bytes": 7530,
+      "sha256": "a3487bdfeeb2a0978979c57e689a2c46c92eda396c6b33f2defbf500b8c4b95c",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/major_upgrade_notes.ru.md",
+      "size_bytes": 5426,
+      "sha256": "e58750b55743e12e60ac3b0ae07bcdbb4bd8e2f0d1dada7cea3c79382dfcb510",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/monitoring_pg_stat_activity.ru.md",
+      "size_bytes": 8131,
+      "sha256": "ba4a2c2fdddf9f49f954ec2d1b45bc4840d303f53a83ee8a3f74f94e4824ef0b",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/partitioning_basics.ru.md",
+      "size_bytes": 8607,
+      "sha256": "291c0db77b38abd3f050a9d2ed665172f2778a9ea98bc73f6f0174ab9c93955f",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/pgvector_for_rag_project.ru.md",
+      "size_bytes": 9709,
+      "sha256": "0f80ee94f340d4576cd74e54e95763fa834ff77e5ff3adb1099dc406ae3973ed",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/postgresql_conf_basics.ru.md",
+      "size_bytes": 8652,
+      "sha256": "a2fcc0b788b1c3790cc3fdfef15eccf86930823dd4869468222058a48a6893db",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/psql_cheatsheet.ru.md",
+      "size_bytes": 8340,
+      "sha256": "5b6e420d58aa68a017d8d91a868c33d44d9a3def45cdf797392c66b8729ef68c",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/query_performance_checklist.ru.md",
+      "size_bytes": 8585,
+      "sha256": "eaf49de7c295f80c1dfcd26c0bd285c5a2d4574e9b0d2ba9ae19bb2f0c6f1ecc",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/remote_access_pg_hba.ru.md",
+      "size_bytes": 6111,
+      "sha256": "0dbf9fcd72f2a5a2069ee413dc71e6d992f1493db7eacf47372eafceb861f629",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/replication_health_checks.ru.md",
+      "size_bytes": 6018,
+      "sha256": "ef66e51e35e92abedc75cf005d9fcb8b725548060b323f371703d4b84528b0d9",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/roles_users_and_databases.ru.md",
+      "size_bytes": 6859,
+      "sha256": "cdedd7612aacd43ba59a223cf8558e45b468f051a00fafe03f3e4fb5255c5891",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/row_level_security_basics.ru.md",
+      "size_bytes": 8725,
+      "sha256": "c255ba89b62e2096a6bcb79fd08e11183c10016f5ffc10748019d711732802f3",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/safe_rag_answering_rules.ru.md",
+      "size_bytes": 9100,
+      "sha256": "55f90d302ae3e494323c5aed4e55cd6b1fa20081769aec7d1b168503c3d439cb",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/schemas_and_search_path.ru.md",
+      "size_bytes": 7888,
+      "sha256": "718793743b642772cd1c903f617de1a85a7c553e9900e352fb60f9deaab3b00e",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/sql_learning_path.ru.md",
+      "size_bytes": 6184,
+      "sha256": "f5a56b3f119a3cd7286ac12cafc5c3276de2a7a5934b6b7ecb8fc8564a7968b4",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/sql_practice_tasks.ru.md",
+      "size_bytes": 5882,
+      "sha256": "fb86fba3e7d4013dacb9e98e459f7c301a721e86a686766ada27cdac65ef74c7",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/streaming_replication_overview.ru.md",
+      "size_bytes": 8693,
+      "sha256": "12ff28bb53f1ada3f58353e219d920b82d57b3f124428d7844a7eb2128455cf6",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/transactions_and_locks_basics.ru.md",
+      "size_bytes": 8916,
+      "sha256": "91495bf93a3cb4a2c7728511c73cc055162363f609364e17ee04bbeab9548164",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/vacuum_analyze_autovacuum.ru.md",
+      "size_bytes": 5892,
+      "sha256": "e9588e436f24d0aff84d7ae2e7621bd29543669dfe33e06d61e738bef38fc026",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/17/window_functions_basics.ru.md",
+      "size_bytes": 8812,
+      "sha256": "df02692257a6e173fa9104d5eaea1a3469a41be3fb61895a2722b554cdc8b689",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/backup_restore_basics.ru.md",
+      "size_bytes": 6475,
+      "sha256": "ffa876925f67cd97418ab04fb8f0c7ec54d65f0204b4c36c8188c282885a9673",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/cancel_terminate_queries.ru.md",
+      "size_bytes": 8480,
+      "sha256": "9bfde25736aa16c8d4bb360102f49de7c136e6cb6149aa00e25ebac734a68b60",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/common_connection_errors.ru.md",
+      "size_bytes": 6001,
+      "sha256": "b8068ba81de04be41f9c3fb696e218d0309f9e2d1648660d494d9467ce64349f",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/cte_subqueries_views.ru.md",
+      "size_bytes": 9120,
+      "sha256": "f9b346384453d5821b6978a6ea92c3c9bcdb24c2a22a795ae07dee0ab68efd1f",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/ddl_constraints_and_keys.ru.md",
+      "size_bytes": 8015,
+      "sha256": "81631fb10e16b8326ea28dcc1a694bdcac3a6d38be40e3cdb14e2dd39c4edd69",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/docker_postgresql_basics.ru.md",
+      "size_bytes": 7241,
+      "sha256": "8baa1cdf02b6dd5ffec959e1f637c84281cd27b23e67e3c1a993c69f46e989fc",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/explain_and_indexes.ru.md",
+      "size_bytes": 5993,
+      "sha256": "bcacc6e0239c8134db67cbf2bedb3609236e063d3e073821c8295e31433b97e6",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/extensions_basics.ru.md",
+      "size_bytes": 7390,
+      "sha256": "4da244833a83eabe01d881db8071b69c5646b201d758b570ff23240b15d65288",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/first_start_and_connect.ru.md",
+      "size_bytes": 7453,
+      "sha256": "9d70bb7f2a671e1a0966713b1161bacfe3639a4f23c37adb8b6940d49ab5e9e1",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/full_text_search_basics.ru.md",
+      "size_bytes": 8561,
+      "sha256": "a1946226cb3ebde9e4a6ae036612dba5840379c6d6c07c4c24733644b22d5c62",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/import_export_copy_csv.ru.md",
+      "size_bytes": 8170,
+      "sha256": "6798e11450303cd8d1a0bf95906a777e820b81e79d7c9b506b82e1ec3d05f587",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/index_design_patterns.ru.md",
+      "size_bytes": 8704,
+      "sha256": "4d09cdbfcacf36874547f53a618bdfe566f40d5457740908088a349b4780eab6",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/json_jsonb_basics.ru.md",
+      "size_bytes": 6243,
+      "sha256": "6fc59dd934e3564f413229d6515981266cd7181ebbc326ed5307d668c5bad8c0",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/logging_and_slow_queries.ru.md",
+      "size_bytes": 6166,
+      "sha256": "8687b516b2cf8d49cf897f04601057cf7eaab267652464cf5894d26959bf15ec",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/logical_replication_setup.ru.md",
+      "size_bytes": 7530,
+      "sha256": "6b74a6563e5f42b15d43a513e49789fcee0d16bc451e4145e7e0d6a2d766edd5",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/major_upgrade_notes.ru.md",
+      "size_bytes": 5426,
+      "sha256": "e1a9334799b8febc952d5f21deb2c3acf41fa4f49e18575d919a5dab053c4c60",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/monitoring_pg_stat_activity.ru.md",
+      "size_bytes": 8131,
+      "sha256": "f4d9fea6462cab1fc47fb2933b120cd1774775f793a595ec7de0c7dbee90a181",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/partitioning_basics.ru.md",
+      "size_bytes": 8607,
+      "sha256": "9acb18b0571f4862a4ab40375456224d328f4a2df1ccd586892018e8accdfe05",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/pgvector_for_rag_project.ru.md",
+      "size_bytes": 9709,
+      "sha256": "6afbf2d18ddc6196a4e70d8de07c624a833788075a4ea6b32623befdfca716c3",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/postgresql_conf_basics.ru.md",
+      "size_bytes": 8652,
+      "sha256": "11800d51911c27ba58c4c9da229a28721ff360097c2d35e8b76902da73704826",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/psql_cheatsheet.ru.md",
+      "size_bytes": 8340,
+      "sha256": "c005f5d2ed26ce2d46bba1392f06813448ddb82293cf363c3e5ad9adab574940",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/query_performance_checklist.ru.md",
+      "size_bytes": 8585,
+      "sha256": "145b2af365c2bdf993ae04607c697365bd96ad215475076c0aa230d043cf3814",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/remote_access_pg_hba.ru.md",
+      "size_bytes": 6111,
+      "sha256": "98a836ca5bb6920c4f9cf8f4d55a83688a89841edb84da45e45d1e16db7c3c80",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/replication_health_checks.ru.md",
+      "size_bytes": 6018,
+      "sha256": "111918047831099cb6ab8a2f3dad00a38b2a3ce102a0efec42d6b2d3320415e1",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/roles_users_and_databases.ru.md",
+      "size_bytes": 6859,
+      "sha256": "9a4b76e59c26dd0c2a2c76b51c789e4967419b6f7cb633cdb791a51209575891",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/row_level_security_basics.ru.md",
+      "size_bytes": 8725,
+      "sha256": "59eabc5a1cacfc15cb187274d620d887d3087c8637189a54dd393b06c227e543",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/safe_rag_answering_rules.ru.md",
+      "size_bytes": 9100,
+      "sha256": "809c67086883770827c726d42c07001b9ac0381215ecb6f62b5b65f1545a8b86",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/schemas_and_search_path.ru.md",
+      "size_bytes": 7888,
+      "sha256": "8c11d94791a388557137b8ef210db7a4dfea26f488d49541769c9994c602464c",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/sql_learning_path.ru.md",
+      "size_bytes": 6184,
+      "sha256": "b5d3c77b094316299f157ec2cf40335869740aeab0ccb92632219ba7e480630e",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/sql_practice_tasks.ru.md",
+      "size_bytes": 5882,
+      "sha256": "1e5aab5bb9d4001e9f6c2b6e93355f6c9ffacfcf3fde04f8fcea6b045599fd51",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/streaming_replication_overview.ru.md",
+      "size_bytes": 8693,
+      "sha256": "61cf7a960b110f1816bf998e280fa4af5f68aa82bb04f779dc511c7e23220983",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/transactions_and_locks_basics.ru.md",
+      "size_bytes": 8916,
+      "sha256": "8e27f68f282fd0a99f3addb5e68c9add1ea5691cbec7cedbc5bb25ebc5bd46b8",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/vacuum_analyze_autovacuum.ru.md",
+      "size_bytes": 5888,
+      "sha256": "db38311fada3a14eaebb217ddf26007f1c10021070df569da18461a64d61b56e",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "curated/18/window_functions_basics.ru.md",
+      "size_bytes": 8812,
+      "sha256": "46cce1f86abc4e8163a7df2fa8b30cff9c811c9a1dbd355bed29903e55ac65a7",
+      "role": "curated_markdown",
+      "indexable": true
+    },
+    {
+      "path": "external_registry/corpus_policy.json",
+      "size_bytes": 834,
+      "sha256": "6c406c1cf48db8eec15f62580fa635717a2ee8b3748d0cdc6c89ca9ec3d0f1e2",
+      "role": "external_registry",
+      "indexable": false
+    },
+    {
+      "path": "external_registry/curated_version_comparison.json",
+      "size_bytes": 10134,
+      "sha256": "450e32c64495abc5939c7b662b5f0aa6e40b4187f00d081b9320d6856db7e7c5",
+      "role": "external_registry",
+      "indexable": false
+    },
+    {
+      "path": "external_registry/ingestion_policy.json",
+      "size_bytes": 1269,
+      "sha256": "ddcb527df6431e93238caab2d5814136f276e273d98f14f307fcacb94e477bcd",
+      "role": "external_registry",
+      "indexable": false
+    },
+    {
+      "path": "external_registry/neon_selected_urls.json",
+      "size_bytes": 1561,
+      "sha256": "3b6782a7f5d130be937d828d3ec25d017cb5b949a0b7c333f7c1fa5c51d091ad",
+      "role": "external_registry",
+      "indexable": false
+    },
+    {
+      "path": "external_registry/pgexercises_status.json",
+      "size_bytes": 712,
+      "sha256": "f933338b2be36a08976cf74a4f8ee2fc4f93131ef89aa4358fcb1234bfca566a",
+      "role": "external_registry",
+      "indexable": false
+    },
+    {
+      "path": "external_registry/source_whitelist.json",
+      "size_bytes": 3044,
+      "sha256": "06cd7e2ec00d469797e0676d7a48d303b41498edefddc1641147a388245b4a8b",
+      "role": "external_registry",
+      "indexable": false
+    },
+    {
+      "path": "external_registry/topic_map.json",
+      "size_bytes": 1252,
+      "sha256": "023f918c81454bde3a2ae334788388d5e57182516f519b1eb5e4b5ba30e29d11",
+      "role": "external_registry",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/dbfiles/clubdata.sql",
+      "size_bytes": 170141,
+      "sha256": "0fe5e73a3da75c1cd77895d796923720f6475d8465d7ad8da62ae2bb5a62f847",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/gettingstarted.html",
+      "size_bytes": 8637,
+      "sha256": "d67fcc44d42b8dbd4e7e18c0721ae260a8853f55546d26191ef75a411f0c16d2",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/index.html",
+      "size_bytes": 4445,
+      "sha256": "2744ad56520b3cdaeda1c22b3f4a9a9e08425143f98a3cea1e337920dd716640",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/manifest.jsonl",
+      "size_bytes": 13228,
+      "sha256": "0317b4e531675c72eba8b13a8c8f7bbc651224ffc31feea7515d935b4c66d29d",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/options.html",
+      "size_bytes": 3723,
+      "sha256": "d82657ee12fa1f168f0c048bdcf5d3010e6cf091d42da415770854a557ec6524",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/classify.html",
+      "size_bytes": 11456,
+      "sha256": "82126b0538c9f0cb974ab5a602d2416a8d4beaec5bdceac257d6a426907d2d59",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/count.html",
+      "size_bytes": 12279,
+      "sha256": "c3015d4ae87fcfc02918fd7366a4c54e99854547c0265eae02de7065fb6f3a7a",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/count2.html",
+      "size_bytes": 10302,
+      "sha256": "488e193dd032da98da650e5884cc4386d65fe02992e2fefb9a12440c8d2ae188",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/count3.html",
+      "size_bytes": 11667,
+      "sha256": "cb5544ae544166843f72e69949fe3b4259ff28d6dc9624affe923267f7cfe074",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/countmembers.html",
+      "size_bytes": 16525,
+      "sha256": "95a4c82aa32b93b25fdcaf1c0d966d49568238b014a2d102e75cc5dd81ab0784",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/fachours.html",
+      "size_bytes": 10881,
+      "sha256": "313ab0578af7f712d405919138c6520ff54be6a92aa6667a9b7e62e0e4f47300",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/fachours1a.html",
+      "size_bytes": 11073,
+      "sha256": "07500a590caa871df1d8988725fd20e6b07c12e8d1ff52ef51b94cb250e3310a",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/fachours2.html",
+      "size_bytes": 14261,
+      "sha256": "2229fa70830e88327a333da4526c41b9024651e915ad872cee5c3836dcc5381b",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/fachours3.html",
+      "size_bytes": 13765,
+      "sha256": "c0155a151a0b6081ca07ed278fc9ccb398bbefd1d473fdbc2f16a5e8f41f9bf3",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/fachours4.html",
+      "size_bytes": 13105,
+      "sha256": "3fc1437e41ec048595ddb2db85580b189810d7b272ceb482716b05f98a37367a",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/fachoursbymonth.html",
+      "size_bytes": 11061,
+      "sha256": "f8fa846b4af39be4f0dbe38b010c7ee75d39f9a7dffe22585d2b2ded2637a920",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/fachoursbymonth2.html",
+      "size_bytes": 13999,
+      "sha256": "cc3bf4befc7c6e363657d4ed8a355495c70488a5a9bade91aa38b0c09c425f2f",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/fachoursbymonth3.html",
+      "size_bytes": 16183,
+      "sha256": "692f384117a6ebd1fe5a40681a1c842f271ef7cbbb6df02bb3a9cb303e2352c6",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/facrev.html",
+      "size_bytes": 11205,
+      "sha256": "1c139fb19ffaa942c8a0815105cd720301942e6de2a1cd53fa819793fcc5e7fd",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/facrev2.html",
+      "size_bytes": 12683,
+      "sha256": "08899fa588cec1554ab34757f6746150d5903f3337499081219d18d02acadd69",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/facrev3.html",
+      "size_bytes": 11219,
+      "sha256": "d4efe8d70a5586b318d57d47318db0932bb6cc8ab9064e496e53d0b4832b9241",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/index.html",
+      "size_bytes": 8611,
+      "sha256": "acc0c1dc6c6f51685bf92bf39c1955eb64933b21ece66e9433e3c4a360bd02a2",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/manifest_pgexercises_aggregates.json",
+      "size_bytes": 3905,
+      "sha256": "2428688e595c9c6dd1f1d7f7c5f2d50c6c960aed1e93a82a79c47ace16190cca",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/members1.html",
+      "size_bytes": 10694,
+      "sha256": "8f9e53731f44f398f8b028b05617a7c618fb11cf2769d5cacc9540ff56204c8a",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/nbooking.html",
+      "size_bytes": 14784,
+      "sha256": "0ccb10665a97712b51fc7e7f508524f0c1eb2158e7afa1e15782dbd182e09df0",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/nummembers.html",
+      "size_bytes": 13084,
+      "sha256": "75f097ac594cfca4659158f7e45eb217373fb53a8b39d1ea05e9b6fb5ba7eac7",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/payback.html",
+      "size_bytes": 14574,
+      "sha256": "544eb2ebd1fa23e7fbbec8ede719592dfcea26e37427aa36f46aaa934115b54e",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/rankmembers.html",
+      "size_bytes": 15131,
+      "sha256": "4034b51e6f841d7cccbd88bed98f7f12e31aba99610edd1fb47142c32c0e16f7",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/aggregates/rollingavg.html",
+      "size_bytes": 19752,
+      "sha256": "a52fbf1a2e33d3d40ef497b04e2c5d90088cf63b79e9bebf77c7a7add310d4a5",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/agg.html",
+      "size_bytes": 10639,
+      "sha256": "e57acd4f7140f58b47d05d7a4192efcf5473edf7ff4594babf3de6aa878117c7",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/agg2.html",
+      "size_bytes": 12217,
+      "sha256": "c63bcfa86c9bc5656e2ce9c96efd7bb3e9d3acbe3c5484c4b13e2fc0aeb1c3a0",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/classify.html",
+      "size_bytes": 11815,
+      "sha256": "9820e19fe49d97bb8847e67fe995c32dc864bb99a68352be24989ff885c29da4",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/date.html",
+      "size_bytes": 12006,
+      "sha256": "9cb4fff80188d3868a396be4b51f54659c50df368988a783a3bb5fc243bf4c30",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/index.html",
+      "size_bytes": 6517,
+      "sha256": "e79099b45388b56bd6b25ad7c93085b946ad89745e870b836053e4fbbea6bc3e",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/selectall.html",
+      "size_bytes": 12129,
+      "sha256": "9fa5419d29be4a3fc62823d8e9cdd274ef242309a60d58367c9d3308fa1e08b6",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/selectspecific.html",
+      "size_bytes": 11486,
+      "sha256": "83d85d9ed5fc333f24ceed8d558daf609b8be6ea53e626ae4420df699905dda9",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/union.html",
+      "size_bytes": 11947,
+      "sha256": "7cab755fecbf6abe5db3cb7dc6e2cb76459dd045490ad28f7c04e61f93240cc0",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/unique.html",
+      "size_bytes": 11649,
+      "sha256": "b60091d71a056401fb6fff8ff0fb14a63b33887834a0258114478c074636f29e",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/where.html",
+      "size_bytes": 11887,
+      "sha256": "71a9271051606b8e58946c46f3e44b419220a23d84876ec3a8eb462b718ffc98",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/where2.html",
+      "size_bytes": 11719,
+      "sha256": "8685d97ef7227bd5b64022f7144c4a58ab7cff05bd884210daa0f9f8a29cea89",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/where3.html",
+      "size_bytes": 11219,
+      "sha256": "039b50990c296ebc06483ff3428925b605b6d05565086bb8f8f5448041e6f2bb",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/basic/where4.html",
+      "size_bytes": 11827,
+      "sha256": "cf09553bf032fe873fddc91c9a66dfaa4a6676f7e33b806226431fc0053c4fa8",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/date/bookingspermonth.html",
+      "size_bytes": 10577,
+      "sha256": "d64054b419ecb32614c4580a852056ff72c0c3f895f9b42d951d392b04b14454",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/date/daysinmonth.html",
+      "size_bytes": 11694,
+      "sha256": "3c0e7d9e3b0c7be1a2a6ef8356826f8ec93f9f25a45cefce1004ff03f439bc90",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/date/daysremaining.html",
+      "size_bytes": 11008,
+      "sha256": "81bba2bc1f26f079de6d9648d01280b13ed3321321b3dcb14b3bf7b5169a04c7",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/date/endtimes.html",
+      "size_bytes": 11768,
+      "sha256": "258e5cfb35b7246f8dfa0ed7f83f4047a12c4bee7df05c6d803deb1b5edf3948",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/date/index.html",
+      "size_bytes": 6260,
+      "sha256": "7991da624ec727bc9b177416bb5e09436fab6d195676ca2b9322a6011f8dd397",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/date/interval.html",
+      "size_bytes": 11216,
+      "sha256": "ea21d3d6508b2d6ae960b8e7f84e9522f81abb47de4d67fa5388da517ababfe2",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/date/series.html",
+      "size_bytes": 13116,
+      "sha256": "4f1508970d1dee6c45e1a470e3c25260ca6a20995b299fdd48417c781168e9a8",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/date/timestamp.html",
+      "size_bytes": 12030,
+      "sha256": "4f5789c9b9aa58f6df2f4753af8c3a46d18d84327a49f9b1121b7c0b619f96f3",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/date/utilisationpermonth.html",
+      "size_bytes": 15349,
+      "sha256": "f55a46b38e09087980b9af72396e6a0b21cf8724d4bce713ca26e0af31d0aa78",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/joins/index.html",
+      "size_bytes": 6093,
+      "sha256": "7289d58868c06343dc19ed595b8b96bc62a637fb3817dfe0cb5fa1a22c0b2c77",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/joins/self.html",
+      "size_bytes": 12112,
+      "sha256": "857b55829c96e59bdf5560c0937409e086aa41fce54c21c3fd11db6fd211c35c",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/joins/self2.html",
+      "size_bytes": 14902,
+      "sha256": "c102f077f76653fa28ee5814978518afc27d54708b4340b2f1df9ba1f674176f",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/joins/simplejoin.html",
+      "size_bytes": 15297,
+      "sha256": "4646bea3bf1e2c057e95f3cdccc5562d745ef5c5f1dea22aae6266993005c9b6",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/joins/simplejoin2.html",
+      "size_bytes": 12883,
+      "sha256": "155794b93036bf17ee1a31d3f97973637263ae318501e30fb2dffaaa8ac47c41",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/joins/sub.html",
+      "size_bytes": 13564,
+      "sha256": "9bcd51b0cf001f2bcab6116cf918fa6b653aead92031b3e1ac132982c5674d44",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/joins/threejoin2.html",
+      "size_bytes": 13505,
+      "sha256": "b9d3998dec0d23926ebe0f2f7d4ef7a5ecad7ccdea4113ef9b914b37abcca5ff",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/joins/tjsub.html",
+      "size_bytes": 13822,
+      "sha256": "bb88614c07d5690aeb6345430aef0df35d55f5fa4b1559f2d694497938827b7e",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/recursive/getdownward.html",
+      "size_bytes": 11728,
+      "sha256": "95eb1a0b6c69b2229572c1d6ce4c85f359c7348039f7f09e023fab44784fb693",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/recursive/getupwardall.html",
+      "size_bytes": 12033,
+      "sha256": "1eeab10f0ba526004f2de5fe1d91b502a87bf2661f9b645407cca0455e5c97d1",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/recursive/index.html",
+      "size_bytes": 5168,
+      "sha256": "2d2f4e4ec57f8ac05cf8fe01b1fd083de00c48433aca2b6e4a90f4f5ca6db40d",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/string/case.html",
+      "size_bytes": 11441,
+      "sha256": "6603207e3f517f12685bbd16ec14469edaece6d9eac890b7ade403df9f09faaa",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/string/index.html",
+      "size_bytes": 5864,
+      "sha256": "74faaf1345f193bfe631f61f60778094fc74d7ebb80dfc2360c4587007328eb3",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/string/like.html",
+      "size_bytes": 11133,
+      "sha256": "00eac4fa4e300af6029d5e7ef0945b986a4a01b1664a79a237927034c352365d",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/string/pad.html",
+      "size_bytes": 12112,
+      "sha256": "a1f0a9e46e90290ef71a22f445d4a71897a78acf09e8d2d89df38167f6b948a1",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/string/reg.html",
+      "size_bytes": 13924,
+      "sha256": "72875cd64b208bb1e433287584382f32da10b87033d9e2adb17e8f268829372f",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/string/translate.html",
+      "size_bytes": 14881,
+      "sha256": "e5d9075cfe88003fe952cab7eaaf79adc985e0dc4e0010be00768932f3a9e0c3",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/updates/deletewh.html",
+      "size_bytes": 20154,
+      "sha256": "651aa298138192830799c46901c6957bdc18f915e78e381d0890c7829587db59",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/updates/deletewh2.html",
+      "size_bytes": 19594,
+      "sha256": "3813cc8348ba5b5c6f6452bf691631eff058ad2873771c6b4dd9a4767e7ce064",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/updates/index.html",
+      "size_bytes": 6199,
+      "sha256": "3bbc7d3ddd4e37c6cc0be2fe1f65dcc38f247976866e54122cd7ab6cd5d00ba4",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/updates/insert.html",
+      "size_bytes": 13056,
+      "sha256": "5dd28231e1e5e33b5d6c3d24c38f9c47816dce953f0df45af9d844deb59dc16a",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/updates/insert2.html",
+      "size_bytes": 13677,
+      "sha256": "0a3a023e4885c03d8f7e0953c94e799a4783d80ee9ffda7e4e7612bb6ef95e1c",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/updates/insert3.html",
+      "size_bytes": 13027,
+      "sha256": "c3c0b6194d0d584e1ec19cbaa68671166703d63fcdb599065e801ef3755e40e7",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/pgexercises/questions/updates/updatemultiple.html",
+      "size_bytes": 11609,
+      "sha256": "399f227593831c4cd108791377a63608edc6b4a091b5e3e96a892699a1cca678",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/manifest.json",
+      "size_bytes": 9282,
+      "sha256": "1561b122ade7ab77e37fca3f79ce9d113cd7858af1b48e314df08081c2f59122",
+      "role": "report",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Binary_Replication_Tutorial.html",
+      "size_bytes": 43163,
+      "sha256": "16812f12a715f5a38def8c808fb99292c485d7acb39a0259207345de3a70852c",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Client_Authentication.html",
+      "size_bytes": 17278,
+      "sha256": "177a25443f91acfac57ca33f453a9e8294442402ef88478166fc996dde8efc0a",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Detailed_installation_guides.html",
+      "size_bytes": 22193,
+      "sha256": "3f0771e63808a42780485c7052189d5dd1dd7e9438ff1304801d1bd2be6ff473",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Disk_Usage.html",
+      "size_bytes": 56327,
+      "sha256": "8b57ca7cd792ee9ea533f5569d523ba9e984e3ca1825ee6f8a275b9580244c6c",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/FAQ.html",
+      "size_bytes": 122469,
+      "sha256": "a7aff40ddaa0df85f2b707eaaa7775add030f159a4e33f0e3bec0610f24ee2e4",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Fixing_Sequences.html",
+      "size_bytes": 30578,
+      "sha256": "b8c03dd0f01538fa7337b024936c3630002b0088dbefe80d6b1e7617b40686b1",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Frequently_Asked_Questions.html",
+      "size_bytes": 16220,
+      "sha256": "32902333c49e433519aeb5f09f359b57d7f378298be0bf3772a28d3b2835c8a0",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Index_Maintenance.html",
+      "size_bytes": 67414,
+      "sha256": "ea3a04f37cbdf96b85b87a1667fa8082bb381206b272f7fe1f27b4534af514b7",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT.html",
+      "size_bytes": 56346,
+      "sha256": "d04540b41faeb870ff7c47675a690de96acce6c69c52610849361173f3f7881c",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Lock_Monitoring.html",
+      "size_bytes": 42690,
+      "sha256": "371250470557ed8e8c028ba9ea14cd0d63f2eacd3aa493bb33d6d9a393930b9f",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Logging_Difficult_Queries.html",
+      "size_bytes": 15476,
+      "sha256": "4709a90a50801fd68e1aa4d4642aa74ecc94063c7d4d08f56c65a9245881c8be",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Monitoring.html",
+      "size_bytes": 44100,
+      "sha256": "004a8c026c1ead87f2c4cf44a363882dd49d0ca64454137f5661d43beb658733",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Number_Of_Database_Connections.html",
+      "size_bytes": 22309,
+      "sha256": "b50e5293c96b5ef3b40df625f78150967cad57544c5491196b17f542f6feee29",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Performance_Analysis_Tools.html",
+      "size_bytes": 34103,
+      "sha256": "358631d327eb599b809ecdc91dd96930a118fac1a29c46f3f0c4154a58eb674e",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Pgpass.html",
+      "size_bytes": 13268,
+      "sha256": "31dd03ce4cf5a4f83f59459492f33cbaa82e8422a46fb37a1ab2f4a7fb0eac01",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Planner_Statistics.html",
+      "size_bytes": 14416,
+      "sha256": "7973047d6b2307b69cd7f42abe1f3e910831148887597fdf89f654cb1d8ca24e",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Simple_Configuration_Recommendation.html",
+      "size_bytes": 24632,
+      "sha256": "1eb71d0179a93cb7c21bd2a4e95055e8fdbd3c83dad63e6fd8ad5edbf379635c",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Slow_Query_Questions.html",
+      "size_bytes": 26148,
+      "sha256": "297ec449ff8cf80b579af5848b03b4d5169ef87fc9594da137b76d60e087a3e0",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Streaming_Replication.html",
+      "size_bytes": 41902,
+      "sha256": "106e12c669312d3202fae38fd4857ef03a735d512306620e352c3d53b59ba8f9",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Tuning_Your_PostgreSQL_Server.html",
+      "size_bytes": 42007,
+      "sha256": "5ef696ccd3ee7d9e24d44fa13df33f67bee4986508a570345c11026da88ddcfd",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Using_EXPLAIN.html",
+      "size_bytes": 20547,
+      "sha256": "260f24fd2ba25b6845d2064c7b1275635d7f50aed06af4735f967d038854819b",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/VACUUM_FULL.html",
+      "size_bytes": 29636,
+      "sha256": "99a0102d39871be8d5ea3ca7b70cfa8085a7a7912ab9b2ab4bdfd565f1f43fbd",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "html/postgres_wiki_whitelist/wiki/Warm_Standby.html",
+      "size_bytes": 20757,
+      "sha256": "fcb24af80570328700022f61238127b052cb96c391dd3474e935854e74759308",
+      "role": "raw_html_archive",
+      "indexable": false
+    },
+    {
+      "path": "processed_html/pgexercises/gettingstarted.md",
+      "size_bytes": 4262,
+      "sha256": "4503789fae7d9f47bc5db52c53b8b7fd1c47cda6aba4a170e0b03b2fb9dd2c9a",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/index.md",
+      "size_bytes": 1303,
+      "sha256": "b74f0cb4244bd6ba8b018aacc26cfe271a5f65777888868aa29d320371c3b70c",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/options.md",
+      "size_bytes": 626,
+      "sha256": "1f444fe1c33b93ff626b980cfe63b7f2afc75f100d92d8b364312dfa1948cdab",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/classify.md",
+      "size_bytes": 2238,
+      "sha256": "58ad118a6110f3f540c3a080ebc46529186d09c7db6d370c3ecba60196211fb1",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/count.md",
+      "size_bytes": 2897,
+      "sha256": "1be7bb6aaa55d125069e2fe7c2525eb34feffbe670e7d04f9ec3b21f04f3d616",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/count2.md",
+      "size_bytes": 1648,
+      "sha256": "eeb7a71b4d1979ec3f67c39bdba964e82ddca6775b8605cdbaec80f5758fbd35",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/count3.md",
+      "size_bytes": 2475,
+      "sha256": "eea69e131086a983c1ad9221c36eb960ef08c24efd01584152488942c96b3bfd",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/countmembers.md",
+      "size_bytes": 4877,
+      "sha256": "61ba897dd96cba19f8f8e4dc0f7491780c51e82ca7af5a5ee73f34caf0c435aa",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours.md",
+      "size_bytes": 1829,
+      "sha256": "0d7b2e873c70cc6a65be28611a56b7f638872739290668f008f574a4d9cdedbc",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours1a.md",
+      "size_bytes": 2083,
+      "sha256": "f7b8a307340b8320ec37b06fbd53187363666267c7046e3eaa9c7e6dd86cedff",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours2.md",
+      "size_bytes": 4459,
+      "sha256": "1c5fdf8ab796e6cd7c7b46cee710c5f88ae3340d181ac58615cf7e0a9d2e8a92",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours3.md",
+      "size_bytes": 4053,
+      "sha256": "303809537e526e94a99dcaa57601f08ab5ac3c80d82757c5936d25e47c79bda8",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours4.md",
+      "size_bytes": 3806,
+      "sha256": "88b399ddbef60f7d7dec1b096f1eef26b6fa4733f9e4532b42bb0d02a42294c7",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachoursbymonth.md",
+      "size_bytes": 2006,
+      "sha256": "0b66a256bf5635cc54b361219d7c19bcc90d51c623b01af420406d674af56922",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachoursbymonth2.md",
+      "size_bytes": 3410,
+      "sha256": "93b714536cc31985fdc1bd5dd3b95099881797b21dfce3331eac8634dbe5bfc0",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachoursbymonth3.md",
+      "size_bytes": 4721,
+      "sha256": "65b03023c0506b3a33bfc8cd68ce2c378cd24312fbbeec708c6f518e34b3c8f0",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/facrev.md",
+      "size_bytes": 2084,
+      "sha256": "16746fd9b7bc3968b3143299ba7188e2f9c5e2b1410c3c97d6b5a6a8f503f1e8",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/facrev2.md",
+      "size_bytes": 3231,
+      "sha256": "d052a4925bbbd2ced1c7d66a3365d9c8fb03e2cfb90542f4c4961894a739b89c",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/facrev3.md",
+      "size_bytes": 2338,
+      "sha256": "f27ed6c296c05dce66f43e6622485919867d91d9d62ca3042ae8024a3df7d096",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/index.md",
+      "size_bytes": 2333,
+      "sha256": "88213147b623137caead11ff62c61ac2c544412578855dbd8c56ae84fb95a543",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/members1.md",
+      "size_bytes": 1776,
+      "sha256": "15d95eeda672b07a5c2b14317b6f6203be93bc1c0134138b8cea0440d346d0e7",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/nbooking.md",
+      "size_bytes": 3230,
+      "sha256": "cd6777f46864f1b2cba7f43265aa04b44e03fc9f7af131c143ba387523e4e553",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/nummembers.md",
+      "size_bytes": 2467,
+      "sha256": "6c13ba988f34fbe95aca28aa340ed801f49b7af56d0684120dcd8d877b8fe9bc",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/payback.md",
+      "size_bytes": 4756,
+      "sha256": "a438daf11ff27820a2e43d7b276ed676b5892d65a938280d6a5ce2a269c257b0",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/rankmembers.md",
+      "size_bytes": 3859,
+      "sha256": "aa986868f001ccd779b3fbf935dc45662aad90d1388ee89d757d2cf623c18a71",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/rollingavg.md",
+      "size_bytes": 8028,
+      "sha256": "80e4ea569edee149da8620609a2f232c5e9607c94fe3e2035384804f0c96e69a",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/agg.md",
+      "size_bytes": 1931,
+      "sha256": "7553ed49a3d9f96ec36a89073c7542cce1aff69d4ec1cb4edb1576241f5e87e6",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/agg2.md",
+      "size_bytes": 2982,
+      "sha256": "6892d2674d088208c4cb8573c6bc7ee428b6c0a7302235b603c4b156dd9296d3",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/classify.md",
+      "size_bytes": 2525,
+      "sha256": "1c19a5bc242d4025238efd42f170f16e68f804c21b1cbb0b257c5bc458553e34",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/date.md",
+      "size_bytes": 2384,
+      "sha256": "96f7f833dae21a08bc77915e339f7b0da60c1d78b8557aaf6813efd88ee78372",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/index.md",
+      "size_bytes": 1594,
+      "sha256": "cf0c10e542e2b5713f329395c6447945c5955a67f07b98f52233efe6e570d837",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/selectall.md",
+      "size_bytes": 2321,
+      "sha256": "7bf6d728bd7fe19f64eaa4f00bf0a18ff77b7dd88311cfd60deb580756017d58",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/selectspecific.md",
+      "size_bytes": 2192,
+      "sha256": "d678388dae92d23f9120eb08100fc4106a597126520b78f8731758d33ba3b69e",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/union.md",
+      "size_bytes": 2105,
+      "sha256": "807ccf970c18622af61c964c52e0580e6434d1e3ff7c893288ef0c20671e5b1a",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/unique.md",
+      "size_bytes": 2454,
+      "sha256": "9d3fd16e4177b78f5284235866e0dc29d2f77d322c35280cc7c1e3e588e6a3a6",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where.md",
+      "size_bytes": 2337,
+      "sha256": "c3aeccaaecc7ee05fcba1bf08ff68490fe4a0b673480c00e7bcb431822482a31",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where2.md",
+      "size_bytes": 2580,
+      "sha256": "aee6605182a6cc00d74dcbcff1b35cb8d2b7970ec7469d4a8d27c2e19f133106",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where3.md",
+      "size_bytes": 2097,
+      "sha256": "7c619555fc2e950733b86f4e39ce257205271ac0f787d60d37f98b59eba30a3e",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where4.md",
+      "size_bytes": 2517,
+      "sha256": "5ec58be75339d4a33255c8fa80965c19225bf7f69be54d21d808ae33fa7385c1",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/bookingspermonth.md",
+      "size_bytes": 1726,
+      "sha256": "c2e1371efaf4613a3b97555e6266e019fcd7248a4c4a074eeb21ee88a8592b57",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/daysinmonth.md",
+      "size_bytes": 2452,
+      "sha256": "a7bc07d26bb05cc524bc4cb1b49308f772ae070e5d00a2e04c01e06fc2184eb1",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/daysremaining.md",
+      "size_bytes": 2322,
+      "sha256": "e133c3aac8ae67d9400bd48ef152f57026252af1f69a65598c96b295f823823e",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/endtimes.md",
+      "size_bytes": 2359,
+      "sha256": "bb57c1905a279df9800a9e8e610f023402585e1f18e178848d61742a4d76b243",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/index.md",
+      "size_bytes": 1520,
+      "sha256": "f36d88565ea9fbc10b8a135d308623e6fd4fcbeb118e61863155bc571392609e",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/interval.md",
+      "size_bytes": 2445,
+      "sha256": "9294145348cd6528c17a0560cef1bef7e975798ad06ee310fc777947f5769e79",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/series.md",
+      "size_bytes": 3078,
+      "sha256": "b39556ae17310811d7e660478cf597d08c880da2de0d75f0898b3dc8fbb9f6a4",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/timestamp.md",
+      "size_bytes": 3017,
+      "sha256": "2f45145a437a1445b0a7bb7e0f8925de6aa2cd895d77bef262e1aac627552022",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/utilisationpermonth.md",
+      "size_bytes": 4292,
+      "sha256": "024894b969f01069052d0da1c8bbe2972566d8cf7bc56142462d718cf38cff85",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/index.md",
+      "size_bytes": 1643,
+      "sha256": "8952bbb4c85c96e5b68d0e560ed8c5e439af5cacb8e75891f7bea6f2d986c840",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/self.md",
+      "size_bytes": 2627,
+      "sha256": "ab4ef84f3d5c29641aaeb4057ed9a5a39066cbc2a85398ce3a86d852578f7899",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/self2.md",
+      "size_bytes": 3512,
+      "sha256": "6f81ef2674cb8ee85ddfc94c761178b34fa4dcfe96597603e345a2a1330ff2aa",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/simplejoin.md",
+      "size_bytes": 4341,
+      "sha256": "c5b51247f2e8e2a026e3f4abe9e1db65e3f111190fd59d7087ea67e648544f80",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/simplejoin2.md",
+      "size_bytes": 3139,
+      "sha256": "954431e23f2311e29f567f53b31eb4c46d0de0b486fef52b18f5bca18f5264f1",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/sub.md",
+      "size_bytes": 3132,
+      "sha256": "19c9c651fc3a076def58a8e3276236fa0f95ae456a39585d6da90a079b704b7b",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/threejoin2.md",
+      "size_bytes": 3257,
+      "sha256": "1376635002521894e7d853c7e83b83e45bf9d7e33992bc1b8c6fcbfcc1c2c575",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/tjsub.md",
+      "size_bytes": 3589,
+      "sha256": "8555519eef94f654064a726137e02bdc8c2b8584cb874c3a10919005a8993e97",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/recursive/getdownward.md",
+      "size_bytes": 2375,
+      "sha256": "19a0ac209c425338b7e899e56259e0adff44b2cd20988069fc0ef6ae15b44947",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/recursive/getupwardall.md",
+      "size_bytes": 3131,
+      "sha256": "7211ec10f82f6fc17dc185896c15b603352e87d0f2c9fa87e9266007fe6959fd",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/recursive/index.md",
+      "size_bytes": 1294,
+      "sha256": "7a094877bf9923a304593940e2db53363f3b8d90635d07d3d3c7333d2e0ffc29",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/case.md",
+      "size_bytes": 2347,
+      "sha256": "f4b6526d2c2827775629f534e43a59c3d2f1b56a58d6281a4f7ac69645a8aca0",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/index.md",
+      "size_bytes": 1493,
+      "sha256": "67f2f135be282f55bb9b0ce309d97b4aa90243aeb545c45fb9d332911713d9ea",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/like.md",
+      "size_bytes": 1947,
+      "sha256": "ff139584dbb6e0bce5622cddff6e6f00316adceb20297ff574ed63887f9d871e",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/pad.md",
+      "size_bytes": 2439,
+      "sha256": "9c619d517a6fedea2c24e4dcd5b4afd60874afea1de6b10eb22ee34284db8776",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/reg.md",
+      "size_bytes": 3444,
+      "sha256": "423023fddddc6ee66254111ec29b45eef337a5dbe8557e91dd04e429c24db09c",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/translate.md",
+      "size_bytes": 4149,
+      "sha256": "3720c0566b8f059ca189fab6adf4a0268dc5882a963fd94c67049aca931d9fc1",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/deletewh.md",
+      "size_bytes": 5633,
+      "sha256": "291a7e6cd1ae6a1919e3a8c76140ca2b9f0bf20aa4b521c20fbe2b46d50df88c",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/deletewh2.md",
+      "size_bytes": 5048,
+      "sha256": "f8270e6c73a1d1d036d0098be85f9505df5bf8bcb3c3a3c0684b5d793aacfcee",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/index.md",
+      "size_bytes": 1613,
+      "sha256": "50c1403688c6e48f113e1221c472354005559ff4950dc6cc71bb2b3fa326a7d6",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/insert.md",
+      "size_bytes": 2869,
+      "sha256": "62198a658acfd2e250f0033fab4843fb9d3f0f6b5565e04bc945a26b6ece5993",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/insert2.md",
+      "size_bytes": 3185,
+      "sha256": "41b25ff4a6b829311535894a73978e5017879da4b565e4d6732a321f24d38e92",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/insert3.md",
+      "size_bytes": 3156,
+      "sha256": "82aa6a4ea9755b783c277d4d04e884e68fc99f09d3d592c8ba2599995faa9c95",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/updatemultiple.md",
+      "size_bytes": 1908,
+      "sha256": "55f0997ce180ba22c2065987dd75a43c8b5637ca66984a87b06bef09cbaa4f9e",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Binary_Replication_Tutorial.md",
+      "size_bytes": 23164,
+      "sha256": "b668fb91a00fb9eb2a19de2ce2d5d0fc143a8425cddbde5175ca1853a1ca8343",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Client_Authentication.md",
+      "size_bytes": 4243,
+      "sha256": "2e5897673a298866e1cba8cac360824919ba174a552baa3d1b86a5a3c3515d97",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Detailed_installation_guides.md",
+      "size_bytes": 4114,
+      "sha256": "ef33d2b6f17de158e4be32f124c5e9ee13e0f8da2b7ede6893d77c45e23cec83",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Disk_Usage.md",
+      "size_bytes": 8033,
+      "sha256": "7c2f863a95ca5f683686e8104ad235191df2e79eb754ce1de5d7f52e2e36937c",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/FAQ.md",
+      "size_bytes": 60975,
+      "sha256": "f244057f9f8dc069f6f3353e242fd177e0857c67bba8013f5679e30e6cd3e701",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Fixing_Sequences.md",
+      "size_bytes": 4318,
+      "sha256": "f91d6b771b53d3416e093d7c87e1bb4b3368436ca660247527a5df4fa0bd837f",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Frequently_Asked_Questions.md",
+      "size_bytes": 1909,
+      "sha256": "8e7434d36eeea9eede38f788941e8dfd6608f7f48f65407b21b481b81fbda476",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Index_Maintenance.md",
+      "size_bytes": 13638,
+      "sha256": "6d9818d21868cbb80baf5648b71103afe1daf6b32cae326ed8205e8246d8fd2a",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT.md",
+      "size_bytes": 37635,
+      "sha256": "f09ab23abd8e8094dd5331f0e499ad907e632d5e1d588a1595163982c2b74413",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Lock_Monitoring.md",
+      "size_bytes": 5986,
+      "sha256": "3256bb1adbe4f88447d379b763c99350673b033a2223b101ab39df9c5a925324",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Logging_Difficult_Queries.md",
+      "size_bytes": 2456,
+      "sha256": "291f4b08f0302db5359e0d7e5abed25f739ba124ca01d3051c491af00506c08e",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Monitoring.md",
+      "size_bytes": 13948,
+      "sha256": "4f9e9441a4e582c470c36aae8c775434c29e19f88113eb7471687a3c3a52ade5",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Number_Of_Database_Connections.md",
+      "size_bytes": 8596,
+      "sha256": "a3aa8a031551d19bd35a50f11c4a8babda8a84dc676c5a6d07eaf30b6b8227de",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Performance_Analysis_Tools.md",
+      "size_bytes": 11010,
+      "sha256": "bfca891e13e95fe8dec19f3287932015616096defc4ee7a8a1e5dc9c862f9295",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Pgpass.md",
+      "size_bytes": 1708,
+      "sha256": "ad9c01141748f70a9881f577c974df99a1d72cb8ab17f0fca7653c49623b9017",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Planner_Statistics.md",
+      "size_bytes": 1906,
+      "sha256": "51e70ccf806871ad0d497224e2af10fd65de1f58283ff4183731806ee8f3cf38",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Simple_Configuration_Recommendation.md",
+      "size_bytes": 9582,
+      "sha256": "1ffacbb6d996c7ad969aa25940b921570d610576e1ebad4161eedbc79a7fcf94",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Slow_Query_Questions.md",
+      "size_bytes": 8759,
+      "sha256": "202fe59d97ac3cecef1a944484569b8139ac5b72c9971d0682b02b74d19b7b33",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Streaming_Replication.md",
+      "size_bytes": 20317,
+      "sha256": "ac12886e7ff9bb09b27aca67ebb8d07635f5bbdbae1e0739505b4de6def4e54b",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Tuning_Your_PostgreSQL_Server.md",
+      "size_bytes": 22927,
+      "sha256": "026ca3cfbdb01dc2b8f89bd8753d8cc1f21a85324471532c06ad6d0bdf8bed27",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Using_EXPLAIN.md",
+      "size_bytes": 5174,
+      "sha256": "141cc88b208d80bf41a715acb1b3dc08178b20957c61d9ff0fe163c1036b10ea",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/VACUUM_FULL.md",
+      "size_bytes": 10638,
+      "sha256": "a81055e5e08d2fdf5f9fbdb0c5898c0a9993139a455b43c4cfc715cc0156b826",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Warm_Standby.md",
+      "size_bytes": 7299,
+      "sha256": "25c5644a14ac3e5a3d094ab8b6ed7fda25b97c982099e712510955f89968d913",
+      "role": "processed_html_markdown",
+      "indexable": true
+    },
+    {
+      "path": "scripts/clean_html_for_ingestion.py",
+      "size_bytes": 4234,
+      "sha256": "35afa39f302a5cbf53f1cfd5ca5bc0aaeae724c124594d273e3b129dfb32cab4",
+      "role": "script",
+      "indexable": false
+    },
+    {
+      "path": "scripts/compare_curated_versions.py",
+      "size_bytes": 3459,
+      "sha256": "1c2bed4fd215ba4056e1a080aeec4aaab4a944691e7991fb2fc050d89d4dd715",
+      "role": "script",
+      "indexable": false
+    },
+    {
+      "path": "scripts/generate_quality_report.py",
+      "size_bytes": 9520,
+      "sha256": "7e24fb4a3da43c556801f908f5cb4c70c15d26b1aa4c05f06cf12c0cdb39df28",
+      "role": "script",
+      "indexable": false
+    },
+    {
+      "path": "scripts/validate_corpus_before_embeddings.py",
+      "size_bytes": 11149,
+      "sha256": "3a27212e095815c74906be8f5b72e6a60198584f2ef53db1ddc2f3072704c363",
+      "role": "script",
+      "indexable": false
+    },
+    {
+      "path": "scripts/validate_processed_html.py",
+      "size_bytes": 2010,
+      "sha256": "384070a119ab81fa0d01d5e14da248b3b0a37142dad5f99443e30532a4c8c6fa",
+      "role": "script",
+      "indexable": false
+    },
+    {
+      "path": "scripts/validate_tutorial_corpus.py",
+      "size_bytes": 1668,
+      "sha256": "0965c1d09d47af49696708d7cf3c3aa233011a97a090c4b5d845142aff39fe84",
+      "role": "script",
+      "indexable": false
+    }
+  ]
+}

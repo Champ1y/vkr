@@ -1,0 +1,314 @@
+{
+  "total_topics": 34,
+  "identical_except_version_urls_count": 27,
+  "materially_different_count": 7,
+  "needs_version_note_count": 0,
+  "topics": [
+    {
+      "topic_file": "backup_restore_basics.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.9986,
+      "sim_ratio_16_18": 0.9986
+    },
+    {
+      "topic_file": "cancel_terminate_queries.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99896,
+      "sim_ratio_16_18": 0.99896
+    },
+    {
+      "topic_file": "common_connection_errors.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99879,
+      "sim_ratio_16_18": 0.99879
+    },
+    {
+      "topic_file": "cte_subqueries_views.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99888,
+      "sim_ratio_16_18": 0.99888
+    },
+    {
+      "topic_file": "ddl_constraints_and_keys.ru.md",
+      "identical_except_version_urls": false,
+      "materially_different": true,
+      "has_version_specific_section": false,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99849,
+      "sim_ratio_16_18": 0.99849
+    },
+    {
+      "topic_file": "docker_postgresql_basics.ru.md",
+      "identical_except_version_urls": false,
+      "materially_different": true,
+      "has_version_specific_section": false,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99879,
+      "sim_ratio_16_18": 0.99879
+    },
+    {
+      "topic_file": "explain_and_indexes.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99846,
+      "sim_ratio_16_18": 0.99846
+    },
+    {
+      "topic_file": "extensions_basics.ru.md",
+      "identical_except_version_urls": false,
+      "materially_different": true,
+      "has_version_specific_section": false,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99878,
+      "sim_ratio_16_18": 0.99878
+    },
+    {
+      "topic_file": "first_start_and_connect.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99883,
+      "sim_ratio_16_18": 0.99883
+    },
+    {
+      "topic_file": "full_text_search_basics.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99883,
+      "sim_ratio_16_18": 0.99883
+    },
+    {
+      "topic_file": "import_export_copy_csv.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99916,
+      "sim_ratio_16_18": 0.99916
+    },
+    {
+      "topic_file": "index_design_patterns.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.9984,
+      "sim_ratio_16_18": 0.9984
+    },
+    {
+      "topic_file": "json_jsonb_basics.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99862,
+      "sim_ratio_16_18": 0.99862
+    },
+    {
+      "topic_file": "logging_and_slow_queries.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99856,
+      "sim_ratio_16_18": 0.99856
+    },
+    {
+      "topic_file": "logical_replication_setup.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99891,
+      "sim_ratio_16_18": 0.99891
+    },
+    {
+      "topic_file": "major_upgrade_notes.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": false,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.76187,
+      "sim_ratio_16_18": 0.76187
+    },
+    {
+      "topic_file": "monitoring_pg_stat_activity.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99894,
+      "sim_ratio_16_18": 0.99894
+    },
+    {
+      "topic_file": "partitioning_basics.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99919,
+      "sim_ratio_16_18": 0.99919
+    },
+    {
+      "topic_file": "pgvector_for_rag_project.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99874,
+      "sim_ratio_16_18": 0.99874
+    },
+    {
+      "topic_file": "postgresql_conf_basics.ru.md",
+      "identical_except_version_urls": false,
+      "materially_different": true,
+      "has_version_specific_section": false,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.9988,
+      "sim_ratio_16_18": 0.9988
+    },
+    {
+      "topic_file": "psql_cheatsheet.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99899,
+      "sim_ratio_16_18": 0.99899
+    },
+    {
+      "topic_file": "query_performance_checklist.ru.md",
+      "identical_except_version_urls": false,
+      "materially_different": true,
+      "has_version_specific_section": false,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99857,
+      "sim_ratio_16_18": 0.99857
+    },
+    {
+      "topic_file": "remote_access_pg_hba.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99854,
+      "sim_ratio_16_18": 0.99854
+    },
+    {
+      "topic_file": "replication_health_checks.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99856,
+      "sim_ratio_16_18": 0.99856
+    },
+    {
+      "topic_file": "roles_users_and_databases.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99895,
+      "sim_ratio_16_18": 0.99895
+    },
+    {
+      "topic_file": "row_level_security_basics.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99904,
+      "sim_ratio_16_18": 0.99904
+    },
+    {
+      "topic_file": "safe_rag_answering_rules.ru.md",
+      "identical_except_version_urls": false,
+      "materially_different": true,
+      "has_version_specific_section": false,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99744,
+      "sim_ratio_16_18": 0.99744
+    },
+    {
+      "topic_file": "schemas_and_search_path.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99891,
+      "sim_ratio_16_18": 0.99891
+    },
+    {
+      "topic_file": "sql_learning_path.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99863,
+      "sim_ratio_16_18": 0.99863
+    },
+    {
+      "topic_file": "sql_practice_tasks.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.9994,
+      "sim_ratio_16_18": 0.9994
+    },
+    {
+      "topic_file": "streaming_replication_overview.ru.md",
+      "identical_except_version_urls": false,
+      "materially_different": true,
+      "has_version_specific_section": false,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99884,
+      "sim_ratio_16_18": 0.99884
+    },
+    {
+      "topic_file": "transactions_and_locks_basics.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99843,
+      "sim_ratio_16_18": 0.99843
+    },
+    {
+      "topic_file": "vacuum_analyze_autovacuum.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99847,
+      "sim_ratio_16_18": 0.99847
+    },
+    {
+      "topic_file": "window_functions_basics.ru.md",
+      "identical_except_version_urls": true,
+      "materially_different": false,
+      "has_version_specific_section": true,
+      "needs_version_note": false,
+      "sim_ratio_16_17": 0.99927,
+      "sim_ratio_16_18": 0.99927
+    }
+  ]
+}

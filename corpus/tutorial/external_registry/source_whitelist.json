@@ -1,0 +1,108 @@
+{
+  "purpose": "Whitelist внешних учебных источников. Это не скачанный контент, а реестр разрешённых дополнительных источников для extended tutorial.",
+  "usage_rule": "Внешние источники можно использовать только как supplementary слой и только при наличии official backing выбранной версии.",
+  "sources": {
+    "neon": {
+      "authority": "external_pedagogical",
+      "priority": "medium",
+      "allowed_modes": [
+        "tutorial_extended_only"
+      ],
+      "use_for": [
+        "SQL basics",
+        "joins",
+        "indexes",
+        "JSON/JSONB",
+        "transactions",
+        "CTE"
+      ],
+      "not_for": [
+        "primary source for administration",
+        "primary source for version-specific behavior"
+      ],
+      "urls": [
+        "https://neon.com/postgresql/postgresql-tutorial/"
+      ]
+    },
+    "pgexercises": {
+      "authority": "exercise_layer",
+      "priority": "medium",
+      "allowed_modes": [
+        "tutorial_extended_only"
+      ],
+      "use_for": [
+        "SQL practice",
+        "joins practice",
+        "aggregates",
+        "recursive queries",
+        "updates"
+      ],
+      "not_for": [
+        "server configuration",
+        "backup",
+        "replication",
+        "authentication"
+      ],
+      "urls": [
+        "https://pgexercises.com/",
+        "https://pgexercises.com/questions/basic/",
+        "https://pgexercises.com/questions/joins/",
+        "https://pgexercises.com/questions/aggregates/"
+      ]
+    },
+    "postgres_wiki": {
+      "authority": "community_reference",
+      "priority": "low_to_medium",
+      "allowed_modes": [
+        "tutorial_extended_only"
+      ],
+      "use_for": [
+        "FAQ",
+        "troubleshooting",
+        "Using EXPLAIN",
+        "slow query questions"
+      ],
+      "not_for": [
+        "primary truth",
+        "version-specific basis without official docs"
+      ],
+      "urls": [
+        "https://wiki.postgresql.org/wiki/Frequently_Asked_Questions",
+        "https://wiki.postgresql.org/wiki/Using_EXPLAIN",
+        "https://wiki.postgresql.org/wiki/SlowQueryQuestions",
+        "https://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server"
+      ],
+      "exclude": [
+        "Special:*",
+        "Category:*",
+        "Talk:*",
+        "User:*",
+        "translations",
+        "obsolete_version_guides"
+      ]
+    },
+    "crunchy_data_tutorials": {
+      "authority": "external_pedagogical",
+      "priority": "medium",
+      "allowed_modes": [
+        "tutorial_extended_only"
+      ],
+      "use_for": [
+        "psql basics",
+        "SQL",
+        "indexes",
+        "transactions",
+        "partitioning",
+        "RLS",
+        "JSON",
+        "performance analysis"
+      ],
+      "not_for": [
+        "primary source for PostgreSQL behavior"
+      ],
+      "urls": [
+        "https://www.crunchydata.com/developers/tutorials"
+      ]
+    }
+  }
+}

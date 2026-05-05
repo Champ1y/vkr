@@ -19,11 +19,9 @@
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix parsing of aggregate functions whose arguments contain a sub-select with a FROM reference to a CTE outside the aggregate function (Tom Lane) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Such a CTE reference must act like a outer-level column reference when determining the aggregate's semantic level; but it was not being accounted for, leading to obscure planner or executor errors.
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix “ no relation entry for relid ” errors in corner cases while estimating SubPlan costs (Richard Guo) §
-[E.3. Release 16.11 # / E.3.2. Changes #] Fix “ no relation entry for relid ” errors in corner cases while estimating SubPlan costs (Richard Guo) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Avoid unlikely use-after-free in planner's expansion of partitioned tables (Bernd Reiß) § There was a hazard only when the last live partition was concurrently dropped.
 [E.3. Release 16.11 # / E.3.2. Changes #] Avoid unlikely use-after-free in planner's expansion of partitioned tables (Bernd Reiß) §
 [E.3. Release 16.11 # / E.3.2. Changes #] There was a hazard only when the last live partition was concurrently dropped.
-[E.3. Release 16.11 # / E.3.2. Changes #] Remove faulty assertion in btree index cleanup (Peter Geoghegan) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Remove faulty assertion in btree index cleanup (Peter Geoghegan) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix possible infinite loop in GIN index scans with multiple scan conditions (Tom Lane) § GIN can handle scan conditions that can reject non-matching entries but are not useful for searching for relevant entries, for example a tsquery clause like !term . But such a condition must not be first in the array of scan conditions. The code failed to ensure that in all cases, with the result that a query having a mix of such conditions with normal conditions might work or not depending on the order in which the conditions were given in the query.
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix possible infinite loop in GIN index scans with multiple scan conditions (Tom Lane) §
@@ -68,7 +66,6 @@
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix memory leakage in hashed subplans (Haiyang Li) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Any memory consumed by the hash functions used for hashing tuples constituted a query-lifespan memory leak. One way that could happen is if the values being hashed require de-toasting.
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix minor memory leak during WAL replay of database creation (Nathan Bossart) §
-[E.3. Release 16.11 # / E.3.2. Changes #] Fix minor memory leak during WAL replay of database creation (Nathan Bossart) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix corruption of the shared statistics table after out-of-memory failures (Mikhail Kot) § Previously, an out-of-memory failure partway through creating a new hash table entry left a broken entry behind, potentially causing errors in other sessions later.
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix corruption of the shared statistics table after out-of-memory failures (Mikhail Kot) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Previously, an out-of-memory failure partway through creating a new hash table entry left a broken entry behind, potentially causing errors in other sessions later.
@@ -79,11 +76,9 @@
 [E.3. Release 16.11 # / E.3.2. Changes #] Add missing replica identity checks in MERGE and INSERT ... ON CONFLICT DO UPDATE (Zhijie Hou) § § §
 [E.3. Release 16.11 # / E.3.2. Changes #] If MERGE may require update or delete actions, and the target table publishes updates or deletes, insist that it have a REPLICA IDENTITY defined. Failing to require this can silently break replication. Likewise, INSERT with an UPDATE option must require REPLICA IDENTITY if the target table publishes either inserts or updates.
 [E.3. Release 16.11 # / E.3.2. Changes #] Avoid deadlock during DROP SUBSCRIPTION when publisher is on the same server as subscriber (Dilip Kumar) §
-[E.3. Release 16.11 # / E.3.2. Changes #] Avoid deadlock during DROP SUBSCRIPTION when publisher is on the same server as subscriber (Dilip Kumar) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix incorrect reporting of replication lag in pg_stat_replication view (Fujii Masao) § If any standby server's replay LSN stopped advancing, the write_lag and flush_lag columns would eventually stop updating.
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix incorrect reporting of replication lag in pg_stat_replication view (Fujii Masao) §
 [E.3. Release 16.11 # / E.3.2. Changes #] If any standby server's replay LSN stopped advancing, the write_lag and flush_lag columns would eventually stop updating.
-[E.3. Release 16.11 # / E.3.2. Changes #] Avoid duplicative log messages about invalid primary_slot_name settings (Fujii Masao) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Avoid duplicative log messages about invalid primary_slot_name settings (Fujii Masao) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Remove the unfinished slot state file after failing to write a replication slot's state to disk (Michael Paquier) § Previously, a failure such as out-of-disk-space resulted in leaving a temporary state.tmp file behind. That's problematic because it would block all subsequent attempts to write the state, requiring manual intervention to clean up.
 [E.3. Release 16.11 # / E.3.2. Changes #] Remove the unfinished slot state file after failing to write a replication slot's state to disk (Michael Paquier) §
@@ -101,8 +96,6 @@
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix use-after-free issue in the relation synchronization cache maintained by the pgoutput logical decoding plugin (Vignesh C, Masahiko Sawada) §
 [E.3. Release 16.11 # / E.3.2. Changes #] An error during logical decoding could result in crashes in subsequent logical decoding attempts in the same session. The case is only reachable when pgoutput is invoked via SQL functions.
 [E.3. Release 16.11 # / E.3.2. Changes #] Avoid unnecessary invalidation of logical replication slots (Bertrand Drouvot) §
-[E.3. Release 16.11 # / E.3.2. Changes #] Avoid unnecessary invalidation of logical replication slots (Bertrand Drouvot) §
-[E.3. Release 16.11 # / E.3.2. Changes #] Avoid assertion failure when trying to release a replication slot in single-user mode (Hayato Kuroda) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Avoid assertion failure when trying to release a replication slot in single-user mode (Hayato Kuroda) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix incorrect printing of messages about failures in checking whether the user has Windows administrator privilege (Bryan Green) § This code would have crashed or at least printed garbage. No such cases have been reported though, indicating that failure of these system calls is extremely rare.
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix incorrect printing of messages about failures in checking whether the user has Windows administrator privilege (Bryan Green) §
@@ -111,8 +104,6 @@
 [E.3. Release 16.11 # / E.3.2. Changes #] Avoid startup failure on macOS and BSD platforms when there is a collision with a pre-existing semaphore set (Tom Lane) §
 [E.3. Release 16.11 # / E.3.2. Changes #] If the pre-existing set has fewer semaphores than we asked for, these platforms return EINVAL not EEXIST as our code expected, resulting in failure to start the database.
 [E.3. Release 16.11 # / E.3.2. Changes #] Avoid crash when attempting to test PostgreSQL with certain libsanitizer options (Emmanuel Sibi, Jacob Champion) §
-[E.3. Release 16.11 # / E.3.2. Changes #] Avoid crash when attempting to test PostgreSQL with certain libsanitizer options (Emmanuel Sibi, Jacob Champion) §
-[E.3. Release 16.11 # / E.3.2. Changes #] Fix false memory-context-checking warnings in debug builds on 64-bit Windows (David Rowley) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix false memory-context-checking warnings in debug builds on 64-bit Windows (David Rowley) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Correctly handle GROUP BY DISTINCT in PL/pgSQL assignment statements (Tom Lane) § The parser failed to record the DISTINCT option in this context, so that the command would act as if it were plain GROUP BY .
 [E.3. Release 16.11 # / E.3.2. Changes #] Correctly handle GROUP BY DISTINCT in PL/pgSQL assignment statements (Tom Lane) §
@@ -148,10 +139,8 @@
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix pgbench 's reporting of multiple errors (Yugo Nagata) §
 [E.3. Release 16.11 # / E.3.2. Changes #] In cases where two successive PQgetResult calls both fail, pgbench might report the wrong error message.
 [E.3. Release 16.11 # / E.3.2. Changes #] In pgbench , fix faulty assertion about errors in pipeline mode (Yugo Nagata) §
-[E.3. Release 16.11 # / E.3.2. Changes #] In pgbench , fix faulty assertion about errors in pipeline mode (Yugo Nagata) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Ensure that contrib/pg_buffercache functions can be canceled (Satyanarayana Narlapuram, Yuhang Qiu) § Some code paths were capable of running for a long time without checking for interrupts.
 [E.3. Release 16.11 # / E.3.2. Changes #] Ensure that contrib/pg_buffercache functions can be canceled (Satyanarayana Narlapuram, Yuhang Qiu) §
-[E.3. Release 16.11 # / E.3.2. Changes #] Some code paths were capable of running for a long time without checking for interrupts.
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix contrib/pg_prewarm 's privilege checks for indexes (Ayush Vatsa, Nathan Bossart) § § pg_prewarm() requires SELECT privilege on relations to be prewarmed. However, since indexes have no SQL privileges of their own, this resulted in non-superusers being unable to prewarm indexes. Instead, check for SELECT privilege on the index's table.
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix contrib/pg_prewarm 's privilege checks for indexes (Ayush Vatsa, Nathan Bossart) § §
 [E.3. Release 16.11 # / E.3.2. Changes #] pg_prewarm() requires SELECT privilege on relations to be prewarmed. However, since indexes have no SQL privileges of their own, this resulted in non-superusers being unable to prewarm indexes. Instead, check for SELECT privilege on the index's table.
@@ -162,9 +151,7 @@
 [E.3. Release 16.11 # / E.3.2. Changes #] Harden our read and write barrier macros to satisfy Clang (Thomas Munro) §
 [E.3. Release 16.11 # / E.3.2. Changes #] We supposed that __atomic_thread_fence() is a sufficient barrier to prevent the C compiler from re-ordering memory accesses around it, but it appears that that's not true for Clang, allowing it to generate incorrect code for at least RISC-V, MIPS, and LoongArch machines. Add explicit compiler barriers to fix that.
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix building with LLVM version 21 and later (Holger Hoffstätte) §
-[E.3. Release 16.11 # / E.3.2. Changes #] Fix building with LLVM version 21 and later (Holger Hoffstätte) §
 [E.3. Release 16.11 # / E.3.2. Changes #] When building with meson, apply the same special optimization flags for numeric.c and checksum.c as the makefile build does (Nathan Bossart, Jeff Davis) § § Use -ftree-vectorize for both files, as well as -funroll-loops for checksum.c , to match what the makefiles have long done.
 [E.3. Release 16.11 # / E.3.2. Changes #] When building with meson, apply the same special optimization flags for numeric.c and checksum.c as the makefile build does (Nathan Bossart, Jeff Davis) § §
 [E.3. Release 16.11 # / E.3.2. Changes #] Use -ftree-vectorize for both files, as well as -funroll-loops for checksum.c , to match what the makefiles have long done.
-[E.3. Release 16.11 # / E.3.2. Changes #] Fix PGXS build infrastructure to support building NLS po files for extensions (Ryo Matsumura) §
 [E.3. Release 16.11 # / E.3.2. Changes #] Fix PGXS build infrastructure to support building NLS po files for extensions (Ryo Matsumura) §

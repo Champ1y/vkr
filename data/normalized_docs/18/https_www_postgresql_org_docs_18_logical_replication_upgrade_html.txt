@@ -3,24 +3,15 @@
 [29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] Before you start upgrading the publisher cluster, ensure that the subscription is temporarily disabled, by executing ALTER SUBSCRIPTION ... DISABLE . Re-enable the subscription after the upgrade.
 [29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] There are some prerequisites for pg_upgrade to be able to upgrade the logical slots. If these are not met an error will be reported.
 [29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] The new cluster must have wal_level as logical .
-[29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] The new cluster must have wal_level as logical .
-[29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] The new cluster must have max_replication_slots configured to a value greater than or equal to the number of slots present in the old cluster.
 [29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] The new cluster must have max_replication_slots configured to a value greater than or equal to the number of slots present in the old cluster.
 [29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] The output plugins referenced by the slots on the old cluster must be installed in the new PostgreSQL executable directory.
-[29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] The output plugins referenced by the slots on the old cluster must be installed in the new PostgreSQL executable directory.
-[29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] The old cluster has replicated all the transactions and logical decoding messages to subscribers.
 [29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] The old cluster has replicated all the transactions and logical decoding messages to subscribers.
 [29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] All slots on the old cluster must be usable, i.e., there are no slots whose pg_replication_slots . conflicting is not true .
-[29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] All slots on the old cluster must be usable, i.e., there are no slots whose pg_replication_slots . conflicting is not true .
-[29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] The new cluster must not have permanent logical slots, i.e., there must be no slots where pg_replication_slots . temporary is false .
 [29.13. Upgrade # / 29.13.1. Prepare for Publisher Upgrades #] The new cluster must not have permanent logical slots, i.e., there must be no slots where pg_replication_slots . temporary is false .
 [29.13. Upgrade # / 29.13.2. Prepare for Subscriber Upgrades #] Setup the subscriber configurations in the new subscriber. pg_upgrade attempts to migrate subscription dependencies which includes the subscription's table information present in pg_subscription_rel system catalog and also the subscription's replication origin. This allows logical replication on the new subscriber to continue from where the old subscriber was up to. Migration of subscription dependencies is only supported when the old cluster is version 17.0 or later. Subscription dependencies on clusters before version 17.0 will silently be ignored.
 [29.13. Upgrade # / 29.13.2. Prepare for Subscriber Upgrades #] There are some prerequisites for pg_upgrade to be able to upgrade the subscriptions. If these are not met an error will be reported.
 [29.13. Upgrade # / 29.13.2. Prepare for Subscriber Upgrades #] All the subscription tables in the old subscriber should be in state i (initialize) or r (ready). This can be verified by checking pg_subscription_rel . srsubstate .
-[29.13. Upgrade # / 29.13.2. Prepare for Subscriber Upgrades #] All the subscription tables in the old subscriber should be in state i (initialize) or r (ready). This can be verified by checking pg_subscription_rel . srsubstate .
 [29.13. Upgrade # / 29.13.2. Prepare for Subscriber Upgrades #] The replication origin entry corresponding to each of the subscriptions should exist in the old cluster. This can be found by checking pg_subscription and pg_replication_origin system tables.
-[29.13. Upgrade # / 29.13.2. Prepare for Subscriber Upgrades #] The replication origin entry corresponding to each of the subscriptions should exist in the old cluster. This can be found by checking pg_subscription and pg_replication_origin system tables.
-[29.13. Upgrade # / 29.13.2. Prepare for Subscriber Upgrades #] The new cluster must have max_active_replication_origins configured to a value greater than or equal to the number of subscriptions present in the old cluster.
 [29.13. Upgrade # / 29.13.2. Prepare for Subscriber Upgrades #] The new cluster must have max_active_replication_origins configured to a value greater than or equal to the number of subscriptions present in the old cluster.
 [29.13. Upgrade # / 29.13.3. Upgrading Logical Replication Clusters #] While upgrading a subscriber, write operations can be performed in the publisher. These changes will be replicated to the subscriber once the subscriber upgrade is completed.
 [29.13. Upgrade # / Note] The logical replication restrictions apply to logical replication cluster upgrades also. See Section 29.8 for details.
@@ -29,10 +20,7 @@
 [29.13. Upgrade # / Warning] Upgrading logical replication cluster requires multiple steps to be performed on various nodes. Because not all operations are transactional, the user is advised to take backups as described in Section 25.3.2 .
 [29.13. Upgrade # / Warning] The steps to upgrade the following logical replication clusters are detailed below:
 [29.13. Upgrade # / Warning] Follow the steps specified in Section 29.13.3.1 to upgrade a two-node logical replication cluster.
-[29.13. Upgrade # / Warning] Follow the steps specified in Section 29.13.3.1 to upgrade a two-node logical replication cluster.
 [29.13. Upgrade # / Warning] Follow the steps specified in Section 29.13.3.2 to upgrade a cascaded logical replication cluster.
-[29.13. Upgrade # / Warning] Follow the steps specified in Section 29.13.3.2 to upgrade a cascaded logical replication cluster.
-[29.13. Upgrade # / Warning] Follow the steps specified in Section 29.13.3.3 to upgrade a two-node circular logical replication cluster.
 [29.13. Upgrade # / Warning] Follow the steps specified in Section 29.13.3.3 to upgrade a two-node circular logical replication cluster.
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Let's say publisher is in node1 and subscriber is in node2 . The subscriber node2 has a subscription sub1_node1_node2 which is subscribing the changes from node1 .
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Disable all the subscriptions on node2 that are subscribing the changes from node1 by using ALTER SUBSCRIPTION ... DISABLE , e.g.: /* node2 # */ ALTER SUBSCRIPTION sub1_node1_node2 DISABLE;
@@ -42,10 +30,13 @@
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Stop the publisher server in node1 , e.g.:
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data1 stop
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Initialize data1_upgraded instance by using the required newer version.
-[29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Initialize data1_upgraded instance by using the required newer version.
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Upgrade the publisher node1 's server to the required newer version, e.g.: pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data1" --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Upgrade the publisher node1 's server to the required newer version, e.g.:
-[29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data1" --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+[29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] pg_upgrade
+        --old-datadir "/opt/PostgreSQL/postgres/17/data1"
+        --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded"
+        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
+        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Start the upgraded publisher server in node1 , e.g.: pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Start the upgraded publisher server in node1 , e.g.:
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
@@ -53,10 +44,13 @@
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Stop the subscriber server in node2 , e.g.:
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data2 stop
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Initialize data2_upgraded instance by using the required newer version.
-[29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Initialize data2_upgraded instance by using the required newer version.
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Upgrade the subscriber node2 's server to the required new version, e.g.: pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data2" --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Upgrade the subscriber node2 's server to the required new version, e.g.:
-[29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data2" --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+[29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] pg_upgrade
+       --old-datadir "/opt/PostgreSQL/postgres/17/data2"
+       --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded"
+       --old-bindir "/opt/PostgreSQL/postgres/17/bin"
+       --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Start the upgraded subscriber server in node2 , e.g.: pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] Start the upgraded subscriber server in node2 , e.g.:
 [29.13. Upgrade # / Warning / 29.13.3.1. Steps to Upgrade a Two-node Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile
@@ -78,10 +72,13 @@
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Stop the server in node1 , e.g.:
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data1 stop
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Initialize data1_upgraded instance by using the required newer version.
-[29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Initialize data1_upgraded instance by using the required newer version.
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Upgrade the node1 's server to the required newer version, e.g.: pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data1" --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Upgrade the node1 's server to the required newer version, e.g.:
-[29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data1" --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+[29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_upgrade
+        --old-datadir "/opt/PostgreSQL/postgres/17/data1"
+        --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded"
+        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
+        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Start the upgraded server in node1 , e.g.: pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Start the upgraded server in node1 , e.g.:
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
@@ -92,10 +89,13 @@
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Stop the server in node2 , e.g.:
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data2 stop
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Initialize data2_upgraded instance by using the required newer version.
-[29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Initialize data2_upgraded instance by using the required newer version.
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Upgrade the node2 's server to the required new version, e.g.: pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data2" --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Upgrade the node2 's server to the required new version, e.g.:
-[29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data2" --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+[29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_upgrade
+        --old-datadir "/opt/PostgreSQL/postgres/17/data2"
+        --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded"
+        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
+        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Start the upgraded server in node2 , e.g.: pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Start the upgraded server in node2 , e.g.:
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile
@@ -112,10 +112,13 @@
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Stop the server in node3 , e.g.:
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data3 stop
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Initialize data3_upgraded instance by using the required newer version.
-[29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Initialize data3_upgraded instance by using the required newer version.
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Upgrade the node3 's server to the required new version, e.g.: pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data3" --new-datadir "/opt/PostgreSQL/postgres/18/data3_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Upgrade the node3 's server to the required new version, e.g.:
-[29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data3" --new-datadir "/opt/PostgreSQL/postgres/18/data3_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+[29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_upgrade
+        --old-datadir "/opt/PostgreSQL/postgres/17/data3"
+        --new-datadir "/opt/PostgreSQL/postgres/18/data3_upgraded"
+        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
+        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Start the upgraded server in node3 , e.g.: pg_ctl -D /opt/PostgreSQL/data3_upgraded start -l logfile
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] Start the upgraded server in node3 , e.g.:
 [29.13. Upgrade # / Note / 29.13.3.2. Steps to Upgrade a Cascaded Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data3_upgraded start -l logfile
@@ -136,10 +139,13 @@
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Stop the server in node1 , e.g.:
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data1 stop
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Initialize data1_upgraded instance by using the required newer version.
-[29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Initialize data1_upgraded instance by using the required newer version.
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Upgrade the node1 's server to the required newer version, e.g.: pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data1" --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Upgrade the node1 's server to the required newer version, e.g.:
-[29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data1" --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+[29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] pg_upgrade
+        --old-datadir "/opt/PostgreSQL/postgres/17/data1"
+        --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded"
+        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
+        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Start the upgraded server in node1 , e.g.: pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Start the upgraded server in node1 , e.g.:
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
@@ -159,10 +165,13 @@
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Stop the server in node2 , e.g.:
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data2 stop
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Initialize data2_upgraded instance by using the required newer version.
-[29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Initialize data2_upgraded instance by using the required newer version.
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Upgrade the node2 's server to the required new version, e.g.: pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data2" --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Upgrade the node2 's server to the required new version, e.g.:
-[29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] pg_upgrade --old-datadir "/opt/PostgreSQL/postgres/17/data2" --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded" --old-bindir "/opt/PostgreSQL/postgres/17/bin" --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+[29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] pg_upgrade
+        --old-datadir "/opt/PostgreSQL/postgres/17/data2"
+        --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded"
+        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
+        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Start the upgraded server in node2 , e.g.: pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] Start the upgraded server in node2 , e.g.:
 [29.13. Upgrade # / Note / 29.13.3.3. Steps to Upgrade a Two-node Circular Logical Replication Cluster #] pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile

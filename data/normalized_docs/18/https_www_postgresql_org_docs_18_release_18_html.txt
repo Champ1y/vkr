@@ -1,17 +1,10 @@
 [E.4. Release 18 # / E.4.1. Overview #] PostgreSQL 18 contains many new features and enhancements, including:
 [E.4. Release 18 # / E.4.1. Overview #] An asynchronous I/O (AIO) subsystem that can improve performance of sequential scans, bitmap heap scans, vacuums, and other operations.
-[E.4. Release 18 # / E.4.1. Overview #] An asynchronous I/O (AIO) subsystem that can improve performance of sequential scans, bitmap heap scans, vacuums, and other operations.
-[E.4. Release 18 # / E.4.1. Overview #] pg_upgrade now retains optimizer statistics.
 [E.4. Release 18 # / E.4.1. Overview #] pg_upgrade now retains optimizer statistics.
 [E.4. Release 18 # / E.4.1. Overview #] Support for "skip scan" lookups that allow using multicolumn B-tree indexes in more cases.
-[E.4. Release 18 # / E.4.1. Overview #] Support for "skip scan" lookups that allow using multicolumn B-tree indexes in more cases.
-[E.4. Release 18 # / E.4.1. Overview #] uuidv7() function for generating timestamp-ordered UUIDs .
 [E.4. Release 18 # / E.4.1. Overview #] uuidv7() function for generating timestamp-ordered UUIDs .
 [E.4. Release 18 # / E.4.1. Overview #] Virtual generated columns that compute their values during read operations. This is now the default for generated columns.
-[E.4. Release 18 # / E.4.1. Overview #] Virtual generated columns that compute their values during read operations. This is now the default for generated columns.
 [E.4. Release 18 # / E.4.1. Overview #] OLD and NEW support for RETURNING clauses in INSERT , UPDATE , DELETE , and MERGE commands.
-[E.4. Release 18 # / E.4.1. Overview #] OLD and NEW support for RETURNING clauses in INSERT , UPDATE , DELETE , and MERGE commands.
-[E.4. Release 18 # / E.4.1. Overview #] Temporal constraints, or constraints over ranges, for PRIMARY KEY , UNIQUE , and FOREIGN KEY constraints.
 [E.4. Release 18 # / E.4.1. Overview #] Temporal constraints, or constraints over ranges, for PRIMARY KEY , UNIQUE , and FOREIGN KEY constraints.
 [E.4. Release 18 # / E.4.1. Overview #] The above items and other new features of PostgreSQL 18 are explained in more detail in the sections below.
 [E.4. Release 18 # / E.4.2. Migration to Version 18 #] A dump/restore using pg_dumpall or use of pg_upgrade or logical replication is required for those wishing to migrate data from any previous release. See Section 18.6 for general information on migrating to new major releases.
@@ -54,10 +47,7 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Automatically remove some unnecessary table self-joins (Andrey Lepikhov, Alexander Kuzmenkov, Alexander Korotkov, Alena Rybakina) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] This optimization can be disabled using server variable enable_self_join_elimination .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Convert some IN (VALUES ...) to x = ANY ... for better optimizer statistics (Alena Rybakina, Andrei Lepikhov) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Convert some IN (VALUES ...) to x = ANY ... for better optimizer statistics (Alena Rybakina, Andrei Lepikhov) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Allow transforming OR -clauses to arrays for faster index processing (Alexander Korotkov, Andrey Lepikhov) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Allow transforming OR -clauses to arrays for faster index processing (Alexander Korotkov, Andrey Lepikhov) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Speed up the processing of INTERSECT , EXCEPT , window aggregates , and view column aliases (Tom Lane, David Rowley) § § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Speed up the processing of INTERSECT , EXCEPT , window aggregates , and view column aliases (Tom Lane, David Rowley) § § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Allow the keys of SELECT DISTINCT to be internally reordered to avoid sorting (Richard Guo) § This optimization can be disabled using enable_distinct_reordering .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Allow the keys of SELECT DISTINCT to be internally reordered to avoid sorting (Richard Guo) §
@@ -69,21 +59,14 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Allow some HAVING clauses on GROUPING SETS to be pushed to WHERE clauses (Richard Guo) § § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] This allows earlier row filtering. This release also fixes some GROUPING SETS queries that used to return incorrect results.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Improve row estimates for generate_series() using numeric and timestamp values (David Rowley, Song Jinzhou) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Improve row estimates for generate_series() using numeric and timestamp values (David Rowley, Song Jinzhou) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Allow the optimizer to use Right Semi Join plans (Richard Guo) § Semi-joins are used when needing to find if there is at least one match.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Allow the optimizer to use Right Semi Join plans (Richard Guo) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Semi-joins are used when needing to find if there is at least one match.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Allow merge joins to use incremental sorts (Richard Guo) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Allow merge joins to use incremental sorts (Richard Guo) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Improve the efficiency of planning queries accessing many partitions (Ashutosh Bapat, Yuya Watari, David Rowley) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Improve the efficiency of planning queries accessing many partitions (Ashutosh Bapat, Yuya Watari, David Rowley) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Allow partitionwise joins in more cases, and reduce its memory usage (Richard Guo, Tom Lane, Ashutosh Bapat) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Allow partitionwise joins in more cases, and reduce its memory usage (Richard Guo, Tom Lane, Ashutosh Bapat) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Improve cost estimates of partition queries (Nikita Malakhov, Andrei Lepikhov) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Improve cost estimates of partition queries (Nikita Malakhov, Andrei Lepikhov) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Improve SQL -language function plan caching (Alexander Pyhalov, Tom Lane) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Improve SQL -language function plan caching (Alexander Pyhalov, Tom Lane) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Improve handling of disabled optimizer features (Robert Haas) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.1. Optimizer #] Improve handling of disabled optimizer features (Robert Haas) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.2. Indexes #] Allow skip scans of btree indexes (Peter Geoghegan) § § This allows multi-column btree indexes to be used in more cases such as when there are no restrictions on the first or early indexed columns (or there are non-equality ones), and there are useful restrictions on later indexed columns.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.2. Indexes #] Allow skip scans of btree indexes (Peter Geoghegan) § §
@@ -92,13 +75,10 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.2. Indexes #] Allow non-btree unique indexes to be used as partition keys and in materialized views (Mark Dilger) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.2. Indexes #] The index type must still support equality.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.2. Indexes #] Allow GIN indexes to be created in parallel (Tomas Vondra, Matthias van de Meent) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.2. Indexes #] Allow GIN indexes to be created in parallel (Tomas Vondra, Matthias van de Meent) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.2. Indexes #] Allow values to be sorted to speed range-type GiST and btree index builds (Bernd Helmle) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.2. Indexes #] Allow values to be sorted to speed range-type GiST and btree index builds (Bernd Helmle) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.3. General Performance #] Add an asynchronous I/O subsystem (Andres Freund, Thomas Munro, Nazir Bilal Yavuz, Melanie Plageman) § § § § § § § § § § § This feature allows backends to queue multiple read requests, which allows for more efficient sequential scans, bitmap heap scans, vacuums, etc. This is enabled by server variable io_method , with server variables io_combine_limit and io_max_combine_limit added to control it. This also enables effective_io_concurrency and maintenance_io_concurrency values greater than zero for systems without fadvise() support. The new system view pg_aios shows the file handles being used for asynchronous I/O.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.3. General Performance #] Add an asynchronous I/O subsystem (Andres Freund, Thomas Munro, Nazir Bilal Yavuz, Melanie Plageman) § § § § § § § § § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.3. General Performance #] This feature allows backends to queue multiple read requests, which allows for more efficient sequential scans, bitmap heap scans, vacuums, etc. This is enabled by server variable io_method , with server variables io_combine_limit and io_max_combine_limit added to control it. This also enables effective_io_concurrency and maintenance_io_concurrency values greater than zero for systems without fadvise() support. The new system view pg_aios shows the file handles being used for asynchronous I/O.
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.3. General Performance #] Improve the locking performance of queries that access many relations (Tomas Vondra) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.3. General Performance #] Improve the locking performance of queries that access many relations (Tomas Vondra) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.3. General Performance #] Improve the performance and reduce memory usage of hash joins and GROUP BY (David Rowley, Jeff Davis) § § § § § This also improves hash set operations used by EXCEPT , and hash lookups of subplan values.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.3. General Performance #] Improve the performance and reduce memory usage of hash joins and GROUP BY (David Rowley, Jeff Davis) § § § § §
@@ -116,8 +96,6 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Increase the logging granularity of server variable log_connections (Melanie Plageman) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] This server variable was previously only boolean, which is still supported.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add log_connections option to report the duration of connection stages (Melanie Plageman) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add log_connections option to report the duration of connection stages (Melanie Plageman) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add log_line_prefix escape %L to output the client IP address (Greg Sabino Mullane) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add log_line_prefix escape %L to output the client IP address (Greg Sabino Mullane) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add server variable log_lock_failures to log lock acquisition failures (Yuki Seino, Fujii Masao) § § Specifically it reports SELECT ... NOWAIT lock failures.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add server variable log_lock_failures to log lock acquisition failures (Yuki Seino, Fujii Masao) § §
@@ -129,8 +107,6 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add delay time reporting to VACUUM and ANALYZE (Bertrand Drouvot, Nathan Bossart) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] This information appears in the server log, the system views pg_stat_progress_vacuum and pg_stat_progress_analyze , and the output of VACUUM and ANALYZE when in VERBOSE mode; tracking must be enabled with the server variable track_cost_delay_timing .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add WAL , CPU , and average read statistics output to ANALYZE VERBOSE (Anthonin Bonnefoy) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add WAL , CPU , and average read statistics output to ANALYZE VERBOSE (Anthonin Bonnefoy) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add full WAL buffer count to VACUUM / ANALYZE (VERBOSE) and autovacuum log output (Bertrand Drouvot) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add full WAL buffer count to VACUUM / ANALYZE (VERBOSE) and autovacuum log output (Bertrand Drouvot) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add per-backend I/O statistics reporting (Bertrand Drouvot) § § The statistics are accessed via pg_stat_get_backend_io() . Per-backend I/O statistics can be cleared via pg_stat_reset_backend_stats() .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add per-backend I/O statistics reporting (Bertrand Drouvot) § §
@@ -142,14 +118,12 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add WAL I/O activity rows to pg_stat_io (Nazir Bilal Yavuz, Bertrand Drouvot, Michael Paquier) § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] This includes WAL receiver activity and a wait event for such writes.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Change server variable track_wal_io_timing to control tracking WAL timing in pg_stat_io instead of pg_stat_wal (Bertrand Drouvot) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Change server variable track_wal_io_timing to control tracking WAL timing in pg_stat_io instead of pg_stat_wal (Bertrand Drouvot) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Remove read/sync columns from pg_stat_wal (Bertrand Drouvot) § § This removes columns wal_write , wal_sync , wal_write_time , and wal_sync_time .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Remove read/sync columns from pg_stat_wal (Bertrand Drouvot) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] This removes columns wal_write , wal_sync , wal_write_time , and wal_sync_time .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add function pg_stat_get_backend_wal() to return per-backend WAL statistics (Bertrand Drouvot) § Per-backend WAL statistics can be cleared via pg_stat_reset_backend_stats() .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add function pg_stat_get_backend_wal() to return per-backend WAL statistics (Bertrand Drouvot) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Per-backend WAL statistics can be cleared via pg_stat_reset_backend_stats() .
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add function pg_ls_summariesdir() to specifically list the contents of PGDATA / pg_wal/summaries (Yushi Ogiwara) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add function pg_ls_summariesdir() to specifically list the contents of PGDATA / pg_wal/summaries (Yushi Ogiwara) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add column pg_stat_checkpointer . num_done to report the number of completed checkpoints (Anton A. Melnikov) § Columns num_timed and num_requested count both completed and skipped checkpoints.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add column pg_stat_checkpointer . num_done to report the number of completed checkpoints (Anton A. Melnikov) §
@@ -167,14 +141,9 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Adjust query id computations to group together queries using the same relation name (Michael Paquier, Sami Imseih) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] This is true even if the tables in different schemas have different column names.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add column pg_backend_memory_contexts . type to report the type of memory context (David Rowley) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add column pg_backend_memory_contexts . type to report the type of memory context (David Rowley) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add column pg_backend_memory_contexts . path to show memory context parents (Melih Mutlu) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.4. Monitoring #] Add column pg_backend_memory_contexts . path to show memory context parents (Melih Mutlu) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.5. Privileges #] Add function pg_get_acl() to retrieve database access control details (Joel Jacobson) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.5. Privileges #] Add function pg_get_acl() to retrieve database access control details (Joel Jacobson) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.5. Privileges #] Add function has_largeobject_privilege() to check large object privileges (Yugo Nagata) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.5. Privileges #] Add function has_largeobject_privilege() to check large object privileges (Yugo Nagata) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.5. Privileges #] Allow ALTER DEFAULT PRIVILEGES to define large object default privileges (Takatsuka Haruka, Yugo Nagata, Laurenz Albe) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.5. Privileges #] Allow ALTER DEFAULT PRIVILEGES to define large object default privileges (Takatsuka Haruka, Yugo Nagata, Laurenz Albe) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.5. Privileges #] Add predefined role pg_signal_autovacuum_worker (Kirill Reshke) § This allows sending signals to autovacuum workers.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.5. Privileges #] Add predefined role pg_signal_autovacuum_worker (Kirill Reshke) §
@@ -183,8 +152,6 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] Add support for the OAuth authentication method (Jacob Champion, Daniel Gustafsson, Thomas Munro) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] This adds an oauth authentication method to pg_hba.conf , libpq OAuth options, a server variable oauth_validator_libraries to load token validation libraries, and a configure flag --with-libcurl to add the required compile-time libraries.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] Add server variable ssl_tls13_ciphers to allow specification of multiple colon-separated TLSv1.3 cipher suites (Erica Zhang, Daniel Gustafsson) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] Add server variable ssl_tls13_ciphers to allow specification of multiple colon-separated TLSv1.3 cipher suites (Erica Zhang, Daniel Gustafsson) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] Change server variable ssl_groups 's default to include elliptic curve X25519 (Daniel Gustafsson, Jacob Champion) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] Change server variable ssl_groups 's default to include elliptic curve X25519 (Daniel Gustafsson, Jacob Champion) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] Rename server variable ssl_ecdh_curve to ssl_groups and allow multiple colon-separated ECDH curves to be specified (Erica Zhang, Daniel Gustafsson) § The previous name still works.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] Rename server variable ssl_ecdh_curve to ssl_groups and allow multiple colon-separated ECDH curves to be specified (Erica Zhang, Daniel Gustafsson) §
@@ -205,8 +172,6 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] Add server variable num_os_semaphores to report the required number of semaphores (Nathan Bossart) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] This is useful for operating system configuration.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] Add server variable extension_control_path to specify the location of extension control files (Peter Eisentraut, Matheus Alcantara) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.6. Server Configuration #] Add server variable extension_control_path to specify the location of extension control files (Peter Eisentraut, Matheus Alcantara) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.7. Streaming Replication and Recovery #] Allow inactive replication slots to be automatically invalidated using server variable idle_replication_slot_timeout (Nisha Moond, Bharath Rupireddy) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.7. Streaming Replication and Recovery #] Allow inactive replication slots to be automatically invalidated using server variable idle_replication_slot_timeout (Nisha Moond, Bharath Rupireddy) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.7. Streaming Replication and Recovery #] Add server variable max_active_replication_origins to control the maximum active replication origins (Euler Taveira) § This was previously controlled by max_replication_slots , but this new setting allows a higher origin count in cases where fewer slots are required.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.7. Streaming Replication and Recovery #] Add server variable max_active_replication_origins to control the maximum active replication origins (Euler Taveira) §
@@ -215,8 +180,6 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.8. Logical Replication #] Allow the values of generated columns to be logically replicated (Shubham Khanna, Vignesh C, Zhijie Hou, Shlok Kyal, Peter Smith) § § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.8. Logical Replication #] If the publication specifies a column list, all specified columns, generated and non-generated, are published. Without a specified column list, publication option publish_generated_columns controls whether generated columns are published. Previously generated columns were not replicated and the subscriber had to compute the values if possible; this is particularly useful for non- PostgreSQL subscribers which lack such a capability.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.8. Logical Replication #] Change the default CREATE SUBSCRIPTION streaming option from off to parallel (Vignesh C) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.8. Logical Replication #] Change the default CREATE SUBSCRIPTION streaming option from off to parallel (Vignesh C) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.8. Logical Replication #] Allow ALTER SUBSCRIPTION to change the replication slot's two-phase commit behavior (Hayato Kuroda, Ajin Cherian, Amit Kapila, Zhijie Hou) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.8. Logical Replication #] Allow ALTER SUBSCRIPTION to change the replication slot's two-phase commit behavior (Hayato Kuroda, Ajin Cherian, Amit Kapila, Zhijie Hou) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.8. Logical Replication #] Log conflicts while applying logical replication changes (Zhijie Hou, Nisha Moond) § § § § § Also report in new columns of pg_stat_subscription_stats .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.1. Server # / E.4.3.1.8. Logical Replication #] Log conflicts while applying logical replication changes (Zhijie Hou, Nisha Moond) § § § § §
@@ -230,7 +193,6 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands #] Allow foreign tables to be created like existing local tables (Zhang Mingli) § The syntax is CREATE FOREIGN TABLE ... LIKE .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands #] Allow foreign tables to be created like existing local tables (Zhang Mingli) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands #] The syntax is CREATE FOREIGN TABLE ... LIKE .
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands #] Allow LIKE with nondeterministic collations (Peter Eisentraut) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands #] Allow LIKE with nondeterministic collations (Peter Eisentraut) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands #] Allow text position search functions with nondeterministic collations (Peter Eisentraut) § These used to generate an error.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands #] Allow text position search functions with nondeterministic collations (Peter Eisentraut) §
@@ -260,11 +222,9 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.1. Constraints #] Store column NOT NULL specifications in pg_constraint (Álvaro Herrera, Bernd Helmle) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.1. Constraints #] This allows names to be specified for NOT NULL constraint. This also adds NOT NULL constraints to foreign tables and NOT NULL inheritance control to local tables.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.1. Constraints #] Allow ALTER TABLE to set the NOT VALID attribute of NOT NULL constraints (Rushabh Lathia, Jian He) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.1. Constraints #] Allow ALTER TABLE to set the NOT VALID attribute of NOT NULL constraints (Rushabh Lathia, Jian He) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.1. Constraints #] Allow modification of the inheritability of NOT NULL constraints (Suraj Kharage, Álvaro Herrera) § § The syntax is ALTER TABLE ... ALTER CONSTRAINT ... [NO] INHERIT .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.1. Constraints #] Allow modification of the inheritability of NOT NULL constraints (Suraj Kharage, Álvaro Herrera) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.1. Constraints #] The syntax is ALTER TABLE ... ALTER CONSTRAINT ... [NO] INHERIT .
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.1. Constraints #] Allow NOT VALID foreign key constraints on partitioned tables (Amul Sul) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.1. Constraints #] Allow NOT VALID foreign key constraints on partitioned tables (Amul Sul) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.1. Constraints #] Allow dropping of constraints ONLY on partitioned tables (Álvaro Herrera) § This was previously erroneously prohibited.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.1. Constraints #] Allow dropping of constraints ONLY on partitioned tables (Álvaro Herrera) §
@@ -273,7 +233,6 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.2. COPY #] Add REJECT_LIMIT to control the number of invalid rows COPY FROM can ignore (Atsushi Torikoshi) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.2. COPY #] This is available when ON_ERROR = 'ignore' .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.2. COPY #] Allow COPY TO to copy rows from populated materialized views (Jian He) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.2. COPY #] Allow COPY TO to copy rows from populated materialized views (Jian He) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.2. COPY #] Add COPY LOG_VERBOSITY level silent to suppress log output of ignored rows (Atsushi Torikoshi) § This new level suppresses output for discarded input rows when on_error = 'ignore' .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.2. COPY #] Add COPY LOG_VERBOSITY level silent to suppress log output of ignored rows (Atsushi Torikoshi) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.2. COPY #] This new level suppresses output for discarded input rows when on_error = 'ignore' .
@@ -281,20 +240,12 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.2. COPY #] Disallow COPY FREEZE on foreign tables (Nathan Bossart) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.2. COPY #] Previously, the COPY worked but the FREEZE was ignored, so disallow this command.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Automatically include BUFFERS output in EXPLAIN ANALYZE (Guillaume Lelarge, David Rowley) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Automatically include BUFFERS output in EXPLAIN ANALYZE (Guillaume Lelarge, David Rowley) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Add full WAL buffer count to EXPLAIN (WAL) output (Bertrand Drouvot) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Add full WAL buffer count to EXPLAIN (WAL) output (Bertrand Drouvot) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] In EXPLAIN ANALYZE , report the number of index lookups used per index scan node (Peter Geoghegan) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] In EXPLAIN ANALYZE , report the number of index lookups used per index scan node (Peter Geoghegan) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Modify EXPLAIN to output fractional row counts (Ibrar Ahmed, Ilia Evdokimov, Robert Haas) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Modify EXPLAIN to output fractional row counts (Ibrar Ahmed, Ilia Evdokimov, Robert Haas) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Add memory and disk usage details to Material , Window Aggregate , and common table expression nodes to EXPLAIN output (David Rowley, Tatsuo Ishii) § § § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Add memory and disk usage details to Material , Window Aggregate , and common table expression nodes to EXPLAIN output (David Rowley, Tatsuo Ishii) § § § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Add details about window function arguments to EXPLAIN output (Tom Lane) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Add details about window function arguments to EXPLAIN output (Tom Lane) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Add Parallel Bitmap Heap Scan worker cache statistics to EXPLAIN ANALYZE (David Geier, Heikki Linnakangas, Donghang Lin, Alena Rybakina, David Rowley) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Add Parallel Bitmap Heap Scan worker cache statistics to EXPLAIN ANALYZE (David Geier, Heikki Linnakangas, Donghang Lin, Alena Rybakina, David Rowley) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Indicate disabled nodes in EXPLAIN ANALYZE output (Robert Haas, David Rowley, Laurenz Albe) § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.2. Utility Commands # / E.4.3.2.3. EXPLAIN #] Indicate disabled nodes in EXPLAIN ANALYZE output (Robert Haas, David Rowley, Laurenz Albe) § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Improve Unicode full case mapping and conversion (Jeff Davis) § § This adds the ability to do conditional and title case mapping, and case map single characters to multiple characters.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Improve Unicode full case mapping and conversion (Jeff Davis) § §
@@ -303,19 +254,13 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Allow jsonb null values to be cast to scalar types as NULL (Tom Lane) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Previously such casts generated an error.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Add optional parameter to json{b}_strip_nulls to allow removal of null array elements (Florents Tselai) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Add optional parameter to json{b}_strip_nulls to allow removal of null array elements (Florents Tselai) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Add function array_sort() which sorts an array's first dimension (Junwang Zhao, Jian He) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Add function array_sort() which sorts an array's first dimension (Junwang Zhao, Jian He) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Add function array_reverse() which reverses an array's first dimension (Aleksander Alekseev) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Add function array_reverse() which reverses an array's first dimension (Aleksander Alekseev) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Add function reverse() to reverse bytea bytes (Aleksander Alekseev) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Add function reverse() to reverse bytea bytes (Aleksander Alekseev) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Allow casting between integer types and bytea (Aleksander Alekseev) § The integer values are stored as bytea two's complement values.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Allow casting between integer types and bytea (Aleksander Alekseev) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] The integer values are stored as bytea two's complement values.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Update Unicode data to Unicode 16.0.0 (Peter Eisentraut) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Update Unicode data to Unicode 16.0.0 (Peter Eisentraut) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Add full text search stemming for Estonian (Tom Lane) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Add full text search stemming for Estonian (Tom Lane) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Improve the XML error codes to more closely match the SQL standard (Tom Lane) § These errors are reported via SQLSTATE .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.3. Data Types #] Improve the XML error codes to more closely match the SQL standard (Tom Lane) §
@@ -324,10 +269,7 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Add function casefold() to allow for more sophisticated case-insensitive matching (Jeff Davis) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] This allows more accurate comparisons, i.e., a character can have multiple upper or lower case equivalents, or upper or lower case conversion changes the number of characters.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Allow MIN() / MAX() aggregates on arrays and composite types (Aleksander Alekseev, Marat Buharov) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Allow MIN() / MAX() aggregates on arrays and composite types (Aleksander Alekseev, Marat Buharov) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Add a WEEK option to EXTRACT() (Tom Lane) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Add a WEEK option to EXTRACT() (Tom Lane) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Improve the output EXTRACT(QUARTER ...) for negative values (Tom Lane) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Improve the output EXTRACT(QUARTER ...) for negative values (Tom Lane) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Add roman numeral support to to_number() (Hunaid Sohail) § This is accessed via the RN pattern.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Add roman numeral support to to_number() (Hunaid Sohail) §
@@ -336,21 +278,14 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Add UUID version 7 generation function uuidv7() (Andrey Borodin) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] This UUID value is temporally sortable. Function alias uuidv4() has been added to explicitly generate version 4 UUIDs.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Add functions crc32() and crc32c() to compute CRC values (Aleksander Alekseev) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Add functions crc32() and crc32c() to compute CRC values (Aleksander Alekseev) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Add math functions gamma() and lgamma() (Dean Rasheed) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Add math functions gamma() and lgamma() (Dean Rasheed) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Allow => syntax for named cursor arguments in PL/pgSQL (Pavel Stehule) § We previously only accepted := .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Allow => syntax for named cursor arguments in PL/pgSQL (Pavel Stehule) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] We previously only accepted := .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Allow regexp_match[es]() / regexp_like() / regexp_replace() / regexp_count() / regexp_instr() / regexp_substr() / regexp_split_to_table() / regexp_split_to_array() to use named arguments (Jian He) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.4. Functions #] Allow regexp_match[es]() / regexp_like() / regexp_replace() / regexp_count() / regexp_instr() / regexp_substr() / regexp_split_to_table() / regexp_split_to_array() to use named arguments (Jian He) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.5. Libpq #] Add function PQfullProtocolVersion() to report the full, including minor, protocol version number (Jacob Champion, Jelte Fennema-Nio) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.5. Libpq #] Add function PQfullProtocolVersion() to report the full, including minor, protocol version number (Jacob Champion, Jelte Fennema-Nio) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.5. Libpq #] Add libpq connection parameters and environment variables to specify the minimum and maximum acceptable protocol version for connections (Jelte Fennema-Nio) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.5. Libpq #] Add libpq connection parameters and environment variables to specify the minimum and maximum acceptable protocol version for connections (Jelte Fennema-Nio) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.5. Libpq #] Report search_path changes to the client (Alexander Kukushkin, Jelte Fennema-Nio, Tomas Vondra) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.5. Libpq #] Report search_path changes to the client (Alexander Kukushkin, Jelte Fennema-Nio, Tomas Vondra) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.5. Libpq #] Add PQtrace() output for all message types, including authentication (Jelte Fennema-Nio) § § § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.5. Libpq #] Add PQtrace() output for all message types, including authentication (Jelte Fennema-Nio) § § § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.5. Libpq #] Add libpq connection parameter sslkeylogfile which dumps out SSL key material (Abhishek Chanda, Daniel Gustafsson) § This is useful for debugging.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.5. Libpq #] Add libpq connection parameter sslkeylogfile which dumps out SSL key material (Abhishek Chanda, Daniel Gustafsson) §
@@ -367,19 +302,13 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Allow adding pipeline status to the psql prompt and add related state variables (Anthonin Bonnefoy) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] The new prompt character is %P and the new psql variables are PIPELINE_SYNC_COUNT , PIPELINE_COMMAND_COUNT , and PIPELINE_RESULT_COUNT .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Allow adding the connection service name to the psql prompt or access it via psql variable (Michael Banck) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Allow adding the connection service name to the psql prompt or access it via psql variable (Michael Banck) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Add psql option to use expanded mode on all list commands (Dean Rasheed) § Adding backslash suffix x enables this.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Add psql option to use expanded mode on all list commands (Dean Rasheed) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Adding backslash suffix x enables this.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Change psql 's \conninfo to use tabular format and include more information (Álvaro Herrera, Maiquel Grassi, Hunaid Sohail) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Change psql 's \conninfo to use tabular format and include more information (Álvaro Herrera, Maiquel Grassi, Hunaid Sohail) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Add function's leakproof indicator to psql 's \df+ , \do+ , \dAo+ , and \dC+ outputs (Yugo Nagata) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Add function's leakproof indicator to psql 's \df+ , \do+ , \dAo+ , and \dC+ outputs (Yugo Nagata) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Add access method details for partitioned relations in \dP+ (Justin Pryzby) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Add access method details for partitioned relations in \dP+ (Justin Pryzby) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Add default_version to the psql \dx extension output (Magnus Hagander) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Add default_version to the psql \dx extension output (Magnus Hagander) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Add psql variable WATCH_INTERVAL to set the default \watch wait time (Daniel Gustafsson) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.6. psql #] Add psql variable WATCH_INTERVAL to set the default \watch wait time (Daniel Gustafsson) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications #] Change initdb to default to enabling checksums (Greg Sabino Mullane) § § The new initdb option --no-data-checksums disables checksums.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications #] Change initdb to default to enabling checksums (Greg Sabino Mullane) § §
@@ -394,16 +323,10 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications #] Add pg_combinebackup option -k / --link to enable hard linking (Israel Barth Rubio, Robert Haas) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications #] Only some files can be hard linked. This should not be used if the backups will be used independently.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications #] Allow pg_verifybackup to verify tar-format backups (Amul Sul) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications #] Allow pg_verifybackup to verify tar-format backups (Amul Sul) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications #] If pg_rewind 's --source-server specifies a database name, use it in --write-recovery-conf output (Masahiko Sawada) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications #] If pg_rewind 's --source-server specifies a database name, use it in --write-recovery-conf output (Masahiko Sawada) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications #] Add pg_resetwal option --char-signedness to change the default char signedness (Masahiko Sawada) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications #] Add pg_resetwal option --char-signedness to change the default char signedness (Masahiko Sawada) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.1. pg_dump / pg_dumpall / pg_restore #] Add pg_dump option --statistics (Jeff Davis) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.1. pg_dump / pg_dumpall / pg_restore #] Add pg_dump option --statistics (Jeff Davis) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.1. pg_dump / pg_dumpall / pg_restore #] Add pg_dump and pg_dumpall option --sequence-data to dump sequence data that would normally be excluded (Nathan Bossart) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.1. pg_dump / pg_dumpall / pg_restore #] Add pg_dump and pg_dumpall option --sequence-data to dump sequence data that would normally be excluded (Nathan Bossart) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.1. pg_dump / pg_dumpall / pg_restore #] Add pg_dump , pg_dumpall , and pg_restore options --statistics-only , --no-statistics , --no-data , and --no-schema (Corey Huinker, Jeff Davis) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.1. pg_dump / pg_dumpall / pg_restore #] Add pg_dump , pg_dumpall , and pg_restore options --statistics-only , --no-statistics , --no-data , and --no-schema (Corey Huinker, Jeff Davis) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.1. pg_dump / pg_dumpall / pg_restore #] Add option --no-policies to disable row level security policy processing in pg_dump , pg_dumpall , pg_restore (Nikolay Samokhvalov) § This is useful for migrating to systems with different policies.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.1. pg_dump / pg_dumpall / pg_restore #] Add option --no-policies to disable row level security policy processing in pg_dump , pg_dumpall , pg_restore (Nikolay Samokhvalov) §
@@ -421,54 +344,35 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.2. pg_upgrade #] Add pg_upgrade option --set-char-signedness to set the default char signedness of new cluster (Masahiko Sawada) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.2. pg_upgrade #] This is to handle cases where a pre- PostgreSQL 18 cluster's default CPU signedness does not match the new cluster.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.3. Logical Replication Applications #] Add pg_createsubscriber option --all to create logical replicas for all databases (Shubham Khanna) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.3. Logical Replication Applications #] Add pg_createsubscriber option --all to create logical replicas for all databases (Shubham Khanna) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.3. Logical Replication Applications #] Add pg_createsubscriber option --clean to remove publications (Shubham Khanna) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.3. Logical Replication Applications #] Add pg_createsubscriber option --clean to remove publications (Shubham Khanna) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.3. Logical Replication Applications #] Add pg_createsubscriber option --enable-two-phase to enable prepared transactions (Shubham Khanna) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.3. Logical Replication Applications #] Add pg_createsubscriber option --enable-two-phase to enable prepared transactions (Shubham Khanna) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.3. Logical Replication Applications #] Add pg_recvlogical option --enable-failover to specify failover slots (Hayato Kuroda) § Also add option --enable-two-phase as a synonym for --two-phase , and deprecate the latter.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.3. Logical Replication Applications #] Add pg_recvlogical option --enable-failover to specify failover slots (Hayato Kuroda) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.3. Logical Replication Applications #] Also add option --enable-two-phase as a synonym for --two-phase , and deprecate the latter.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.3. Logical Replication Applications #] Allow pg_recvlogical --drop-slot to work without --dbname (Hayato Kuroda) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.7. Server Applications # / E.4.3.7.3. Logical Replication Applications #] Allow pg_recvlogical --drop-slot to work without --dbname (Hayato Kuroda) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Separate the loading and running of injection points (Michael Paquier, Heikki Linnakangas) § § Injection points can now be created, but not run, via INJECTION_POINT_LOAD() , and such injection points can be run via INJECTION_POINT_CACHED() .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Separate the loading and running of injection points (Michael Paquier, Heikki Linnakangas) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Injection points can now be created, but not run, via INJECTION_POINT_LOAD() , and such injection points can be run via INJECTION_POINT_CACHED() .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Support runtime arguments in injection points (Michael Paquier) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Support runtime arguments in injection points (Michael Paquier) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Allow inline injection point test code with IS_INJECTION_POINT_ATTACHED() (Heikki Linnakangas) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Allow inline injection point test code with IS_INJECTION_POINT_ATTACHED() (Heikki Linnakangas) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Improve the performance of processing long JSON strings using SIMD (Single Instruction Multiple Data) (David Rowley) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Improve the performance of processing long JSON strings using SIMD (Single Instruction Multiple Data) (David Rowley) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Speed up CRC32C calculations using x86 AVX -512 instructions (Raghuveer Devulapalli, Paul Amonson) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Speed up CRC32C calculations using x86 AVX -512 instructions (Raghuveer Devulapalli, Paul Amonson) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add ARM Neon and SVE CPU intrinsics for popcount (integer bit counting) (Chiranmoy Bhattacharya, Devanga Susmitha, Rama Malladi) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add ARM Neon and SVE CPU intrinsics for popcount (integer bit counting) (Chiranmoy Bhattacharya, Devanga Susmitha, Rama Malladi) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Improve the speed of numeric multiplication and division (Joel Jacobson, Dean Rasheed) § § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Improve the speed of numeric multiplication and division (Joel Jacobson, Dean Rasheed) § § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add configure option --with-libnuma to enable NUMA awareness (Jakub Wartak, Bertrand Drouvot) § § § The function pg_numa_available() reports on NUMA awareness, and system views pg_shmem_allocations_numa and pg_buffercache_numa which report on shared memory distribution across NUMA nodes.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add configure option --with-libnuma to enable NUMA awareness (Jakub Wartak, Bertrand Drouvot) § § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] The function pg_numa_available() reports on NUMA awareness, and system views pg_shmem_allocations_numa and pg_buffercache_numa which report on shared memory distribution across NUMA nodes.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add TOAST table to pg_index to allow for very large expression indexes (Nathan Bossart) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add TOAST table to pg_index to allow for very large expression indexes (Nathan Bossart) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Remove column pg_attribute . attcacheoff (David Rowley) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Remove column pg_attribute . attcacheoff (David Rowley) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add column pg_class . relallfrozen (Melanie Plageman) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add column pg_class . relallfrozen (Melanie Plageman) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add amgettreeheight , amconsistentequality , and amconsistentordering to the index access method API (Mark Dilger) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add amgettreeheight , amconsistentequality , and amconsistentordering to the index access method API (Mark Dilger) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add GiST support function stratnum() (Paul A. Jungwirth) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add GiST support function stratnum() (Paul A. Jungwirth) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Record the default CPU signedness of char in pg_controldata (Masahiko Sawada) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Record the default CPU signedness of char in pg_controldata (Masahiko Sawada) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add support for Python "Limited API " in PL/Python (Peter Eisentraut) § § This helps prevent problems caused by Python 3.x version mismatches.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add support for Python "Limited API " in PL/Python (Peter Eisentraut) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] This helps prevent problems caused by Python 3.x version mismatches.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Change the minimum supported Python version to 3.6.8 (Jacob Champion) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Change the minimum supported Python version to 3.6.8 (Jacob Champion) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Remove support for OpenSSL versions older than 1.1.1 (Daniel Gustafsson) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Remove support for OpenSSL versions older than 1.1.1 (Daniel Gustafsson) § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] If LLVM is enabled, require version 14 or later (Thomas Munro) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] If LLVM is enabled, require version 14 or later (Thomas Munro) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add macro PG_MODULE_MAGIC_EXT to allow extensions to report their name and version (Andrei Lepikhov) § This information can be access via the new function pg_get_loaded_modules() .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add macro PG_MODULE_MAGIC_EXT to allow extensions to report their name and version (Andrei Lepikhov) §
@@ -477,17 +381,12 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Document that SPI_connect() / SPI_connect_ext() always returns success ( SPI_OK_CONNECT ) (Stepan Neretin) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Errors are always reported via ereport() .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add documentation section about API and ABI compatibility (David Wheeler, Peter Eisentraut) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Add documentation section about API and ABI compatibility (David Wheeler, Peter Eisentraut) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Remove the experimental designation of Meson builds on Windows (Aleksander Alekseev) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Remove the experimental designation of Meson builds on Windows (Aleksander Alekseev) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Remove configure options --disable-spinlocks and --disable-atomics (Thomas Munro) § § Thirty-two-bit atomic operations are now required.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Remove configure options --disable-spinlocks and --disable-atomics (Thomas Munro) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Thirty-two-bit atomic operations are now required.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Remove support for the HPPA / PA-RISC architecture (Tom Lane) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.8. Source Code #] Remove support for the HPPA / PA-RISC architecture (Tom Lane) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add extension pg_logicalinspect to inspect logical snapshots (Bertrand Drouvot) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add extension pg_logicalinspect to inspect logical snapshots (Bertrand Drouvot) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add extension pg_overexplain which adds debug details to EXPLAIN output (Robert Haas) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add extension pg_overexplain which adds debug details to EXPLAIN output (Robert Haas) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add output columns to postgres_fdw_get_connections() (Hayato Kuroda, Sagar Dilip Shedge) § § § § New output column used_in_xact indicates if the foreign data wrapper is being used by a current transaction, closed indicates if it is closed, user_name indicates the user name, and remote_backend_pid indicates the remote backend process identifier.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add output columns to postgres_fdw_get_connections() (Hayato Kuroda, Sagar Dilip Shedge) § § § §
@@ -495,7 +394,6 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Allow SCRAM authentication from the client to be passed to postgres_fdw servers (Matheus Alcantara, Peter Eisentraut) § This avoids storing postgres_fdw authentication information in the database, and is enabled with the postgres_fdw use_scram_passthrough connection option. libpq uses new connection parameters scram_client_key and scram_server_key .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Allow SCRAM authentication from the client to be passed to postgres_fdw servers (Matheus Alcantara, Peter Eisentraut) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] This avoids storing postgres_fdw authentication information in the database, and is enabled with the postgres_fdw use_scram_passthrough connection option. libpq uses new connection parameters scram_client_key and scram_server_key .
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Allow SCRAM authentication from the client to be passed to dblink servers (Matheus Alcantara) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Allow SCRAM authentication from the client to be passed to dblink servers (Matheus Alcantara) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add on_error and log_verbosity options to file_fdw (Atsushi Torikoshi) § These control how file_fdw handles and reports invalid file rows.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add on_error and log_verbosity options to file_fdw (Atsushi Torikoshi) §
@@ -507,20 +405,15 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add configurable variable min_password_length to passwordcheck (Emanuele Musella, Maurizio Boriani) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] This controls the minimum password length.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Have pgbench report the number of failed, retried, or skipped transactions in per-script reports (Yugo Nagata) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Have pgbench report the number of failed, retried, or skipped transactions in per-script reports (Yugo Nagata) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add isn server variable weak to control invalid check digit acceptance (Viktor Holmberg) § This was previously only controlled by function isn_weak() .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add isn server variable weak to control invalid check digit acceptance (Viktor Holmberg) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] This was previously only controlled by function isn_weak() .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Allow values to be sorted to speed btree_gist index builds (Bernd Helmle, Andrey Borodin) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Allow values to be sorted to speed btree_gist index builds (Bernd Helmle, Andrey Borodin) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add amcheck check function gin_index_check() to verify GIN indexes (Grigory Kryachko, Heikki Linnakangas, Andrey Borodin) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add amcheck check function gin_index_check() to verify GIN indexes (Grigory Kryachko, Heikki Linnakangas, Andrey Borodin) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add functions pg_buffercache_evict_relation() and pg_buffercache_evict_all() to evict unpinned shared buffers (Nazir Bilal Yavuz) § The existing function pg_buffercache_evict() now returns the buffer flush status.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Add functions pg_buffercache_evict_relation() and pg_buffercache_evict_all() to evict unpinned shared buffers (Nazir Bilal Yavuz) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] The existing function pg_buffercache_evict() now returns the buffer flush status.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Allow extensions to install custom EXPLAIN options (Robert Haas, Sami Imseih) § § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Allow extensions to install custom EXPLAIN options (Robert Haas, Sami Imseih) § § §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Allow extensions to use the server's cumulative statistics API (Michael Paquier) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules #] Allow extensions to use the server's cumulative statistics API (Michael Paquier) § §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.1. pg_stat_statements #] Allow the queries of CREATE TABLE AS and DECLARE to be tracked by pg_stat_statements (Anthonin Bonnefoy) § They are also now assigned query ids.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.1. pg_stat_statements #] Allow the queries of CREATE TABLE AS and DECLARE to be tracked by pg_stat_statements (Anthonin Bonnefoy) §
@@ -532,14 +425,517 @@
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.1. pg_stat_statements #] Add pg_stat_statements columns to report parallel activity (Guillaume Lelarge) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.1. pg_stat_statements #] The new columns are parallel_workers_to_launch and parallel_workers_launched .
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.1. pg_stat_statements #] Add pg_stat_statements . wal_buffers_full to report full WAL buffers (Bertrand Drouvot) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.1. pg_stat_statements #] Add pg_stat_statements . wal_buffers_full to report full WAL buffers (Bertrand Drouvot) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.2. pgcrypto #] Add pgcrypto algorithms sha256crypt and sha512crypt (Bernd Helmle) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.2. pgcrypto #] Add pgcrypto algorithms sha256crypt and sha512crypt (Bernd Helmle) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.2. pgcrypto #] Add CFB mode to pgcrypto encryption and decryption (Umar Hayat) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.2. pgcrypto #] Add CFB mode to pgcrypto encryption and decryption (Umar Hayat) §
-[E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.2. pgcrypto #] Add function fips_mode() to report the server's FIPS mode (Daniel Gustafsson) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.2. pgcrypto #] Add function fips_mode() to report the server's FIPS mode (Daniel Gustafsson) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.2. pgcrypto #] Add pgcrypto server variable builtin_crypto_enabled to allow disabling builtin non- FIPS mode cryptographic functions (Daniel Gustafsson, Joe Conway) § This is useful for guaranteeing FIPS mode behavior.
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.2. pgcrypto #] Add pgcrypto server variable builtin_crypto_enabled to allow disabling builtin non- FIPS mode cryptographic functions (Daniel Gustafsson, Joe Conway) §
 [E.4. Release 18 # / E.4.3. Changes # / E.4.3.9. Additional Modules # / E.4.3.9.2. pgcrypto #] This is useful for guaranteeing FIPS mode behavior.
 [E.4. Release 18 # / E.4.4. Acknowledgments #] The following individuals (in alphabetical order) have contributed to this release as patch authors, committers, reviewers, testers, or reporters of issues.
+[E.4. Release 18 # / E.4.4. Acknowledgments #] Abhishek Chanda
+Adam Guo
+Adam Rauch
+Aidar Imamov
+Ajin Cherian
+Alastair Turner
+Alec Cozens
+Aleksander Alekseev
+Alena Rybakina
+Alex Friedman
+Alex Richman
+Alexander Alehin
+Alexander Borisov
+Alexander Korotkov
+Alexander Kozhemyakin
+Alexander Kukushkin
+Alexander Kuzmenkov
+Alexander Kuznetsov
+Alexander Lakhin
+Alexander Pyhalov
+Alexandra Wang
+Alexey Dvoichenkov
+Alexey Makhmutov
+Alexey Shishkin
+Ali Akbar
+Álvaro Herrera
+Álvaro Mongil
+Amit Kapila
+Amit Langote
+Amul Sul
+Andreas Karlsson
+Andreas Scherbaum
+Andreas Ulbrich
+Andrei Lepikhov
+Andres Freund
+Andrew
+Andrew Bille
+Andrew Dunstan
+Andrew Jackson
+Andrew Kane
+Andrew Watkins
+Andrey Borodin
+Andrey Chudnovsky
+Andrey Rachitskiy
+Andrey Rudometov
+Andy Alsup
+Andy Fan
+Anthonin Bonnefoy
+Anthony Hsu
+Anthony Leung
+Anton Melnikov
+Anton Voloshin
+Antonin Houska
+Antti Lampinen
+Arseniy Mukhin
+Artur Zakirov
+Arun Thirupathi
+Ashutosh Bapat
+Asphator
+Atsushi Torikoshi
+Avi Weinberg
+Aya Iwata
+Ayush Tiwari
+Ayush Vatsa
+Bastien Roucariès
+Ben Peachey Higdon
+Benoit Lobréau
+Bernd Helmle
+Bernd Reiß
+Bernhard Wiedemann
+Bertrand Drouvot
+Bertrand Mamasam
+Bharath Rupireddy
+Bogdan Grigorenko
+Boyu Yang
+Braulio Fdo Gonzalez
+Bruce Momjian
+Bykov Ivan
+Cameron Vogt
+Cary Huang
+Cédric Villemain
+Cees van Zeeland
+ChangAo Chen
+Chao Li
+Chapman Flack
+Charles Samborski
+Chengwen Wu
+Chengxi Sun
+Chiranmoy Bhattacharya
+Chris Gooch
+Christian Charukiewicz
+Christoph Berg
+Christophe Courtois
+Christopher Inokuchi
+Clemens Ruck
+Corey Huinker
+Craig Milhiser
+Crisp Lee
+Dagfinn Ilmari Mannsåker
+Daniel Elishakov
+Daniel Gustafsson
+Daniel Vérité
+Daniel Westermann
+Daniele Varrazzo
+Daniil Davydov
+Daria Shanina
+Dave Cramer
+Dave Page
+David Benjamin
+David Christensen
+David Fiedler
+David G. Johnston
+David Geier
+David Rowley
+David Steele
+David Wheeler
+David Zhang
+Davinder Singh
+Dean Rasheed
+Devanga Susmitha
+Devrim Gündüz
+Dian Fay
+Dilip Kumar
+Dimitrios Apostolou
+Dipesh Dhameliya
+Dmitrii Bondar
+Dmitry Dolgov
+Dmitry Koval
+Dmitry Kovalenko
+Dmitry Yurichev
+Dominique Devienne
+Donghang Lin
+Dorjpalam Batbaatar
+Drew Callahan
+Duncan Sands
+Dwayne Towell
+Dzmitry Jachnik
+Egor Chindyaskin
+Egor Rogov
+Emanuel Ionescu
+Emanuele Musella
+Emre Hasegeli
+Eric Cyr
+Erica Zhang
+Erik Nordström
+Erik Rijkers
+Erik Wienhold
+Erki Eessaar
+Ethan Mertz
+Etienne LAFARGE
+Etsuro Fujita
+Euler Taveira
+Evan Si
+Evgeniy Gorbanev
+Fabio R. Sluzala
+Fabrízio de Royes Mello
+Feike Steenbergen
+Feliphe Pozzer
+Felix
+Fire Emerald
+Florents Tselai
+Francesco Degrassi
+Frank Streitzig
+Frédéric Yhuel
+Fredrik Widlert
+Gabriele Bartolini
+Gavin Panella
+Geoff Winkless
+George MacKerron
+Gilles Darold
+Grant Gryczan
+Greg Burd
+Greg Sabino Mullane
+Greg Stark
+Grigory Kryachko
+Guillaume Lelarge
+Gunnar Morling
+Gunnar Wagner
+Gurjeet Singh
+Haifang Wang
+Hajime Matsunaga
+Hamid Akhtar
+Hannu Krosing
+Hari Krishna Sunder
+Haruka Takatsuka
+Hayato Kuroda
+Heikki Linnakangas
+Hironobu Suzuki
+Holger Jakobs
+Hubert Lubaczewski
+Hugo Dubois
+Hugo Zhang
+Hunaid Sohail
+Hywel Carver
+Ian Barwick
+Ibrar Ahmed
+Igor Gnatyuk
+Igor Korot
+Ilia Evdokimov
+Ilya Gladyshev
+Ilyasov Ian
+Imran Zaheer
+Isaac Morland
+Israel Barth Rubio
+Ivan Kush
+Jacob Brazeal
+Jacob Champion
+Jaime Casanova
+Jakob Egger
+Jakub Wartak
+James Coleman
+James Hunter
+Jan Behrens
+Japin Li
+Jason Smith
+Jayesh Dehankar
+Jeevan Chalke
+Jeff Davis
+Jehan-Guillaume de Rorthais
+Jelte Fennema-Nio
+Jian He
+Jianghua Yang
+Jiao Shuntian
+Jim Jones
+Jim Nasby
+Jingtang Zhang
+Jingzhou Fu
+Joe Conway
+Joel Jacobson
+John Hutchins
+John Naylor
+Jonathan Katz
+Jorge Solórzano
+José Villanova
+Josef Šimánek
+Joseph Koshakow
+Julien Rouhaud
+Junwang Zhao
+Justin Pryzby
+Kaido Vaikla
+Kaimeh
+Karina Litskevich
+Karthik S
+Kartyshov Ivan
+Kashif Zeeshan
+Keisuke Kuroda
+Kevin Hale Boyes
+Kevin K Biju
+Kirill Reshke
+Kirill Zdornyy
+Koen De Groote
+Koichi Suzuki
+Koki Nakamura
+Konstantin Knizhnik
+Kouhei Sutou
+Kuntal Ghosh
+Kyotaro Horiguchi
+Lakshmi Narayana Velayudam
+Lars Kanis
+Laurence Parry
+Laurenz Albe
+Lele Gaifax
+Li Yong
+Lilian Ontowhee
+Lingbin Meng
+Luboslav Špilák
+Luca Vallisa
+Lukas Fittl
+Maciek Sakrejda
+Magnus Hagander
+Mahendra Singh Thalor
+Mahendrakar Srinivasarao
+Maiquel Grassi
+Maksim Korotkov
+Maksim Melnikov
+Man Zeng
+Marat Buharov
+Marc Balmer
+Marco Nenciarini
+Marcos Pegoraro
+Marina Polyakova
+Mark Callaghan
+Mark Dilger
+Marlene Brandstaetter
+Marlene Reiterer
+Martin Rakhmanov
+Masahiko Sawada
+Masahiro Ikeda
+Masao Fujii
+Mason Mackaman
+Mat Arye
+Matheus Alcantara
+Mats Kindahl
+Matthew Gabeler-Lee
+Matthew Kim
+Matthew Sterrett
+Matthew Woodcraft
+Matthias van de Meent
+Matthieu Denais
+Maurizio Boriani
+Max Johnson
+Max Madden
+Maxim Boguk
+Maxim Orlov
+Maximilian Chrzan
+Melanie Plageman
+Melih Mutlu
+Mert Alev
+Michael Banck
+Michael Bondarenko
+Michael Christofides
+Michael Guissine
+Michael Harris
+Michaël Paquier
+Michail Nikolaev
+Michal Kleczek
+Michel Pelletier
+Mikaël Gourlaouen
+Mikhail Gribkov
+Mikhail Kot
+Milosz Chmura
+Muralikrishna Bandaru
+Murat Efendioglu
+Mutaamba Maasha
+Naeem Akhter
+Nat Makarevitch
+Nathan Bossart
+Navneet Kumar
+Nazir Bilal Yavuz
+Neil Conway
+Niccolò Fei
+Nick Davies
+Nicolas Maus
+Niek Brasa
+Nikhil Raj
+Nikita
+Nikita Kalinin
+Nikita Malakhov
+Nikolay Samokhvalov
+Nikolay Shaplov
+Nisha Moond
+Nitin Jadhav
+Nitin Motiani
+Noah Misch
+Noboru Saito
+Noriyoshi Shinoda
+Ole Peder Brandtzæg
+Oleg Sibiryakov
+Oleg Tselebrovskiy
+Olleg Samoylov
+Onder Kalaci
+Ondrej Navratil
+Patrick Stählin
+Paul Amonson
+Paul Jungwirth
+Paul Ramsey
+Pavel Borisov
+Pavel Luzanov
+Pavel Nekrasov
+Pavel Stehule
+Peter Eisentraut
+Peter Geoghegan
+Peter Mittere
+Peter Smith
+Phil Eaton
+Philipp Salvisberg
+Philippe Beaudoin
+Pierre Giraud
+Pixian Shi
+Polina Bungina
+Przemyslaw Sztoch
+Quynh Tran
+Rafia Sabih
+Raghuveer Devulapalli
+Rahila Syed
+Rama Malladi
+Ran Benita
+Ranier Vilela
+Renan Alves Fonseca
+Richard Guo
+Richard Neill
+Rintaro Ikeda
+Robert Haas
+Robert Treat
+Robins Tharakan
+Roman Zharkov
+Ronald Cruz
+Ronan Dunklau
+Rui Zhao
+Rushabh Lathia
+Rustam Allakov
+Ryo Kanbayashi
+Ryohei Takahashi
+RyotaK
+Sagar Dilip Shedge
+Salvatore Dipietro
+Sam Gabrielsson
+Sam James
+Sameer Kumar
+Sami Imseih
+Samuel Thibault
+Satyanarayana Narlapuram
+Sebastian Skalacki
+Senglee Choi
+Sergei Kornilov
+Sergey Belyashov
+Sergey Dudoladov
+Sergey Prokhorenko
+Sergey Sargsyan
+Sergey Soloviev
+Sergey Tatarintsev
+Shaik Mohammad Mujeeb
+Shawn McCoy
+Shenhao Wang
+Shihao Zhong
+Shinya Kato
+Shlok Kyal
+Shubham Khanna
+Shveta Malik
+Simon Riggs
+Smolkin Grigory
+Sofia Kopikova
+Song Hongyu
+Song Jinzhou
+Soumyadeep Chakraborty
+Sravan Kumar
+Srinath Reddy
+Stan Hu
+Stepan Neretin
+Stephen Fewer
+Stephen Frost
+Steve Chavez
+Steven Niu
+Suraj Kharage
+Sven Klemm
+Takamichi Osumi
+Takeshi Ideriha
+Tatsuo Ishii
+Ted Yu
+Tels
+Tender Wang
+Teodor Sigaev
+Thom Brown
+Thomas Baehler
+Thomas Krennwallner
+Thomas Munro
+Tim Wood
+Timur Magomedov
+Tobias Wendorff
+Todd Cook
+Tofig Aliev
+Tom Lane
+Tomas Vondra
+Tomasz Rybak
+Tomasz Szypowski
+Torsten Foertsch
+Toshi Harada
+Tristan Partin
+Triveni N
+Umar Hayat
+Vallimaharajan G
+Vasya Boytsov
+Victor Yegorov
+Vignesh C
+Viktor Holmberg
+Vinícius Abrahão
+Vinod Sridharan
+Virender Singla
+Vitaly Davydov
+Vladlen Popolitov
+Vladyslav Nebozhyn
+Walid Ibrahim
+Webbo Han
+Wenhui Qiu
+Will Mortensen
+Will Storey
+Wolfgang Walther
+Xin Zhang
+Xing Guo
+Xuneng Zhou
+Yan Chengpen
+Yang Lei
+Yaroslav Saburov
+Yaroslav Syrytsia
+Yasir Hussain
+Yasuo Honda
+Yogesh Sharma
+Yonghao Lee
+Yoran Heling
+Yu Liang
+Yugo Nagata
+Yuhang Qiu
+Yuki Seino
+Yura Sokolov
+Yurii Rashkovskii
+Yushi Ogiwara
+Yusuke Sugie
+Yuta Katsuragi
+Yuto Sasaki
+Yuuki Fujii
+Yuya Watari
+Zane Duffield
+Zeyuan Hu
+Zhang Mingli
+Zhihong Yu
+Zhijie Hou
+Zsolt Parragi

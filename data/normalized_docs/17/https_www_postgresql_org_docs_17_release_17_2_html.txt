@@ -17,7 +17,6 @@
 [E.8. Release 17.2 # / E.8.2. Changes #] Fix race conditions associated with dropping shared statistics entries (Kyotaro Horiguchi, Michael Paquier) §
 [E.8. Release 17.2 # / E.8.2. Changes #] These bugs could lead to loss of statistics data, assertion failures, or “ can only drop stats once ” errors.
 [E.8. Release 17.2 # / E.8.2. Changes #] Count index scans in contrib/bloom indexes in the statistics views, such as the pg_stat_user_indexes . idx_scan counter (Masahiro Ikeda) §
-[E.8. Release 17.2 # / E.8.2. Changes #] Count index scans in contrib/bloom indexes in the statistics views, such as the pg_stat_user_indexes . idx_scan counter (Masahiro Ikeda) §
 [E.8. Release 17.2 # / E.8.2. Changes #] Fix crash when checking to see if an index's opclass options have changed (Alexander Korotkov) § Some forms of ALTER TABLE would fail if the table has an index with non-default operator class options.
 [E.8. Release 17.2 # / E.8.2. Changes #] Fix crash when checking to see if an index's opclass options have changed (Alexander Korotkov) §
 [E.8. Release 17.2 # / E.8.2. Changes #] Some forms of ALTER TABLE would fail if the table has an index with non-default operator class options.

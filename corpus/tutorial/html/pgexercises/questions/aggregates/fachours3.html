@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PostgreSQL exercises</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <link rel="icon" href="../../img/favicon.ico" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="../../css/site.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../../lib/codemirror/lib/codemirror.css" rel="stylesheet">
+    <link href="../../lib/perfect-scrollbar/min/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="../../lib/splitter/splitter.css" rel="stylesheet">
+    <link href="../../css/jquery/jquery-ui-1.10.3.custom.min.css " rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <!-- temporary downgrade to 1.10.2 due to popup drag bugs with 1.10.3-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="../../lib/codemirror/lib/codemirror.js"></script>
+    <script src="../../lib/perfect-scrollbar/min/perfect-scrollbar.with-mousewheel.min.js"></script>
+    <script src="../../lib/codemirror/mode/sql/sql.js"></script>
+    <script src="../../js/browser.js"></script>
+    <script src="../../lib/splitter/splitter.js"></script>
+    <script src="../../js/site.js"></script>
+
+  </head>
+
+  <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+    <!-- Navbar
+      ================================================== -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../">PostgreSQL Exercises</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="divider"></li>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../gettingstarted.html">Getting Started</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Exercises<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../basic/">Basic</a></li>
+                  <li><a href="../joins/">Joins and Subqueries</a></li>
+                  <li><a href="../updates/">Modifying data</a></li>
+                  <li><a href="../aggregates/">Aggregates</a></li>
+                  <li><a href="../date/">Date</a></li>
+                  <li><a href="../string/">String</a></li>
+                  <li><a href="../recursive/">Recursive</a></li>
+                </ul>
+              </li>
+              <li><a href="../../about.html">About</a></li>
+	      <li><a href="../../options.html">Options</a></li>
+              <!--<li><a href="#">Random</a></li>-->
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+
+    <div class="container">
+
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="fachoursbymonth3.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Aggregates</a> <span class="divider">/</span></li>
+            <li class="active">Fachours3</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="nbooking.html">Next Exercise</a></p></div>
+      </div>
+
+
+    <!-- Typography
+    ================================================== -->
+    <section id="typography">
+      <div class="page-header">
+        <h1>
+	<span style="float:left">
+List the total hours booked per named facility        </span>
+	<span style="float:right">
+	<img src="../../assets/tick2.svg" class="headertick"></img>
+
+	</span>
+        <div style="clear:both"></div>
+        </h1>
+      </div>
+
+      <div class="row" style="margin-bottom:10px">
+        <div class="span8">
+          <h3>Question</h3>
+Produce a list of the total number of <i>hours</i> booked per facility, remembering that a slot lasts half an hour.  The output table should consist of the facility id, name, and hours booked, sorted by facility id.  Try formatting the hours to two decimal places.        </div>
+      </div>
+      <div class="row">
+      <div class="span12">
+      <div id=splittercontainerouter>
+        <div id="schemareminder" class="btn btn-primary" onClick="schema();">
+          <div>Schema reminder <span id="schemareminderarrow">&#x25BC;</span></div>
+        </div>
+        <div id="schemaremindercontents">
+          <img id="schemareminderimage" src="../../img/schema-horizontal.svg" alt="DB schema" width="840"></img>
+        </div>
+        <div id=splittercontainer>
+          <div id="expres" ondblclick="setOptimalExpectedResultsSize()">
+            <div style="overflow-x:hidden;">
+              <div style="display: inline-block; min-width:1000px;">
+                <h3>Expected Results</h3>
+                <div style="width:auto; display:inline-block">
+                  <table id="exprestable" class="demo table table-bordered table-striped" style="width:auto;">
+<thead><tr>
+<th>facid</th>
+<th>name</th>
+<th>Total Hours</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>Tennis Court 1</td>
+<td>660.00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Tennis Court 2</td>
+<td>639.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Badminton Court</td>
+<td>604.50</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Table Tennis</td>
+<td>415.00</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Massage Room 1</td>
+<td>702.00</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Massage Room 2</td>
+<td>114.00</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Squash Court</td>
+<td>552.00</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Snooker Table</td>
+<td>454.00</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Pool Table</td>
+<td>455.50</td>
+</tr>
+</tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div id="codediv">
+            <div id="youranswerdiv" ondblclick="setOptimalYourAnswerSize()">
+                    <h3 style="min-width:200px;">Your Answer<span id="youranswertickspan"><img src="../../assets/cross.svg" class="youranswertick"></img></span>
+                <span id="youranswerbuttons">
+                  <a id="hintbtn" class="youranswerbutton btn btn-primary btn-small" onClick="hint();">Hint</a>
+                  <a id="helpbtn" class="youranswerbutton btn btn-primary btn-small" onClick="help();" title="[Alt-h]">Help</a>
+                  <a id="querybtn" class="youranswerbutton btn btn-primary btn-small" onClick="save();">Save</a>
+                  <a id="savebtn" class="youranswerbutton btn btn-primary btn-small" onClick="query();" title="[Alt-r]">Run Query</a>
+                </span>
+              </h3>
+              <div style="clear:both;">
+  	      <div id="codewrapper">
+                  <form>
+                    <textarea id="code" name="code"></textarea>
+                  </form>
+                </div>
+  	    </div>
+            </div>
+            <div id="yourresultsdiv" ondblclick="setOptimalYourResultsSize()">
+              <div>
+                <table id="yourresultstable" class="demo table table-bordered table-striped"></table>
+                <pre id="yourresultserror"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      <div class="row" style="margin-bottom:30px">
+        <div class="span12">
+          <h3>Answers and Discussion <a id="answerbtn" class="inactive btn btn-primary btn-small" style="margin: 5px" onClick="toggleAnswers();">Show</a></h3>
+          <pre id="querydiv" class="answerdiv prettyprint lang-sql">
+select facs.facid, facs.name,
+	trim(to_char(sum(bks.slots)/2.0, '9999999999999999D99')) as "Total Hours"
+
+	from cd.bookings bks
+	inner join cd.facilities facs
+		on facs.facid = bks.facid
+	group by facs.facid, facs.name
+order by facs.facid;          </pre>
+          <div class="row">
+            <div class="span8 answerdiv">
+<p>There's a few little pieces of interest in this question.  Firstly, you can see that our aggregation works just fine when we join to another table on a 1:1 basis.  Also note that we group by both <span class="code">facs.facid</span> and <span class="code">facs.name</span>.  This is might seem odd: after all, since <span class="code">facid</span> is the primary key of the <span class="code">facilities</span> table, each <span class="code">facid</span> has exactly one <span class="code">name</span>, and grouping by both fields is the same as grouping by <span class="code">facid</span> alone.  In fact, you'll find that if you remove <span class="code">facs.name</span> from the <span class="code">GROUP BY</span> clause, the query works just fine: Postgres works out that this 1:1 mapping exists, and doesn't insist that we group by both columns.</p>
+
+<p>Unfortunately, depending on which database system we use, validation might not be so smart, and may not realise that the mapping is strictly 1:1.  That being the case, if there were multiple <span class="code">name</span>s for each <span class="code">facid</span> and we hadn't grouped by <span class="code">name</span>, the DBMS would have to choose between multiple (equally valid) choices for the <span class="code">name</span>.  Since this is invalid, the database system will insist that we group by both fields.  In general, I recommend grouping by all columns you don't have an aggregate function on: this will ensure better cross-platform compatibility.</p>
+
+<p>Next up is the division.  Those of you familiar with MySQL may be aware that integer divisions are automatically cast to floats.  Postgres is a little more traditional in this respect, and expects you to tell it if you want a floating point division.  You can do that easily in this case by dividing by 2.0 rather than 2.</p>
+
+<p>Finally, let's take a look at formatting.  The <span class="code">TO_CHAR</span> function converts values to character strings.  It takes a formatting string, which we specify as (up to) lots of numbers before the decimal place, decimal place, and two numbers after the decimal place.  The output of this function can be prepended with a space, which is why we include the outer <span class="code">TRIM</span> function.</p>            </div>
+          </div>
+        </div>
+      </div>
+      <!--Navigation-->
+      <div class="row">
+        <div class="span4"><p class="bfnav"><a href="fachoursbymonth3.html">Previous Exercise</a></p></div>
+        <div class="span4" align="center">
+          <ul class="breadcrumb">
+            <li><a href="../../">Home</a> <span class="divider">/</span></li>
+            <li><a href="./">Aggregates</a> <span class="divider">/</span></li>
+            <li class="active">Fachours3</li>
+          </ul>
+        </div>
+        <div class="span4"><p class="bfnav" align="right"><a href="nbooking.html">Next Exercise</a></p></div>
+      </div>
+    </div><!-- /container -->
+      <div id="hint" title="Hint">
+Remember that in Postgres, dividing two integers together causes an integer division.  Here you want a floating point division.  For formatting the hours, take a look at the <span class="code">to_char</span> function, remembering to <span class="code">trim</span> any leftover whitespace
+      </div>
+      <div id="help" title="Help">
+        <div id="helpcontent">
+	  <h4>Keyboard shortcuts:</h4>
+	  <ul>
+	    <li><b>Alt-h</b>: Show/Hide Help menu
+	    <li><b>Alt-r</b>: Run query
+	    <li><b>Alt-x</b>: Run selected text as query
+	    <li><b>Alt-s</b>: Run query by cursor (delimited by whitespace/semi-colon)
+	  </ul>
+	  <hr />
+	  <h4>Other hints:</h4>
+	    <ul>
+	      <li>You can double click on each of the panes of Expected Result/Your answer to quickly resize them.
+	      <li>If you have trouble remembering the database schema, you can leave this popup open while you work on your answer.
+	      <li>Don't forget to use the hint button if you're stuck!
+	    </ul>
+	  <hr />
+	</div>
+      </div>
+
+
+    <script>
+        var App = {};
+	App.sorted = 1;
+	App.pageID = "3B453BF9-ABD5-4C48-8EB5-3627FF8AAAA5";
+        App.writeable = 0;
+        App.tableToReturn = "";
+	App.jsonResults = sortJSONResults([["0","Tennis Court 1","660.00"],["1","Tennis Court 2","639.00"],["2","Badminton Court","604.50"],["3","Table Tennis","415.00"],["4","Massage Room 1","702.00"],["5","Massage Room 2","114.00"],["6","Squash Court","552.00"],["7","Snooker Table","454.00"],["8","Pool Table","455.50"]]);
+    </script>
+
+    <script src="../../js/prettify/run_prettify.js?lang=sql"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45602502-1', 'pgexercises.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+</html>

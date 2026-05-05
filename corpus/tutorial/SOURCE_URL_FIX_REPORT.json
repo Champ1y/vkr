@@ -1,0 +1,585 @@
+{
+  "tutorial_root": "/home/arz/Desktop/RAG_postgres/corpus/tutorial",
+  "processed_root": "/home/arz/Desktop/RAG_postgres/corpus/tutorial/processed_html",
+  "mode": "apply",
+  "processed_md_files": 95,
+  "changed": 0,
+  "skipped_existing": 95,
+  "errors": 0,
+  "missing_source_url_after": 0,
+  "ready": true,
+  "backup_root": "/home/arz/Desktop/RAG_postgres/corpus/tutorial/_backup_before_source_url_fix",
+  "items": [
+    {
+      "path": "processed_html/pgexercises/gettingstarted.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/gettingstarted.html"
+    },
+    {
+      "path": "processed_html/pgexercises/index.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/index.html"
+    },
+    {
+      "path": "processed_html/pgexercises/options.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/options.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/classify.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/classify.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/count.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/count.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/count2.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/count2.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/count3.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/count3.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/countmembers.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/countmembers.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/fachours.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours1a.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/fachours1a.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours2.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/fachours2.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours3.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/fachours3.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachours4.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/fachours4.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachoursbymonth.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/fachoursbymonth.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachoursbymonth2.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/fachoursbymonth2.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/fachoursbymonth3.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/fachoursbymonth3.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/facrev.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/facrev.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/facrev2.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/facrev2.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/facrev3.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/facrev3.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/index.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/index.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/members1.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/members1.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/nbooking.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/nbooking.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/nummembers.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/nummembers.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/payback.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/payback.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/rankmembers.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/rankmembers.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/aggregates/rollingavg.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/aggregates/rollingavg.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/agg.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/agg.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/agg2.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/agg2.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/classify.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/classify.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/date.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/date.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/index.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/index.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/selectall.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/selectall.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/selectspecific.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/selectspecific.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/union.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/union.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/unique.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/unique.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/where.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where2.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/where2.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where3.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/where3.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/basic/where4.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/basic/where4.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/bookingspermonth.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/date/bookingspermonth.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/daysinmonth.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/date/daysinmonth.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/daysremaining.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/date/daysremaining.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/endtimes.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/date/endtimes.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/index.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/date/index.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/interval.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/date/interval.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/series.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/date/series.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/timestamp.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/date/timestamp.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/date/utilisationpermonth.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/date/utilisationpermonth.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/index.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/joins/index.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/self.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/joins/self.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/self2.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/joins/self2.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/simplejoin.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/joins/simplejoin.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/simplejoin2.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/joins/simplejoin2.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/sub.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/joins/sub.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/threejoin2.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/joins/threejoin2.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/joins/tjsub.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/joins/tjsub.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/recursive/getdownward.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/recursive/getdownward.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/recursive/getupwardall.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/recursive/getupwardall.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/recursive/index.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/recursive/index.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/case.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/string/case.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/index.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/string/index.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/like.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/string/like.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/pad.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/string/pad.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/reg.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/string/reg.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/string/translate.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/string/translate.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/deletewh.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/updates/deletewh.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/deletewh2.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/updates/deletewh2.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/index.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/updates/index.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/insert.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/updates/insert.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/insert2.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/updates/insert2.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/insert3.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/updates/insert3.html"
+    },
+    {
+      "path": "processed_html/pgexercises/questions/updates/updatemultiple.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://pgexercises.com/questions/updates/updatemultiple.html"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Binary_Replication_Tutorial.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Binary_Replication_Tutorial"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Client_Authentication.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Client_Authentication"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Detailed_installation_guides.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Detailed_installation_guides"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Disk_Usage.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Disk_Usage"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/FAQ.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/FAQ"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Fixing_Sequences.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Fixing_Sequences"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Frequently_Asked_Questions.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Frequently_Asked_Questions"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Index_Maintenance.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Index_Maintenance"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Lock_Monitoring.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Lock_Monitoring"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Logging_Difficult_Queries.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Logging_Difficult_Queries"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Monitoring.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Monitoring"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Number_Of_Database_Connections.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Number_Of_Database_Connections"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Performance_Analysis_Tools.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Performance_Analysis_Tools"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Pgpass.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Pgpass"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Planner_Statistics.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Planner_Statistics"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Simple_Configuration_Recommendation.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Simple_Configuration_Recommendation"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Slow_Query_Questions.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Slow_Query_Questions"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Streaming_Replication.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Streaming_Replication"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Tuning_Your_PostgreSQL_Server.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Using_EXPLAIN.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Using_EXPLAIN"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/VACUUM_FULL.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/VACUUM_FULL"
+    },
+    {
+      "path": "processed_html/postgres_wiki_whitelist/wiki/Warm_Standby.md",
+      "action": "skip",
+      "reason": "source_url_already_exists",
+      "source_url": "https://wiki.postgresql.org/wiki/Warm_Standby"
+    }
+  ],
+  "missing_after": []
+}
