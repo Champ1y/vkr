@@ -31,34 +31,47 @@ def make_candidate(
     )
 
 
-def test_answer_mode_drops_supplementary() -> None:
+def test_short_mode_drops_supplementary() -> None:
     reranker = RerankingService()
     candidates = [
         make_candidate(corpus_type="official", url="https://www.postgresql.org/docs/16/sql-select.html", distance=0.2, text="official text"),
         make_candidate(corpus_type="supplementary", url="supplementary://16/guide.md", distance=0.1, text="supp text"),
     ]
 
-    ranked = reranker.rerank(question="select", candidates=candidates, mode="answer", extended_mode=False, top_k=5)
+    ranked = reranker.rerank(question="select", candidates=candidates, answer_mode="short", top_k=5)
 
     assert ranked
     assert all(item.corpus_type == "official" for item in ranked)
 
 
-def test_tutorial_extended_can_include_supplementary_after_official() -> None:
+def test_detailed_mode_drops_supplementary() -> None:
+    reranker = RerankingService()
+    candidates = [
+        make_candidate(corpus_type="official", url="https://www.postgresql.org/docs/16/sql-select.html", distance=0.2, text="official text"),
+        make_candidate(corpus_type="supplementary", url="supplementary://16/guide.md", distance=0.1, text="supp text"),
+    ]
+
+    ranked = reranker.rerank(question="select", candidates=candidates, answer_mode="detailed", top_k=5)
+
+    assert ranked
+    assert all(item.corpus_type == "official" for item in ranked)
+
+
+def test_tutorial_can_include_supplementary_after_official() -> None:
     reranker = RerankingService()
     candidates = [
         make_candidate(corpus_type="official", url="https://www.postgresql.org/docs/16/logical-replication.html", distance=0.3, text="official logical replication"),
         make_candidate(corpus_type="supplementary", url="supplementary://16/guide.md", distance=0.1, text="step by step supplementary"),
     ]
 
-    ranked = reranker.rerank(question="logical replication", candidates=candidates, mode="tutorial", extended_mode=True, top_k=5)
+    ranked = reranker.rerank(question="logical replication", candidates=candidates, answer_mode="tutorial", top_k=5)
 
     assert len(ranked) == 2
     assert ranked[0].corpus_type == "official"
     assert ranked[1].corpus_type == "supplementary"
 
 
-def test_tutorial_extended_reserves_slot_for_supplementary() -> None:
+def test_tutorial_reserves_slot_for_supplementary() -> None:
     reranker = RerankingService()
     candidates = [
         make_candidate(
@@ -78,40 +91,11 @@ def test_tutorial_extended_reserves_slot_for_supplementary() -> None:
         )
     )
 
-    ranked = reranker.rerank(question="guide", candidates=candidates, mode="tutorial", extended_mode=True, top_k=4)
+    ranked = reranker.rerank(question="guide", candidates=candidates, answer_mode="tutorial", top_k=4)
 
     assert len(ranked) == 4
     assert ranked[0].corpus_type == "official"
     assert any(item.corpus_type == "supplementary" for item in ranked)
-
-
-def test_tutorial_without_extended_excludes_supplementary() -> None:
-    reranker = RerankingService()
-    candidates = [
-        make_candidate(
-            corpus_type="official",
-            url="https://www.postgresql.org/docs/16/logical-replication.html",
-            distance=0.25,
-            text="Logical replication uses publication and subscription.",
-        ),
-        make_candidate(
-            corpus_type="supplementary",
-            url="supplementary://16/guide.md",
-            distance=0.01,
-            text="Some supplementary guide",
-        ),
-    ]
-
-    ranked = reranker.rerank(
-        question="Объясни logical replication",
-        candidates=candidates,
-        mode="tutorial",
-        extended_mode=False,
-        top_k=5,
-    )
-
-    assert ranked
-    assert all(item.corpus_type == "official" for item in ranked)
 
 
 def test_logical_replication_query_penalizes_unrelated_mechanisms() -> None:
@@ -140,8 +124,7 @@ def test_logical_replication_query_penalizes_unrelated_mechanisms() -> None:
     ranked = reranker.rerank(
         question="Можно ли logical replication from standby servers в PostgreSQL 16?",
         candidates=candidates,
-        mode="answer",
-        extended_mode=False,
+        answer_mode="short",
         top_k=2,
     )
 
@@ -174,8 +157,7 @@ def test_logical_replication_parameters_prefers_config_over_basebackup() -> None
     ranked = reranker.rerank(
         question="Какие параметры проверить для logical replication в PostgreSQL 16?",
         candidates=candidates,
-        mode="answer",
-        extended_mode=False,
+        answer_mode="short",
         top_k=2,
     )
 
@@ -220,8 +202,7 @@ def test_tutorial_procedural_prefers_publication_subscription_steps() -> None:
     ranked = reranker.rerank(
         question="Объясни для новичка, как добавить новую таблицу в существующую logical replication.",
         candidates=candidates,
-        mode="tutorial",
-        extended_mode=False,
+        answer_mode="tutorial",
         top_k=3,
     )
 

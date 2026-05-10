@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Developer FAQ/ru - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"b4f3b0d6313c82ffcdf3748a","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Developer_FAQ/ru","wgTitle":"Developer FAQ/ru","wgCurRevisionId":25812,"wgRevisionId":25812,"wgArticleId":2694,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["FAQ","Russian"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Developer_FAQ/ru","wgRelevantArticleId":2694,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Developer_FAQ_ru rootpage-Developer_FAQ skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Developer FAQ/ru</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ><span class="subpages">&lt; <a href="/wiki/Developer_FAQ" title="Developer FAQ">Developer FAQ</a></span></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Вовлечение"><span class="tocnumber">1</span> <span class="toctext">Вовлечение</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Как_мне_влиться_в_разработку_PostgreSQL?"><span class="tocnumber">1.1</span> <span class="toctext">Как мне влиться в разработку PostgreSQL?</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Как_мне_скачать_или_обновить_текущее_дерево?"><span class="tocnumber">1.2</span> <span class="toctext">Как мне скачать или обновить текущее дерево?</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Какая_среда_необходима_для_разработки?"><span class="tocnumber">1.3</span> <span class="toctext">Какая среда необходима для разработки?</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Где_применить_свой_талант?"><span class="tocnumber">1.4</span> <span class="toctext">Где применить свой талант?</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Как_мне_влиться_в_разработку_сайта_PostgreSQL?"><span class="tocnumber">1.5</span> <span class="toctext">Как мне влиться в разработку сайта PostgreSQL?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7"><a href="#Средства_разработки_и_помощь"><span class="tocnumber">2</span> <span class="toctext">Средства разработки и помощь</span></a>
+<ul>
+<li class="toclevel-2 tocsection-8"><a href="#Как_организован_исходный_код?"><span class="tocnumber">2.1</span> <span class="toctext">Как организован исходный код?</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Какие_инструменты_доступны_разработчикам?"><span class="tocnumber">2.2</span> <span class="toctext">Какие инструменты доступны разработчикам?</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Какой_стиль_форматирования_используется_для_исходников_PostgreSQL?"><span class="tocnumber">2.3</span> <span class="toctext">Какой стиль форматирования используется для исходников PostgreSQL?</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Существует_ли_диаграмма_системного_каталога?"><span class="tocnumber">2.4</span> <span class="toctext">Существует ли диаграмма системного каталога?</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Какие_книги_стоит_прочесть_разработчику?"><span class="tocnumber">2.5</span> <span class="toctext">Какие книги стоит прочесть разработчику?</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Как_собрать_конфигурацию?"><span class="tocnumber">2.6</span> <span class="toctext">Как собрать конфигурацию?</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Как_добавить_новую_платформу?"><span class="tocnumber">2.7</span> <span class="toctext">Как добавить новую платформу?</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Почему_не_используются_потоки,_сырые_диски,_асинхронный_ввод/вывод_и_другие_новомодные_штучки?"><span class="tocnumber">2.8</span> <span class="toctext">Почему не используются потоки, сырые диски, асинхронный ввод/вывод и другие новомодные штучки?</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Как_управляется_репозиторий?"><span class="tocnumber">2.9</span> <span class="toctext">Как управляется репозиторий?</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Где_взять_копию_SQL-стандартов?"><span class="tocnumber">2.10</span> <span class="toctext">Где взять копию SQL-стандартов?</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#У_кого_просить_технической_помощи?"><span class="tocnumber">2.11</span> <span class="toctext">У кого просить технической помощи?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-19"><a href="#Процесс_разработки"><span class="tocnumber">3</span> <span class="toctext">Процесс разработки</span></a>
+<ul>
+<li class="toclevel-2 tocsection-20"><a href="#Что_делать_после_того,_как_сделан_выбор?"><span class="tocnumber">3.1</span> <span class="toctext">Что делать после того, как сделан выбор?</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#Как_протестировать_изменения?"><span class="tocnumber">3.2</span> <span class="toctext">Как протестировать изменения?</span></a>
+<ul>
+<li class="toclevel-3 tocsection-22"><a href="#Основные_системные_тесты"><span class="tocnumber">3.2.1</span> <span class="toctext">Основные системные тесты</span></a></li>
+<li class="toclevel-3 tocsection-23"><a href="#Среда_времени_исполнения"><span class="tocnumber">3.2.2</span> <span class="toctext">Среда времени исполнения</span></a></li>
+<li class="toclevel-3 tocsection-24"><a href="#Регрессионное_тестирование"><span class="tocnumber">3.2.3</span> <span class="toctext">Регрессионное тестирование</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#Изоляционные_тесты"><span class="tocnumber">3.2.4</span> <span class="toctext">Изоляционные тесты</span></a></li>
+<li class="toclevel-3 tocsection-26"><a href="#Valgrind"><span class="tocnumber">3.2.5</span> <span class="toctext">Valgrind</span></a></li>
+<li class="toclevel-3 tocsection-27"><a href="#Другие_тесты_времени_исполнения"><span class="tocnumber">3.2.6</span> <span class="toctext">Другие тесты времени исполнения</span></a></li>
+<li class="toclevel-3 tocsection-28"><a href="#Как_на_счет_юнит-тестов,_статического_анализа_кода,_проверки_моделей...?"><span class="tocnumber">3.2.7</span> <span class="toctext">Как на счет юнит-тестов, статического анализа кода, проверки моделей...?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-29"><a href="#Я_разработал_патч,_что_дальше?"><span class="tocnumber">3.3</span> <span class="toctext">Я разработал патч, что дальше?</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#Что_происходит_дальше_с_моим_патчем?"><span class="tocnumber">3.4</span> <span class="toctext">Что происходит дальше с моим патчем?</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#Могу_ли_я_помочь_с_проверкой_патчей?"><span class="tocnumber">3.5</span> <span class="toctext">Могу ли я помочь с проверкой патчей?</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#Необходимо_ли_передавать_авторские_права?"><span class="tocnumber">3.6</span> <span class="toctext">Необходимо ли передавать авторские права?</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#Могу_ли_я_добавить_свое_авторство?"><span class="tocnumber">3.7</span> <span class="toctext">Могу ли я добавить свое авторство?</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#Требует_ли_лицензия_PostgreSQL_сохранять_уведомление_об_авторских_правах_неизменными?"><span class="tocnumber">3.8</span> <span class="toctext">Требует ли лицензия PostgreSQL сохранять уведомление об авторских правах неизменными?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-35"><a href="#Технические_вопросы"><span class="tocnumber">4</span> <span class="toctext">Технические вопросы</span></a>
+<ul>
+<li class="toclevel-2 tocsection-36"><a href="#Как_более_эффективно_работать_с_данными_системных_каталогов_в_коде?"><span class="tocnumber">4.1</span> <span class="toctext">Как более эффективно работать с данными системных каталогов в коде?</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#Почему_имена_таблиц,_колонок,_типов,_функций,_представлений_иногда_возвращаются_как_Name_или_NameData,_а_иногда_как_char_*?"><span class="tocnumber">4.2</span> <span class="toctext">Почему имена таблиц, колонок, типов, функций, представлений иногда возвращаются как Name или NameData, а иногда как char *?</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#Почему_используются_Node_и_List_для_создания_структур_данных?"><span class="tocnumber">4.3</span> <span class="toctext">Почему используются Node и List для создания структур данных?</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#Только_что_добавил_поле_в_структуру,_что_еще_необходимо_предпринять?"><span class="tocnumber">4.4</span> <span class="toctext">Только что добавил поле в структуру, что еще необходимо предпринять?</span></a></li>
+<li class="toclevel-2 tocsection-40"><a href="#Почему_используются_функции_palloc()_и_pfree()_при_работе_с_памятью?"><span class="tocnumber">4.5</span> <span class="toctext">Почему используются функции palloc() и pfree() при работе с памятью?</span></a></li>
+<li class="toclevel-2 tocsection-41"><a href="#Что_такое_ereport()?"><span class="tocnumber">4.6</span> <span class="toctext">Что такое ereport()?</span></a></li>
+<li class="toclevel-2 tocsection-42"><a href="#Что_такое_CommandCounterIncrement()?"><span class="tocnumber">4.7</span> <span class="toctext">Что такое CommandCounterIncrement()?</span></a></li>
+<li class="toclevel-2 tocsection-43"><a href="#Мне_необходимо_внести_изменения_в_парсер_запросов._Можете_кратко_осветить_файлы,_относящиеся_к_парсеру?"><span class="tocnumber">4.8</span> <span class="toctext">Мне необходимо внести изменения в парсер запросов. Можете кратко осветить файлы, относящиеся к парсеру?</span></a></li>
+<li class="toclevel-2 tocsection-44"><a href="#У_меня_возник_конфликт_shift/reduce,_который_непонятно_как_решить"><span class="tocnumber">4.9</span> <span class="toctext">У меня возник конфликт <i>shift/reduce</i>, который непонятно как решить</span></a></li>
+<li class="toclevel-2 tocsection-45"><a href="#Как_посмотреть_план_запроса_или_разобранный_запрос?"><span class="tocnumber">4.10</span> <span class="toctext">Как посмотреть план запроса или разобранный запрос?</span></a></li>
+<li class="toclevel-2 tocsection-46"><a href="#Что_предлагается_для_отладки?"><span class="tocnumber">4.11</span> <span class="toctext">Что предлагается для отладки?</span></a>
+<ul>
+<li class="toclevel-3 tocsection-47"><a href="#Время_компиляции"><span class="tocnumber">4.11.1</span> <span class="toctext">Время компиляции</span></a></li>
+<li class="toclevel-3 tocsection-48"><a href="#Время_исполнения"><span class="tocnumber">4.11.2</span> <span class="toctext">Время исполнения</span></a></li>
+<li class="toclevel-3 tocsection-49"><a href="#gdb"><span class="tocnumber">4.11.3</span> <span class="toctext">gdb</span></a></li>
+<li class="toclevel-3 tocsection-50"><a href="#Автономный_рабочий_процесс"><span class="tocnumber">4.11.4</span> <span class="toctext">Автономный рабочий процесс</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-51"><a href="#Поломал_initdb,_как_его_отладить?"><span class="tocnumber">4.12</span> <span class="toctext">Поломал <i>initdb</i>, как его отладить?</span></a></li>
+<li class="toclevel-2 tocsection-52"><a href="#Профилирование_производительности,_утилизация_CPU"><span class="tocnumber">4.13</span> <span class="toctext">Профилирование производительности, утилизация <i>CPU</i></span></a></li>
+<li class="toclevel-2 tocsection-53"><a href="#Анализ_используемой_памяти_рабочего_процесса"><span class="tocnumber">4.14</span> <span class="toctext">Анализ используемой памяти рабочего процесса</span></a></li>
+<li class="toclevel-2 tocsection-54"><a href="#gdb/MSVC_точки_трассировки"><span class="tocnumber">4.15</span> <span class="toctext"><i>gdb/MSVC</i> точки трассировки</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span id=".D0.92.D0.BE.D0.B2.D0.BB.D0.B5.D1.87.D0.B5.D0.BD.D0.B8.D0.B5"></span><span class="mw-headline" id="Вовлечение">Вовлечение</span></h2>
+<h3><span id=".D0.9A.D0.B0.D0.BA_.D0.BC.D0.BD.D0.B5_.D0.B2.D0.BB.D0.B8.D1.82.D1.8C.D1.81.D1.8F_.D0.B2_.D1.80.D0.B0.D0.B7.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D1.83_PostgreSQL.3F"></span><span class="mw-headline" id="Как_мне_влиться_в_разработку_PostgreSQL?">Как мне влиться в разработку PostgreSQL?</span></h3>
+<p>Скачайте исходный код, изучите его. См. раздел <a href="#How_do_I_download.2Fupdate_the_current_source_tree.3F"> скачать дерево исходников</a>.
+</p><p>Подпишитесь на <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/">рассылку pgsql-hackers</a> (или просто "hackers"). Это именно то место, где обсуждаются вопросы разработки между ведущими разработчиками и членами core team.
+</p>
+<h3><span id=".D0.9A.D0.B0.D0.BA_.D0.BC.D0.BD.D0.B5_.D1.81.D0.BA.D0.B0.D1.87.D0.B0.D1.82.D1.8C_.D0.B8.D0.BB.D0.B8_.D0.BE.D0.B1.D0.BD.D0.BE.D0.B2.D0.B8.D1.82.D1.8C_.D1.82.D0.B5.D0.BA.D1.83.D1.89.D0.B5.D0.B5_.D0.B4.D0.B5.D1.80.D0.B5.D0.B2.D0.BE.3F"></span><span class="mw-headline" id="Как_мне_скачать_или_обновить_текущее_дерево?">Как мне скачать или обновить текущее дерево?</span></h3>
+<p>Существует несколько путей получения исходников. Для того, чтобы просто посмотреть исходный код, можно скачать свежий снимок с <a rel="nofollow" class="external text" href="ftp://ftp.postgresql.org/pub/snapshot/">ftp</a>.
+</p><p>Для разработки на постоянной основе можно воспользоваться анонимным доступом к системе управления кодом. Сейчас дерево находится под управлением <a rel="nofollow" class="external text" href="https://git-scm.com/book/ru/v1/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git">git</a>. Подробнее о том, как получить исходные коды из <i>git</i>, см. <a rel="nofollow" class="external text" href="http://developer.postgresql.org/pgdocs/postgres/git.html">developer.postgresql.org/pgdocs/postgres/git.html</a> и <a href="/index.php?title=Working_with_Git/ru&amp;action=edit&amp;redlink=1" class="new" title="Working with Git/ru (page does not exist)">Working_with_Git/ru</a>.
+</p>
+<h3><span id=".D0.9A.D0.B0.D0.BA.D0.B0.D1.8F_.D1.81.D1.80.D0.B5.D0.B4.D0.B0_.D0.BD.D0.B5.D0.BE.D0.B1.D1.85.D0.BE.D0.B4.D0.B8.D0.BC.D0.B0_.D0.B4.D0.BB.D1.8F_.D1.80.D0.B0.D0.B7.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D0.B8.3F"></span><span class="mw-headline" id="Какая_среда_необходима_для_разработки?">Какая среда необходима для разработки?</span></h3>
+<p><i>PostgreSQL</i> в основном разрабатывается на языке <i>C</i>. Исходный код совместим с основными популярными <i>Unix</i> и <i>Windows</i>-платформами (XP, Windows 2000 и выше).
+</p><p>Большинство разработчиков под <i>Unix-подобные</i> ОС используют инструментарий свободного ПО: <a rel="nofollow" class="external text" href="http://gcc.gnu.org">GCC</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/make/make.html">GNU Make</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/gdb/gdb.html">GDB</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/autoconf/">Autoconf</a> и т.д. Если приходилось сталкиваться с разработкой свободного ПО ранее, то, скорее всего, вам эти инструменты уже известны. Разработчики под <i>Windows</i> могут использовать <a rel="nofollow" class="external text" href="http://www.mingw.org/">MinGW</a>, хотя разработка в основном происходит с помощью среды <i>Microsoft Visual Studio</i> и связанных с нею средств.
+</p><p>Полный перечень необходимого для сборки <i>PostgreSQL</i> ПО можно найти в <a rel="nofollow" class="external text" href="http://developer.postgresql.org/pgdocs/postgres/install-requirements.html">инструкциях по установке</a>.
+</p><p>Если приходится часто пересобирать исходники, то удобно использовать флаг конфигурации <i>--enable-depend</i>. Благодаря этому флагу, при изменении заголовочного C-файла, все зависимости пересобираются автоматически.
+</p><p>С помощью <i>src/Makefile.custom</i> можно установить переменные окружения, например, <i>CUSTOM_COPT</i>, которые будут использованы при компиляции.
+</p>
+<h3><span id=".D0.93.D0.B4.D0.B5_.D0.BF.D1.80.D0.B8.D0.BC.D0.B5.D0.BD.D0.B8.D1.82.D1.8C_.D1.81.D0.B2.D0.BE.D0.B9_.D1.82.D0.B0.D0.BB.D0.B0.D0.BD.D1.82.3F"></span><span class="mw-headline" id="Где_применить_свой_талант?">Где применить свой талант?</span></h3>
+<p>Список нереализованных функциональностей отражен в <a href="/wiki/Todo" title="Todo">Todo</a>.
+</p><p>Его можно изучить, обращаясь к <a rel="nofollow" class="external text" href="http://archives.postgresql.org/">архивам</a>, SQL-стандартам и рекомендованным материалам, см. <a href="#Какие_книги_стоит_прочесть_разработчику?">#Какие книги стоит прочесть разработчику?</a>.
+</p>
+<h3><span id=".D0.9A.D0.B0.D0.BA_.D0.BC.D0.BD.D0.B5_.D0.B2.D0.BB.D0.B8.D1.82.D1.8C.D1.81.D1.8F_.D0.B2_.D1.80.D0.B0.D0.B7.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D1.83_.D1.81.D0.B0.D0.B9.D1.82.D0.B0_PostgreSQL.3F"></span><span class="mw-headline" id="Как_мне_влиться_в_разработку_сайта_PostgreSQL?">Как мне влиться в разработку сайта PostgreSQL?</span></h3>
+<p>Разработка сайта <i>PostgreSQL</i> обсуждается в <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-www/">рассылке pgsql-www</a> и курируется <a href="/wiki/Infrastructure_team" title="Infrastructure team"> командой инфраструктуры</a>. Исходный код сайта <a rel="nofollow" class="external text" href="http://postgresql.org">postgresql.org</a> храниться в <a rel="nofollow" class="external text" href="http://git.postgresql.org/gitweb/?p=pgweb.git;a=summary">Git-репозитории</a>.
+</p>
+<h2><span id=".D0.A1.D1.80.D0.B5.D0.B4.D1.81.D1.82.D0.B2.D0.B0_.D1.80.D0.B0.D0.B7.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D0.B8_.D0.B8_.D0.BF.D0.BE.D0.BC.D0.BE.D1.89.D1.8C"></span><span class="mw-headline" id="Средства_разработки_и_помощь">Средства разработки и помощь</span></h2>
+<h3><span id=".D0.9A.D0.B0.D0.BA_.D0.BE.D1.80.D0.B3.D0.B0.D0.BD.D0.B8.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD_.D0.B8.D1.81.D1.85.D0.BE.D0.B4.D0.BD.D1.8B.D0.B9_.D0.BA.D0.BE.D0.B4.3F"></span><span class="mw-headline" id="Как_организован_исходный_код?">Как организован исходный код?</span></h3>
+<p>Если перейти по ссылке <a rel="nofollow" class="external text" href="http://www.postgresql.org/developer/backend/">Как PostgreSQL обрабатывает запросы</a>, можно увидеть разделы с описанием потоков данных, схему компонентов сервера и описание области распределенной памяти. Можно посмотреть подробное описание, нажав на интересующем элементе. Нажатие на названии директории приведет к просмотру исходного кода, реализующего функцию выбранного компонента. В некоторых директориях есть файлы <i>README</i>, которые описывают функции модуля. Файлы можно посмотреть в браузере.
+</p><p>Помимо документации, расположенной в исходниках, можно изучить презентации и документы, касающиеся обсуждения кода, например, <a rel="nofollow" class="external text" href="http://www.postgresql.org/developer/coding">www.postgresql.org/developer/coding</a>. Очень хорошая презентация размещена на ресурсе <a rel="nofollow" class="external text" href="http://neilconway.org/talks/hacking/">Нила Конвея (Neil Conway)</a>
+</p>
+<h3><span id=".D0.9A.D0.B0.D0.BA.D0.B8.D0.B5_.D0.B8.D0.BD.D1.81.D1.82.D1.80.D1.83.D0.BC.D0.B5.D0.BD.D1.82.D1.8B_.D0.B4.D0.BE.D1.81.D1.82.D1.83.D0.BF.D0.BD.D1.8B_.D1.80.D0.B0.D0.B7.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D1.87.D0.B8.D0.BA.D0.B0.D0.BC.3F"></span><span class="mw-headline" id="Какие_инструменты_доступны_разработчикам?">Какие инструменты доступны разработчикам?</span></h3>
+<p><b>Первое</b> -  файлы директории <i>src/tools</i> предназначены для разработчиков.
+</p>
+<pre>   RELEASE_CHANGES изменения необходимо проводить для каждого релиза
+   ccsym           содержит стандартные определения компилятора
+   copyright       отражает авторские права
+</pre>
+<pre>   entab           преобразует пробелы в знаки табуляции, используется <i>pgindent</i>
+   find_static     ищет статические функции
+   find_typedef    ищет определения типов в исходных кодах
+   find_badmacros  ищет макросы, неверно использующие фигурные скобки
+   fsync           скрипт, предоставляющий сведения о стоимости синхронизации кэша с диском
+   make_ctags      создает 'tags'-файлы для редактора <i>vi</i> в каждой директории
+   make_diff       создает <i>*.orig</i> и разностные файлы исходников
+   make_etags      создает 'etags'-файлы редактора <i>emacs</i>
+   make_keywords   сравнивает наши ключевые слова со стандартом <i>SQL'92</i>
+   make_mkid       создает <i>mkid</i> ID-файлы
+   git_changelog   используется для генерации перечня изменений в рамках релиза
+   pginclude       скрипты для добавления/удаления включаемых файлов
+   pgindent        форматирует отступы исходных файлов
+   pgtest          полуавтоматическая система сборки
+   thread          скрипт тестирования потока
+</pre>
+<p><i>src/include/catalog</i> содержит:
+</p>
+<pre>   unused_oids     скрипт поиска неиспользуемых <i>OID'</i>ов в системном каталоге
+   duplicate_oids  ищет дубли <i>OID'</i>ов в системном каталоге
+</pre>
+<p><i>tools/backend</i> описан выше.
+</p><p><b>Второе</b> - удобно использовать редактор с подсветкой, это позволяет посмотреть определение функций, например, перейти в них, чтобы увидеть реализацию, а затем вернуться в исходную точку кода. Большинство редакторов это поддерживают с помощью <i>tags</i> или <i>etags</i>-файлов.
+</p><p><b>Третье</b> - необходимо скачать <a rel="nofollow" class="external text" href="ftp://ftp.gnu.org/gnu/idutils/">id-utils</a>
+</p><p>Запустив <i>tools/make_mkid</i> можно создать архив идентификаторов, которые позже можно с легкостью запросить.
+</p><p>Некоторые разработчики используют <a rel="nofollow" class="external text" href="http://cscope.sf.net/">cscope</a>. Другие - <a rel="nofollow" class="external text" href="http://webglimpse.net/">glimpse</a>.
+</p><p><i>tools/make_diff</i> содержит утилиты для создания патч-файлов, которые позже можно накатить на дистрибутив. Инструмент генерирует контекст-зависимые разностные файлы.
+</p><p><i>pgindent</i> используется для приведения исходников к принятому стилю кода, и обычно запускается в конце этапа разработки. См. более подробно в разделе <a href="#Какой_стиль_форматирования_используется_для_исходников_PostgreSQL?">#Какой стиль форматирования используется для исходников PostgreSQL?</a>.
+</p><p><i>pginclude</i> содержит набор скриптов для добавления <i>#include</i> во включаемые файлы с одновременным удалением лишних директив.
+</p><p>При добавлении встроенных объектов, таких как, типы или функции, им необходимо присвоить <i>OID</i> 'ы. По нашим соглашениям все назначенные руками <i>OID</i> 'ы лежат в пределах от 1 до 9999. На уровне отдельных системных каталогов объекты будут иметь уникальные идентификаторы независимо от выбранного вручную, но для прозрачности мы требуем, чтобы в рамках всей системы выбирались уникальные значения.
+Скрипт <i>unused_oids</i>, расположенный в каталоге <i>src/include/catalog </i>, выявляет неиспользованные <i>OID</i> 'ы. Чтобы назначить новый <i>OID</i>, возьмите любой свободный согласно <i>unused_oids</i>, а в придачу можно взять еще и соседний для логически связанных объектов. Скрипт <i>duplicate_oids</i> может помочь в выявлении коллизий <i>OID</i> 'ов при ошибке.
+</p>
+<h3><span id=".D0.9A.D0.B0.D0.BA.D0.BE.D0.B9_.D1.81.D1.82.D0.B8.D0.BB.D1.8C_.D1.84.D0.BE.D1.80.D0.BC.D0.B0.D1.82.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D1.8F_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D1.83.D0.B5.D1.82.D1.81.D1.8F_.D0.B4.D0.BB.D1.8F_.D0.B8.D1.81.D1.85.D0.BE.D0.B4.D0.BD.D0.B8.D0.BA.D0.BE.D0.B2_PostgreSQL.3F"></span><span class="mw-headline" id="Какой_стиль_форматирования_используется_для_исходников_PostgreSQL?">Какой стиль форматирования используется для исходников PostgreSQL?</span></h3>
+<p>Мы используем стиль <i>BSD</i>, при котором каждый уровень кода идет с отступом в один знак табуляции, состоящей из четырех пробелов. Необходимо настроить редактор или вьювер для отображения табуляции в четыре пробела.
+</p><p>В директории <a rel="nofollow" class="external text" href="http://git.postgresql.org/gitweb/?p=postgresql.git;a=tree;f=src/tools/editors;hb=HEAD">src/tools/editors</a> расположены примеры настроек редакторов, например, <i>emacs</i> и <i>xemacs</i>, для упрощения настройки стиля, принятого для <i>PostgreSQL</i>.
+</p><p>Для <i>vim</i> лучше установить <a rel="nofollow" class="external text" href="http://vimawesome.com/plugin/localvimrc">localvimrc</a> с помощью <i>Pathogen</i> или <i>Vundle</i>, затем добавить файл <i>.lvimrc</i> в директорию вашего <i>PostgreSQL</i>, содержащий:
+</p>
+<pre>" Works best with vimrc entries:
+"   let g:localvimrc_sandbox = 0
+"   let g:localvimrc_whitelist = "/path/to/postgres/tree/.*"
+"
+if g:localvimrc_sourced_once_for_file
+        finish
+endif
+au BufNewFile,BufRead *.[ch] setlocal expandtab autoindent cindent tabstop=4 shiftwidth=4 cinoptions="(0,t0"
+</pre>
+<p>Для <i>less</i> или <i>more</i>, установите <code>-x4</code> для правильного отображения отступов.
+</p><p><i>pgindent</i> проведет форматирование кода, установив флаги согласно вашей ОС. <i>pgindent</i> запускается для всех исходных файлов непосредственно перед бета-тестированием. Утилита автоматически форматирует все файлы для обеспечения целостности. Блоки комментариев, где требуется особое форматирование, необходимо начинать с <code>/*------</code>. Такие комментарии пропускаются при обработке.
+</p><p>Также см. раздел документации про <a rel="nofollow" class="external text" href="http://developer.postgresql.org/pgdocs/postgres/source-format.html">форматирование</a>. <a rel="nofollow" class="external text" href="http://archives.postgresql.org/message-id/1221125165.5637.12.camel@abbas-laptop">Тема</a> затрагивает вопрос именования переменных и функций.
+</p><p>Чтобы понять, почему мы переживаем на этот счет, прочитайте <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/Coding_conventions">статью</a>, описывающую ценность целостного стиля кода.
+</p>
+<h3><span id=".D0.A1.D1.83.D1.89.D0.B5.D1.81.D1.82.D0.B2.D1.83.D0.B5.D1.82_.D0.BB.D0.B8_.D0.B4.D0.B8.D0.B0.D0.B3.D1.80.D0.B0.D0.BC.D0.BC.D0.B0_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D0.BD.D0.BE.D0.B3.D0.BE_.D0.BA.D0.B0.D1.82.D0.B0.D0.BB.D0.BE.D0.B3.D0.B0.3F"></span><span class="mw-headline" id="Существует_ли_диаграмма_системного_каталога?">Существует ли диаграмма системного каталога?</span></h3>
+<p>Да, как минимум <a rel="nofollow" class="external text" href="http://dalibo.org/_media/articles/catalog.png">здесь</a>.
+</p>
+<h3><span id=".D0.9A.D0.B0.D0.BA.D0.B8.D0.B5_.D0.BA.D0.BD.D0.B8.D0.B3.D0.B8_.D1.81.D1.82.D0.BE.D0.B8.D1.82_.D0.BF.D1.80.D0.BE.D1.87.D0.B5.D1.81.D1.82.D1.8C_.D1.80.D0.B0.D0.B7.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D1.87.D0.B8.D0.BA.D1.83.3F"></span><span class="mw-headline" id="Какие_книги_стоит_прочесть_разработчику?">Какие книги стоит прочесть разработчику?</span></h3>
+<p>Есть несколько отличных книг:
+</p>
+<ul><li>An Introduction to Database Systems, by C.J. Date, Addison, Wesley</li>
+<li>A Guide to the SQL Standard, by C.J. Date, et. al, Addison, Wesley</li>
+<li>Fundamentals of Database Systems, by Elmasri and Navathe</li>
+<li>Transaction Processing, by Jim Gray and Andreas Reuter, Morgan Kaufmann</li>
+<li>Transactional Information Systems, by Gerhard Weikum and Gottfried Vossen, Morgan Kaufmann</li></ul>
+<h3><span id=".D0.9A.D0.B0.D0.BA_.D1.81.D0.BE.D0.B1.D1.80.D0.B0.D1.82.D1.8C_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D1.8E.3F"></span><span class="mw-headline" id="Как_собрать_конфигурацию?">Как собрать конфигурацию?</span></h3>
+<p>Файлы <i>configure</i> и <i>configure.in</i> относятся к GNU-пакету <i>autoconf</i>. <i>Configure</i> позволяет протестировать различные возможности ОС, и выставить значения переменных, которые в свою очередь будут проверены программами на <i>C</i> и <i>Makefiles</i>. <i>Autoconf</i> устанавливается на сервере <i>PostgreSQL</i>. Чтобы добавить флаги в <i>configure</i>, нужно отредактировать <i>configure.in</i>, затем запустить <i>autoconf</i> для генерации непосредственно <i>configure</i>.
+</p><p>При запуске <i>configure</i> производятся различные проверки возможностей ОС, данные сохраняются в <i>config.status</i> и <i>config.cache</i>, изменяются <i>*.in</i>-файлы . Например, если существует файл <i>Makefile.in</i>, <i>configure</i> генерирует <i>Makefile</i>, содержащий замененные значения для параметров @var@, найденных <i>configure</i>.
+</p><p>Если требуется отредактировать файлы, убедитесь, что вы не правите созданные утилитой <i>configure</i> файлы. Отредактируйте <i>*.in</i>-файлы, затем повторно запустите <i>configure</i>, чтобы получить конечные. Если запустить <i>make distclean</i> в директории верхнего уровня, все файлы, созданные <i>configure</i> будут удалены, это позволит получить исходный дистрибутив.
+</p>
+<h3><span id=".D0.9A.D0.B0.D0.BA_.D0.B4.D0.BE.D0.B1.D0.B0.D0.B2.D0.B8.D1.82.D1.8C_.D0.BD.D0.BE.D0.B2.D1.83.D1.8E_.D0.BF.D0.BB.D0.B0.D1.82.D1.84.D0.BE.D1.80.D0.BC.D1.83.3F"></span><span class="mw-headline" id="Как_добавить_новую_платформу?">Как добавить новую платформу?</span></h3>
+<p>Чтобы добавить поддержку новой платформы, необходимо провести изменения в нескольких кусках кода.
+</p><p><b>Первое</b> - начните с директории <i>src/template</i>. Добавьте соответствующую новой ОС запись. Также воспользуйтесь <i>src/config.guess</i>, чтобы добавить новую ОС в <i>src/template/.similar</i>. Нет нужды указывать точную версию ОС. При проверке <i>configure</i> ищет точную версию, и, если не находит, то использует запись без точной версии. Отредактируйте <i>src/configure.in</i>, добавив новую ОС. Подробности см. выше. Затем выполните <i>autoconf</i>, и/или поправьте <i>src/configure</i>.
+</p><p><b>Второе</b> - проверьте <i>src/include/port</i> и добавьте файл для новой ОС, содержащий соответствующие значения. Возможно, уже существует реализация для желаемого <i>CPU</i> в <i>src/include/storage/s_lock.h</i>. Директория <i>src/makefiles</i> содержит файлы для обработки утилитой <i>Makefile</i> особых платформа-зависимых действий. Директория <i>backend/port</i> пригодится в случае, если требуются особые файлы для новой ОС.
+</p>
+<h3><span id=".D0.9F.D0.BE.D1.87.D0.B5.D0.BC.D1.83_.D0.BD.D0.B5_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D1.83.D1.8E.D1.82.D1.81.D1.8F_.D0.BF.D0.BE.D1.82.D0.BE.D0.BA.D0.B8.2C_.D1.81.D1.8B.D1.80.D1.8B.D0.B5_.D0.B4.D0.B8.D1.81.D0.BA.D0.B8.2C_.D0.B0.D1.81.D0.B8.D0.BD.D1.85.D1.80.D0.BE.D0.BD.D0.BD.D1.8B.D0.B9_.D0.B2.D0.B2.D0.BE.D0.B4.2F.D0.B2.D1.8B.D0.B2.D0.BE.D0.B4_.D0.B8_.D0.B4.D1.80.D1.83.D0.B3.D0.B8.D0.B5_.D0.BD.D0.BE.D0.B2.D0.BE.D0.BC.D0.BE.D0.B4.D0.BD.D1.8B.D0.B5_.D1.88.D1.82.D1.83.D1.87.D0.BA.D0.B8.3F"></span><span class="mw-headline" id="Почему_не_используются_потоки,_сырые_диски,_асинхронный_ввод/вывод_и_другие_новомодные_штучки?">Почему не используются потоки, сырые диски, асинхронный ввод/вывод и другие новомодные штучки?</span></h3>
+<p>Всегда существует соблазн, использовать крутые фичи по мере их появления. Мы этому соблазну не поддаемся.
+</p><p><b>Первое</b> - мы поддерживаем больше 15 ОС, потому каждая новая фича должна себя хорошо зарекомендовать по надежности, прежде чем мы обратимся к ней.
+<b>Второе</b> - большинство новомодных штучек не ведут к значительным улучшениям.
+<b>Третье</b> - они часто имеют подводные камни, например, снижение надежности или дополнительные издержки в разработке.
+Таким образом, наша стратегия - выжидание состояния стабилизации новой технологии, и только затем уже тестирование возможного значительного прироста в производительности и других плюшек.
+</p><p>Например, сейчас не используются потоки вместо много-процессной архитектуры потому что:
+</p>
+<ul><li>Исторически потоки слабо поддерживаются и содержат много ошибок.</li>
+<li>Ошибка одного потока может повредить другие, если они относятся к единому процессу.</li>
+<li>Улучшение производительности при использовании потоков слабо соотносится с учетом необходимого времени запуска.</li>
+<li>Код рабочего процесса значительно усложняется.</li>
+<li>При завершении рабочего процесса высвобождение ресурсов ОС проходит значительно быстрее и чище, обеспечивая защиту от утечек памяти и файловых дескрипторов.</li>
+<li>Отладка потоков значительно сложнее нежели отладка рабочих процессов, а снимки памяти менее полезны.</li>
+<li>Выделение общих блоков памяти на чтение и использование разделяемых буферов позволяет процессам быть более эффективными по отношению к потокам.</li>
+<li>Периодическое создание и уничтожение процессов позволяет избегать фрагментации памяти, что позволяет избегать сложности управления ею по отношению к <i>длинным</i> процессам.</li></ul>
+<p>Должен ли отдельный рабочий процесс использовать много-поточность при множестве процессоров в рамках одного запроса - отдельный вопрос, здесь не освещаемый.
+</p><p>В целом мы не выступаем против новых штучек. Скорее мы относимся с осторожностью в их отношении. <a href="/wiki/Todo" title="Todo"> TODO</a> часто содержит ссылки на обсуждения касаемо аргументации в этой области.
+</p>
+<h3><span id=".D0.9A.D0.B0.D0.BA_.D1.83.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D1.8F.D0.B5.D1.82.D1.81.D1.8F_.D1.80.D0.B5.D0.BF.D0.BE.D0.B7.D0.B8.D1.82.D0.BE.D1.80.D0.B8.D0.B9.3F"></span><span class="mw-headline" id="Как_управляется_репозиторий?">Как управляется репозиторий?</span></h3>
+<p>Более подробно о стратегии ветвления и разработки патчей см. <a href="/wiki/Working_with_Git#Using_Back_Branches" title="Working with Git"> Использование обратного ветвления</a> и <a href="/wiki/Committing_with_Git" title="Committing with Git"> Фиксация изменений в Git</a>.
+</p>
+<h3><span id=".D0.93.D0.B4.D0.B5_.D0.B2.D0.B7.D1.8F.D1.82.D1.8C_.D0.BA.D0.BE.D0.BF.D0.B8.D1.8E_SQL-.D1.81.D1.82.D0.B0.D0.BD.D0.B4.D0.B0.D1.80.D1.82.D0.BE.D0.B2.3F"></span><span class="mw-headline" id="Где_взять_копию_SQL-стандартов?">Где взять копию SQL-стандартов?</span></h3>
+<p>Мы рекомендуем купить их у <a rel="nofollow" class="external text" href="http://www.iso.ch/">ISO</a> или <a rel="nofollow" class="external text" href="http://www.ansi.org">ANSI</a>. Поискать ISO/ANSI 9075. Предложение от <i>ANSI</i> немного дешевле, при том же содержимом, что у <i>ISO</i>.
+</p><p>Покупка официальной копии стоит денег, поэтому большинство разработчиков обращаются к доступным в <i>Internet</i> черновым версиям. Некоторые из них:
+</p>
+<ul><li>SQL-92 <a rel="nofollow" class="external free" href="http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt">http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt</a></li>
+<li>SQL:1999 <a rel="nofollow" class="external free" href="http://web.cs.ualberta.ca/~yuan/courses/db_readings/ansi-iso-9075-2-1999.pdf">http://web.cs.ualberta.ca/~yuan/courses/db_readings/ansi-iso-9075-2-1999.pdf</a></li>
+<li>SQL:2003 <a rel="nofollow" class="external free" href="http://www.wiscorp.com/sql_2003_standard.zip">http://www.wiscorp.com/sql_2003_standard.zip</a></li>
+<li>SQL:201x (предварительный) <a rel="nofollow" class="external free" href="http://www.wiscorp.com/sql20nn.zip">http://www.wiscorp.com/sql20nn.zip</a></li></ul>
+<p>Документация <i>PostgreSQL</i> содержит информацию по <a rel="nofollow" class="external text" href="http://developer.postgresql.org/pgdocs/postgres/features.html">соответствию стандартам</a>.
+</p><p>Еще несколько ресурсов по SQL-стандартам:
+</p>
+<ul><li><a rel="nofollow" class="external free" href="http://troels.arvin.dk/db/rdbms/links/#standards">http://troels.arvin.dk/db/rdbms/links/#standards</a></li>
+<li><a rel="nofollow" class="external free" href="http://www.wiscorp.com/SQLStandards.html">http://www.wiscorp.com/SQLStandards.html</a></li>
+<li><a rel="nofollow" class="external free" href="http://www.contrib.andrew.cmu.edu/~shadow/sql.html#syntax">http://www.contrib.andrew.cmu.edu/~shadow/sql.html#syntax</a> (SQL-92)</li>
+<li><a rel="nofollow" class="external free" href="http://dbs.uni-leipzig.de/en/lokal/standards.pdf">http://dbs.uni-leipzig.de/en/lokal/standards.pdf</a> (статья)</li></ul>
+<p>Обратите внимание! Совсем необязательно иметь доступную копию SQL-стандартов, чтобы быть эффективным участником разработки <i>PostgreSQL</i>. Толкование стандарта сложно и требует годы опыта. Стандарт не затрагивает такие вопросы, как индексирование, например, а это хороший кусок разработки, выходящий за его рамки.
+</p>
+<h3><span id=".D0.A3_.D0.BA.D0.BE.D0.B3.D0.BE_.D0.BF.D1.80.D0.BE.D1.81.D0.B8.D1.82.D1.8C_.D1.82.D0.B5.D1.85.D0.BD.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.BE.D0.B9_.D0.BF.D0.BE.D0.BC.D0.BE.D1.89.D0.B8.3F"></span><span class="mw-headline" id="У_кого_просить_технической_помощи?">У кого просить технической помощи?</span></h3>
+<p>Многие вопросы технического характера имеют ответы в рассылке <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/">pgsql-hackers</a>.
+</p><p>Если ответ не был найден, то не проблема - задайте его в рассылке.
+</p><p>Ведущие разработчики также задают вопросы, включая те, что касаются новых доработок по IRC-каналу <i>#postgresql</i> на irc.freenode.net.
+</p>
+<h2><span id=".D0.9F.D1.80.D0.BE.D1.86.D0.B5.D1.81.D1.81_.D1.80.D0.B0.D0.B7.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D0.B8"></span><span class="mw-headline" id="Процесс_разработки">Процесс разработки</span></h2>
+<h3><span id=".D0.A7.D1.82.D0.BE_.D0.B4.D0.B5.D0.BB.D0.B0.D1.82.D1.8C_.D0.BF.D0.BE.D1.81.D0.BB.D0.B5_.D1.82.D0.BE.D0.B3.D0.BE.2C_.D0.BA.D0.B0.D0.BA_.D1.81.D0.B4.D0.B5.D0.BB.D0.B0.D0.BD_.D0.B2.D1.8B.D0.B1.D0.BE.D1.80.3F"></span><span class="mw-headline" id="Что_делать_после_того,_как_сделан_выбор?">Что делать после того, как сделан выбор?</span></h3>
+<p>Отправьте электронное письмо на <i>pgsql-hackers</i> с описанием плана разработки. Предполагается, что доработка существенна. Работать без связи с внешним миром крайне не рекомендовано, тк. кто-то другой уже может выполнять аналогичные работы из <a href="/wiki/Todo" title="Todo"> TODO</a>, либо поставленная в <a href="/wiki/Todo" title="Todo"> TODO</a> задача может быть неверно понята. В письме укажите планируемый подход внутренней реализации, все изменения, затрагивающие пользователя, например, новый синтаксис, и тд. Для сложных патчей важно получить обратную связь от сообщества до начала работы. Иначе ваш патч в итоге могут отклонить. Если компания спонсирует доработку, стоит прочесть <a rel="nofollow" class="external text" href="http://momjian.us/main/writings/pgsql/company_contributions/">эту статью</a>.
+</p><p>Наша очередь патчей организована с помощью веб-приложения <a href="/wiki/CommitFest" class="mw-redirect" title="CommitFest">CommitFest</a> на ресурсе <a rel="nofollow" class="external text" href="http://commitfest.postgresql.org">commitfest.postgresql.org</a>.
+</p>
+<h3><span id=".D0.9A.D0.B0.D0.BA_.D0.BF.D1.80.D0.BE.D1.82.D0.B5.D1.81.D1.82.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D1.82.D1.8C_.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F.3F"></span><span class="mw-headline" id="Как_протестировать_изменения?">Как протестировать изменения?</span></h3>
+<h4><span id=".D0.9E.D1.81.D0.BD.D0.BE.D0.B2.D0.BD.D1.8B.D0.B5_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D0.BD.D1.8B.D0.B5_.D1.82.D0.B5.D1.81.D1.82.D1.8B"></span><span class="mw-headline" id="Основные_системные_тесты">Основные системные тесты</span></h4>
+<p>Сначала нужно протестировать код, собрав его из последней версии исходников базы, и убедившись, что компилятор не кидает предупреждения.
+</p><p>Хорошая практика - устанавливать флаг <i>--enable-cassert</i> для <i>configure</i>. Включенные утверждения упрощают отладку ошибок за счет проверок на сегментацию и повреждение памяти.
+</p><p>Далее необходимо выполнить тесты времени исполнения с помощью <i>psql</i>.
+</p>
+<h4><span id=".D0.A1.D1.80.D0.B5.D0.B4.D0.B0_.D0.B2.D1.80.D0.B5.D0.BC.D0.B5.D0.BD.D0.B8_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F"></span><span class="mw-headline" id="Среда_времени_исполнения">Среда времени исполнения</span></h4>
+<p>Чтобы протестировать проведенные изменения <i>PostgreSQL</i>, установите <i>PostgreSQL</i> в локальную директорию, например, свою домашнюю. Это позволит обойти возможные конфликты с глобально установленной версией. Используйте опцию <i>--prefix=</i>, чтобы указать расположение установленной базы. Опция <i>--with-pgport</i> позволит указать специфический порт. При запуске нового экземпляра базы убедитесь в том, что используются нужные бинарники. В зависимости от вашей ОС необходимо установить переменные окружения, такие как <i>PATH</i> и <i>LD_LIBRARY_PATH</i> (для большинства Linux/Unix-подобных систем). Также полезная установка <i>PGDATA</i>.
+</p><p>Чтобы автоматизировать установку значений, можно воспользоваться <a rel="nofollow" class="external text" href="https://github.com/gregs1104/peg">peg</a> скриптами Грега Смита (Greg Smith), или <a rel="nofollow" class="external text" href="https://github.com/PGBuildFarm/client-code">скриптами</a>, используемыми <a rel="nofollow" class="external text" href="http://buildfarm.postgresql.org/">buildfarm</a>.
+</p>
+<h4><span id=".D0.A0.D0.B5.D0.B3.D1.80.D0.B5.D1.81.D1.81.D0.B8.D0.BE.D0.BD.D0.BD.D0.BE.D0.B5_.D1.82.D0.B5.D1.81.D1.82.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5"></span><span class="mw-headline" id="Регрессионное_тестирование">Регрессионное тестирование</span></h4>
+<p>Следующим шагом необходимо протестировать изменения на существующих регрессионных тестах. Для запуска тестов выполните <i>make check</i> в корневой директории исходников. Если тесты валятся, необходимо понять почему?.
+</p><p>Регрессионные тесты и управляющие программы расположены в директории <i>src/test/regress</i>.
+</p><p>Управляющая программа - <i>pg_regress</i>, но обычно она запускается косвенно через <i>make</i>.
+</p><p>Может пригодиться конструкция <i>PG_REGRESS_DIFF_OPTS=-ud make check</i> для получения более читаемых объединенных разностных файлов, что удобнее работы с контекстными файлами <i>pg_regress</i>.
+</p><p>Если поведение изменено осознанно, регрессионные тесты могут поломаться, что вовсе не означает наличие регрессии. В этом случае регрессионные тесты необходимо изменить.
+</p>
+<h4><span id=".D0.98.D0.B7.D0.BE.D0.BB.D1.8F.D1.86.D0.B8.D0.BE.D0.BD.D0.BD.D1.8B.D0.B5_.D1.82.D0.B5.D1.81.D1.82.D1.8B"></span><span class="mw-headline" id="Изоляционные_тесты">Изоляционные тесты</span></h4>
+<p><i>PostgreSQL</i> содержит так называемый <i>изоляционный тестер</i> для тестирования конкурентных логик, расположенный в директории <i>src/test/isolation</i>. Инструмент поддерживает множественные подключения и полезен, когда требуется воспроизвести ошибки или протестировать новые логики, связанные с конкурентными запросами.
+</p>
+<h4><span class="mw-headline" id="Valgrind">Valgrind</span></h4>
+<p>Чтобы воспользоваться <a rel="nofollow" class="external text" href="http://valgrind.org/">Valgrind</a>, необходимо поправить <i>src/include/pg_config_manual.h</i>, установив директиву <i>#define USE_VALGRIND</i>. Затем запустить <i>postmaster</i> под <i>Valgrind</i> с необходимым уровнем подавления. По использованию также см. <a href="/wiki/Valgrind" title="Valgrind">Valgrind</a>.
+</p>
+<h4><span id=".D0.94.D1.80.D1.83.D0.B3.D0.B8.D0.B5_.D1.82.D0.B5.D1.81.D1.82.D1.8B_.D0.B2.D1.80.D0.B5.D0.BC.D0.B5.D0.BD.D0.B8_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F"></span><span class="mw-headline" id="Другие_тесты_времени_исполнения">Другие тесты времени исполнения</span></h4>
+<p>Некоторые разработчики используют такие инструменты, как <a href="/wiki/Profiling_with_perf" title="Profiling with perf"> perf</a> (из ядра Linux, <a rel="nofollow" class="external text" href="https://perf.wiki.kernel.org/index.php/Main_Page">perf.wiki.kernel.org</a>), <i>gprof</i> (поставляемый в составе GNU-пакета <i>binutils</i>), <i>ftrace</i>, <i>dtrace</i> и <a href="/wiki/Profiling_with_OProfile" title="Profiling with OProfile">oprofile</a> (<a rel="nofollow" class="external text" href="http://oprofile.sourceforge.net/">oprofile.sourceforge.net</a>) для профилирования, например.
+</p>
+<h4><span id=".D0.9A.D0.B0.D0.BA_.D0.BD.D0.B0_.D1.81.D1.87.D0.B5.D1.82_.D1.8E.D0.BD.D0.B8.D1.82-.D1.82.D0.B5.D1.81.D1.82.D0.BE.D0.B2.2C_.D1.81.D1.82.D0.B0.D1.82.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.BE.D0.B3.D0.BE_.D0.B0.D0.BD.D0.B0.D0.BB.D0.B8.D0.B7.D0.B0_.D0.BA.D0.BE.D0.B4.D0.B0.2C_.D0.BF.D1.80.D0.BE.D0.B2.D0.B5.D1.80.D0.BA.D0.B8_.D0.BC.D0.BE.D0.B4.D0.B5.D0.BB.D0.B5.D0.B9....3F"></span><span class="mw-headline" id="Как_на_счет_юнит-тестов,_статического_анализа_кода,_проверки_моделей...?">Как на счет юнит-тестов, статического анализа кода, проверки моделей...?</span></h4>
+<p>Был ряд обсуждений на счет других методик тестирования, и ряд разработчиков занимается их исследованием.
+</p><p>Стоит помнить, что <i>Makefiles</i> не содержит правильные зависимости для включаемых файлов. Необходимо выполнять <i>make clean</i>, а затем уже сборку. Если применяется <i>GCC</i>, можно использовать флаг <i>--enable-depend</i>, чтобы <i>configure</i> вычислял зависимости автоматом.
+</p>
+<h3><span id=".D0.AF_.D1.80.D0.B0.D0.B7.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.B0.D0.BB_.D0.BF.D0.B0.D1.82.D1.87.2C_.D1.87.D1.82.D0.BE_.D0.B4.D0.B0.D0.BB.D1.8C.D1.88.D0.B5.3F"></span><span class="mw-headline" id="Я_разработал_патч,_что_дальше?">Я разработал патч, что дальше?</span></h3>
+<p>Патч необходимо предоставить на <a rel="nofollow" class="external text" href="mailto:pgsql-hackers@postgresql.org">hackers</a>. Чтобы упростить проверку вашего патча и ускорить фиксацию в мастер, пожалуйста, следуйте <a href="/wiki/Submitting_a_Patch" title="Submitting a Patch"> инструкции </a>.
+</p>
+<h3><span id=".D0.A7.D1.82.D0.BE_.D0.BF.D1.80.D0.BE.D0.B8.D1.81.D1.85.D0.BE.D0.B4.D0.B8.D1.82_.D0.B4.D0.B0.D0.BB.D1.8C.D1.88.D0.B5_.D1.81_.D0.BC.D0.BE.D0.B8.D0.BC_.D0.BF.D0.B0.D1.82.D1.87.D0.B5.D0.BC.3F"></span><span class="mw-headline" id="Что_происходит_дальше_с_моим_патчем?">Что происходит дальше с моим патчем?</span></h3>
+<p>Патч проверяется другими разработчиками проекта и по результатам, либо принимается, либо отправляется на доработку. Процесс описан более подробно в <a href="/wiki/Submitting_a_Patch#Patch_review_and_commit" title="Submitting a Patch"> предоставлении патчей</a>.
+</p>
+<h3><span id=".D0.9C.D0.BE.D0.B3.D1.83_.D0.BB.D0.B8_.D1.8F_.D0.BF.D0.BE.D0.BC.D0.BE.D1.87.D1.8C_.D1.81_.D0.BF.D1.80.D0.BE.D0.B2.D0.B5.D1.80.D0.BA.D0.BE.D0.B9_.D0.BF.D0.B0.D1.82.D1.87.D0.B5.D0.B9.3F"></span><span class="mw-headline" id="Могу_ли_я_помочь_с_проверкой_патчей?">Могу ли я помочь с проверкой патчей?</span></h3>
+<p>Ваше желание внести вклад, проверяя патчи из очереди <a rel="nofollow" class="external text" href="http://commitfest.postgresql.org">CommitFest</a>, всегда приветствуется! Пожалуйста, прочтите руководство по <a href="/wiki/Reviewing_a_Patch/ru" title="Reviewing a Patch/ru"> проверке патчей</a>, чтобы получить более подробную информацию.
+</p>
+<h3><span id=".D0.9D.D0.B5.D0.BE.D0.B1.D1.85.D0.BE.D0.B4.D0.B8.D0.BC.D0.BE_.D0.BB.D0.B8_.D0.BF.D0.B5.D1.80.D0.B5.D0.B4.D0.B0.D0.B2.D0.B0.D1.82.D1.8C_.D0.B0.D0.B2.D1.82.D0.BE.D1.80.D1.81.D0.BA.D0.B8.D0.B5_.D0.BF.D1.80.D0.B0.D0.B2.D0.B0.3F"></span><span class="mw-headline" id="Необходимо_ли_передавать_авторские_права?">Необходимо ли передавать авторские права?</span></h3>
+<p>Нет. Разработчики сохраняют свои права, во всяком случае, в большинстве Европейских стран. Они просто считаются членами <i>Postgres Global Development Group</i>. Более того, передать права <i>PGDG</i> вовсе невозможно, потому что группа не является юридическим лицом. Все организовано по аналогии с <i>Linux Kernel</i> и большинством проектов свободного ПО.
+</p>
+<h3><span id=".D0.9C.D0.BE.D0.B3.D1.83_.D0.BB.D0.B8_.D1.8F_.D0.B4.D0.BE.D0.B1.D0.B0.D0.B2.D0.B8.D1.82.D1.8C_.D1.81.D0.B2.D0.BE.D0.B5_.D0.B0.D0.B2.D1.82.D0.BE.D1.80.D1.81.D1.82.D0.B2.D0.BE.3F"></span><span class="mw-headline" id="Могу_ли_я_добавить_свое_авторство?">Могу ли я добавить свое авторство?</span></h3>
+<p>Не делайте это, пожалуйста. Нам нравится четкость и краткость. Более того, возможны проблемы при использовании корпоративными пользователями.
+</p>
+<h3><span id=".D0.A2.D1.80.D0.B5.D0.B1.D1.83.D0.B5.D1.82_.D0.BB.D0.B8_.D0.BB.D0.B8.D1.86.D0.B5.D0.BD.D0.B7.D0.B8.D1.8F_PostgreSQL_.D1.81.D0.BE.D1.85.D1.80.D0.B0.D0.BD.D1.8F.D1.82.D1.8C_.D1.83.D0.B2.D0.B5.D0.B4.D0.BE.D0.BC.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BE.D0.B1_.D0.B0.D0.B2.D1.82.D0.BE.D1.80.D1.81.D0.BA.D0.B8.D1.85_.D0.BF.D1.80.D0.B0.D0.B2.D0.B0.D1.85_.D0.BD.D0.B5.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D0.BD.D1.8B.D0.BC.D0.B8.3F"></span><span class="mw-headline" id="Требует_ли_лицензия_PostgreSQL_сохранять_уведомление_об_авторских_правах_неизменными?">Требует ли лицензия PostgreSQL сохранять уведомление об авторских правах неизменными?</span></h3>
+<p>Не требует. Это обосновано тем, что <i>PostgreSQL Global Development Group</i> охватывает всех правообладателей. Стоит обратить внимание, закон США не требует уведомлений об авторских правах для получения права на эксплуатацию, как и в большинстве европейских стран.
+</p>
+<h2><span id=".D0.A2.D0.B5.D1.85.D0.BD.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.B8.D0.B5_.D0.B2.D0.BE.D0.BF.D1.80.D0.BE.D1.81.D1.8B"></span><span class="mw-headline" id="Технические_вопросы">Технические вопросы</span></h2>
+<h3><span id=".D0.9A.D0.B0.D0.BA_.D0.B1.D0.BE.D0.BB.D0.B5.D0.B5_.D1.8D.D1.84.D1.84.D0.B5.D0.BA.D1.82.D0.B8.D0.B2.D0.BD.D0.BE_.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.B0.D1.82.D1.8C_.D1.81_.D0.B4.D0.B0.D0.BD.D0.BD.D1.8B.D0.BC.D0.B8_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D0.BD.D1.8B.D1.85_.D0.BA.D0.B0.D1.82.D0.B0.D0.BB.D0.BE.D0.B3.D0.BE.D0.B2_.D0.B2_.D0.BA.D0.BE.D0.B4.D0.B5.3F"></span><span class="mw-headline" id="Как_более_эффективно_работать_с_данными_системных_каталогов_в_коде?">Как более эффективно работать с данными системных каталогов в коде?</span></h3>
+<p>Искать кортежи (ряды) можно двумя способами. Первый, <code>SearchSysCache()</code> и связные функции позволяют запрашивать системные каталоги, используя созданные системные индексы. Этот способ доступа к системным таблицам предпочитаемый, потому что первый вызов наполняет кэш необходимыми рядами, а последующие вызовы смогут возвращать данные без обращения к таблицам. Перечень доступных типов кэш можно найти в <i>src/backend/utils/cache/syscache.c</i>. <i>src/backend/utils/cache/lsyscache.c</i> содержит множество поисковых функций, завязанных на конкретные колонки.
+</p><p>Возвращенные ряды это кэшированные версии из кучи. Нельзя изменять или удалять кортежи, возвращенные <code>SearchSysCache()</code>. После использования данных, их необходимо высвободить с помощью вызова <code>ReleaseSysCache()</code>, который уведомляет кэшер о возможности выбросить данные при необходимости. Пренебрежение вызовом <code>ReleaseSysCache()</code> может приводить к блокировкам записей кэша до завершения транзакции, что допустимо при разработке, но никак не в продукционном коде.
+</p><p>Если по реализуемой логике использование системного кэша недопустимо, понадобится извлечение данных напрямую из кучи с использованием буферного кэша, разделяемого между рабочими процессами. Процесс берет управление над загрузкой рядов в буферный кэш. Для этого нужно открыть таблицу с помощью вызова <code>heap_open()</code>. Далее можно начать сканирование таблицы с помощью <code>heap_beginscan()</code>, а получать данные с помощью вызова <code>heap_getnext()</code>, продолжая пока <code>HeapTupleIsValid()</code> не вернет ложь. Для завершения сканирования нужно вызвать <code>heap_endscan()</code>. Для сканирования можно назначить ключи. При этом индексы не используются, и происходит сравнение рядов по ключам, чтобы вернуть нужные.
+</p><p><code>heap_fetch()</code> можно использовать для извлечения рядов блоками данных. При сканировании с помощью <code>heap_fetch()</code> происходит автоматический захват рядов из буферного кэша, при этом необходимо передавать указатель <code>Buffer</code>, и после завершения вызвать <code>ReleaseBuffer()</code>.
+</p><p>После получения ряда, можно извлечь данные, общие для всех кортежей, такие как <code>t_self</code> и <code>t_oid</code>, обратившись к полям структуры <code>HeapTuple</code>. Если требуется получить конкретную колонку таблицы, необходимо получить указатель <code>HeapTuple</code>, и передать в макрос <code>GETSTRUCT()</code>, чтобы получить начало кортежа таблицы. После необходимо привести указатель, например, к <code>Form_pg_proc</code>, если осуществляется доступ к таблице <i>pg_proc</i>, или <code>Form_pg_type</code>, если к <i>pg_type</i>. Далее можно обращаться к полям ряда, используя указатель на структуру:
+</p>
+<pre>((Form_pg_class) GETSTRUCT(tuple))-&gt;relnatts
+</pre>
+<p>Стоит помнить, что это справедливо только для колонок фиксированной длинны и не содержащих <i>null</i>-значения, и перед которыми также идут фиксированные колонки без <i>null</i> 'ов. В противном случае расположение колонок вариативно, и необходимо использовать <code>heap_getattr()</code> или аналогичные функции для извлечения из кортежа.
+</p><p>Также стоит избегать прямого сохранения в структуру полей, те. по факту изменения <i>живых</i> рядов. Лучше использовать функцию <code>heap_modifytuple()</code>, передав ей исходный кортеж и измененные значения. В результате вызова получается <code>palloc</code>-кортеж, который затем необходимо передать <code>heap_update()</code>. Чтобы удалить кортеж, нужно передать его <code>t_self</code> функции <code>heap_delete()</code>. <code>t_self</code> также необходимо передавать функции <code>heap_update()</code>. <b>Помните!</b> Кортежи могут быть копиями системного кэша, которые могут удалиться после вызова <code>ReleaseSysCache()</code>, или результатом прямого чтения с диска, который может удалиться после вызова <code>heap_getnext()</code>, <code>heap_endscan()</code>, или <code>ReleaseBuffer()</code>, при использовании <code>heap_fetch()</code>. Также кортеж может представлять запись <code>palloc</code>, которую после завершения работы с ней необходимо высвободить, вызвав <code>pfree()</code>.
+</p>
+<h3><span id=".D0.9F.D0.BE.D1.87.D0.B5.D0.BC.D1.83_.D0.B8.D0.BC.D0.B5.D0.BD.D0.B0_.D1.82.D0.B0.D0.B1.D0.BB.D0.B8.D1.86.2C_.D0.BA.D0.BE.D0.BB.D0.BE.D0.BD.D0.BE.D0.BA.2C_.D1.82.D0.B8.D0.BF.D0.BE.D0.B2.2C_.D1.84.D1.83.D0.BD.D0.BA.D1.86.D0.B8.D0.B9.2C_.D0.BF.D1.80.D0.B5.D0.B4.D1.81.D1.82.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D0.B9_.D0.B8.D0.BD.D0.BE.D0.B3.D0.B4.D0.B0_.D0.B2.D0.BE.D0.B7.D0.B2.D1.80.D0.B0.D1.89.D0.B0.D1.8E.D1.82.D1.81.D1.8F_.D0.BA.D0.B0.D0.BA_Name_.D0.B8.D0.BB.D0.B8_NameData.2C_.D0.B0_.D0.B8.D0.BD.D0.BE.D0.B3.D0.B4.D0.B0_.D0.BA.D0.B0.D0.BA_char_.2A.3F"></span><span class="mw-headline" id="Почему_имена_таблиц,_колонок,_типов,_функций,_представлений_иногда_возвращаются_как_Name_или_NameData,_а_иногда_как_char_*?">Почему имена таблиц, колонок, типов, функций, представлений иногда возвращаются как <code>Name</code> или <code>NameData</code>, а иногда как <code>char *</code>?</span></h3>
+<p>Имена таблиц, колонок, типов, функций и представлений хранятся в колонках системных таблиц с типом <code>Name</code>. <code>Name</code> это тип фиксированной длинны, завершенный <i>null</i>-терминатором и имеющий длину в <code>NAMEDATALEN</code> байт. По умолчанию значение <code>NAMEDATALEN</code> составляет 64 байта.
+</p>
+<pre>  typedef struct nameData
+  {
+      char    data[NAMEDATALEN];
+  } NameData;
+  typedef NameData *Name;
+</pre>
+<p>Имена таблиц, колонок, типов, функций и представлений, которые приходят на рабочий процесс из пользовательских запросов хранятся в символьных строках переменной длины и завершаются <i>null</i>-терминаторами.
+</p><p>Многие функции поддерживают оба типа имен, например, <code>heap_open()</code>. Т.к. тип <code>Name</code> завершен <i>null</i>-терминатором, передавать его в функции, ожидающие <code>char *</code>, безопасно. Существует множество мест, где производится сравнение имен, получаемых с диска (<code>Name</code>) с именами, передаваемыми пользователями (<code>char *</code>), и при этом типы взаимозаменяемы.
+</p>
+<h3><span id=".D0.9F.D0.BE.D1.87.D0.B5.D0.BC.D1.83_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D1.83.D1.8E.D1.82.D1.81.D1.8F_Node_.D0.B8_List_.D0.B4.D0.BB.D1.8F_.D1.81.D0.BE.D0.B7.D0.B4.D0.B0.D0.BD.D0.B8.D1.8F_.D1.81.D1.82.D1.80.D1.83.D0.BA.D1.82.D1.83.D1.80_.D0.B4.D0.B0.D0.BD.D0.BD.D1.8B.D1.85.3F"></span><span class="mw-headline" id="Почему_используются_Node_и_List_для_создания_структур_данных?">Почему используются <code>Node</code> и <code>List</code> для создания структур данных?</span></h3>
+<p>Это позволяет гибко передавать целостные данные рабочему процессу. Каждый узел имеет <code>NodeTag</code>, который указывает тип данных, содержащийся в <code>Node</code>. <code>List</code> представляет собой группы <code>Node</code>, объединенные вместе односвязным списком с указателем на первый элемент. Сортировка элементов списка может быть накладной в некоторых ситуациях.
+</p><p>Ниже приведены команды манипуляции <code>List</code>:
+</p>
+<dl><dt>lfirst(i)</dt>
+<dt>lfirst_int(i)</dt>
+<dt>lfirst_oid(i)</dt>
+<dd>возвращает данные (указатель, <code>integer</code> или <code>OID</code> соответственно) ячейки <code>i</code> из списка.</dd></dl>
+<dl><dt>lnext(i)</dt>
+<dd>возвращает из списка следующую за <code>i</code> ячейку.</dd></dl>
+<dl><dt>foreach(i, list)</dt>
+<dd>пробегается по списку, присваивая ячейку переменной <code>i</code> на каждой итерации.</dd></dl>
+<p>Важно понимать то, что <code>i</code> присваивается <code>ListCell *</code>, а не данные ячейки <code>List</code>. Необходимо использовать один из вариантов <code>lfirst()</code>, чтобы получить данные ячейки.
+</p><p>Ниже приведен типичный кусок кода, который пробегается по <code>List</code>, содержащему <code>Var *</code> ячеек и обрабатывает их:
+</p>
+<pre> List        *list;
+ ListCell    *i;
+ ...
+ foreach(i, list)
+ {
+   Var *var = (Var *) lfirst(i);
+   ...
+   /* var обрабатывается здесь */
+ }
+</pre>
+<dl><dt>lcons(node, list)</dt>
+<dd>добавить <code>node</code> в начало списка, или создать новый список с <code>node</code>, если вместо <code>list</code> передан <code>NIL</code>.</dd></dl>
+<dl><dt>lappend(list, node)</dt>
+<dd>добавить <code>node</code> в конец <code>list</code>.</dd></dl>
+<dl><dt>list_concat(list1, list2)</dt>
+<dd>объединить <code>list2</code>, добавив его в конец <code>list1</code>.</dd></dl>
+<dl><dt>list_length(list)</dt>
+<dd>вернуть длину <code>list</code>.</dd></dl>
+<dl><dt>list_nth(list, i)</dt>
+<dd>вернуть <code>i</code>-ый элемент из <code>list</code>, считая от нулевого.</dd></dl>
+<dl><dt>lcons_int, ...</dt>
+<dd>существуют <code>integer</code>-версии функций: <code>lcons_int()</code>, <code>lappend_int()</code>, и т.д. А также версии для работы с <code>OID</code>: <code>lcons_oid()</code>, <code>lappend_oid()</code>, и т.д.</dd></dl>
+<p>Можно с легкостью вывести узлы с помощью <i>gdb</i>. Первое, необходимо отключить обрезку вывода для команды <i>print</i>:
+</p>
+<pre>(gdb) set print elements 0
+</pre>
+<p>Вместо вывода значений в формате <i>gdb</i>, можно воспользоваться следующими командами для вывода <code>List</code>, <code>Node</code> и содержимого структур в более подробном и удобном для восприятия виде. <code>List</code> разворачивается в подробно распечатанные узлы. Первая команда выводит в краткой форме, а вторая команда - более подробной:
+</p>
+<pre>(gdb) call print(any_pointer)
+(gdb) call pprint(any_pointer)
+</pre>
+<p>Вывод производится в лог-файл сервера, либо на консоль, если рабочий процесс запущен без головного <i>postmaster</i>.
+</p>
+<h3><span id=".D0.A2.D0.BE.D0.BB.D1.8C.D0.BA.D0.BE_.D1.87.D1.82.D0.BE_.D0.B4.D0.BE.D0.B1.D0.B0.D0.B2.D0.B8.D0.BB_.D0.BF.D0.BE.D0.BB.D0.B5_.D0.B2_.D1.81.D1.82.D1.80.D1.83.D0.BA.D1.82.D1.83.D1.80.D1.83.2C_.D1.87.D1.82.D0.BE_.D0.B5.D1.89.D0.B5_.D0.BD.D0.B5.D0.BE.D0.B1.D1.85.D0.BE.D0.B4.D0.B8.D0.BC.D0.BE_.D0.BF.D1.80.D0.B5.D0.B4.D0.BF.D1.80.D0.B8.D0.BD.D1.8F.D1.82.D1.8C.3F"></span><span class="mw-headline" id="Только_что_добавил_поле_в_структуру,_что_еще_необходимо_предпринять?">Только что добавил поле в структуру, что еще необходимо предпринять?</span></h3>
+<p>Структуры, передаваемые в логиках парсера, реврайтера, оптимизатора и исполнителя запросов не требуют сложного сопровождения. Большинство структур каталога <i>src/backend/nodes</i> используются для создания, копирования, чтения и их вывода. Большинство типов узлов сопровождаются функциями из <i>copyfuncs.c</i> и <i>equalfuncs.c</i>, а некоторые из <i>outfuncs.c</i> и <i>readfuncs.c</i>. При добавлении нового поля необходимо внести сопровождающие функции в эти файлы. Найдите другие места, где может понадобиться сопровождающий код для нового поля, через поиск, например, уже существующих полей структуры. <i>mkid</i> может помочь в этом, см. раздел <a href="#Какие_инструменты_доступны_разработчикам?">#Какие инструменты доступны разработчикам?</a>.
+</p>
+<h3><span id=".D0.9F.D0.BE.D1.87.D0.B5.D0.BC.D1.83_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D1.83.D1.8E.D1.82.D1.81.D1.8F_.D1.84.D1.83.D0.BD.D0.BA.D1.86.D0.B8.D0.B8_palloc.28.29_.D0.B8_pfree.28.29_.D0.BF.D1.80.D0.B8_.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.B5_.D1.81_.D0.BF.D0.B0.D0.BC.D1.8F.D1.82.D1.8C.D1.8E.3F"></span><span class="mw-headline" id="Почему_используются_функции_palloc()_и_pfree()_при_работе_с_памятью?">Почему используются функции <code>palloc()</code> и <code>pfree()</code> при работе с памятью?</span></h3>
+<p><code>palloc()</code> и <code>pfree()</code> используются вместо <code>malloc()</code> и <code>free()</code>, потому что так проще автоматически освобождать всю память, выделенную для запроса, после его завершения. Всегда есть уверенность в том, что вся выделенная память будет высвобождена в любом случае, даже, когда мы не следим за тем, где она выделена. Есть несколько контекстов, не связанных с выполнением запросов, где также выделяется память. Механизм помогает при высвобождении памяти рабочим процессом.
+</p><p>Можно получить снимок по этим контекстам памяти для, например, отлова утечек памяти. См. <a href="#Анализ_используемой_памяти_рабочего_процесса">#Анализ используемой памяти рабочего процесса</a>.
+</p>
+<h3><span id=".D0.A7.D1.82.D0.BE_.D1.82.D0.B0.D0.BA.D0.BE.D0.B5_ereport.28.29.3F"></span><span class="mw-headline" id="Что_такое_ereport()?">Что такое <code>ereport()</code>?</span></h3>
+<p><code>ereport()</code> используется для отправки сообщений на фронт-енд, и опционально прекращает выполнение текущего запроса. См. <a rel="nofollow" class="external text" href="http://developer.postgresql.org/pgdocs/postgres/error-message-reporting.html">как использовать</a> более подробно.
+</p>
+<h3><span id=".D0.A7.D1.82.D0.BE_.D1.82.D0.B0.D0.BA.D0.BE.D0.B5_CommandCounterIncrement.28.29.3F"></span><span class="mw-headline" id="Что_такое_CommandCounterIncrement()?">Что такое <code>CommandCounterIncrement()</code>?</span></h3>
+<p>Обычно запросы не видят модифицируемые ряды, что позволяет <code>UPDATE foo SET x = x + 1</code> работать корректно.
+</p><p>Однако существуют ситуации, в которых транзакции необходимо увидеть измененные в ее предшествующих частях ряды. Это выполняется с помощью <i>Command Counter</i>. Увеличивая счетчик можно разбить транзакцию на кусочки таким образом, чтобы каждый из них мог видеть изменения, произведенные предыдущими. <code>CommandCounterIncrement()</code> увеличивает <i>Command Counter</i>, создавая очередную часть транзакции.
+</p>
+<h3><span id=".D0.9C.D0.BD.D0.B5_.D0.BD.D0.B5.D0.BE.D0.B1.D1.85.D0.BE.D0.B4.D0.B8.D0.BC.D0.BE_.D0.B2.D0.BD.D0.B5.D1.81.D1.82.D0.B8_.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F_.D0.B2_.D0.BF.D0.B0.D1.80.D1.81.D0.B5.D1.80_.D0.B7.D0.B0.D0.BF.D1.80.D0.BE.D1.81.D0.BE.D0.B2._.D0.9C.D0.BE.D0.B6.D0.B5.D1.82.D0.B5_.D0.BA.D1.80.D0.B0.D1.82.D0.BA.D0.BE_.D0.BE.D1.81.D0.B2.D0.B5.D1.82.D0.B8.D1.82.D1.8C_.D1.84.D0.B0.D0.B9.D0.BB.D1.8B.2C_.D0.BE.D1.82.D0.BD.D0.BE.D1.81.D1.8F.D1.89.D0.B8.D0.B5.D1.81.D1.8F_.D0.BA_.D0.BF.D0.B0.D1.80.D1.81.D0.B5.D1.80.D1.83.3F"></span><span class="mw-headline" id="Мне_необходимо_внести_изменения_в_парсер_запросов._Можете_кратко_осветить_файлы,_относящиеся_к_парсеру?">Мне необходимо внести изменения в парсер запросов. Можете кратко осветить файлы, относящиеся к парсеру?</span></h3>
+<p>Файлы парсера расположены в директории <i>src/backend/parser</i>.
+</p><p><i>scan.l</i> содержит <i>лексику</i>, описывающую алгоритм разбиения строк SQL-запросов, в потоки лексем. Лексема обычно представляет собой отдельное слово без пробелов, но выделенное с их помощью. Лексемы могут заключаться в одинарные и двойные кавычки. <i>Лексика</i> представляет собой набор регулярных выражений, описывающих различные типы лексем.
+</p><p><i>gram.y</i> содержит <i>грамматику</i>, т.е. синтаксическую структуру SQL-выражений, на основе полученных с помощью <i>лексики</i> лексем в качестве строительных блоков. <i>Грамматика</i> реализована согласно <i>BNF</i>-нотации. <i>BNF</i> похожа на регулярные выражения, но работает на уровне лексем, а не символов. Также, шаблоны (правила или продукты согласно <i>BNF</i>) носят имена и могут быть рекурсивными.
+</p><p><i>Лексика</i> (<i>lexer</i>) генерируется из <i>scan.l</i> инструментом <i>flex</i>. Найти руководство можно <a rel="nofollow" class="external text" href="http://flex.sourceforge.net/manual/">здесь</a>
+</p><p><i>Грамматика</i> (<i>parser</i>) формируется на основании <i>gram.y</i> инструментом <i>bison</i>. Руководство расположено <a rel="nofollow" class="external text" href="http://www.gnu.org/s/bison/">здесь</a>.
+</p><p>Стоит уделить значительное внимание изучению <i>flex</i> и <i>bison</i> при отсутствии практического опыта работы с ними.
+</p>
+<h3><span id=".D0.A3_.D0.BC.D0.B5.D0.BD.D1.8F_.D0.B2.D0.BE.D0.B7.D0.BD.D0.B8.D0.BA_.D0.BA.D0.BE.D0.BD.D1.84.D0.BB.D0.B8.D0.BA.D1.82_shift.2Freduce.2C_.D0.BA.D0.BE.D1.82.D0.BE.D1.80.D1.8B.D0.B9_.D0.BD.D0.B5.D0.BF.D0.BE.D0.BD.D1.8F.D1.82.D0.BD.D0.BE_.D0.BA.D0.B0.D0.BA_.D1.80.D0.B5.D1.88.D0.B8.D1.82.D1.8C"></span><span class="mw-headline" id="У_меня_возник_конфликт_shift/reduce,_который_непонятно_как_решить">У меня возник конфликт <i>shift/reduce</i>, который непонятно как решить</span></h3>
+<p>См. <a href="/wiki/Fixing_shift/reduce_conflicts_in_Bison" class="mw-redirect" title="Fixing shift/reduce conflicts in Bison">Fixing_shift/reduce_conflicts_in_Bison</a>
+</p>
+<h3><span id=".D0.9A.D0.B0.D0.BA_.D0.BF.D0.BE.D1.81.D0.BC.D0.BE.D1.82.D1.80.D0.B5.D1.82.D1.8C_.D0.BF.D0.BB.D0.B0.D0.BD_.D0.B7.D0.B0.D0.BF.D1.80.D0.BE.D1.81.D0.B0_.D0.B8.D0.BB.D0.B8_.D1.80.D0.B0.D0.B7.D0.BE.D0.B1.D1.80.D0.B0.D0.BD.D0.BD.D1.8B.D0.B9_.D0.B7.D0.B0.D0.BF.D1.80.D0.BE.D1.81.3F"></span><span class="mw-headline" id="Как_посмотреть_план_запроса_или_разобранный_запрос?">Как посмотреть план запроса или разобранный запрос?</span></h3>
+<p>Часто требуется понимать структуру разобранного запроса или ожидаемый план его выполнения. <i>PostgreSQL</i> хранит эти данные в виде иерархических деревьев, которые можно распечатать в удобном формате.
+</p><p>Можно использовать функцию <i>pprint</i> для вывода этих данных в <i>stderr</i> рабочего процесса, а затем вытащить из лог-файла, например. Обычно функцию вызывают из подключенного к рабочему процессу отладчика, например, <i>gdb</i> или <i>MSVC</i> до выполнения интересующего запроса, предварительно установив точки прерывания в парсере, реврайтере, оптимизаторе и/или исполнителе запросов, в зависимости от решаемой задачи. После срабатывания точки прерывания выполните:
+</p>
+<pre>call pprint(theQueryVariable)
+</pre>
+<p>где <code>theQueryVariable</code> - любой требуемый <code>Node*</code> с типом, понятным вызову <i>pprint</i>. Распространена практика вывода различных частей запроса, например, списка целевых объектов и др.
+</p><p>Функциональность крайне полезна в совокупности с точками трассировки отладчиков <i>gdb</i> или <i>MSVC</i>.
+</p>
+<h3><span id=".D0.A7.D1.82.D0.BE_.D0.BF.D1.80.D0.B5.D0.B4.D0.BB.D0.B0.D0.B3.D0.B0.D0.B5.D1.82.D1.81.D1.8F_.D0.B4.D0.BB.D1.8F_.D0.BE.D1.82.D0.BB.D0.B0.D0.B4.D0.BA.D0.B8.3F"></span><span class="mw-headline" id="Что_предлагается_для_отладки?">Что предлагается для отладки?</span></h3>
+<h4><span id=".D0.92.D1.80.D0.B5.D0.BC.D1.8F_.D0.BA.D0.BE.D0.BC.D0.BF.D0.B8.D0.BB.D1.8F.D1.86.D0.B8.D0.B8"></span><span class="mw-headline" id="Время_компиляции">Время компиляции</span></h4>
+<p><b>Первое</b>, при разработке нового кода на <i>C</i>, собирать <b>всегда</b> нужно с флагами <i>--enable-cassert</i> и <i>--enable-debug</i>. Включенные <i>утверждения</i> проводят большое количество дополнительных проверок. Включенная  <i>отладка</i>позволяет использовать отладчик, например, <i>gdb</i> для трассировки сбойного кода. При компиляции с использованием <i>gcc</i>, дополнительные  параметры <i>-ggdb -Og -fno-omit-frame-pointer</i>, переданные через <i>cflags</i>, крайне полезны, тк. добавляют дополнительную отладочную информацию. Передать их <i>configure</i> можно, например, так:
+</p><p><code lang="bash">
+</code></p><code lang="bash"><pre>./configure --enable-cassert --enable-debug CFLAGS="-ggdb -Og -fno-omit-frame-pointer"
+</pre></code><code lang="bash"></code><p><code lang="bash"></code>
+</p><p><i>-O0</i> вместо <i>-Og</i> выключит большинство оптимизаций компилятора, включая <i>inlining</i>.
+</p><p><i>-fno-omit-frame-pointer</i> полезен при трассировке и профилировании с использованием <i>perf</i>, например, тк. подобные средства могут захватывать полный стэк вызовов помимо верхнего уровня.
+</p>
+<h4><span id=".D0.92.D1.80.D0.B5.D0.BC.D1.8F_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F"></span><span class="mw-headline" id="Время_исполнения">Время исполнения</span></h4>
+<p>Сервер <i>postgres</i> может принимать флаг <i>-d</i>, позволяющий выводить подробную информацию в лог-файл (отладка с помощью <code>elog</code> или <code>ereport</code>). Флаг передает значение уровня отладки. Чем выше уровень, тем быстрее будет расти лог-файл. Флаг недоступен при запуске сервера через команду <i>pg_ctl</i>, но можно использовать конструкцию <i>-o log_min_messages=debug4</i>, например.
+</p>
+<h4><span class="mw-headline" id="gdb">gdb</span></h4>
+<p>Если запущен головной <i>postmaster</i>, запустите в одном терминале <i>psql</i>, найдите <i>PID</i> процесса <i>postgres</i>, созданного в результате выполнения <code>SELECT pg_backend_pid()</code> из консоли <i>psql</i>. Подключите отладчик к процессу <i>postgres</i> по PID, например, <i>gdb -p 1234</i>, или из уже запущенного <i>gdb</i> - <i>attach 1234</i>. Также может пригодиться этот <a href="/wiki/Gdblive_script" title="Gdblive script"> скрипт</a>. Можно установить точки прерывания в отладчике, и далее выполнить запрос из консоли <i>psql</i>. 
+</p><p>Чтобы найти место генерации ошибки или сообщения в лог, установите точку прерывания на <i>errfinish</i>, это позволит отловить все вызовы <i>elog</i> и <i>ereport</i> в зависимости от уровня логгирования. Если же требуется найти лишь <i>ERROR/FATAL/PANIC</i>, используйте <a rel="nofollow" class="external text" href="http://blog.vinceliu.com/2009/07/gdbs-conditional-breakpoints.html">условные точки прерывания в gdb</a> для <i>errordata[errordata_stack_depth].elevel &gt;= 20</i>, или установите точку прерывания на строке с <i>errfinish</i>, используя нужное условие <i>PANIC</i>, <i>FATAL</i>, и <i>ERROR</i>. Стоит помнить, что не все ошибки проходят через <i>errfinish</i>, в частности, проверки разрешений идут особняком. Если на установленной точке исполнение не прерывается, выполните <i>git grep</i> с текстом искомой ошибки, и посмотрите, где возбуждается эта ошибка.
+</p><p>Если отлаживается логика на этапе начала сессии, можно установить <i>PGOPTIONS="-W n"</i>, затем запустить <i>psql</i>. Опция отложит запуск на <i>n</i>-секунд, что позволит подключить отладчик к процессу и установить необходимые точки прерывания.
+</p>
+<h4><span id=".D0.90.D0.B2.D1.82.D0.BE.D0.BD.D0.BE.D0.BC.D0.BD.D1.8B.D0.B9_.D1.80.D0.B0.D0.B1.D0.BE.D1.87.D0.B8.D0.B9_.D0.BF.D1.80.D0.BE.D1.86.D0.B5.D1.81.D1.81"></span><span class="mw-headline" id="Автономный_рабочий_процесс">Автономный рабочий процесс</span></h4>
+<p>Можно запустить рабочий процесс из командной строки и передавать <i>SQL</i>-запросы напрямую в обход головного <i>postmaster</i>. Обычно это не требуется, тк. среда не столь дружелюбна по сравнению с <i>psql</i> (нет истории запросов, например), и нет возможности проверить конкурентные логики. Это может понадобиться, если сломался <i>initdb</i>, например.
+</p>
+<h3><span id=".D0.9F.D0.BE.D0.BB.D0.BE.D0.BC.D0.B0.D0.BB_initdb.2C_.D0.BA.D0.B0.D0.BA_.D0.B5.D0.B3.D0.BE_.D0.BE.D1.82.D0.BB.D0.B0.D0.B4.D0.B8.D1.82.D1.8C.3F"></span><span class="mw-headline" id="Поломал_initdb,_как_его_отладить?">Поломал <i>initdb</i>, как его отладить?</span></h3>
+<p>Иногда исправления приводят к отказу <i>initdb</i>. Редко бывает, чтобы проблема заключалась в самом <i>initdb</i>. Чаще сбои происходят в рабочих процессах <i>postgres</i>, запущенных через <i>initdb</i>.
+</p><p>Если процесс падает или отрабатывает утверждение, подключенный <i>gdb</i> к <i>initdb</i> вряд ли поможет. <i>initdb</i> не поломан, а значит <i>gdb</i> не остановится.
+</p><p>Что нужно сделать, так это запустить <i>initdb</i> с подключенным <i>gdb</i>, установив точку прерывания на <i>fork</i>, а затем продолжить исполнение. Когда будет достигнута точка прерывания, остановите функцию командой <b>f</b>inish. <i>gdb</i> выведет сообщение о созданном дочернем процессе, и по факту это <b>не</b> цель, а сигнал, что создан реальный экземпляр <i>postgres</i>.
+Пока <i>initdb</i> на паузе, можно воспользоваться командой <i>ps</i>, чтобы найти идентификатор запущенного процесса <i>postgres</i>. <i>pstree -p</i> также может оказаться полезным. Как будет получен идентификатор, подключите отдельную сессию <i>gdb</i> с помощью команды <i>gdb -p $the_postgres_pid</i>, после чего можно безопасно отключить <i>gdb</i> от <i>initdb</i>, и отлаживать сбойный процесс <i>postgres</i>.
+</p>
+<h3><span id=".D0.9F.D1.80.D0.BE.D1.84.D0.B8.D0.BB.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BF.D1.80.D0.BE.D0.B8.D0.B7.D0.B2.D0.BE.D0.B4.D0.B8.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D0.BE.D1.81.D1.82.D0.B8.2C_.D1.83.D1.82.D0.B8.D0.BB.D0.B8.D0.B7.D0.B0.D1.86.D0.B8.D1.8F_CPU"></span><span class="mw-headline" id="Профилирование_производительности,_утилизация_CPU">Профилирование производительности, утилизация <i>CPU</i></span></h3>
+<p>Существуют разные способы профилирования <i>PostgreSQL</i>, но наиболее популярный на текущий момент это <i>perf</i>, инструмент из ядра <i>Linux</i>. См. <a href="/wiki/Profiling_with_perf" title="Profiling with perf"> Профилирование с помощью perf</a>.
+</p><p><i>perf</i> крайне мощный инструмент, не ограниченный профилированием лишь <i>CPU</i>, и полезен в качестве средства трассировки.
+</p><p><i>PostgreSQL</i> можно скомпилировать с включенной опцией профилирования, чтобы увидеть время, затрачиваемое на исполнение той или иной функцией. Рекомендуется конфигурация с помощью флага <i>--enable-profiling</i>. Файлы профилирования серверных процессов складываются в директорию <i>pgsql/data</i>. Файлы профилирования клиентов, таких как <i>psql</i>, складываются в текущей на стороне клиента директории.
+</p><p>Обычно не требуется использовать <i>--enable-cassert</i> или любой из пользовательских <i>-O</i> флагов, например, <i>-Og</i>/<i>-O0</i> при исследовании проблем производительности. При включенной проверке <i>cassert</i> вносятся дорогостоящие накладные расходы, что в свою очередь искажает данные профилирования. Важно удостовериться, что профилирование происходит при тех же параметрах оптимизации компилятора, что и реальный запуск.
+</p><p><i>--enable-debug</i> прекрасно подходит, когда профилирование производится с использованием <i>gcc</i>, для других же компиляторов лучше этот флаг не использовать.
+</p><p><i>perf</i> в составе современных <i>Linux</i>-систем является более удобной альтернативой флагу <i>--enable-profiling</i>.
+</p>
+<h3><span id=".D0.90.D0.BD.D0.B0.D0.BB.D0.B8.D0.B7_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D1.83.D0.B5.D0.BC.D0.BE.D0.B9_.D0.BF.D0.B0.D0.BC.D1.8F.D1.82.D0.B8_.D1.80.D0.B0.D0.B1.D0.BE.D1.87.D0.B5.D0.B3.D0.BE_.D0.BF.D1.80.D0.BE.D1.86.D0.B5.D1.81.D1.81.D0.B0"></span><span class="mw-headline" id="Анализ_используемой_памяти_рабочего_процесса">Анализ используемой памяти рабочего процесса</span></h3>
+<p><code>palloc</code> в <i>PostgreSQL</i> представляет собой механизм выделения памяти с иерархической организацией и является оберткой для вызовов ОС. См. раздел <a href="#Почему_используются_функции_palloc()_и_pfree()_при_работе_с_памятью?">#Почему используются функции palloc() и pfree() при работе с памятью?</a>.
+</p><p>Память, выделенная с помощью <code>palloc</code>, назначается <i>контексту памяти</i>, лежащему в иерархии с корнем <i>TopMemoryContext</i>. Каждый контекст памяти именован.
+</p><p>Можно снять данные статистики по интересующему контексту памяти, включая дочерние узлы, вызвав функцию <code>MemoryContextStats(MemoryContext*)</code>. Обычно делается так:
+</p>
+<pre>gdb -p $the_backend_pid
+(gdb) p MemoryContextStats(TopMemoryContext)
+</pre>
+<p>Вывод производится в лог-файл сервера, либо на консоль, если рабочий процесс запущен без головного <i>postmaster</i>.
+</p>
+<h3><span id="gdb.2FMSVC_.D1.82.D0.BE.D1.87.D0.BA.D0.B8_.D1.82.D1.80.D0.B0.D1.81.D1.81.D0.B8.D1.80.D0.BE.D0.B2.D0.BA.D0.B8"></span><span class="mw-headline" id="gdb/MSVC_точки_трассировки"><i>gdb/MSVC</i> точки трассировки</span></h3>
+<p>Иногда необходимо отследить исполнение и получить информацию без переключения на <i>gdb</i> на точках прерывания.
+</p><p><i>MSVC</i> и <i>gdb</i> могут работать с точками трассировки. Этот инструмент более мощный по сравнению с <i>perf</i>, где требуется отладчик. По <i>gdb</i>, см. <a rel="nofollow" class="external text" href="https://sourceware.org/gdb/onlinedocs/gdb/Tracepoint-Actions.html">точки трассировки в gdb</a>. Точки трассировки также можно использовать для создания снимков контекста памяти, или вывода дерева разобранных запросов, и тд.
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260407171313
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.110 seconds
+Real time usage: 0.120 seconds
+Preprocessor visited node count: 195/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 309/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    6.746      1 Template:Languages
+100.00%    6.746      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:2694-0!canonical and timestamp 20260407171313 and revision id 25812.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Developer_FAQ/ru&amp;oldid=25812">https://wiki.postgresql.org/index.php?title=Developer_FAQ/ru&amp;oldid=25812</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:FAQ" title="Category:FAQ">FAQ</a></li><li><a href="/wiki/Category:Russian" title="Category:Russian">Russian</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Developer_FAQ/ru" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Developer_FAQ/ru&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Developer_FAQ/ru">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/ru&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/ru&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Developer_FAQ/ru" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Developer_FAQ/ru&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Developer+FAQ%2Fru" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Developer_FAQ/ru" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Developer_FAQ/ru" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/ru&amp;oldid=25812" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/ru&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 9 September 2015, at 11:01.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.110","walltime":"0.120","ppvisitednodes":{"value":195,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":309,"limit":5000000},"timingprofile":["100.00%    6.746      1 Template:Languages","100.00%    6.746      1 -total"]},"cachereport":{"timestamp":"20260407171313","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":289});});</script>
+</body>
+</html>

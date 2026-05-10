@@ -7,7 +7,7 @@ source_format: "html_cleaned_to_markdown"
 original_html_path: "html/pgexercises/questions/aggregates/fachours.html"
 source_url: "https://pgexercises.com/questions/aggregates/fachours.html"
 indexable: true
-usage_rule: "Использовать только как supplementary слой в tutorial + extended_mode. Факты должны подтверждаться official corpus выбранной версии."
+usage_rule: "Использовать только как supplementary слой в tutorial. Факты должны подтверждаться official corpus выбранной версии."
 ---
 
 List the total slots booked per facility

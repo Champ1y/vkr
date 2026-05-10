@@ -51,7 +51,7 @@
   - `source_url` из YAML.
   - индексируется только при `indexable: true`.
   - embedding `text` формируется из body без front matter.
-- Legacy layout `data/supplementary` сохранён как fallback, но не default.
+- Старый supplementary layout удалён из загрузчика; текущий supplementary path — `corpus/tutorial`.
 
 ## 4) Текущий supplementary path
 

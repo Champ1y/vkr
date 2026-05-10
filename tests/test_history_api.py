@@ -3,7 +3,7 @@ from __future__ import annotations
 from app.services.history import HistoryService
 
 
-def test_history_includes_mode_version_and_extended(monkeypatch, client) -> None:
+def test_history_includes_mode_and_version(monkeypatch, client) -> None:
     def fake_get_history(self, *, limit: int = 50):
         return {
             "items": [
@@ -12,7 +12,6 @@ def test_history_includes_mode_version_and_extended(monkeypatch, client) -> None
                     "user_question": "Как настроить logical replication?",
                     "pg_version": "16",
                     "mode": "tutorial",
-                    "extended_mode": True,
                     "answer_text": None,
                     "tutorial_json": {
                         "short_explanation": "x",
@@ -35,4 +34,3 @@ def test_history_includes_mode_version_and_extended(monkeypatch, client) -> None
     body = response.json()
     assert body["items"][0]["mode"] == "tutorial"
     assert body["items"][0]["pg_version"] == "16"
-    assert body["items"][0]["extended_mode"] is True

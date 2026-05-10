@@ -7,7 +7,7 @@ source_format: "html_cleaned_to_markdown"
 original_html_path: "html/postgres_wiki_whitelist/wiki/Binary_Replication_Tutorial.html"
 source_url: "https://wiki.postgresql.org/wiki/Binary_Replication_Tutorial"
 indexable: true
-usage_rule: "Использовать только как supplementary слой в tutorial + extended_mode. Факты должны подтверждаться official corpus выбранной версии."
+usage_rule: "Использовать только как supplementary слой в tutorial. Факты должны подтверждаться official corpus выбранной версии."
 ---
 
 # Binary Replication Tutorial - PostgreSQL wiki

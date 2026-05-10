@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Automated Backup on Linux/ja - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"da1c693646a9025a5d249ea3","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Automated_Backup_on_Linux/ja","wgTitle":"Automated Backup on Linux/ja","wgCurRevisionId":28067,"wgRevisionId":28067,"wgArticleId":3235,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Pages using deprecated source tags","Administration","Backup","Japanese"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Automated_Backup_on_Linux/ja","wgRelevantArticleId":3235,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","ext.pygments":"ready","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=ext.pygments%7Cskins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Automated_Backup_on_Linux_ja rootpage-Automated_Backup_on_Linux skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Automated Backup on Linux/ja</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ><span class="subpages">&lt; <a href="/wiki/Automated_Backup_on_Linux" title="Automated Backup on Linux">Automated Backup on Linux</a></span></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+原文最終更新日：17 May 2016
+</p><p>ここではクラスタ個別にすべてのデータベースをバックアップするいくつかのスクリプト、必要に応じてセットリストのスキーマのバックアップのみ行うものを取り扱います。理由の一つは、pg_dumpallが単一のファイルに明白なSQLコピーを出力するであるがゆえに、バックアップから個別のデータベースのみをリストアしたいと思った時にpg_dumpallを超えた使い方によってこのスクリプトを利用して欲しいからです。これは、スキーマの特定データベースのみをリストアする場合のオプションも提供します。このアイディアは深夜のcronジョブにて実行される想定です。
+</p>
+<ul><li>pg_backup.config - 主となる設定ファイル。利用者が変更する唯一のファイル。</li></ul>
+<ul><li>pg_backup.sh - それぞれのデータベースで実行され、gzip圧縮そして／又は日付を基本としたディレクトリにバックアップのコピーをカスタムフォーマットによって保存する通常のバックアップスクリプト。</li></ul>
+<ul><li>pg_backup_rotated.sh - 設定によって期限切れしたバックアップの削除を行うこと以外は上記と同様のもの。</li></ul>
+<p>※訳注：以下のスクリプトのコメントを和訳していますが、文字化けなどを起こす環境の場合は原文<a href="/wiki/Automated_Backup_on_Linux" title="Automated Backup on Linux">Automated_Backup_on_Linux</a>のスクリプトを利用してください。
+</p>
+<h3><span class="mw-headline" id="pg_backup.config">pg_backup.config</span></h3>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span><span class="c1">################################</span>
+<span class="c1">## POSTGRESQLバックアップ設定 ##</span>
+<span class="c1">################################</span>
+
+<span class="c1"># バックアップ実行のためのユーザ設定。もし設定したユーザとこのスクリプトを実行しているユーザがちがう場合は</span>
+<span class="c1"># スクリプトは終了します。このチェックを回避したい場合は空白を設定してください。</span>
+<span class="nv">BACKUP_USER</span><span class="o">=</span>
+
+<span class="c1"># pg_hbaファイルのポリシーに紐づいたホスト名の設定。ブランクの場合は、デフォルトで&quot;localhost&quot;となります。</span>
+<span class="nv">HOSTNAME</span><span class="o">=</span>
+
+<span class="c1"># データベースに接続するユーザ名の設定。ブランクの場合は&quot;postgres&quot;となります。</span>
+<span class="nv">USERNAME</span><span class="o">=</span>
+
+<span class="c1"># バックアップディレクトリの設定。存在しなければ作成されます。スクリプト実行ユーザによる書き込み権限が</span>
+<span class="c1"># 必須となります。</span>
+<span class="nv">BACKUP_DIR</span><span class="o">=</span>/home/backups/database/postgresql/
+
+<span class="c1"># スペースかカンマ区切りで羅列されたデータベース名に合致する文字列リスト。データではなく、スキーマの</span>
+<span class="c1"># バックアップを保持するためのものとなります。これらの値に含まれるいずれのデータベース名もバックアップ候補となります。</span>
+<span class="c1"># （例えば&quot;system_log&quot;の指定をすると&quot;dev_system_log_2010-01&quot;にも合致します）</span>
+<span class="nv">SCHEMA_ONLY_LIST</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+
+<span class="c1"># &quot;yes&quot;の場合はカスタムフォーマットのバックアップが提供されます。</span>
+<span class="nv">ENABLE_CUSTOM_BACKUPS</span><span class="o">=</span>yes
+
+<span class="c1"># &quot;yes&quot;の場合はgzip圧縮されたプレーンフォーマットのバックアップが提供されます。</span>
+<span class="nv">ENABLE_PLAIN_BACKUPS</span><span class="o">=</span>yes
+
+<span class="c1"># &quot;yes&quot;の場合はユーザやパスワードをのようなglobalクラスタを含んだsqlファイルをgzipしたものが提供されます。</span>
+<span class="nv">ENABLE_GLOBALS_BACKUPS</span><span class="o">=</span>yes
+
+
+<span class="c1">#### 自動ローテーションの設定 ####</span>
+
+<span class="c1"># 週次バックアップを取る曜日（1-7 = 月曜日-日曜日）</span>
+<span class="nv">DAY_OF_WEEK_TO_KEEP</span><span class="o">=</span><span class="m">5</span>
+
+<span class="c1"># 日次バックアップを保持する日数</span>
+<span class="nv">DAYS_TO_KEEP</span><span class="o">=</span><span class="m">7</span>
+
+<span class="c1"># 週次バックアップを保持する週数</span>
+<span class="nv">WEEKS_TO_KEEP</span><span class="o">=</span><span class="m">5</span>
+
+<span class="c1">######################################</span>
+</pre></div>
+<h3><span class="mw-headline" id="pg_backup.sh">pg_backup.sh</span></h3>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1">##############################</span>
+<span class="c1">####### 設定の読み込み #######</span>
+<span class="c1">##############################</span>
+
+<span class="k">while</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="k">in</span>
+<span class="w">                </span>-c<span class="o">)</span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                                </span><span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
+<span class="w">                                </span><span class="nb">shift</span><span class="w"> </span><span class="m">2</span>
+<span class="w">                        </span><span class="k">else</span>
+<span class="w">                                </span><span class="si">${</span><span class="nv">ECHO</span><span class="si">}</span><span class="w"> </span><span class="s2">&quot;Unreadable config file \&quot;</span><span class="nv">$2</span><span class="s2">\&quot;&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">                                </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="w">                        </span><span class="k">fi</span>
+<span class="w">                        </span><span class="p">;;</span>
+<span class="w">                </span>*<span class="o">)</span>
+<span class="w">                        </span><span class="si">${</span><span class="nv">ECHO</span><span class="si">}</span><span class="w"> </span><span class="s2">&quot;不明なオプションです。 \&quot;</span><span class="nv">$1</span><span class="s2">\&quot;&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">                        </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span>
+<span class="w">                        </span><span class="p">;;</span>
+<span class="w">        </span><span class="k">esac</span>
+<span class="k">done</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nv">SCRIPTPATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">pwd</span><span class="w"> </span>-P<span class="k">)</span>
+<span class="w">        </span><span class="nb">source</span><span class="w"> </span><span class="nv">$SCRIPTPATH</span>/pg_backup.config
+<span class="k">fi</span><span class="p">;</span>
+
+<span class="c1">##################################</span>
+<span class="c1">#### バックアップ前のチェック ####</span>
+<span class="c1">##################################</span>
+
+<span class="c1"># 要求されたバックアップユーザで実行中かの確認</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_USER</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-un<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_USER</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;このスクリプトは </span><span class="nv">$BACKUP_USER</span><span class="s2"> として実行されなければなりません。 終了しています。&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">	</span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="k">fi</span><span class="p">;</span>
+
+
+<span class="c1">############################</span>
+<span class="c1">### デフォルト値で初期化 ###</span>
+<span class="c1">############################</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span><span class="nv">$HOSTNAME</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">	</span><span class="nv">HOSTNAME</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span>
+<span class="k">fi</span><span class="p">;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span><span class="nv">$USERNAME</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">	</span><span class="nv">USERNAME</span><span class="o">=</span><span class="s2">&quot;postgres&quot;</span>
+<span class="k">fi</span><span class="p">;</span>
+
+
+<span class="c1">##########################</span>
+<span class="c1">#### バックアップ開始 ####</span>
+<span class="c1">##########################</span>
+
+
+<span class="nv">FINAL_BACKUP_DIR</span><span class="o">=</span><span class="nv">$BACKUP_DIR</span><span class="s2">&quot;`date +\%Y-\%m-\%d`/&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;バックアップディレクトリを作成中 </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span>
+
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;バックアップディレクトリを </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2"> に作成できません。正しく設定してください。&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">	</span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="k">fi</span><span class="p">;</span>
+
+
+<span class="c1">############################</span>
+<span class="c1">### GLOBALのバックアップ ###</span>
+<span class="c1">############################</span>
+
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\n\nglobalsのバックアップを実行中&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;--------------------------------------------\n&quot;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$ENABLE_GLOBALS_BACKUPS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="w"> </span><span class="o">]</span>
+<span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Globalのバックアップ&quot;</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>pg_dumpall<span class="w"> </span>-g<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;globals&quot;</span>.sql.gz.in_progress<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[!!エラー!!] globalsのバックアップに失敗しました。&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">                </span>mv<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;globals&quot;</span>.sql.gz.in_progress<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;globals&quot;</span>.sql.gz
+<span class="w">        </span><span class="k">fi</span>
+<span class="k">else</span>
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;None&quot;</span>
+<span class="k">fi</span>
+
+
+<span class="c1">##################################</span>
+<span class="c1">### スキーマのみのバックアップ ###</span>
+<span class="c1">##################################</span>
+
+<span class="k">for</span><span class="w"> </span>SCHEMA_ONLY_DB<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="si">${</span><span class="nv">SCHEMA_ONLY_LIST</span><span class="p">//,/ </span><span class="si">}</span>
+<span class="k">do</span>
+<span class="w">	</span><span class="nv">SCHEMA_ONLY_CLAUSE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$SCHEMA_ONLY_CLAUSE</span><span class="s2"> or datname ~ &#39;</span><span class="nv">$SCHEMA_ONLY_DB</span><span class="s2">&#39;&quot;</span>
+<span class="k">done</span>
+
+<span class="nv">SCHEMA_ONLY_QUERY</span><span class="o">=</span><span class="s2">&quot;select datname from pg_database where false </span><span class="nv">$SCHEMA_ONLY_CLAUSE</span><span class="s2"> order by datname;&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\n\nスキーマのみのバックアップを実行中&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;--------------------------------------------\n&quot;</span>
+
+<span class="nv">SCHEMA_ONLY_DB_LIST</span><span class="o">=</span><span class="sb">`</span>psql<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span>-At<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SCHEMA_ONLY_QUERY</span><span class="s2">&quot;</span><span class="w"> </span>postgres<span class="sb">`</span>
+
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;以下のデータベースがスキーマのみバックアップ対象となります:\n</span><span class="si">${</span><span class="nv">SCHEMA_ONLY_DB_LIST</span><span class="si">}</span><span class="s2">\n&quot;</span>
+
+<span class="k">for</span><span class="w"> </span>DATABASE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$SCHEMA_ONLY_DB_LIST</span>
+<span class="k">do</span>
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2"> のスキーマのみバックアップ&quot;</span>
+
+<span class="w">	</span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>pg_dump<span class="w"> </span>-Fp<span class="w"> </span>-s<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>_SCHEMA.sql.gz.in_progress<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">		</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[!!エラー!!] </span><span class="nv">$DATABASE</span><span class="s2"> スキーマのバックアップに失敗しました。&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">	</span><span class="k">else</span>
+<span class="w">		</span>mv<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>_SCHEMA.sql.gz.in_progress<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>_SCHEMA.sql.gz
+<span class="w">	</span><span class="k">fi</span>
+<span class="k">done</span>
+
+
+<span class="c1">###############################</span>
+<span class="c1">###### フルバックアップ #######</span>
+<span class="c1">###############################</span>
+
+<span class="k">for</span><span class="w"> </span>SCHEMA_ONLY_DB<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="si">${</span><span class="nv">SCHEMA_ONLY_LIST</span><span class="p">//,/ </span><span class="si">}</span>
+<span class="k">do</span>
+<span class="w">	</span><span class="nv">EXCLUDE_SCHEMA_ONLY_CLAUSE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$EXCLUDE_SCHEMA_ONLY_CLAUSE</span><span class="s2"> and datname&#160;!~ &#39;</span><span class="nv">$SCHEMA_ONLY_DB</span><span class="s2">&#39;&quot;</span>
+<span class="k">done</span>
+
+<span class="nv">FULL_BACKUP_QUERY</span><span class="o">=</span><span class="s2">&quot;select datname from pg_database where not datistemplate and datallowconn </span><span class="nv">$EXCLUDE_SCHEMA_ONLY_CLAUSE</span><span class="s2"> order by datname;&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\n\nフルバックアップの実行中&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;--------------------------------------------\n&quot;</span>
+
+<span class="k">for</span><span class="w"> </span>DATABASE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sb">`</span>psql<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span>-At<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$FULL_BACKUP_QUERY</span><span class="s2">&quot;</span><span class="w"> </span>postgres<span class="sb">`</span>
+<span class="k">do</span>
+<span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$ENABLE_PLAIN_BACKUPS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="w"> </span><span class="o">]</span>
+<span class="w">	</span><span class="k">then</span>
+<span class="w">		</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2"> のバックアップ&quot;</span>
+
+<span class="w">		</span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>pg_dump<span class="w"> </span>-Fp<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.sql.gz.in_progress<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">			</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[!!エラー!!] </span><span class="nv">$DATABASE</span><span class="s2"> のバックアップに失敗しました。&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">		</span><span class="k">else</span>
+<span class="w">			</span>mv<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.sql.gz.in_progress<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.sql.gz
+<span class="w">		</span><span class="k">fi</span>
+<span class="w">	</span><span class="k">fi</span>
+
+<span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$ENABLE_CUSTOM_BACKUPS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="w"> </span><span class="o">]</span>
+<span class="w">	</span><span class="k">then</span>
+<span class="w">		</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2"> のカスタムバックアップ&quot;</span>
+
+<span class="w">		</span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>pg_dump<span class="w"> </span>-Fc<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.custom.in_progress<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">			</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[!!エラー!!] </span><span class="nv">$DATABASE</span><span class="s2"> のカスタムバックアップに失敗しました。&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">		</span><span class="k">else</span>
+<span class="w">			</span>mv<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.custom.in_progress<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.custom
+<span class="w">		</span><span class="k">fi</span>
+<span class="w">	</span><span class="k">fi</span>
+
+<span class="k">done</span>
+
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\nすべてのデータベースのバックアップが完了しました。&quot;</span>
+</pre></div>
+<h3><span class="mw-headline" id="pg_backup_rotated.sh">pg_backup_rotated.sh</span></h3>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1">##############################</span>
+<span class="c1">####### 設定の読み込み #######</span>
+<span class="c1">##############################</span>
+
+<span class="k">while</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="k">in</span>
+<span class="w">                </span>-c<span class="o">)</span>
+<span class="w">                        </span><span class="nv">CONFIG_FILE_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
+<span class="w">                        </span><span class="nb">shift</span><span class="w"> </span><span class="m">2</span>
+<span class="w">                        </span><span class="p">;;</span>
+<span class="w">                </span>*<span class="o">)</span>
+<span class="w">                        </span><span class="si">${</span><span class="nv">ECHO</span><span class="si">}</span><span class="w"> </span><span class="s2">&quot;不明なオプションです。 \&quot;</span><span class="nv">$1</span><span class="s2">\&quot;&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">                        </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span>
+<span class="w">                        </span><span class="p">;;</span>
+<span class="w">        </span><span class="k">esac</span>
+<span class="k">done</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="nv">$CONFIG_FILE_PATH</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nv">SCRIPTPATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">pwd</span><span class="w"> </span>-P<span class="k">)</span>
+<span class="w">        </span><span class="nv">CONFIG_FILE_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SCRIPTPATH</span><span class="si">}</span><span class="s2">/pg_backup.config&quot;</span>
+<span class="k">fi</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-r<span class="w"> </span><span class="si">${</span><span class="nv">CONFIG_FILE_PATH</span><span class="si">}</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Could not load config file from </span><span class="si">${</span><span class="nv">CONFIG_FILE_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">        </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CONFIG_FILE_PATH</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1">##################################</span>
+<span class="c1">#### バックアップ前のチェック ####</span>
+<span class="c1">##################################</span>
+
+<span class="c1"># Make sure we&#39;re running as the required backup user</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_USER</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-un<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_USER</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;このスクリプトは </span><span class="nv">$BACKUP_USER</span><span class="s2"> として実行されなければなりません。 終了しています。&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">	</span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+
+<span class="c1">############################</span>
+<span class="c1">### デフォルト値で初期化 ###</span>
+<span class="c1">############################</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span><span class="nv">$HOSTNAME</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">	</span><span class="nv">HOSTNAME</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span>
+<span class="k">fi</span><span class="p">;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span><span class="nv">$USERNAME</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">	</span><span class="nv">USERNAME</span><span class="o">=</span><span class="s2">&quot;postgres&quot;</span>
+<span class="k">fi</span><span class="p">;</span>
+
+
+<span class="c1">##########################</span>
+<span class="c1">#### バックアップ開始 ####</span>
+<span class="c1">##########################</span>
+
+<span class="k">function</span><span class="w"> </span>perform_backups<span class="o">()</span>
+<span class="o">{</span>
+<span class="w">	</span><span class="nv">SUFFIX</span><span class="o">=</span><span class="nv">$1</span>
+<span class="w">	</span><span class="nv">FINAL_BACKUP_DIR</span><span class="o">=</span><span class="nv">$BACKUP_DIR</span><span class="s2">&quot;`date +\%Y-\%m-\%d`</span><span class="nv">$SUFFIX</span><span class="s2">/&quot;</span>
+
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;バックアップディレクトリを作成中 </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span>
+
+<span class="w">	</span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">		</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;バックアップディレクトリを </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2"> に作成できません。正しく設定してください。&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">		</span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">	</span><span class="k">fi</span><span class="p">;</span>
+<span class="w">	</span>
+<span class="w">	</span><span class="c1">############################</span>
+<span class="w">	</span><span class="c1">### GLOBALのバックアップ ###</span>
+<span class="w">	</span><span class="c1">############################</span>
+
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\n\nglobalsのバックアップを実行中&quot;</span>
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;--------------------------------------------\n&quot;</span>
+
+<span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$ENABLE_GLOBALS_BACKUPS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="w"> </span><span class="o">]</span>
+<span class="w">	</span><span class="k">then</span>
+<span class="w">		    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Globals backup&quot;</span>
+
+<span class="w">		    </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>pg_dumpall<span class="w"> </span>-g<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;globals&quot;</span>.sql.gz.in_progress<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">		            </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[!!エラー!!] globalsのバックアップに失敗しました。&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">		    </span><span class="k">else</span>
+<span class="w">		            </span>mv<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;globals&quot;</span>.sql.gz.in_progress<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;globals&quot;</span>.sql.gz
+<span class="w">		    </span><span class="k">fi</span>
+<span class="w">	</span><span class="k">else</span>
+<span class="w">		</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;None&quot;</span>
+<span class="w">	</span><span class="k">fi</span>
+
+
+<span class="w">	</span><span class="c1">##################################</span>
+<span class="w">	</span><span class="c1">### スキーマのみのバックアップ ###</span>
+<span class="w">	</span><span class="c1">##################################</span>
+<span class="w">	</span>
+<span class="w">	</span><span class="k">for</span><span class="w"> </span>SCHEMA_ONLY_DB<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="si">${</span><span class="nv">SCHEMA_ONLY_LIST</span><span class="p">//,/ </span><span class="si">}</span>
+<span class="w">	</span><span class="k">do</span>
+<span class="w">	        </span><span class="nv">SCHEMA_ONLY_CLAUSE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$SCHEMA_ONLY_CLAUSE</span><span class="s2"> or datname ~ &#39;</span><span class="nv">$SCHEMA_ONLY_DB</span><span class="s2">&#39;&quot;</span>
+<span class="w">	</span><span class="k">done</span>
+<span class="w">	</span>
+<span class="w">	</span><span class="nv">SCHEMA_ONLY_QUERY</span><span class="o">=</span><span class="s2">&quot;select datname from pg_database where false </span><span class="nv">$SCHEMA_ONLY_CLAUSE</span><span class="s2"> order by datname;&quot;</span>
+<span class="w">	</span>
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\n\nスキーマのみのバックアップを実行中&quot;</span>
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;--------------------------------------------\n&quot;</span>
+<span class="w">	</span>
+<span class="w">	</span><span class="nv">SCHEMA_ONLY_DB_LIST</span><span class="o">=</span><span class="sb">`</span>psql<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span>-At<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SCHEMA_ONLY_QUERY</span><span class="s2">&quot;</span><span class="w"> </span>postgres<span class="sb">`</span>
+<span class="w">	</span>
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;以下のデータベースがスキーマのみバックアップ対象となります:\n</span><span class="si">${</span><span class="nv">SCHEMA_ONLY_DB_LIST</span><span class="si">}</span><span class="s2">\n&quot;</span>
+<span class="w">	</span>
+<span class="w">	</span><span class="k">for</span><span class="w"> </span>DATABASE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$SCHEMA_ONLY_DB_LIST</span>
+<span class="w">	</span><span class="k">do</span>
+<span class="w">	        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2"> のスキーマのみバックアップ&quot;</span>
+<span class="w">	</span>
+<span class="w">	        </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>pg_dump<span class="w"> </span>-Fp<span class="w"> </span>-s<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>_SCHEMA.sql.gz.in_progress<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">	                </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[!!エラー!!] </span><span class="nv">$DATABASE</span><span class="s2"> スキーマのバックアップに失敗しました。&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">	        </span><span class="k">else</span>
+<span class="w">	                </span>mv<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>_SCHEMA.sql.gz.in_progress<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>_SCHEMA.sql.gz
+<span class="w">	        </span><span class="k">fi</span>
+<span class="w">	</span><span class="k">done</span>
+<span class="w">	</span>
+<span class="w">	</span>
+<span class="w">	</span><span class="c1">###############################</span>
+<span class="w">	</span><span class="c1">###### フルバックアップ #######</span>
+<span class="w">	</span><span class="c1">###############################</span>
+
+<span class="w">	</span><span class="k">for</span><span class="w"> </span>SCHEMA_ONLY_DB<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="si">${</span><span class="nv">SCHEMA_ONLY_LIST</span><span class="p">//,/ </span><span class="si">}</span>
+<span class="w">	</span><span class="k">do</span>
+<span class="w">		</span><span class="nv">EXCLUDE_SCHEMA_ONLY_CLAUSE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$EXCLUDE_SCHEMA_ONLY_CLAUSE</span><span class="s2"> and datname&#160;!~ &#39;</span><span class="nv">$SCHEMA_ONLY_DB</span><span class="s2">&#39;&quot;</span>
+<span class="w">	</span><span class="k">done</span>
+
+<span class="w">	</span><span class="nv">FULL_BACKUP_QUERY</span><span class="o">=</span><span class="s2">&quot;select datname from pg_database where not datistemplate and datallowconn </span><span class="nv">$EXCLUDE_SCHEMA_ONLY_CLAUSE</span><span class="s2"> order by datname;&quot;</span>
+
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\n\nフルバックアップの実行中&quot;</span>
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;--------------------------------------------\n&quot;</span>
+
+<span class="w">	</span><span class="k">for</span><span class="w"> </span>DATABASE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sb">`</span>psql<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span>-At<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$FULL_BACKUP_QUERY</span><span class="s2">&quot;</span><span class="w"> </span>postgres<span class="sb">`</span>
+<span class="w">	</span><span class="k">do</span>
+<span class="w">		</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$ENABLE_PLAIN_BACKUPS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="w"> </span><span class="o">]</span>
+<span class="w">		</span><span class="k">then</span>
+<span class="w">			</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2"> のバックアップ&quot;</span>
+<span class="w">	</span>
+<span class="w">			</span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>pg_dump<span class="w"> </span>-Fp<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.sql.gz.in_progress<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">				</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[!!エラー!!] </span><span class="nv">$DATABASE</span><span class="s2"> のバックアップに失敗しました。&quot;</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">			</span><span class="k">else</span>
+<span class="w">				</span>mv<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.sql.gz.in_progress<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.sql.gz
+<span class="w">			</span><span class="k">fi</span>
+<span class="w">		</span><span class="k">fi</span>
+
+<span class="w">		</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$ENABLE_CUSTOM_BACKUPS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="w"> </span><span class="o">]</span>
+<span class="w">		</span><span class="k">then</span>
+<span class="w">			</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2"> のカスタムバックアップ&quot;</span>
+<span class="w">	</span>
+<span class="w">			</span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>pg_dump<span class="w"> </span>-Fc<span class="w"> </span>-h<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOSTNAME</span><span class="s2">&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USERNAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.custom.in_progress<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">				</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[!!エラー!!] </span><span class="nv">$DATABASE</span><span class="s2"> のカスタムバックアップに失敗しました。&quot;</span>
+<span class="w">			</span><span class="k">else</span>
+<span class="w">				</span>mv<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.custom.in_progress<span class="w"> </span><span class="nv">$FINAL_BACKUP_DIR</span><span class="s2">&quot;</span><span class="nv">$DATABASE</span><span class="s2">&quot;</span>.custom
+<span class="w">			</span><span class="k">fi</span>
+<span class="w">		</span><span class="k">fi</span>
+
+<span class="w">	</span><span class="k">done</span>
+
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\nすべてのデータベースのバックアップが完了しました。&quot;</span>
+<span class="o">}</span>
+
+<span class="c1"># MONTHLY BACKUPS</span>
+
+<span class="nv">DAY_OF_MONTH</span><span class="o">=</span><span class="sb">`</span>date<span class="w"> </span>+%d<span class="sb">`</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$DAY_OF_MONTH</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">]</span><span class="p">;</span>
+<span class="k">then</span>
+<span class="w">	</span><span class="c1"># 全ての期限切れ月次ディレクトリの削除</span>
+<span class="w">	</span>find<span class="w"> </span><span class="nv">$BACKUP_DIR</span><span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">1</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*-monthly&quot;</span><span class="w"> </span>-exec<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="s1">&#39;{}&#39;</span><span class="w"> </span><span class="s1">&#39;;&#39;</span>
+<span class="w">	        	</span>
+<span class="w">	</span>perform_backups<span class="w"> </span><span class="s2">&quot;-monthly&quot;</span>
+<span class="w">	</span>
+<span class="w">	</span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="k">fi</span>
+
+<span class="c1"># 週次バックアップ</span>
+
+<span class="nv">DAY_OF_WEEK</span><span class="o">=</span><span class="sb">`</span>date<span class="w"> </span>+%u<span class="sb">`</span><span class="w"> </span><span class="c1">#1-7 (Monday-Sunday)</span>
+<span class="nv">EXPIRED_DAYS</span><span class="o">=</span><span class="sb">`</span>expr<span class="w"> </span><span class="k">$((</span><span class="o">(</span><span class="nv">$WEEKS_TO_KEEP</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">7</span><span class="o">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="k">))</span><span class="sb">`</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$DAY_OF_WEEK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$DAY_OF_WEEK_TO_KEEP</span><span class="w"> </span><span class="o">]</span><span class="p">;</span>
+<span class="k">then</span>
+<span class="w">	</span><span class="c1"># 全ての期限切れ週次ディレクトリの削除</span>
+<span class="w">	</span>find<span class="w"> </span><span class="nv">$BACKUP_DIR</span><span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">1</span><span class="w"> </span>-mtime<span class="w"> </span>+<span class="nv">$EXPIRED_DAYS</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*-weekly&quot;</span><span class="w"> </span>-exec<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="s1">&#39;{}&#39;</span><span class="w"> </span><span class="s1">&#39;;&#39;</span>
+<span class="w">	        	</span>
+<span class="w">	</span>perform_backups<span class="w"> </span><span class="s2">&quot;-weekly&quot;</span>
+<span class="w">	</span>
+<span class="w">	</span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="k">fi</span>
+
+<span class="c1"># 日次バックアップ</span>
+
+<span class="c1"># 7日以前の日次バックアップの削除</span>
+find<span class="w"> </span><span class="nv">$BACKUP_DIR</span><span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">1</span><span class="w"> </span>-mtime<span class="w"> </span>+<span class="nv">$DAYS_TO_KEEP</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*-daily&quot;</span><span class="w"> </span>-exec<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="s1">&#39;{}&#39;</span><span class="w"> </span><span class="s1">&#39;;&#39;</span>
+
+perform_backups<span class="w"> </span><span class="s2">&quot;-daily&quot;</span>
+</pre></div>
+<!-- 
+NewPP limit report
+Cached time: 20260408153039
+Cache expiry: 86400
+Reduced expiry: false
+Complications: []
+CPU time usage: 0.115 seconds
+Real time usage: 1.319 seconds
+Preprocessor visited node count: 26/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 53358/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    8.056      1 Template:Languages
+100.00%    8.056      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:3235-0!canonical and timestamp 20260408153038 and revision id 28067.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Automated_Backup_on_Linux/ja&amp;oldid=28067">https://wiki.postgresql.org/index.php?title=Automated_Backup_on_Linux/ja&amp;oldid=28067</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/index.php?title=Category:Pages_using_deprecated_source_tags&amp;action=edit&amp;redlink=1" class="new" title="Category:Pages using deprecated source tags (page does not exist)">Pages using deprecated source tags</a></li><li><a href="/wiki/Category:Administration" title="Category:Administration">Administration</a></li><li><a href="/wiki/Category:Backup" title="Category:Backup">Backup</a></li><li><a href="/wiki/Category:Japanese" title="Category:Japanese">Japanese</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Automated_Backup_on_Linux/ja" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Automated_Backup_on_Linux/ja&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Automated_Backup_on_Linux/ja">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Automated_Backup_on_Linux/ja&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Automated_Backup_on_Linux/ja&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Automated_Backup_on_Linux/ja" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Automated_Backup_on_Linux/ja&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Automated+Backup+on+Linux%2Fja" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Automated_Backup_on_Linux/ja" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Automated_Backup_on_Linux/ja" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Automated_Backup_on_Linux/ja&amp;oldid=28067" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Automated_Backup_on_Linux/ja&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 21 August 2016, at 12:28.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.115","walltime":"1.319","ppvisitednodes":{"value":26,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":53358,"limit":5000000},"timingprofile":["100.00%    8.056      1 Template:Languages","100.00%    8.056      1 -total"]},"cachereport":{"timestamp":"20260408153039","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":1600});});</script>
+</body>
+</html>

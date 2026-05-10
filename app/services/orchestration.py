@@ -11,31 +11,16 @@ from app.core.logging import get_logger
 from app.db.enums import CorpusType, ModeType, QueryStatus
 from app.repositories.queries import QueryRepository
 from app.repositories.versions import VersionRepository
-from app.schemas.ask import AskRequest, AskResponse, ClarificationPayload, TutorialPayload
+from app.schemas.ask import AskRequest, AskResponse, TutorialPayload
 from app.schemas.common import SourceOut
 from app.services.adapters.embeddings import EmbeddingServiceFactory
 from app.services.adapters.generation import GenerationService
 from app.services.query_processing import QueryAnalysis, analyze_query
 from app.services.reranking import RerankingService
 from app.services.retrieval import RetrievalService
-from app.services.types import RankedChunk
+from app.services.types import RankedChunk, RetrievedChunk
 
 logger = get_logger(__name__)
-
-_SETUP_KEYWORDS = (
-    "настро", "установ", "установк", "деплой", "deploy", "запуст",
-    "конфигур", "config", "setup", "install",
-)
-_ENV_KEYWORDS = (
-    "linux", "windows", "macos", "mac os", "docker", "kubernetes", "k8s",
-    "ubuntu", "debian", "centos", "rhel", "fedora", "arch",
-    "aws", "rds", "gcp", "cloud sql", "azure", "heroku",
-    "systemd", "brew", "apt", "yum", "dnf",
-)
-_ARCH_KEYWORDS = (
-    "primary", "standby", "replica", "master", "slave",
-    "prod", "production", "staging", "dev", "development", "test",
-)
 
 
 class AskOrchestrationService:
@@ -49,50 +34,13 @@ class AskOrchestrationService:
         self.generator = GenerationService()
 
     @staticmethod
-    def resolve_corpora(mode: str, extended_mode: bool) -> list[str]:
-        if mode == ModeType.ANSWER.value:
-            return [CorpusType.OFFICIAL.value]
-        if mode == ModeType.TUTORIAL.value and extended_mode:
+    def resolve_corpora(answer_mode: str) -> list[str]:
+        if answer_mode == ModeType.TUTORIAL.value:
             return [CorpusType.OFFICIAL.value, CorpusType.SUPPLEMENTARY.value]
         return [CorpusType.OFFICIAL.value]
 
     @staticmethod
-    def detect_clarification_need(question: str, mode: str, clarification_answer: str | None) -> ClarificationPayload | None:
-        if mode != ModeType.TUTORIAL.value:
-            return None
-        if clarification_answer:
-            return None
-
-        q_lower = question.lower().strip()
-        words = q_lower.split()
-        word_count = len(words)
-
-        has_setup = any(kw in q_lower for kw in _SETUP_KEYWORDS)
-        has_env = any(kw in q_lower for kw in _ENV_KEYWORDS)
-        has_arch = any(kw in q_lower for kw in _ARCH_KEYWORDS)
-
-        if has_setup and not has_env and word_count < 12:
-            return ClarificationPayload(
-                question="В каком окружении вы работаете? Например: локальный сервер (Linux/Windows/macOS), Docker, или облачный сервис (AWS RDS, GCP Cloud SQL)?",
-                hint="environment",
-            )
-
-        if has_setup and has_env and not has_arch and word_count < 10:
-            return ClarificationPayload(
-                question="Это для production-среды или для локальной разработки? Нужна ли высокая доступность?",
-                hint="architecture",
-            )
-
-        if word_count < 5 and not has_setup:
-            return ClarificationPayload(
-                question="Опишите задачу подробнее — что именно вы хотите сделать? Это поможет подготовить точное руководство.",
-                hint="details",
-            )
-
-        return None
-
-    @staticmethod
-    def _has_sufficient_evidence(*, ranked: list[RankedChunk], analysis: QueryAnalysis, mode: str) -> bool:
+    def _has_sufficient_evidence(*, ranked: list[RankedChunk], analysis: QueryAnalysis, answer_mode: str) -> bool:
         if not ranked:
             return False
 
@@ -142,7 +90,7 @@ class AskOrchestrationService:
             if not has_anchor_source:
                 return False
 
-        if mode == ModeType.TUTORIAL.value and analysis.intent == "procedural" and max_term_overlap < 0.12:
+        if answer_mode == ModeType.TUTORIAL.value and analysis.intent == "procedural" and max_term_overlap < 0.12:
             return False
 
         return True
@@ -170,6 +118,49 @@ class AskOrchestrationService:
             ],
         )
 
+    @staticmethod
+    def _merge_retrieved_unique(rows: list[RetrievedChunk]) -> list[RetrievedChunk]:
+        unique: dict[str, RetrievedChunk] = {}
+        for item in rows:
+            key = str(item.chunk_id)
+            if key not in unique:
+                unique[key] = item
+        return list(unique.values())
+
+    def _ensure_tutorial_supplementary(
+        self,
+        *,
+        answer_mode: str,
+        question_vector: list[float],
+        pg_version: str,
+        query_terms: list[str],
+        candidates: list[RetrievedChunk],
+    ) -> list[RetrievedChunk]:
+        if answer_mode != ModeType.TUTORIAL.value:
+            return candidates
+        if any(item.corpus_type == CorpusType.SUPPLEMENTARY.value for item in candidates):
+            return candidates
+
+        supplementary_candidates = self.retrieval.retrieve(
+            query_vector=question_vector,
+            pg_version=pg_version,
+            corpora=[CorpusType.SUPPLEMENTARY.value],
+            query_terms=query_terms,
+            top_k=max(4, min(settings.retrieval_top_k, settings.rerank_top_k)),
+        )
+        if not supplementary_candidates:
+            return candidates
+
+        merged = self._merge_retrieved_unique(candidates + supplementary_candidates)
+        logger.info(
+            "Tutorial retrieval added supplementary candidates version=%s base=%d supplementary=%d merged=%d",
+            pg_version,
+            len(candidates),
+            len(supplementary_candidates),
+            len(merged),
+        )
+        return merged
+
     def handle_ask(self, req: AskRequest) -> AskResponse:
         started = time.perf_counter()
         version = self.version_repo.get_by_major(req.pg_version)
@@ -179,34 +170,17 @@ class AskOrchestrationService:
             self.query_repo.create_failed_query(
                 version=version,
                 question=req.question,
-                mode=req.mode,
-                extended_mode=req.extended_mode,
+                mode=req.answer_mode,
                 latency_ms=elapsed,
             )
             raise NotFoundError(f"Unsupported PostgreSQL version: {req.pg_version}")
 
-        clarification = self.detect_clarification_need(
-            question=req.question,
-            mode=req.mode,
-            clarification_answer=req.clarification_answer,
-        )
-        if clarification is not None:
-            return AskResponse(
-                mode=req.mode,
-                pg_version=req.pg_version,
-                extended_mode=req.extended_mode if req.mode == "tutorial" else None,
-                clarification=clarification,
-                sources=[],
-            )
-
         effective_question = req.question
-        if req.clarification_answer:
-            effective_question = f"{req.question} ({req.clarification_answer})"
         analysis = analyze_query(effective_question)
 
-        corpora = self.resolve_corpora(req.mode, req.extended_mode)
-        if req.mode == ModeType.ANSWER.value and CorpusType.SUPPLEMENTARY.value in corpora:
-            raise DomainError("supplementary corpus is forbidden in answer mode")
+        corpora = self.resolve_corpora(req.answer_mode)
+        if req.answer_mode in {ModeType.SHORT.value, ModeType.DETAILED.value} and CorpusType.SUPPLEMENTARY.value in corpora:
+            raise DomainError("supplementary corpus is forbidden in short/detailed modes")
 
         try:
             question_vector = self.embedding.embed_text(analysis.embedding_query)
@@ -217,6 +191,13 @@ class AskOrchestrationService:
                 query_terms=analysis.expanded_terms,
                 top_k=settings.retrieval_top_k,
             )
+            retrieved = self._ensure_tutorial_supplementary(
+                answer_mode=req.answer_mode,
+                question_vector=question_vector,
+                pg_version=req.pg_version,
+                query_terms=analysis.expanded_terms,
+                candidates=retrieved,
+            )
 
             if not retrieved:
                 raise DomainError("No relevant documentation fragments found for selected version", status.HTTP_404_NOT_FOUND)
@@ -224,8 +205,7 @@ class AskOrchestrationService:
             ranked = self.reranker.rerank(
                 question=effective_question,
                 candidates=retrieved,
-                mode=req.mode,
-                extended_mode=req.extended_mode,
+                answer_mode=req.answer_mode,
                 query_analysis=analysis,
                 top_k=settings.rerank_top_k,
             )
@@ -237,17 +217,22 @@ class AskOrchestrationService:
                     status.HTTP_422_UNPROCESSABLE_ENTITY,
                 )
 
-            has_sufficient_evidence = self._has_sufficient_evidence(ranked=ranked, analysis=analysis, mode=req.mode)
+            has_sufficient_evidence = self._has_sufficient_evidence(ranked=ranked, analysis=analysis, answer_mode=req.answer_mode)
             if not has_sufficient_evidence:
-                if req.mode == ModeType.ANSWER.value:
+                if req.answer_mode in {ModeType.SHORT.value, ModeType.DETAILED.value}:
                     answer = self._insufficient_answer(pg_version=req.pg_version)
                     tutorial = None
                 else:
                     tutorial = self._insufficient_tutorial(pg_version=req.pg_version)
                     answer = None
             else:
-                if req.mode == ModeType.ANSWER.value:
-                    answer = self.generator.generate_answer(question=effective_question, pg_version=req.pg_version, ranked_chunks=ranked)
+                if req.answer_mode in {ModeType.SHORT.value, ModeType.DETAILED.value}:
+                    answer = self.generator.generate_answer(
+                        question=effective_question,
+                        pg_version=req.pg_version,
+                        answer_mode=req.answer_mode,
+                        ranked_chunks=ranked,
+                    )
                     tutorial = None
                 else:
                     tutorial = self.generator.generate_tutorial(
@@ -261,8 +246,7 @@ class AskOrchestrationService:
             self.query_repo.create_query(
                 version=version,
                 question=req.question,
-                mode=req.mode,
-                extended_mode=req.extended_mode,
+                mode=req.answer_mode,
                 answer_text=answer,
                 tutorial_payload=tutorial,
                 status=QueryStatus.SUCCESS.value,
@@ -283,18 +267,17 @@ class AskOrchestrationService:
                 for item in ranked
             ]
 
-            if req.mode == ModeType.ANSWER.value:
+            if req.answer_mode in {ModeType.SHORT.value, ModeType.DETAILED.value}:
                 return AskResponse(
-                    mode="answer",
+                    answer_mode=req.answer_mode,
                     pg_version=req.pg_version,
                     answer=answer,
                     sources=sources_out,
                 )
 
             return AskResponse(
-                mode="tutorial",
+                answer_mode="tutorial",
                 pg_version=req.pg_version,
-                extended_mode=req.extended_mode,
                 tutorial=tutorial,
                 sources=sources_out,
             )
@@ -305,8 +288,7 @@ class AskOrchestrationService:
             self.query_repo.create_failed_query(
                 version=version,
                 question=req.question,
-                mode=req.mode,
-                extended_mode=req.extended_mode,
+                mode=req.answer_mode,
                 latency_ms=elapsed,
             )
             raise
@@ -317,8 +299,7 @@ class AskOrchestrationService:
             self.query_repo.create_failed_query(
                 version=version,
                 question=req.question,
-                mode=req.mode,
-                extended_mode=req.extended_mode,
+                mode=req.answer_mode,
                 latency_ms=elapsed,
             )
             raise DomainError(str(exc), status.HTTP_503_SERVICE_UNAVAILABLE) from exc
@@ -329,8 +310,7 @@ class AskOrchestrationService:
             self.query_repo.create_failed_query(
                 version=version,
                 question=req.question,
-                mode=req.mode,
-                extended_mode=req.extended_mode,
+                mode=req.answer_mode,
                 latency_ms=elapsed,
             )
             raise DomainError("Internal error while processing request", status.HTTP_500_INTERNAL_SERVER_ERROR) from exc

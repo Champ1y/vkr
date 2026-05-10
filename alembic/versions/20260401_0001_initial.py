@@ -88,13 +88,12 @@ def upgrade() -> None:
         sa.Column("selected_version_id", postgresql.UUID(as_uuid=True), sa.ForeignKey("versions.id", ondelete="SET NULL"), nullable=True),
         sa.Column("user_question", sa.Text(), nullable=False),
         sa.Column("mode", sa.String(length=30), nullable=False),
-        sa.Column("extended_mode", sa.Boolean(), nullable=False, server_default=sa.false()),
         sa.Column("answer_text", sa.Text(), nullable=True),
         sa.Column("tutorial_json", postgresql.JSONB(astext_type=sa.Text()), nullable=True),
         sa.Column("status", sa.String(length=30), nullable=False, server_default="success"),
         sa.Column("latency_ms", sa.Integer(), nullable=False, server_default="0"),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False, server_default=sa.text("now()")),
-        sa.CheckConstraint("mode IN ('answer', 'tutorial')", name="ck_query_history_mode"),
+        sa.CheckConstraint("mode IN ('short', 'detailed', 'tutorial')", name="ck_query_history_mode"),
         sa.CheckConstraint("status IN ('success', 'failed')", name="ck_query_history_status"),
     )
 

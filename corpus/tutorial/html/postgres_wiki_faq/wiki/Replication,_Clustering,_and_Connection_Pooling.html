@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Replication, Clustering, and Connection Pooling - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"833cf04c464f60259f92ade6","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Replication,_Clustering,_and_Connection_Pooling","wgTitle":"Replication, Clustering, and Connection Pooling","wgCurRevisionId":42385,"wgRevisionId":42385,"wgArticleId":140,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Replication","Administration","Performance","Clustering"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Replication,_Clustering,_and_Connection_Pooling","wgRelevantArticleId":140,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Replication_Clustering_and_Connection_Pooling rootpage-Replication_Clustering_and_Connection_Pooling skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Replication, Clustering, and Connection Pooling</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Introduction"><span class="tocnumber">1</span> <span class="toctext">Introduction</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Features_in_the_Core_of_PostgreSQL"><span class="tocnumber">2</span> <span class="toctext">Features in the Core of PostgreSQL</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Comparison_matrix"><span class="tocnumber">3</span> <span class="toctext">Comparison matrix</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Replication"><span class="tocnumber">4</span> <span class="toctext">Replication</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Inactive_projects"><span class="tocnumber">4.1</span> <span class="toctext">Inactive projects</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-6"><a href="#Clustering"><span class="tocnumber">5</span> <span class="toctext">Clustering</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#Connection_Pooling_and_Acceleration"><span class="tocnumber">6</span> <span class="toctext">Connection Pooling and Acceleration</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Cluster_management"><span class="tocnumber">7</span> <span class="toctext">Cluster management</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#Other_Resources"><span class="tocnumber">8</span> <span class="toctext">Other Resources</span></a>
+<ul>
+<li class="toclevel-2 tocsection-10"><a href="#Articles"><span class="tocnumber">8.1</span> <span class="toctext">Articles</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Video_tutorials"><span class="tocnumber">8.2</span> <span class="toctext">Video tutorials</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-12"><a href="#Credits"><span class="tocnumber">9</span> <span class="toctext">Credits</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Introduction">Introduction</span></h2>
+<p>There are many approaches available to scale PostgreSQL beyond running on a single server.  An outline of the terminology and basic technologies involved is at <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/interactive/high-availability.html">High Availability and Load Balancing</a>.  There is a <a rel="nofollow" class="external text" href="http://momjian.us/main/writings/pgsql/replication.pdf">presentation</a> covering some of these solutions.
+</p><p>There is no one-size fits all replication software.  You have to understand your requirements and how various approaches fit into that.  For example, here are two extremes in the replication problem space:
+</p>
+<ul><li>You have a few servers connected to a local network you want to always keep current for failover and load-balancing purposes.  Here you would be considering solutions that are synchronous, eager, and therefore conflict-free.</li>
+<li>Your users take a local copy of the database with them on laptops when they leave the office, make changes while they are away, and need to merge those with the main database when they return.  Here you'd want an asynchronous, lazy replication approach, and will be forced to consider how to handle conflicts in cases where the same record has been modified both on the primary server and on a local copy.</li></ul>
+<p>These are both database replication problems, but the best way to solve them is very different.  And as you can see from these examples, replication has a lot of specific terminology that you'll have to understand to figure out what class of solution makes sense for your requirements.  A great source for this background is in the
+<a rel="nofollow" class="external text" href="http://www.postgres-r.org/documentation/terms">Postgres-R Terms and Definitions for Database Replication</a>.  The main theoretical topic it doesn't mention is how to resolve conflict resolution in lazy replication cases like the laptop situation, which involves voting and similar schemes.
+</p>
+<h2><span class="mw-headline" id="Features_in_the_Core_of_PostgreSQL">Features in the Core of PostgreSQL</span></h2>
+<ul><li><a href="/wiki/Hot_Standby" title="Hot Standby">Hot Standby</a>/<a href="/wiki/Streaming_Replication" title="Streaming Replication">Streaming Replication</a> is available as of PostgreSQL 9.0 and provides asynchronous binary replication to one or more standbys.  Standbys may also become hot standbys meaning they can be queried as a read-only database.  This is the fastest type of replication available as WAL data is sent immediately rather than waiting for a whole segment to be produced and shipped.</li></ul>
+<ul><li><a href="/wiki/Warm_Standby" title="Warm Standby">Warm Standby</a>/Log Shipping is a HA solution which 'replicates' a database cluster to an archive or a warm (can be brought up quickly, but not available for querying) standby server.  Overhead is very low and it's easy to set up.  This is a simple and appropriate solution if all you care about is continuous backup and short failover times.</li></ul>
+<ul><li>PostgreSQL 9.4's <a href="/index.php?title=Logical_Changeset_Extraction&amp;action=edit&amp;redlink=1" class="new" title="Logical Changeset Extraction (page does not exist)">Logical Changeset Extraction</a> forms the foundation of the <a href="/wiki/Bi-Directional_Replication" class="mw-redirect" title="Bi-Directional Replication">Bi-Directional Replication</a> and <a href="/wiki/Logical_Log_Streaming_Replication" class="mw-redirect" title="Logical Log Streaming Replication">Logical Log Streaming Replication</a> features being added to PostgreSQL.</li></ul>
+<p>Historically, the PostgreSQL core team considered replication and clustering technology outside the scope of the main project's focus but this changed in 2008, see the <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2008-05/msg00913.php">Core Team's statement</a>. Replication is now a significant focus of ongoing PostgreSQL development.
+</p>
+<h2><span class="mw-headline" id="Comparison_matrix">Comparison matrix</span></h2>
+<p>This page is being overhauled at <a href="/wiki/Clustering" title="Clustering">Clustering</a>
+</p>
+<table border="1" cellpadding="1" cellspacing="0" style="font-size: 85%; border: gray solid 1px; border-collapse: collapse; text-align: center; width: 100%; table-layout: fixed;">
+
+<tbody><tr style="background: #ececec">
+<th>Program
+</th>
+<th>License
+</th>
+<th>Maturity
+</th>
+<th>Replication Method
+</th>
+<th>Sync
+</th>
+<th>Connection Pooling
+</th>
+<th>Load Balancing
+</th>
+<th>Query Partitioning
+</th></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a href="/wiki/PgCluster" title="PgCluster">PgCluster</a>
+</th>
+<td bgcolor="#ffffaa">BSD
+</td>
+<td bgcolor="#ffffaa">Not production ready
+</td>
+<td bgcolor="#ffffaa">Master-Master
+</td>
+<td bgcolor="#ffffaa">Synchronous
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ddffdd">Yes
+</td>
+<td bgcolor="#ffaaaa">No
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><b>pgpool-I</b>
+</th>
+<td bgcolor="#ffffaa">BSD
+</td>
+<td bgcolor="#ffffaa">Stable
+</td>
+<td bgcolor="#ffffaa">Statement-Based Middleware
+</td>
+<td bgcolor="#ffffaa">Synchronous
+</td>
+<td bgcolor="#ddffdd">Yes
+</td>
+<td bgcolor="#ddffdd">Yes
+</td>
+<td bgcolor="#ffaaaa">No
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a href="/wiki/Pgpool-II" title="Pgpool-II">Pgpool-II</a>
+</th>
+<td bgcolor="#ffffaa">BSD
+</td>
+<td bgcolor="#ffffaa">Recent release
+</td>
+<td bgcolor="#ffffaa">Statement-Based Middleware
+</td>
+<td bgcolor="#ffffaa">Synchronous
+</td>
+<td bgcolor="#ddffdd">Yes
+</td>
+<td bgcolor="#ddffdd">Yes
+</td>
+<td bgcolor="#ddffdd">Yes
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a href="/wiki/Slony" title="Slony">slony</a>
+</th>
+<td bgcolor="#ffffaa">BSD
+</td>
+<td bgcolor="#ffffaa">Stable
+</td>
+<td bgcolor="#ffffaa">Primary-Replica
+</td>
+<td bgcolor="#ffffaa">Asynchronous
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a href="/wiki/Bucardo" title="Bucardo">Bucardo</a>
+</th>
+<td bgcolor="#ffffaa">BSD
+</td>
+<td bgcolor="#ffffaa">Stable
+</td>
+<td bgcolor="#ffffaa">Master-Master, Primary-Replica
+</td>
+<td bgcolor="#ffffaa">Asynchronous
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a href="/wiki/Londiste" class="mw-redirect" title="Londiste">Londiste</a>
+</th>
+<td bgcolor="#ffffaa">BSD
+</td>
+<td bgcolor="#ffffaa">Stable
+</td>
+<td bgcolor="#ffffaa">Primary-Replica
+</td>
+<td bgcolor="#ffffaa">Asynchronous
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a href="/wiki/Mammoth" title="Mammoth">Mammoth</a>
+</th>
+<td bgcolor="#ffffaa">BSD
+</td>
+<td bgcolor="#ffffaa">No longer maintained
+</td>
+<td bgcolor="#ffffaa">Primary-Replica
+</td>
+<td bgcolor="#ffffaa">Asynchronous
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a href="/wiki/Rubyrep" title="Rubyrep">rubyrep</a>
+</th>
+<td bgcolor="#ffffaa">MIT
+</td>
+<td bgcolor="#ffffaa">No longer maintained
+</td>
+<td bgcolor="#ffffaa">Master-Master, Primary-Replica
+</td>
+<td bgcolor="#ffffaa">Asynchronous
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a rel="nofollow" class="external text" href="https://2ndquadrant.com/en/resources/bdr/">Bi-Directional Replication</a>
+</th>
+<td bgcolor="#ffffaa">PostgreSQL (BSD)
+</td>
+<td bgcolor="#ffffaa">Recent release
+</td>
+<td bgcolor="#ffffaa">Master-Master<br />(no triggers needed)
+</td>
+<td bgcolor="#ffffaa">Asynchronous
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a rel="nofollow" class="external text" href="https://www.citusdata.com/citus-products/pg-shard">pg_shard</a>
+</th>
+<td bgcolor="#ffffaa">LGPL
+</td>
+<td bgcolor="#ffffaa">Recent release
+</td>
+<td bgcolor="#ffffaa">Statement-based Middleware (as an extension)
+</td>
+<td bgcolor="#ffffaa">Synchronous
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ddffdd">Yes
+</td>
+<td bgcolor="#ddffdd">Yes
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a rel="nofollow" class="external text" href="http://2ndquadrant.com/resources/pglogical">pglogical</a>
+</th>
+<td bgcolor="#ffffaa">PostgreSQL
+</td>
+<td bgcolor="#ffffaa">Recent release
+</td>
+<td bgcolor="#ffffaa">Primary-Replica
+</td>
+<td bgcolor="#ffffaa">Asynchronous
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td>
+<td bgcolor="#ffaaaa">No
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a rel="nofollow" class="external text" href="http://postgres-xl.org/">Postgres-XL</a>
+</th>
+<td bgcolor="#ffffaa">PostgreSQL
+</td>
+<td bgcolor="#ffffaa">Recent release
+</td>
+<td bgcolor="#ffffaa">MPP Postgres, scalable writes &amp; reads
+</td>
+<td bgcolor="#ffffaa">Synchronous
+</td>
+<td bgcolor="#ddffdd">Yes
+</td>
+<td bgcolor="#ddffdd">Yes
+</td>
+<td bgcolor="#ddffdd">Yes
+</td></tr>
+<tr>
+<th style="text-align:block;" bgcolor="#ececec"><a rel="nofollow" class="external text" href="https://www.citusdata.com/">Citus</a>
+</th>
+<td bgcolor="#ffffaa">AGPL
+</td>
+<td bgcolor="#ffffaa">Recent release
+</td>
+<td bgcolor="#ffffaa">MPP Postgres, scalable writes &amp; reads
+</td>
+<td bgcolor="#ffffaa">Asynchronous or Synchronous
+</td>
+<td bgcolor="#ddffdd">Yes
+</td>
+<td bgcolor="#ddffdd">Yes
+</td>
+<td bgcolor="#ddffdd">Yes
+</td></tr></tbody></table>
+<h2><span class="mw-headline" id="Replication">Replication</span></h2>
+<p>Aside from the in-core streaming replication, mentioned above...
+</p>
+<ul><li><a rel="nofollow" class="external text" href="https://www.ispirer.com/data-migration">IDM (Ispirer Data Migrator)</a>, a part of the Ispirer Ecosystem, is an enterprise-grade replication solution designed for streamlined data migration with near-zero downtime and no middleware required.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.spectralcore.com/replicator">Replicator Pro</a> allows table data comparison and sync - even with heterogeneous databases. It is unique in the fact it can replicate changes only even if source is non-relational (CSV, DBF, Excel documents, Paradox...). Replicator has a built-in scheduler for easy periodic change replication.</li></ul>
+<ul><li>Slony-I: Seems good, single primary only, primary is a single point of failure, no good failover system for electing a new primary or having a failed primary rejoin the cluster. Replica databases are mostly for safety or for parallelizing queries for performance. Suffers from O(N^2) communications (N = cluster size).  with reasonable sysadmin you can implement failover system yourself.  regarding communications, you can cascade the replication to reduce load on the primary.  If you were implementing a large replication cluster, this would probably be a good idea.  Slony is powerful, trigger based, and highly configurable.</li></ul>
+<ul><li>PGCluster:  PGCluster (which, incidentally, is not the same as PGCluster-II, a shared-disk solution), which does synchronous multimaster replication.  Two single-points failure spots, load balancer and the data replicator.  The project was developed as open source (old releases available in <a rel="nofollow" class="external text" href="https://www.postgresql.org/ftp/projects/pgFoundry/pgcluster/">PgFoundry archives</a>), then it was commercialized by the Cybertec.at company.</li></ul>
+<ul><li><a rel="nofollow" class="external free" href="http://www.pgpool.net/">http://www.pgpool.net/</a> pgpool 1/2 is a reasonable solution.  it's statement level replication, which has some downsides, but is good for certain things.  pgpool 2 has a neat distributed table mechanism which is interesting.  You might want to be looking here if you have extremely high ratios of read to write but need to service a huge transaction volume.  Supports load-balancing and replication by implementing a proxy that duplicates all updates to all replicas. It can partition data by doing this, and it can semi-intelligently route queries to the appropriate servers.</li></ul>
+<ul><li>"Mammoth Replicator" - BSD - <a rel="nofollow" class="external free" href="http://www.commandprompt.com/products/mammothreplicator/">http://www.commandprompt.com/products/mammothreplicator/</a> - Former proprietary solution, now open source. Uses a central logging process to distribute data changes amongst nodes. Essentially a fork of Postgres, as the changes are written directly into the backend.</li></ul>
+<ul><li>"Bucardo" - BSD License - <a rel="nofollow" class="external free" href="http://bucardo.org/">http://bucardo.org/</a> - Trigger-based, asynchronous, multi-master or primary-replica, written using plperl.</li></ul>
+<ul><li>Cybertec, an Austrian company, offers a proprietary packaging of PGCluster. They simply call it PostgreSQL Multimaster-Replication, see <a rel="nofollow" class="external free" href="http://www.cybertec.at">http://www.cybertec.at</a>.</li></ul>
+<ul><li><a href="/wiki/Londiste_Tutorial" class="mw-redirect" title="Londiste Tutorial">Londiste</a>, a part of <a href="/wiki/Skytools" class="mw-redirect" title="Skytools">Skytools</a> (<a rel="nofollow" class="external free" href="https://developer.skype.com/SkypeGarage/DbProjects/SkyTools">https://developer.skype.com/SkypeGarage/DbProjects/SkyTools</a>) which is a collection of replication tools from the Skype people. Purports to be simpler to use than Slony.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://2ndquadrant.com/en/resources/bdr/">BDR (Bi-Directional Replication for PostgreSQL)</a> - multi-master replication based on log streaming logical replication.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://2ndquadrant.com/en/resources/pglogical/">pglogical</a> - pglogical is a logical replication system implemented entirely as a PostgreSQL extension. Fully integrated, it requires no triggers or external programs. This alternative to physical replication is a highly efficient method of replicating data using a publish/subscribe model for selective replication.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.continuent.com/index.php?option=com_content&amp;task=view&amp;id=212&amp;Itemid=169">Continuent uni/cluster</a>, proprietary and the related Sequoia (jdbc, formerly known as c-jdbc)</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.postgres-r.org">Postgres-R</a> is still in development. It features eager and thus conflict-free, but async multi-master replication.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://symmetricds.codehaus.org/">SymmetricDS</a> is an open-source, web-enabled, database independent, data synchronization software application. It uses web and database technologies to replicate tables between relational databases in near real time. The software was designed to scale for a large number of databases, work across low-bandwidth connections, and withstand periods of network outages. Supports several relational databases, including PostgreSQL. Licensed under Lesser GPL (LGPL).</li></ul>
+<ul><li>DRBD (<a rel="nofollow" class="external free" href="http://www.drbd.org/">http://www.drbd.org/</a>), a device driver that replicates disk blocks to other nodes. This works for failover only, not for scaling reads. Easy migration of devices if combined with an NFS export.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://sourceforge.net/projects/daffodilreplica/">Daffodil Replicator</a>. Supports several relational databases, including PostgreSQL. Licensed under GPL.</li></ul>
+<ul><li>"RubyRep" - MIT License - <a rel="nofollow" class="external free" href="http://www.rubyrep.org/">http://www.rubyrep.org/</a> - Ruby based, asynchronous, multi-master replication system, which supports Postgres and MySQL.</li></ul>
+<ul><li>"pg_comparator" - BSD License - <a rel="nofollow" class="external free" href="https://www.cri.ensmp.fr/people/coelho/pg_comparator/">https://www.cri.ensmp.fr/people/coelho/pg_comparator/</a> (old releases in <a rel="nofollow" class="external text" href="https://www.postgresql.org/ftp/projects/pgFoundry/pg-comparator/">PgFoundry archives</a>)- Perl-based, table-level async primary-replica "diff" and "patch" method of replication.  Low configuration overhead.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.citusdata.com/">Citus Data</a> develops the <a rel="nofollow" class="external text" href="https://www.citusdata.com/citus-products/pg-shard">pg_shard extension</a> which can transparently shard a PostgreSQL table across many servers and replicate the shards, and <a rel="nofollow" class="external text" href="https://www.citusdata.com/product/citus">Citus</a> which parallelizes queries across many servers and cores for real-time analytics and supports bulk loading, distributed joins, columnar storage and more.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.enterprisedb.com/products-services-training/products-overview/tools/">EDB Replication Server</a>: Provides single and multi-master solutions for read/write scalability, availability, performance, and data integration with Oracle, SQL Server, and Postgres.  EDB Replication Server uses Postgres' fast Logical Decoding technology to support large multi-master clusters and single primary configurations for a wide variety of data center solutions.</li></ul>
+<p><br />
+</p>
+<h3><span class="mw-headline" id="Inactive_projects">Inactive projects</span></h3>
+<ul><li>Slony-II</li>
+<li>PGReplication</li></ul>
+<h2><span class="mw-headline" id="Clustering">Clustering</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="https://www.citusdata.com/product/citus">Citus</a> - shards and replicates tables across a scalable, high availability cluster of commodity PostgreSQL servers and parallelizes queries for real-time SQL on big data.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.greenplum.org">Greenplum Database</a> - Not so much a replication solution as a way to parallelize queries, and targeted at the data warehousing and big data crowd. Greenplum is tightly integrated with PostgreSQL.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.enterprisedb.com/products/gridsql.do">GridSQL for EnterpriseDB Advanced Server</a> (formerly ExtenDB)</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://db.cs.yale.edu/hadoopdb/hadoopdb.html">HadoopDB</a> - A MapReduce layer put in front of a cluster of postgres back end servers.   Shared-nothing clustering.</li></ul>
+<ul><li><a href="/wiki/PL/Proxy" title="PL/Proxy">PL/Proxy</a> - database partitioning system implemented as PL language.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://postgrespro.com">Postgres Pro Multimaster</a> - part of Postgres Pro Enterprise DBMS. Provides fail-safe shared nothing cluster with transactional integrity and no read overhead. Based on enhanced logical replication.</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.citusdata.com/citus-products/pg-shard">pg_shard</a> - extension that shards and replicates table across many servers, can also <a rel="nofollow" class="external text" href="https://www.citusdata.com/blog/14-marco/178-scaling-out-postgresql-on-amazon-rds-using-masterless-pg-shard">scale out Amazon RDS</a></li></ul>
+<ul><li>sequoia (jdbc, formerly known as c-jdbc)</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.postgres-xl.org/">Postgres-XL</a> is a shared nothing, multi-master clustering solution which can transparently distribute a table on a set of nodes and execute queries in parallel of those nodes. It has a additional component called Global Transaction Manager (GTM) for providing globally consistent view of the cluster. The project is based on the latest available 9.5 release of PostgreSQL. Some companies, such as <a rel="nofollow" class="external text" href="http://www.2ndquadrant.com">2ndQuadrant</a> provides commercial support for the product.</li></ul>
+<h2><span class="mw-headline" id="Connection_Pooling_and_Acceleration">Connection Pooling and Acceleration</span></h2>
+<p>Connection pooling programs let you reduce database-related overhead when it's the sheer number of physical connections dragging performance down.  This is particularly important on Windows, where system limitations prevent large number of connections; see "I cannot run with more than about 125 connections at once" in <a href="/wiki/Running_%26_Installing_PostgreSQL_On_Native_Windows" title="Running &amp; Installing PostgreSQL On Native Windows">Running &amp; Installing PostgreSQL On Native Windows</a>.  It's also vital for web applications where the number of connections can get very large.
+</p><p>Some programs that implement connection pooling are:
+</p>
+<ul><li><a href="/wiki/PgBouncer" title="PgBouncer">PgBouncer</a></li>
+<li><a rel="nofollow" class="external text" href="http://www.pgpool.net/">pgpool</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.heimdalldata.com/">Heimdall Data</a> - (Proprietary) Provides a multi-vendor solution for database caching, connection pooling, load balancing, query routing, analytics and security.  Provides a GUI for simple configuration, as well as a distributed engine for processing queries at scale.  Also supports run-time reconfiguration cluster-wide without application restarts.  Requires zero code changes to implement.</li></ul>
+<p>Some people also or alternately use <a rel="nofollow" class="external text" href="http://www.danga.com/memcached/">memcached</a> in various ways to reduce the work the database handles directly by caching popular data. <a rel="nofollow" class="external text" href="https://github.com/ohmu/pgmemcache/">pgmemcache</a> is a PostgreSQL extension for interfacing with memcached servers.
+</p>
+<h2><span class="mw-headline" id="Cluster_management">Cluster management</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="https://github.com/ohmu/pglookout/">pglookout</a> - PostgreSQL replication monitoring and failover daemon</li>
+<li><a href="/wiki/Repmgr" title="Repmgr">repmgr</a> - replication manager for PostgreSQL clusters</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/MasahikoSawada/pg_keeper/tree/REL1_0_STABLE">pg_keeper</a> - Background worker based simple failover daemon.</li></ul>
+<h2><span class="mw-headline" id="Other_Resources">Other Resources</span></h2>
+<p>Sources for more information located but not yet integrated into here.
+</p>
+<h3><span class="mw-headline" id="Articles">Articles</span></h3>
+<ul><li><strike><a rel="nofollow" class="external text" href="http://bristlecone.continuent.org/uploads/bristlecone/HomePage/PG_East-Scale-Out-Benchmarks_FINAL2.pdf">Portable Scale-Out Benchmarks for PostgreSQL</a> by Robert Hodges</strike> not available (2012-10-11)</li>
+<li><a rel="nofollow" class="external text" href="https://web.archive.org/web/20111027082229/www.fastware.com.au/docs/PostgreSQL_HighAvailability.pdf">High Availability and PostgreSQL</a> by Gavin Sherry <strike>not available (2012-10-11)</strike> (Web Archive version)</li>
+<li><a rel="nofollow" class="external text" href="http://www.palominodb.com/blog/2012/08/01/cascade-replication-and-delayed-servers-postgresql-92">Cascade Replication and Delayed servers on PostgreSQL 9.2</a></li>
+<li><a rel="nofollow" class="external text" href="http://prongs.org/blog/postgresql-replication">Streaming Replication on PostgreSQL 9.3 by Afra Ahmad</a></li></ul>
+<p><br />
+</p>
+<ul><li><a rel="nofollow" class="external text" href="http://burger-ag.de/postgresql_replikation.whtml">Replikation - Lösungen für PostgreSQL</a> page covering this topic in German.  It translates pretty well through <a rel="nofollow" class="external text" href="http://babelfish.altavista.com/">Babelfish</a>.</li></ul>
+<h3><span class="mw-headline" id="Video_tutorials">Video tutorials</span></h3>
+<ul><li><a rel="nofollow" class="external text" href="http://youtu.be/qTPNB0y37EI">Alex Alexander presenting Managing Postgres HA using DRBD, Pacemaker and Corosync</a> youtube video</li></ul>
+<h2><span class="mw-headline" id="Credits">Credits</span></h2>
+<p>Sources for the initial information on this page include:
+</p>
+<ul><li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-performance/2007-06/msg00264.php">replication thread</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-general/2007-08/msg00085.php">pgpool2 vs sequoia</a></li>
+<li><a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-hackers/2006-10/msg00810.php">Postgresql Caching</a></li></ul>
+<!-- 
+NewPP limit report
+Cached time: 20260408084217
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.038 seconds
+Real time usage: 0.043 seconds
+Preprocessor visited node count: 55/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:140-0!canonical and timestamp 20260408084216 and revision id 42385.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Replication,_Clustering,_and_Connection_Pooling&amp;oldid=42385">https://wiki.postgresql.org/index.php?title=Replication,_Clustering,_and_Connection_Pooling&amp;oldid=42385</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:Replication" title="Category:Replication">Replication</a></li><li><a href="/wiki/Category:Administration" title="Category:Administration">Administration</a></li><li><a href="/wiki/Category:Performance" title="Category:Performance">Performance</a></li><li><a href="/wiki/Category:Clustering" title="Category:Clustering">Clustering</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Replication,_Clustering,_and_Connection_Pooling" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/Talk:Replication,_Clustering,_and_Connection_Pooling" rel="discussion" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Replication,_Clustering,_and_Connection_Pooling">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Replication,_Clustering,_and_Connection_Pooling&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Replication,_Clustering,_and_Connection_Pooling&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Replication,_Clustering,_and_Connection_Pooling" title="Page">Page</a></li><li id="talk-mobile" class="mw-list-item"><a href="/wiki/Talk:Replication,_Clustering,_and_Connection_Pooling" title="Discussion">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Replication%2C+Clustering%2C+and+Connection+Pooling" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Replication,_Clustering,_and_Connection_Pooling" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Replication,_Clustering,_and_Connection_Pooling" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Replication,_Clustering,_and_Connection_Pooling&amp;oldid=42385" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Replication,_Clustering,_and_Connection_Pooling&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 12 December 2025, at 07:52.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.038","walltime":"0.043","ppvisitednodes":{"value":55,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260408084217","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":411});});</script>
+</body>
+</html>

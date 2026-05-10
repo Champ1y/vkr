@@ -7,7 +7,7 @@ source_format: "html_cleaned_to_markdown"
 original_html_path: "html/postgres_wiki_whitelist/wiki/Number_Of_Database_Connections.html"
 source_url: "https://wiki.postgresql.org/wiki/Number_Of_Database_Connections"
 indexable: true
-usage_rule: "Использовать только как supplementary слой в tutorial + extended_mode. Факты должны подтверждаться official corpus выбранной версии."
+usage_rule: "Использовать только как supplementary слой в tutorial. Факты должны подтверждаться official corpus выбранной версии."
 ---
 
 # Number Of Database Connections - PostgreSQL wiki

@@ -22,7 +22,6 @@ class QueryHistoryOut(BaseModel):
     user_question: str
     pg_version: str | None
     mode: str
-    extended_mode: bool
     answer_text: str | None
     tutorial_json: dict | None
     status: str

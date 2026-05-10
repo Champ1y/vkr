@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Lock dependency information/ja - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"79a357907e479d19b9eeee9a","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Lock_dependency_information/ja","wgTitle":"Lock dependency information/ja","wgCurRevisionId":27908,"wgRevisionId":27908,"wgArticleId":3220,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Pages using deprecated source tags","Performance Snippets","Administration","Performance","Monitoring","Japanese"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Lock_dependency_information/ja","wgRelevantArticleId":3220,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","ext.pygments":"ready","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=ext.pygments%7Cskins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Lock_dependency_information_ja rootpage-Lock_dependency_information skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Lock dependency information/ja</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ><span class="subpages">&lt; <a href="/wiki/Lock_dependency_information" title="Lock dependency information">Lock dependency information</a></span></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+原文最終更新日：1 October 2015
+</p>
+<div style="width: 11em; float: right; border: 1px solid #ccc; padding: 1ex 1em;">
+<p><big style="color: #e65600;"><b><a href="/wiki/Category:Performance_Snippets" title="Category:Performance Snippets">Performance Snippets</a></b></big>
+</p>
+<p style="font-weight: bold;">Lock dependency info</p>
+<div style="background: #eee; text-align: center; padding: 2px;">Works with PostgreSQL</div>
+<p>Any version
+</p>
+<div style="background: #eee; text-align: center; padding: 2px;">Written in</div>
+<p>SQL
+</p>
+<div style="background: #eee; text-align: center; padding: 2px;">Depends on</div>
+<p>Nothing
+</p>
+</div>
+<p>時に、ロックがお互いに依存していることを見ることはとても役に立ちます。
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Flat_View_of_Blocking"><span class="tocnumber">1</span> <span class="toctext">Flat View of Blocking</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#ブロッキングのフラットなビュー"><span class="tocnumber">2</span> <span class="toctext">ブロッキングのフラットなビュー</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#ブロッキングの再帰的なビュー"><span class="tocnumber">3</span> <span class="toctext">ブロッキングの再帰的なビュー</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#TIPS"><span class="tocnumber">3.1</span> <span class="toctext">TIPS</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Flat_View_of_Blocking">Flat View of Blocking</span></h2>
+<h2><span id=".E3.83.96.E3.83.AD.E3.83.83.E3.82.AD.E3.83.B3.E3.82.B0.E3.81.AE.E3.83.95.E3.83.A9.E3.83.83.E3.83.88.E3.81.AA.E3.83.93.E3.83.A5.E3.83.BC"></span><span class="mw-headline" id="ブロッキングのフラットなビュー">ブロッキングのフラットなビュー</span></h2>
+<p><i>waiting_</i>の接頭辞がついたすべてのカラムはロックを獲得していないトランザクションの情報を保持し、<i>other_</i>の接頭辞がついたカラムはそれぞれのトランザクションIDの同一リレーション上の他のロックについての情報を保持しています。
+</p>
+<div class="mw-highlight mw-highlight-lang-sql mw-content-ltr" dir="ltr"><pre><span></span><span class="c1">-- PostgreSQLバージョン9.2未満</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">waiting</span><span class="p">.</span><span class="n">locktype</span><span class="w">           </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_locktype</span><span class="p">,</span>
+<span class="w">    </span><span class="n">waiting</span><span class="p">.</span><span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_table</span><span class="p">,</span>
+<span class="w">    </span><span class="n">waiting_stm</span><span class="p">.</span><span class="n">current_query</span><span class="w">  </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_query</span><span class="p">,</span>
+<span class="w">    </span><span class="n">waiting</span><span class="p">.</span><span class="k">mode</span><span class="w">               </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_mode</span><span class="p">,</span>
+<span class="w">    </span><span class="n">waiting</span><span class="p">.</span><span class="n">pid</span><span class="w">                </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other</span><span class="p">.</span><span class="n">locktype</span><span class="w">             </span><span class="k">AS</span><span class="w"> </span><span class="n">other_locktype</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other</span><span class="p">.</span><span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="w">   </span><span class="k">AS</span><span class="w"> </span><span class="n">other_table</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other_stm</span><span class="p">.</span><span class="n">current_query</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">other_query</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other</span><span class="p">.</span><span class="k">mode</span><span class="w">                 </span><span class="k">AS</span><span class="w"> </span><span class="n">other_mode</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other</span><span class="p">.</span><span class="n">pid</span><span class="w">                  </span><span class="k">AS</span><span class="w"> </span><span class="n">other_pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other</span><span class="p">.</span><span class="k">granted</span><span class="w">              </span><span class="k">AS</span><span class="w"> </span><span class="n">other_granted</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_locks</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting</span>
+<span class="k">JOIN</span>
+<span class="w">    </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_stat_activity</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_stm</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">waiting_stm</span><span class="p">.</span><span class="n">procpid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">waiting</span><span class="p">.</span><span class="n">pid</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">JOIN</span>
+<span class="w">    </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_locks</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">other</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="p">(</span>
+<span class="w">            </span><span class="n">waiting</span><span class="p">.</span><span class="ss">&quot;database&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="ss">&quot;database&quot;</span>
+<span class="w">        </span><span class="k">AND</span><span class="w"> </span><span class="n">waiting</span><span class="p">.</span><span class="n">relation</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">relation</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">        </span><span class="k">OR</span><span class="w"> </span><span class="n">waiting</span><span class="p">.</span><span class="n">transactionid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">transactionid</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">JOIN</span>
+<span class="w">    </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_stat_activity</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">other_stm</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">other_stm</span><span class="p">.</span><span class="n">procpid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">pid</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">WHERE</span>
+<span class="w">    </span><span class="k">NOT</span><span class="w"> </span><span class="n">waiting</span><span class="p">.</span><span class="k">granted</span>
+<span class="k">AND</span>
+<span class="w">    </span><span class="n">waiting</span><span class="p">.</span><span class="n">pid</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">pid</span>
+</pre></div>
+<p><br />
+</p>
+<div class="mw-highlight mw-highlight-lang-sql mw-content-ltr" dir="ltr"><pre><span></span><span class="c1">-- PostgreSQLバージョン9.2以上</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">waiting</span><span class="p">.</span><span class="n">locktype</span><span class="w">           </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_locktype</span><span class="p">,</span>
+<span class="w">    </span><span class="n">waiting</span><span class="p">.</span><span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_table</span><span class="p">,</span>
+<span class="w">    </span><span class="n">waiting_stm</span><span class="p">.</span><span class="n">query</span><span class="w">          </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_query</span><span class="p">,</span>
+<span class="w">    </span><span class="n">waiting</span><span class="p">.</span><span class="k">mode</span><span class="w">               </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_mode</span><span class="p">,</span>
+<span class="w">    </span><span class="n">waiting</span><span class="p">.</span><span class="n">pid</span><span class="w">                </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other</span><span class="p">.</span><span class="n">locktype</span><span class="w">             </span><span class="k">AS</span><span class="w"> </span><span class="n">other_locktype</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other</span><span class="p">.</span><span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="w">   </span><span class="k">AS</span><span class="w"> </span><span class="n">other_table</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other_stm</span><span class="p">.</span><span class="n">query</span><span class="w">            </span><span class="k">AS</span><span class="w"> </span><span class="n">other_query</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other</span><span class="p">.</span><span class="k">mode</span><span class="w">                 </span><span class="k">AS</span><span class="w"> </span><span class="n">other_mode</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other</span><span class="p">.</span><span class="n">pid</span><span class="w">                  </span><span class="k">AS</span><span class="w"> </span><span class="n">other_pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">other</span><span class="p">.</span><span class="k">granted</span><span class="w">              </span><span class="k">AS</span><span class="w"> </span><span class="n">other_granted</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_locks</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting</span>
+<span class="k">JOIN</span>
+<span class="w">    </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_stat_activity</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">waiting_stm</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">waiting_stm</span><span class="p">.</span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">waiting</span><span class="p">.</span><span class="n">pid</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">JOIN</span>
+<span class="w">    </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_locks</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">other</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="p">(</span>
+<span class="w">            </span><span class="n">waiting</span><span class="p">.</span><span class="ss">&quot;database&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="ss">&quot;database&quot;</span>
+<span class="w">        </span><span class="k">AND</span><span class="w"> </span><span class="n">waiting</span><span class="p">.</span><span class="n">relation</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">relation</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">        </span><span class="k">OR</span><span class="w"> </span><span class="n">waiting</span><span class="p">.</span><span class="n">transactionid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">transactionid</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">JOIN</span>
+<span class="w">    </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_stat_activity</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">other_stm</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">other_stm</span><span class="p">.</span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">pid</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">WHERE</span>
+<span class="w">    </span><span class="k">NOT</span><span class="w"> </span><span class="n">waiting</span><span class="p">.</span><span class="k">granted</span>
+<span class="k">AND</span>
+<span class="w">    </span><span class="n">waiting</span><span class="p">.</span><span class="n">pid</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">pid</span>
+</pre></div>
+<p><br />
+どれくらいの間、待機中ステートメントがブロックされているかを指し示す特別なカラムを追加すると便利でしょう。
+</p>
+<h2><span id=".E3.83.96.E3.83.AD.E3.83.83.E3.82.AD.E3.83.B3.E3.82.B0.E3.81.AE.E5.86.8D.E5.B8.B0.E7.9A.84.E3.81.AA.E3.83.93.E3.83.A5.E3.83.BC"></span><span class="mw-headline" id="ブロッキングの再帰的なビュー">ブロッキングの再帰的なビュー</span></h2>
+<div class="mw-highlight mw-highlight-lang-sql mw-content-ltr" dir="ltr"><pre><span></span><span class="k">WITH</span><span class="w"> </span><span class="k">RECURSIVE</span>
+<span class="w">     </span><span class="k">c</span><span class="p">(</span><span class="n">requested</span><span class="p">,</span><span class="w"> </span><span class="k">current</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span>
+<span class="w">       </span><span class="p">(</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;AccessShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;RowShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;RowShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;RowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;RowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;RowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;RowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareUpdateExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareUpdateExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareUpdateExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareUpdateExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareUpdateExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareUpdateExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;RowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareUpdateExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;RowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareUpdateExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;RowShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;RowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareUpdateExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;AccessShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;RowShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;RowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareUpdateExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ShareRowExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">),</span>
+<span class="w">         </span><span class="p">(</span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;AccessExclusiveLock&#39;</span><span class="p">::</span><span class="nb">text</span><span class="p">)</span>
+<span class="w">       </span><span class="p">),</span>
+<span class="w">     </span><span class="n">l</span><span class="w"> </span><span class="k">AS</span>
+<span class="w">       </span><span class="p">(</span>
+<span class="w">         </span><span class="k">SELECT</span>
+<span class="w">             </span><span class="p">(</span><span class="n">locktype</span><span class="p">,</span><span class="k">DATABASE</span><span class="p">,</span><span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="n">page</span><span class="p">,</span><span class="n">tuple</span><span class="p">,</span><span class="n">virtualxid</span><span class="p">,</span><span class="n">transactionid</span><span class="p">,</span><span class="n">classid</span><span class="p">,</span><span class="n">objid</span><span class="p">,</span><span class="n">objsubid</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">target</span><span class="p">,</span>
+<span class="w">             </span><span class="n">virtualtransaction</span><span class="p">,</span>
+<span class="w">             </span><span class="n">pid</span><span class="p">,</span>
+<span class="w">             </span><span class="k">mode</span><span class="p">,</span>
+<span class="w">             </span><span class="k">granted</span>
+<span class="w">           </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_locks</span>
+<span class="w">       </span><span class="p">),</span>
+<span class="w">     </span><span class="n">t</span><span class="w"> </span><span class="k">AS</span>
+<span class="w">       </span><span class="p">(</span>
+<span class="w">         </span><span class="k">SELECT</span>
+<span class="w">             </span><span class="n">blocker</span><span class="p">.</span><span class="n">target</span><span class="w">  </span><span class="k">AS</span><span class="w"> </span><span class="n">blocker_target</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocker</span><span class="p">.</span><span class="n">pid</span><span class="w">     </span><span class="k">AS</span><span class="w"> </span><span class="n">blocker_pid</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocker</span><span class="p">.</span><span class="k">mode</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">blocker_mode</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocked</span><span class="p">.</span><span class="n">target</span><span class="w">  </span><span class="k">AS</span><span class="w"> </span><span class="n">target</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocked</span><span class="p">.</span><span class="n">pid</span><span class="w">     </span><span class="k">AS</span><span class="w"> </span><span class="n">pid</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocked</span><span class="p">.</span><span class="k">mode</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="k">mode</span>
+<span class="w">           </span><span class="k">FROM</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="n">blocker</span>
+<span class="w">           </span><span class="k">JOIN</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="n">blocked</span>
+<span class="w">             </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="k">granted</span>
+<span class="w">              </span><span class="k">AND</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="k">granted</span>
+<span class="w">              </span><span class="k">AND</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="n">pid</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="n">pid</span>
+<span class="w">              </span><span class="k">AND</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="n">target</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="n">target</span><span class="p">)</span>
+<span class="w">           </span><span class="k">JOIN</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="k">c</span><span class="p">.</span><span class="n">requested</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="k">mode</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="k">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="k">mode</span><span class="p">)</span>
+<span class="w">       </span><span class="p">),</span>
+<span class="w">     </span><span class="n">r</span><span class="w"> </span><span class="k">AS</span>
+<span class="w">       </span><span class="p">(</span>
+<span class="w">         </span><span class="k">SELECT</span>
+<span class="w">             </span><span class="n">blocker_target</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocker_pid</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocker_mode</span><span class="p">,</span>
+<span class="w">             </span><span class="s1">&#39;1&#39;</span><span class="p">::</span><span class="nb">int</span><span class="w">        </span><span class="k">AS</span><span class="w"> </span><span class="n">depth</span><span class="p">,</span>
+<span class="w">             </span><span class="n">target</span><span class="p">,</span>
+<span class="w">             </span><span class="n">pid</span><span class="p">,</span>
+<span class="w">             </span><span class="k">mode</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocker_pid</span><span class="p">::</span><span class="nb">text</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;,&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">pid</span><span class="p">::</span><span class="nb">text</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">seq</span>
+<span class="w">           </span><span class="k">FROM</span><span class="w"> </span><span class="n">t</span>
+<span class="w">         </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">         </span><span class="k">SELECT</span>
+<span class="w">             </span><span class="n">blocker</span><span class="p">.</span><span class="n">blocker_target</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocker</span><span class="p">.</span><span class="n">blocker_pid</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocker</span><span class="p">.</span><span class="n">blocker_mode</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocker</span><span class="p">.</span><span class="n">depth</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocked</span><span class="p">.</span><span class="n">target</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocked</span><span class="p">.</span><span class="n">pid</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocked</span><span class="p">.</span><span class="k">mode</span><span class="p">,</span>
+<span class="w">             </span><span class="n">blocker</span><span class="p">.</span><span class="n">seq</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;,&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="n">pid</span><span class="p">::</span><span class="nb">text</span>
+<span class="w">           </span><span class="k">FROM</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="n">blocker</span>
+<span class="w">           </span><span class="k">JOIN</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">blocked</span>
+<span class="w">             </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">blocked</span><span class="p">.</span><span class="n">blocker_pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="n">pid</span><span class="p">)</span>
+<span class="w">           </span><span class="k">WHERE</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="n">depth</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1000</span>
+<span class="w">       </span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">r</span>
+<span class="w">  </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">seq</span><span class="p">;</span>
+</pre></div>
+<h6><span class="mw-headline" id="TIPS">TIPS</span></h6>
+<ul><li>リアルタイムモニタリングをより便利にするために、階層的なレポートを生成するビューを作成することができ、以下に示すようにレポートをを更新するための<code>watch</code>コマンドが利用できます。</li>
+<li>以下のビューはブロッキングツリーのセッションについての便利な情報も追加しています。</li></ul>
+<div class="mw-highlight mw-highlight-lang-sql mw-content-ltr" dir="ltr"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">blocking_tree</span><span class="w"> </span><span class="k">AS</span>
+<span class="k">WITH</span><span class="w"> </span><span class="k">RECURSIVE</span>
+<span class="w">  </span><span class="k">lock</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">pid</span><span class="p">,</span>
+<span class="w">     </span><span class="n">virtualtransaction</span><span class="p">,</span>
+<span class="w">     </span><span class="k">granted</span><span class="p">,</span>
+<span class="w">     </span><span class="k">mode</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span><span class="n">locktype</span><span class="p">,</span>
+<span class="w">     </span><span class="k">CASE</span><span class="w"> </span><span class="n">locktype</span>
+<span class="w">       </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">&#39;relation&#39;</span><span class="w">      </span><span class="k">THEN</span><span class="w"> </span><span class="n">concat_ws</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;db:&#39;</span><span class="o">||</span><span class="n">datname</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;rel:&#39;</span><span class="o">||</span><span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="p">::</span><span class="nb">text</span><span class="p">)</span>
+<span class="w">       </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">&#39;extend&#39;</span><span class="w">        </span><span class="k">THEN</span><span class="w"> </span><span class="n">concat_ws</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;db:&#39;</span><span class="o">||</span><span class="n">datname</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;rel:&#39;</span><span class="o">||</span><span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="p">::</span><span class="nb">text</span><span class="p">)</span>
+<span class="w">       </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">&#39;page&#39;</span><span class="w">          </span><span class="k">THEN</span><span class="w"> </span><span class="n">concat_ws</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;db:&#39;</span><span class="o">||</span><span class="n">datname</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;rel:&#39;</span><span class="o">||</span><span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;page#&#39;</span><span class="o">||</span><span class="n">page</span><span class="p">::</span><span class="nb">text</span><span class="p">)</span>
+<span class="w">       </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">&#39;tuple&#39;</span><span class="w">         </span><span class="k">THEN</span><span class="w"> </span><span class="n">concat_ws</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;db:&#39;</span><span class="o">||</span><span class="n">datname</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;rel:&#39;</span><span class="o">||</span><span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;page#&#39;</span><span class="o">||</span><span class="n">page</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;tuple#&#39;</span><span class="o">||</span><span class="n">tuple</span><span class="p">::</span><span class="nb">text</span><span class="p">)</span>
+<span class="w">       </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">&#39;transactionid&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="n">transactionid</span><span class="p">::</span><span class="nb">text</span>
+<span class="w">       </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">&#39;virtualxid&#39;</span><span class="w">    </span><span class="k">THEN</span><span class="w"> </span><span class="n">virtualxid</span><span class="p">::</span><span class="nb">text</span>
+<span class="w">       </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">&#39;object&#39;</span><span class="w">        </span><span class="k">THEN</span><span class="w"> </span><span class="n">concat_ws</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;class:&#39;</span><span class="o">||</span><span class="n">classid</span><span class="p">::</span><span class="n">regclass</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;objid:&#39;</span><span class="o">||</span><span class="n">objid</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;col#&#39;</span><span class="o">||</span><span class="n">objsubid</span><span class="p">)</span>
+<span class="w">       </span><span class="k">ELSE</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="s1">&#39;db:&#39;</span><span class="o">||</span><span class="n">datname</span><span class="p">)</span><span class="w"> </span><span class="c1">-- userlock and advisory</span>
+<span class="w">     </span><span class="k">END</span><span class="p">::</span><span class="nb">text</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">target</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_locks</span>
+<span class="w">  </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_database</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">pg_database</span><span class="p">.</span><span class="n">oid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pg_locks</span><span class="p">.</span><span class="k">database</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">,</span><span class="w"> </span><span class="n">waiting_lock</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">blocker</span><span class="p">.</span><span class="n">pid</span><span class="w">                         </span><span class="k">AS</span><span class="w"> </span><span class="n">blocker_pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">blocked</span><span class="p">.</span><span class="n">pid</span><span class="w">                         </span><span class="k">AS</span><span class="w"> </span><span class="n">pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">concat</span><span class="p">(</span><span class="n">blocked</span><span class="p">.</span><span class="k">mode</span><span class="p">,</span><span class="n">blocked</span><span class="p">.</span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">lock_target</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="k">lock</span><span class="w"> </span><span class="n">blocker</span>
+<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="k">lock</span><span class="w"> </span><span class="n">blocked</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="k">granted</span>
+<span class="w">     </span><span class="k">AND</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="k">granted</span>
+<span class="w">     </span><span class="k">AND</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="n">pid</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="n">pid</span>
+<span class="w">     </span><span class="k">AND</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="n">target</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="n">target</span><span class="p">)</span>
+<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">lock_composite</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="k">c</span><span class="p">.</span><span class="n">requested</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="k">mode</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="k">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="k">mode</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">,</span><span class="w"> </span><span class="n">acquired_lock</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="k">WITH</span><span class="w"> </span><span class="n">waiting</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">lock_target</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="n">lock_target</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">wait_count</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">waiting_lock</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">lock_target</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="w">  </span><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">array_agg</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="k">mode</span><span class="p">,</span><span class="n">target</span><span class="p">,</span><span class="s1">&#39; + &#39;</span><span class="o">||</span><span class="n">wait_count</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">wait_count</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="n">NULLS</span><span class="w"> </span><span class="k">LAST</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">locks_acquired</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="k">lock</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">waiting</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">waiting</span><span class="p">.</span><span class="n">lock_target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="k">mode</span><span class="p">,</span><span class="n">target</span><span class="p">)</span>
+<span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="k">granted</span>
+<span class="w">  </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">pid</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">,</span><span class="w"> </span><span class="n">blocking_lock</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="k">SELECT</span>
+<span class="w">    </span><span class="nb">ARRAY</span><span class="p">[</span><span class="n">date_part</span><span class="p">(</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">query_start</span><span class="p">)::</span><span class="nb">int</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">]</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">seq</span><span class="p">,</span>
+<span class="w">     </span><span class="mi">0</span><span class="p">::</span><span class="nb">int</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">depth</span><span class="p">,</span>
+<span class="w">    </span><span class="o">-</span><span class="mi">1</span><span class="p">::</span><span class="nb">int</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">blocker_pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">concat</span><span class="p">(</span><span class="s1">&#39;Connect: &#39;</span><span class="p">,</span><span class="n">usename</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">datname</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="k">coalesce</span><span class="p">(</span><span class="k">host</span><span class="p">(</span><span class="n">client_addr</span><span class="p">)</span><span class="o">||</span><span class="s1">&#39;:&#39;</span><span class="o">||</span><span class="n">client_port</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="s1">&#39;\nSQL: &#39;</span><span class="p">,</span><span class="k">replace</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">coalesce</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="s1">&#39;N/A&#39;</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">),</span><span class="w"> </span><span class="n">E</span><span class="s1">&#39;\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="s1">&#39;\nAcquired:\n  &#39;</span>
+<span class="w">      </span><span class="p">,</span><span class="w"> </span><span class="n">array_to_string</span><span class="p">(</span><span class="n">locks_acquired</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">||</span>
+<span class="w">                        </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">array_upper</span><span class="p">(</span><span class="n">locks_acquired</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">                             </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;... &#39;</span><span class="o">||</span><span class="p">(</span><span class="n">array_upper</span><span class="p">(</span><span class="n">locks_acquired</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">5</span><span class="p">)::</span><span class="nb">text</span><span class="o">||</span><span class="s1">&#39; more ...&#39;</span>
+<span class="w">                        </span><span class="k">END</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">E</span><span class="s1">&#39;\n  &#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">lock_info</span><span class="p">,</span>
+<span class="w">    </span><span class="n">concat</span><span class="p">(</span><span class="n">to_char</span><span class="p">(</span><span class="n">query_start</span><span class="p">,</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">age</span><span class="p">(</span><span class="n">query_start</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;24h&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;Day DD Mon&#39;</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;HH24:MI:SS&#39;</span><span class="w"> </span><span class="k">END</span><span class="p">),</span><span class="n">E</span><span class="s1">&#39; started\n&#39;</span>
+<span class="w">          </span><span class="p">,</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">waiting</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;waiting&#39;</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="k">state</span><span class="w"> </span><span class="k">END</span><span class="p">,</span><span class="n">E</span><span class="s1">&#39;\n&#39;</span>
+<span class="w">          </span><span class="p">,</span><span class="n">date_trunc</span><span class="p">(</span><span class="s1">&#39;second&#39;</span><span class="p">,</span><span class="n">age</span><span class="p">(</span><span class="n">now</span><span class="p">(),</span><span class="n">query_start</span><span class="p">)),</span><span class="s1">&#39; ago&#39;</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">lock_state</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">acquired_lock</span><span class="w"> </span><span class="n">blocker</span>
+<span class="w">  </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">pg_stat_activity</span><span class="w"> </span><span class="n">act</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+<span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="k">EXISTS</span><span class="w">     </span><span class="c1">-- The root of the tree should blocks one or more sessions.</span>
+<span class="w">         </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;x&#39;</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">waiting_lock</span><span class="w"> </span><span class="n">blocked</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="n">blocker_pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="n">pid</span><span class="p">)</span>
+<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="c1">-- The root of the tree should not be a blocked session.</span>
+<span class="w">         </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;x&#39;</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">waiting_lock</span><span class="w"> </span><span class="n">blocked</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="n">pid</span><span class="p">)</span>
+<span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">  </span><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">blocker</span><span class="p">.</span><span class="n">seq</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="n">pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">blocker</span><span class="p">.</span><span class="n">depth</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="n">blocker</span><span class="p">.</span><span class="n">pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">blocked</span><span class="p">.</span><span class="n">pid</span><span class="p">,</span>
+<span class="w">    </span><span class="n">concat</span><span class="p">(</span><span class="s1">&#39;Connect: &#39;</span><span class="p">,</span><span class="n">usename</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">datname</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="k">coalesce</span><span class="p">(</span><span class="k">host</span><span class="p">(</span><span class="n">client_addr</span><span class="p">)</span><span class="o">||</span><span class="s1">&#39;:&#39;</span><span class="o">||</span><span class="n">client_port</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="s1">&#39;\nSQL: &#39;</span><span class="p">,</span><span class="k">replace</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">coalesce</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="s1">&#39;N/A&#39;</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">),</span><span class="w"> </span><span class="n">E</span><span class="s1">&#39;\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="s1">&#39;\nWaiting: &#39;</span><span class="p">,</span><span class="n">blocked</span><span class="p">.</span><span class="n">lock_target</span>
+<span class="w">      </span><span class="p">,</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">locks_acquired</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+<span class="w">             </span><span class="k">THEN</span><span class="w"> </span><span class="n">E</span><span class="s1">&#39;\nAcquired:\n  &#39;</span><span class="w"> </span><span class="o">||</span>
+<span class="w">                  </span><span class="n">array_to_string</span><span class="p">(</span><span class="n">locks_acquired</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">||</span>
+<span class="w">                                  </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">array_upper</span><span class="p">(</span><span class="n">locks_acquired</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">                                       </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;... &#39;</span><span class="o">||</span><span class="p">(</span><span class="n">array_upper</span><span class="p">(</span><span class="n">locks_acquired</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">5</span><span class="p">)::</span><span class="nb">text</span><span class="o">||</span><span class="s1">&#39; more ...&#39;</span>
+<span class="w">                                  </span><span class="k">END</span><span class="p">,</span>
+<span class="w">                                  </span><span class="n">E</span><span class="s1">&#39;\n  &#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="k">END</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">lock_info</span><span class="p">,</span>
+<span class="w">    </span><span class="n">concat</span><span class="p">(</span><span class="n">to_char</span><span class="p">(</span><span class="n">query_start</span><span class="p">,</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">age</span><span class="p">(</span><span class="n">query_start</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;24h&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;Day DD Mon&#39;</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;HH24:MI:SS&#39;</span><span class="w"> </span><span class="k">END</span><span class="p">),</span><span class="n">E</span><span class="s1">&#39; started\n&#39;</span>
+<span class="w">          </span><span class="p">,</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">waiting</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;waiting&#39;</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="k">state</span><span class="w"> </span><span class="k">END</span><span class="p">,</span><span class="n">E</span><span class="s1">&#39;\n&#39;</span>
+<span class="w">          </span><span class="p">,</span><span class="n">date_trunc</span><span class="p">(</span><span class="s1">&#39;second&#39;</span><span class="p">,</span><span class="n">age</span><span class="p">(</span><span class="n">now</span><span class="p">(),</span><span class="n">query_start</span><span class="p">)),</span><span class="s1">&#39; ago&#39;</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">lock_state</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">blocking_lock</span><span class="w"> </span><span class="n">blocker</span>
+<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">waiting_lock</span><span class="w"> </span><span class="n">blocked</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">blocked</span><span class="p">.</span><span class="n">blocker_pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="n">pid</span><span class="p">)</span>
+<span class="w">  </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">pg_stat_activity</span><span class="w"> </span><span class="n">act</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">act</span><span class="p">.</span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="n">pid</span><span class="p">)</span>
+<span class="w">  </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">acquired_lock</span><span class="w"> </span><span class="n">acq</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">acq</span><span class="p">.</span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blocked</span><span class="p">.</span><span class="n">pid</span><span class="p">)</span>
+<span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">blocker</span><span class="p">.</span><span class="n">depth</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="n">lpad</span><span class="p">(</span><span class="s1">&#39;=&gt; &#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="n">depth</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="p">),</span><span class="n">pid</span><span class="p">::</span><span class="nb">text</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="ss">&quot;PID&quot;</span>
+<span class="p">,</span><span class="w"> </span><span class="n">lock_info</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="ss">&quot;Lock Info&quot;</span>
+<span class="p">,</span><span class="w"> </span><span class="n">lock_state</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="ss">&quot;State&quot;</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">blocking_lock</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">seq</span><span class="p">;</span>
+</pre></div>
+<!-- 
+NewPP limit report
+Cached time: 20260407163456
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.203 seconds
+Real time usage: 1.745 seconds
+Preprocessor visited node count: 55/1000000
+Post‐expand include size: 557/2097152 bytes
+Template argument size: 56/2097152 bytes
+Highest expansion depth: 3/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 71036/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   19.710      1 -total
+ 50.98%   10.049      1 Template:Languages
+ 47.86%    9.433      1 Template:SnippetInfo
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:3220-0!canonical and timestamp 20260407163455 and revision id 27908.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Lock_dependency_information/ja&amp;oldid=27908">https://wiki.postgresql.org/index.php?title=Lock_dependency_information/ja&amp;oldid=27908</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/index.php?title=Category:Pages_using_deprecated_source_tags&amp;action=edit&amp;redlink=1" class="new" title="Category:Pages using deprecated source tags (page does not exist)">Pages using deprecated source tags</a></li><li><a href="/wiki/Category:Performance_Snippets" title="Category:Performance Snippets">Performance Snippets</a></li><li><a href="/wiki/Category:Administration" title="Category:Administration">Administration</a></li><li><a href="/wiki/Category:Performance" title="Category:Performance">Performance</a></li><li><a href="/wiki/Category:Monitoring" title="Category:Monitoring">Monitoring</a></li><li><a href="/wiki/Category:Japanese" title="Category:Japanese">Japanese</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Lock_dependency_information/ja" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Lock_dependency_information/ja&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Lock_dependency_information/ja">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Lock_dependency_information/ja&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Lock_dependency_information/ja&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Lock_dependency_information/ja" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Lock_dependency_information/ja&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Lock+dependency+information%2Fja" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Lock_dependency_information/ja" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Lock_dependency_information/ja" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Lock_dependency_information/ja&amp;oldid=27908" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Lock_dependency_information/ja&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 26 July 2016, at 15:12.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.203","walltime":"1.745","ppvisitednodes":{"value":55,"limit":1000000},"postexpandincludesize":{"value":557,"limit":2097152},"templateargumentsize":{"value":56,"limit":2097152},"expansiondepth":{"value":3,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":71036,"limit":5000000},"timingprofile":["100.00%   19.710      1 -total"," 50.98%   10.049      1 Template:Languages"," 47.86%    9.433      1 Template:SnippetInfo"]},"cachereport":{"timestamp":"20260407163456","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":180});});</script>
+</body>
+</html>

@@ -7,7 +7,7 @@ source_format: "html_cleaned_to_markdown"
 original_html_path: "html/pgexercises/questions/aggregates/countmembers.html"
 source_url: "https://pgexercises.com/questions/aggregates/countmembers.html"
 indexable: true
-usage_rule: "Использовать только как supplementary слой в tutorial + extended_mode. Факты должны подтверждаться official corpus выбранной версии."
+usage_rule: "Использовать только как supplementary слой в tutorial. Факты должны подтверждаться official corpus выбранной версии."
 ---
 
 Produce a list of member names, with each row containing the total member count

@@ -7,7 +7,7 @@ source_format: "html_cleaned_to_markdown"
 original_html_path: "html/postgres_wiki_whitelist/wiki/Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT.html"
 source_url: "https://wiki.postgresql.org/wiki/Introduction_to_VACUUM,_ANALYZE,_EXPLAIN,_and_COUNT"
 indexable: true
-usage_rule: "Использовать только как supplementary слой в tutorial + extended_mode. Факты должны подтверждаться official corpus выбранной версии."
+usage_rule: "Использовать только как supplementary слой в tutorial. Факты должны подтверждаться official corpus выбранной версии."
 ---
 
 # Introduction to VACUUM, ANALYZE, EXPLAIN, and COUNT - PostgreSQL wiki

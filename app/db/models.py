@@ -109,7 +109,7 @@ class QueryHistory(Base):
     __tablename__ = "query_history"
     __table_args__ = (
         CheckConstraint(
-            f"mode IN ('{ModeType.ANSWER.value}', '{ModeType.TUTORIAL.value}')",
+            f"mode IN ('{ModeType.SHORT.value}', '{ModeType.DETAILED.value}', '{ModeType.TUTORIAL.value}')",
             name="ck_query_history_mode",
         ),
         CheckConstraint(
@@ -126,7 +126,6 @@ class QueryHistory(Base):
     )
     user_question: Mapped[str] = mapped_column(Text, nullable=False)
     mode: Mapped[str] = mapped_column(String(30), nullable=False)
-    extended_mode: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     answer_text: Mapped[str | None] = mapped_column(Text, nullable=True)
     tutorial_json: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     status: Mapped[str] = mapped_column(String(30), nullable=False, default=QueryStatus.SUCCESS.value)

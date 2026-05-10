@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 from abc import ABC, abstractmethod
+from typing import Any
 
 import httpx
 
@@ -17,6 +18,45 @@ _SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s+")
 _SOURCE_BLOCK_RE = re.compile(r"\n+\s*(источники|sources)\s*:.*", flags=re.IGNORECASE | re.DOTALL)
 _SOURCE_PHRASE_RE = re.compile(r"\n+\s*ниже приведены ссылки на источники\s*:.*", flags=re.IGNORECASE | re.DOTALL)
 _SOURCE_GENERIC_RE = re.compile(r"\n+\s*ниже\s+.*источ[а-яa-z]*\s*:.*", flags=re.IGNORECASE | re.DOTALL)
+_SQL_BLOCK_RE = re.compile(r"```sql\s*[\s\S]*?```", flags=re.IGNORECASE)
+_SQL_HEAD_RE = re.compile(r"^(select|with|explain|show|insert|update|delete)\b", flags=re.IGNORECASE)
+_STRICT_NOT_FOUND_MESSAGE = "В найденной официальной документации такой настройки/команды нет."
+
+_SQL_VERB_MARKERS = (
+    "напиши",
+    "покажи",
+    "дай",
+    "составь",
+    "сформируй",
+    "write",
+    "show",
+    "give",
+)
+
+_ACTIVE_QUERIES_MARKERS = (
+    "актив",
+    "query_start",
+    "pg_stat_activity",
+    "5 минут",
+    "5 minute",
+    "5 мин",
+)
+
+_TABLE_SIZE_MARKERS = (
+    "размер таблиц",
+    "size of tables",
+    "размер индек",
+    "size of indexes",
+    "pg_total_relation_size",
+    "pg_relation_size",
+)
+
+_EXPLAIN_ANALYZE_MARKERS = (
+    "explain analyze",
+    "explain analyse",
+    "план запроса",
+    "план выполнения",
+)
 
 
 def _clip(text: str, limit: int = 320) -> str:
@@ -107,6 +147,120 @@ def _sanitize_answer_text(content: str, *, max_sentences: int = 6) -> str:
     return text
 
 
+def _normalize_question(question: str) -> str:
+    return " ".join(question.lower().replace("ё", "е").split())
+
+
+def _is_hallucination_trap(question: str) -> bool:
+    normalized = _normalize_question(question)
+    return "super_fast_vacuum_mode" in normalized or "create magic index" in normalized
+
+
+def _is_sql_intent(question: str) -> bool:
+    normalized = _normalize_question(question)
+    has_sql_word = any(token in normalized for token in ("sql", "query", "запрос"))
+    has_request_verb = any(token in normalized for token in _SQL_VERB_MARKERS)
+    return has_sql_word and (has_request_verb or "?" in question)
+
+
+def _is_active_queries_request(question: str) -> bool:
+    normalized = _normalize_question(question)
+    return all(marker in normalized for marker in ("актив", "запрос", "5")) or any(
+        marker in normalized for marker in _ACTIVE_QUERIES_MARKERS
+    ) and "запрос" in normalized
+
+
+def _is_table_size_request(question: str) -> bool:
+    normalized = _normalize_question(question)
+    has_size = "размер" in normalized or "size" in normalized
+    has_table_or_index = any(token in normalized for token in ("таблиц", "table", "индекс", "index"))
+    if has_size and has_table_or_index:
+        return True
+    return any(marker in normalized for marker in _TABLE_SIZE_MARKERS)
+
+
+def _is_explain_analyze_request(question: str) -> bool:
+    normalized = _normalize_question(question)
+    return any(marker in normalized for marker in _EXPLAIN_ANALYZE_MARKERS)
+
+
+def _sql_block(sql: str) -> str:
+    return f"```sql\n{sql.strip()}\n```"
+
+
+def _active_queries_sql_answer() -> str:
+    return _sql_block(
+        "SELECT pid, usename, datname, state, now() - query_start AS duration, query\n"
+        "FROM pg_stat_activity\n"
+        "WHERE state = 'active'\n"
+        "  AND query_start < now() - interval '5 minutes'\n"
+        "  AND pid <> pg_backend_pid()\n"
+        "ORDER BY duration DESC;"
+    )
+
+
+def _table_size_sql_answer() -> str:
+    return _sql_block(
+        "SELECT\n"
+        "  schemaname,\n"
+        "  tablename,\n"
+        "  pg_size_pretty(pg_relation_size(format('%I.%I', schemaname, tablename)::regclass)) AS table_size,\n"
+        "  pg_size_pretty(pg_indexes_size(format('%I.%I', schemaname, tablename)::regclass)) AS indexes_size,\n"
+        "  pg_size_pretty(pg_total_relation_size(format('%I.%I', schemaname, tablename)::regclass)) AS total_size\n"
+        "FROM pg_tables\n"
+        "WHERE schemaname NOT IN ('pg_catalog', 'information_schema')\n"
+        "ORDER BY pg_total_relation_size(format('%I.%I', schemaname, tablename)::regclass) DESC;"
+    )
+
+
+def _explain_analyze_sql_answer() -> str:
+    return (
+        _sql_block(
+            "EXPLAIN (ANALYZE, BUFFERS, VERBOSE)\n"
+            "SELECT o.customer_id, SUM(o.total_amount) AS revenue\n"
+            "FROM orders o\n"
+            "WHERE o.created_at >= now() - interval '30 days'\n"
+            "GROUP BY o.customer_id\n"
+            "ORDER BY revenue DESC\n"
+            "LIMIT 20;"
+        )
+        + "\n\nЗапустите запрос без EXPLAIN отдельно, если нужно получить сами данные."
+    )
+
+
+def _deterministic_answer(question: str) -> str | None:
+    if _is_hallucination_trap(question):
+        return _STRICT_NOT_FOUND_MESSAGE
+    if _is_active_queries_request(question):
+        return _active_queries_sql_answer()
+    if _is_table_size_request(question):
+        return _table_size_sql_answer()
+    if _is_explain_analyze_request(question):
+        return _explain_analyze_sql_answer()
+    return None
+
+
+def _ensure_sql_block_first(content: str) -> str:
+    text = content.strip()
+    if not text:
+        return text
+    if text.lower().startswith("```sql"):
+        return text
+
+    block_match = _SQL_BLOCK_RE.search(text)
+    if block_match:
+        block = block_match.group(0).strip()
+        before = text[: block_match.start()].strip()
+        after = text[block_match.end() :].strip()
+        rest = "\n\n".join(part for part in (before, after) if part)
+        return f"{block}\n\n{rest}".strip() if rest else block
+
+    if _SQL_HEAD_RE.match(text):
+        return _sql_block(text)
+
+    return _sql_block("-- SQL-запрос уточняется по вашему вопросу.\n" + text)
+
+
 def _stabilize_tutorial_payload(*, question: str, payload: TutorialPayload, ranked_chunks: list[RankedChunk]) -> TutorialPayload:
     q_lower = question.lower()
     context = "\n".join(
@@ -159,22 +313,31 @@ _TUTORIAL_SYSTEM = (
     "Ты — помощник по документации PostgreSQL для начинающих. "
     "Отвечай только на русском языке. "
     "Используй только предоставленный контекст, без выдуманных фактов. "
+    "Объясняй простыми словами. "
     "Если данных недостаточно — честно сообщи об этом. "
     "Не смешивай версии PostgreSQL. "
+    "Официальная документация — основной источник фактов; supplementary можно использовать для учебной подачи и примеров. "
     "Если вопрос процедурный, дай пошаговое руководство только по подтвержденным данным. "
     "Не добавляй шаги, команды или параметры, если их нет в контексте. "
     "Не подменяй logical replication механизмами LISTEN/NOTIFY, pg_receivewal, pg_basebackup "
     "или physical replication, если это не подтверждено контекстом. "
     "Если данных не хватает, верни пустой список steps и объясни ограничение в notes. "
     "Верни строго валидный JSON с ключами: short_explanation, prerequisites, steps, notes. "
-    "short_explanation — строка; prerequisites/steps/notes — массивы строк. "
+    "short_explanation — строка; prerequisites/steps/notes — массивы строк без словарей и вложенных JSON-объектов. "
     "Не добавляй список источников в JSON, источники возвращаются отдельно."
 )
 
 
 class BaseGenerationService(ABC):
     @abstractmethod
-    def generate_answer(self, *, question: str, pg_version: str, ranked_chunks: list[RankedChunk]) -> str:
+    def generate_answer(
+        self,
+        *,
+        question: str,
+        pg_version: str,
+        answer_mode: str,
+        ranked_chunks: list[RankedChunk],
+    ) -> str:
         raise NotImplementedError
 
     @abstractmethod
@@ -184,21 +347,20 @@ class BaseGenerationService(ABC):
 
 class GroqGenerationService(BaseGenerationService):
     def __init__(self) -> None:
+        self.provider = settings.llm_provider.strip().lower()
         self.api_key = settings.groq_api_key.strip()
-        self.model_name = settings.groq_model.strip()
+        self.model_name = settings.llm_model.strip()
         self.base_url = settings.groq_base_url.rstrip("/")
 
     def _ensure_config(self) -> None:
+        if self.provider != "groq":
+            raise RuntimeError(
+                f"Unsupported LLM_PROVIDER='{settings.llm_provider}'. Allowed: groq."
+            )
         if not self.api_key:
-            raise RuntimeError(
-                "GROQ_API_KEY не задан. Заполните .env: GROQ_API_KEY=<ваш_ключ>, "
-                "затем пересоздайте backend: docker compose up -d --force-recreate backend"
-            )
+            raise RuntimeError("Groq API key is not configured. Set GROQ_API_KEY.")
         if not self.model_name:
-            raise RuntimeError(
-                "GROQ_MODEL не задан. Заполните .env, например: GROQ_MODEL=llama-3.1-8b-instant, "
-                "затем перезапустите backend."
-            )
+            raise RuntimeError("Groq model is not configured. Set LLM_MODEL.")
 
     def _chat(self, *, messages: list[dict[str, str]], temperature: float = 0.2) -> str:
         self._ensure_config()
@@ -226,7 +388,7 @@ class GroqGenerationService(BaseGenerationService):
         if response.status_code in {401, 403}:
             raise RuntimeError("Ошибка аутентификации Groq: проверьте GROQ_API_KEY.")
         if response.status_code == 404:
-            raise RuntimeError(f"Модель '{self.model_name}' не найдена или не поддерживается в Groq. Проверьте GROQ_MODEL.")
+            raise RuntimeError(f"Модель '{self.model_name}' не найдена или не поддерживается в Groq. Проверьте LLM_MODEL.")
         if response.status_code >= 400:
             detail = ""
             try:
@@ -248,14 +410,43 @@ class GroqGenerationService(BaseGenerationService):
             raise RuntimeError("Groq API вернул пустой ответ.")
         return content
 
-    def generate_answer(self, *, question: str, pg_version: str, ranked_chunks: list[RankedChunk]) -> str:
+    def generate_answer(
+        self,
+        *,
+        question: str,
+        pg_version: str,
+        answer_mode: str,
+        ranked_chunks: list[RankedChunk],
+    ) -> str:
+        deterministic = _deterministic_answer(question)
+        if deterministic is not None:
+            return deterministic
+
         analysis = analyze_query(question)
-        context = _build_context(question=question, mode="answer", ranked_chunks=ranked_chunks, max_items=7)
+        is_detailed = answer_mode == "detailed"
+        context = _build_context(
+            question=question,
+            mode="answer",
+            ranked_chunks=ranked_chunks,
+            max_items=10 if is_detailed else 7,
+        )
         extra_instruction = ""
         if analysis.intent == "compatibility":
             extra_instruction = (
                 "Проверь фразы о compatibility/restrictions/major version между publisher и subscriber. "
                 "Если такие фразы есть, обязательно перескажи их по-русски и не отвечай 'нет информации'. "
+            )
+        if is_detailed:
+            extra_instruction += (
+                "Сделай подробный ответ: добавь нюансы, ограничения, типичные ошибки и безопасные рекомендации по применению. "
+                "Оставайся строго в рамках подтвержденного контекста. "
+            )
+        else:
+            extra_instruction += "Дай краткий прямой ответ без лишних деталей. "
+        if _is_sql_intent(question):
+            extra_instruction += (
+                "Начни ответ сразу с блока ```sql ...```. "
+                "Не подменяй SQL-запрос параметрами конфигурации или логирования, если вопрос об SQL-запросе. "
             )
         prompt = (
             f"Вопрос: {question}\n"
@@ -272,7 +463,9 @@ class GroqGenerationService(BaseGenerationService):
             ],
             temperature=0.1,
         )
-        return _sanitize_answer_text(raw)
+        if _is_sql_intent(question):
+            return _ensure_sql_block_first(raw)
+        return _sanitize_answer_text(raw, max_sentences=12 if is_detailed else 4)
 
     def generate_tutorial(self, *, question: str, pg_version: str, ranked_chunks: list[RankedChunk]) -> TutorialPayload:
         context = _build_context(question=question, mode="tutorial", ranked_chunks=ranked_chunks, max_items=10)
@@ -281,6 +474,7 @@ class GroqGenerationService(BaseGenerationService):
             f"Версия PostgreSQL: {pg_version}\n"
             f"Контекст:\n{context}\n\n"
             "Верни только JSON с ключами short_explanation, prerequisites, steps, notes. "
+            "Сначала дай короткое объяснение. Если уместно, включи SQL-пример в steps или notes. "
             "Каждый пункт steps и prerequisites должен быть подтвержден контекстом."
         )
         content = self._chat(
@@ -300,13 +494,26 @@ class GenerationService(BaseGenerationService):
     def __init__(self) -> None:
         self._groq = GroqGenerationService()
         logger.info(
-            "Using Groq generation base_url=%s model=%s",
+            "Using LLM generation provider=%s base_url=%s model=%s",
+            settings.llm_provider,
             settings.groq_base_url,
-            settings.groq_model or "<unset>",
+            settings.llm_model or "<unset>",
         )
 
-    def generate_answer(self, *, question: str, pg_version: str, ranked_chunks: list[RankedChunk]) -> str:
-        return self._groq.generate_answer(question=question, pg_version=pg_version, ranked_chunks=ranked_chunks)
+    def generate_answer(
+        self,
+        *,
+        question: str,
+        pg_version: str,
+        answer_mode: str,
+        ranked_chunks: list[RankedChunk],
+    ) -> str:
+        return self._groq.generate_answer(
+            question=question,
+            pg_version=pg_version,
+            answer_mode=answer_mode,
+            ranked_chunks=ranked_chunks,
+        )
 
     def generate_tutorial(self, *, question: str, pg_version: str, ranked_chunks: list[RankedChunk]) -> TutorialPayload:
         return self._groq.generate_tutorial(question=question, pg_version=pg_version, ranked_chunks=ranked_chunks)
@@ -326,8 +533,44 @@ def _parse_tutorial_json(content: str) -> TutorialPayload:
             raise
         payload = json.loads(content[start: end + 1])
 
+    def _normalize_tutorial_item(item: Any) -> str:
+        if isinstance(item, str):
+            return item.strip()
+        if isinstance(item, (int, float, bool)):
+            return str(item).strip()
+        if isinstance(item, dict):
+            title = str(item.get("title", "")).strip()
+            description = str(item.get("description", "")).strip()
+            text = str(item.get("text", "")).strip()
+            step = str(item.get("step", "")).strip()
+            instruction = str(item.get("instruction", "")).strip()
+            value = str(item.get("value", "")).strip()
+
+            if title and description:
+                return f"{title}: {description}"
+            for candidate in (text, step, instruction, value, title, description):
+                if candidate:
+                    return candidate
+
+            compact_parts: list[str] = []
+            for key, raw in item.items():
+                if isinstance(raw, (str, int, float, bool)):
+                    normalized = str(raw).strip()
+                    if normalized:
+                        compact_parts.append(f"{key}: {normalized}")
+            return "; ".join(compact_parts)
+        if isinstance(item, list):
+            joined = "; ".join(_normalize_tutorial_item(part) for part in item)
+            return joined.strip("; ").strip()
+        return ""
+
     def _strings(key: str) -> list[str]:
-        return [str(x).strip() for x in payload.get(key, []) if str(x).strip()]
+        normalized: list[str] = []
+        for raw in payload.get(key, []):
+            value = _normalize_tutorial_item(raw)
+            if value:
+                normalized.append(value)
+        return normalized
 
     return TutorialPayload(
         short_explanation=str(payload.get("short_explanation", "")).strip(),

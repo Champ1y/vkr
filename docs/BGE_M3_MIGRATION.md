@@ -7,6 +7,8 @@
 - `EMBEDDING_DIMENSION=1024`
 - `EMBEDDING_BATCH_SIZE=8`
 - `EMBEDDING_MAX_SEQ_LENGTH=8192`
+- `LLM_PROVIDER=groq`
+- `LLM_MODEL=<groq-model-name>`
 - `SUPPLEMENTARY_DIR=corpus/tutorial`
 
 `BAAI/bge-m3` is used in dense mode only. Sparse/ColBERT retrieval is intentionally not enabled in this stage.

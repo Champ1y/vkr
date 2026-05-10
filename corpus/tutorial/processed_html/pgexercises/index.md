@@ -7,7 +7,7 @@ source_format: "html_cleaned_to_markdown"
 original_html_path: "html/pgexercises/index.html"
 source_url: "https://pgexercises.com/index.html"
 indexable: true
-usage_rule: "Использовать только как supplementary слой в tutorial + extended_mode. Факты должны подтверждаться official corpus выбранной версии."
+usage_rule: "Использовать только как supplementary слой в tutorial. Факты должны подтверждаться official corpus выбранной версии."
 ---
 
 Welcome to PostgreSQL Exercises! This site was born when I noticed that there's a load of material out there to help people learn about SQL, but not a great deal to make it easy to learn by doing.  PGExercises provides a series of questions and explanations built on a single, simple dataset. It's designed for use as a partner to a good book or Postgres' excellent

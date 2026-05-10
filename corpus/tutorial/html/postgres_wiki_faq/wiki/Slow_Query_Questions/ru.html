@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Slow Query Questions/ru - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"efa9f9f1483a46afe84c9999","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Slow_Query_Questions/ru","wgTitle":"Slow Query Questions/ru","wgCurRevisionId":25664,"wgRevisionId":25664,"wgArticleId":2681,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Performance","FAQ","Asking Questions"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Slow_Query_Questions/ru","wgRelevantArticleId":2681,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Slow_Query_Questions_ru rootpage-Slow_Query_Questions skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Slow Query Questions/ru</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ><span class="subpages">&lt; <a href="/wiki/Slow_Query_Questions" title="Slow Query Questions">Slow Query Questions</a></span></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+</p>
+<h1><span id=".D0.A0.D1.83.D0.BA.D0.BE.D0.B2.D0.BE.D0.B4.D1.81.D1.82.D0.B2.D0.BE_.D0.BF.D0.BE_.D0.BF.D1.83.D0.B1.D0.BB.D0.B8.D0.BA.D0.B0.D1.86.D0.B8.D0.B8_.D0.B2.D0.BE.D0.BF.D1.80.D0.BE.D1.81.D0.BE.D0.B2_.D0.BE_.D0.BC.D0.B5.D0.B4.D0.BB.D0.B5.D0.BD.D0.BD.D1.8B.D1.85_.D0.B7.D0.B0.D0.BF.D1.80.D0.BE.D1.81.D0.B0.D1.85"></span><span class="mw-headline" id="Руководство_по_публикации_вопросов_о_медленных_запросах">Руководство по публикации вопросов о медленных запросах</span></h1>
+<p>Примерно 50% вопросов по IRC-каналу #postgresql и порядка 75% в рассылке pgsql-performance, задаваемых еженедельно, относятся к проблеме медленных запросов. При этом редко кто из задающих вопрос предоставляет полную информацию по проблемному медленному запросу, что приводит к разочарованию обеих сторон - отвечающих на вопрос и его задающих.
+</p><p>Поэтому перед тем как задать вопрос на тему "Я и мой медленный запрос", пожалуйста, обратитесь к нижеследующим рекомендациям, а так же соберите необходимую информацию. Обратитесь к <a href="/wiki/Guide_to_reporting_problems" title="Guide to reporting problems">руководству по сообщению о проблемах</a> и предоставьте сведения согласно ему.
+</p><p><b>Вопросы, касающиеся проблем производительности, в листе рассылки pgsql-performance задавайте лишь после</b> изучения ресурсов, доступных в разделе <a href="/wiki/Category:Performance" title="Category:Performance">категории производительности</a>, предварительно собрав необходимые сведения (см. ниже) и <i>тщательно обдумав проблему</i>. Перед тем как нажать кнопку "Отправить", внимательно прочтите ваше сообщение, представьте себя на месте того человека, которому ничего неизвестно о вашем приложении или конфигурации, еще раз переосмыслите задаваемый вопрос. Это избавит вас от лишних "Вы не объяснили &lt;то&gt;!" и "Что вы имели ввиду, сославшись на &lt;это&gt;?", прежде чем кто-то сможет помочь вам, имея достаточно вводных сведений. Таким образом <i>небольшим приложением усилий вначале пути можно быстрее решить вашу проблему.</i>
+</p>
+<h2><span id=".D0.9D.D0.B5.D0.BE.D0.B1.D1.85.D0.BE.D0.B4.D0.B8.D0.BC.D1.8B.D0.B5_.D0.B4.D0.BB.D1.8F_.D0.BF.D1.80.D0.B5.D0.B4.D0.BE.D1.81.D1.82.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D1.8F_.D1.81.D0.B2.D0.B5.D0.B4.D0.B5.D0.BD.D0.B8.D1.8F"></span><span class="mw-headline" id="Необходимые_для_предоставления_сведения">Необходимые для предоставления сведения</span></h2>
+<p>(замечание: если просите помощи по IRC-каналу, то публикуйте сведения на таких специализированных ресурсах, как, например, <a rel="nofollow" class="external text" href="http://pgsql.privatepaste.com/">pgsql.privatepaste.com</a>, но не напрямую)
+</p>
+<ul><li><b>Полная схема таблиц и индексов</b>: публикуйте определения всех таблиц и индексов, на которые имеются ссылки в запросе.  Если запрос затрагивает представления или пользовательские функции, то их определения также необходимо предоставить.</li>
+<li><b>Метаданные таблиц</b>: также к определению таблиц необходимо сообщить примерное количество записей и такие сведения, как, например:
+<ul><li>содержит ли таблица большие бинарные объекты?</li>
+<li>есть ли значительный перекос в количестве NULL-значений каких-либо колонок таблицы?</li>
+<li>есть ли постоянное большое количество операций записи таких, как UPDATE или DELETE к таблице?</li>
+<li>есть ли быстрый рост данных в таблице?</li>
+<li>есть ли большое количество индексов таблицы?</li>
+<li>использует ли таблица триггеры, которые в свою очередь могут вызывать функции базы данных, или имеются ли прямые вызовы функций?</li></ul></li></ul>
+<ul><li><b>EXPLAIN (ANALYZE, BUFFERS) вместо EXPLAIN:</b> <code>EXPLAIN (ANALYZE, BUFFERS)</code> сообщает о том, как запрос реально выполнялся, а не то, как он планировался к выполнению. Это важная информация, по которой можно судить о том, где планировщик мог ошибиться. Если невозможно выполнить EXPLAIN (ANALYZE, BUFFERS) в силу каких-либо причин, то это необходимо указать. Пример: <code>EXPLAIN (ANALYZE, BUFFERS) select * from tablename;</code>
+<ul><li>EXPLAIN (ANALYZE, BUFFERS) был представлен в версии 9.0. Если ваша версия Postgres ниже 9.0, то вместо нее необходимо выполнить <b><code>EXPLAIN ANALYZE</code></b>.</li>
+<li>Для Postgres версии 9.2 и выше включите track_io_timing перед выполнением EXPLAIN. Если подключение установлено от лица суперпользователя, можно включить track_io_timing на уровне сессии, выполнив <b><code>SET track_io_timing = on;</code></b></li>
+<li>Разместите результат выполнения <code>EXPLAIN (ANALYZE, BUFFERS)</code> или <code>EXPLAIN ANALYZE</code> на <a rel="nofollow" class="external text" href="http://explain.depesz.com/">explain.depesz.com</a> и предоставьте эти ссылки. Нам это очень нравится, тк. позволяет изучать планы выполнения значительно проще.</li></ul></li>
+<li><b>Версия Postgres:</b> необходимо указывать точную полную версию используемого сервера, простой способ - выполнить команду SELECT version(). Поведение планировщика меняется от версии к версии, поэтому эти сведения крайне важны.</li>
+<li><b>Предыстория:</b> был ли запрос медленным всегда или стал таким с течением времени? Имеются ли копии плана и реального выполнения до того момента, как запрос стал медленным? Что еще изменилось в вашей базе помимо роста данных?</li>
+<li><b>Железо</b>: необходимо предоставить сведения по аппаратной части сервера. Если используются нестандартные компоненты, пожалуйста, сообщите подробно о них. Обратитесь к <a href="/wiki/Guide_to_reporting_problems" title="Guide to reporting problems">руководству по сообщению о проблемах</a> для получения информации о том, какого рода сведения об аппаратной части могут пригодится.</li>
+<li><b>Обслуживание сервера</b>: применяете ли вы автовакуум и с каким настройками? Если не применяется автовакуум, выполняете ли вручную и как часто команды VACUUM и/или ANALYZE?</li>
+<li><b>Конфигурация журнала упреждающей записи (WAL)</b>: (для запросов записи данных) вынесен ли журнал на другой диск? Изменялись ли параметры конфигурации?</li>
+<li><b>Настройки GUC</b>: какие настройки базы данных вами проводились? Каковы их значения? Важны такие, как, например, "work_mem", "enable_seq_scan". В <a href="/wiki/Server_Configuration" title="Server Configuration">конфигурации сервера</a> можно найти полезный запрос, который выведет все измененные параметры, и в более удобочитаемой форме относительно кусков, взятых из вашего конфигурационного файла postgresql.conf.</li></ul>
+<h2><span id=".D0.A7.D1.82.D0.BE_.D0.BC.D0.BE.D0.B6.D0.BD.D0.BE_.D0.BF.D0.BE.D0.BF.D1.80.D0.BE.D0.B1.D0.BE.D0.B2.D0.B0.D1.82.D1.8C_.D0.BF.D1.80.D0.B5.D0.B4.D0.BF.D1.80.D0.B8.D0.BD.D1.8F.D1.82.D1.8C_.D1.81.D0.B0.D0.BC.D0.BE.D1.81.D1.82.D0.BE.D1.8F.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D0.BE"></span><span class="mw-headline" id="Что_можно_попробовать_предпринять_самостоятельно">Что можно попробовать предпринять самостоятельно</span></h2>
+<p>Перед тем, как задать вопрос, можно сэкономить кучу своего времени, попробовав следующее:
+</p>
+<ul><li>Прочитать <a href="/wiki/Using_EXPLAIN/ru" title="Using EXPLAIN/ru">Использование EXPLAIN</a>, если это еще не сделано.</li>
+<li>Выполнить ANALYZE для базы данных, чтобы обновить статистику запросов.</li>
+<li>Выполнить VACUUM базы данных, что бы избавиться от лишнего мусора, если не выполняется автовакуум на постоянной основе.</li>
+<li>Проверить основные параметры GUC, чтобы удостовериться в обоснованности их значений (также см. <a href="/wiki/Tuning_Your_PostgreSQL_Server" title="Tuning Your PostgreSQL Server">Настройка вашего сервера PostgreSQL</a>):
+<ul><li>shared_buffers должен иметь значение в пределах от 10% до 25% доступной оперативной памяти</li>
+<li>effective_cache_size должен иметь значение 75% от доступной оперативной памяти</li></ul></li>
+<li>Поиграйтесь с параметром work_mem: увеличьте его до 8MB, 32MB, 256MB, 1GB. Ощутили эффект?</li>
+<li>Для запросов Insert/Update/Delete можно поэкспериментировать с конфигурацией журнала упреждающей записи (WAL):
+<ul><li>Вынесите pg_xlog на отдельный диск, если это возможно</li>
+<li>Увеличьте значение checkpoint_segments до 16 или более, в соответствии со свободным пространством на диске</li>
+<li>Увеличьте wal_buffers до 16MB</li></ul></li>
+<li><a rel="nofollow" class="external text" href="http://www.westnet.com/~gsmith/content/postgresql/pg-disktesting.htm">Проверьте ваш IO</a>: запустите тест dd, bonnie++ или другие тесты дисковой производительности, чтобы убедиться в том, что проблемы не связаны с аппаратной частью. Например, RAID-5 по определению всегда будет медленным для операций insert/update, как бы вы не оптимизировали запросы.</li></ul>
+<!-- 
+NewPP limit report
+Cached time: 20260407164402
+Cache expiry: 86400
+Reduced expiry: false
+Complications: []
+CPU time usage: 0.029 seconds
+Real time usage: 0.040 seconds
+Preprocessor visited node count: 16/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    8.834      1 Template:Languages
+100.00%    8.834      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:2681-0!canonical and timestamp 20260407164402 and revision id 25664.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Slow_Query_Questions/ru&amp;oldid=25664">https://wiki.postgresql.org/index.php?title=Slow_Query_Questions/ru&amp;oldid=25664</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:Performance" title="Category:Performance">Performance</a></li><li><a href="/wiki/Category:FAQ" title="Category:FAQ">FAQ</a></li><li><a href="/wiki/Category:Asking_Questions" title="Category:Asking Questions">Asking Questions</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Slow_Query_Questions/ru" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Slow_Query_Questions/ru&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Slow_Query_Questions/ru">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Slow_Query_Questions/ru&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Slow_Query_Questions/ru&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Slow_Query_Questions/ru" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Slow_Query_Questions/ru&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Slow+Query+Questions%2Fru" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Slow_Query_Questions/ru" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Slow_Query_Questions/ru" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Slow_Query_Questions/ru&amp;oldid=25664" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Slow_Query_Questions/ru&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 26 August 2015, at 06:38.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.029","walltime":"0.040","ppvisitednodes":{"value":16,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    8.834      1 Template:Languages","100.00%    8.834      1 -total"]},"cachereport":{"timestamp":"20260407164402","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":311});});</script>
+</body>
+</html>

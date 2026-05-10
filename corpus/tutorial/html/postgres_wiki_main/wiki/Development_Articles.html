@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Development Articles - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"ec9890c566bdebe3dc734ee4","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Development_Articles","wgTitle":"Development Articles","wgCurRevisionId":34693,"wgRevisionId":34693,"wgArticleId":255,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["General articles and guides"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Development_Articles","wgRelevantArticleId":255,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Development_Articles rootpage-Development_Articles skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Development Articles</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p>These are articles about developing with PostgreSQL (not on <a href="/wiki/Development_information" title="Development information">developing PostgreSQL</a> itself).
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#General_Development"><span class="tocnumber">1</span> <span class="toctext">General Development</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Client_Libraries"><span class="tocnumber">2</span> <span class="toctext">Client Libraries</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#JDBC/J2EE"><span class="tocnumber">3</span> <span class="toctext">JDBC/J2EE</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Lua"><span class="tocnumber">4</span> <span class="toctext">Lua</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#Materialized_Views"><span class="tocnumber">5</span> <span class="toctext">Materialized Views</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Microsoft_Access_and_.NET"><span class="tocnumber">6</span> <span class="toctext">Microsoft Access and .NET</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#PL/pgSQL"><span class="tocnumber">7</span> <span class="toctext">PL/pgSQL</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Python"><span class="tocnumber">8</span> <span class="toctext">Python</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#PL/Python"><span class="tocnumber">9</span> <span class="toctext">PL/Python</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#PL/R"><span class="tocnumber">10</span> <span class="toctext">PL/R</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#Smalltalk"><span class="tocnumber">11</span> <span class="toctext">Smalltalk</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#Referential_Integrity"><span class="tocnumber">12</span> <span class="toctext">Referential Integrity</span></a></li>
+<li class="toclevel-1 tocsection-13"><a href="#Web_development"><span class="tocnumber">13</span> <span class="toctext">Web development</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="General_Development">General Development</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="http://www.webdotdev.com/nvd/articles-reviews/postgresql/programming-otl-using-postgresql-and-unixodbc-in-the-solaris-environment-348.html">Programming OTL using PostgreSQL and unixODBC in the Solaris environment: a step-by-step guide</a> by Carlos Crosetti (2006-02-13)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresql.org/files/documentation/books/aw_pgsql/writing_apps/">Writing Applications for PostgreSQL</a> by Bruce Momjian</li>
+<li><a rel="nofollow" class="external text" href="http://www.codeproject.com/KB/database/PostgreSQLTasks.aspx">PostgreSQL &amp; PostGIS operations</a> by Mohammed Thabet</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/kristiandupont/schemalint">schemalint</a> by Kristian Dupont - a tool to verify the database schema against <a href="/wiki/Don%27t_Do_This" title="Don&#39;t Do This">Don't Do This</a> recommendations.</li></ul>
+<h2><span class="mw-headline" id="Client_Libraries">Client Libraries</span></h2>
+<p><a href="/wiki/Client_Libraries" title="Client Libraries">Client Libraries</a> access PostgreSQL from your favorite language
+</p>
+<h2><span id="JDBC.2FJ2EE"></span><span class="mw-headline" id="JDBC/J2EE">JDBC/J2EE</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="http://www.linuxfocus.org/English/March2003/article285.shtml">Accessing PostgreSQL through JDBC via a Java SSL tunnel</a> by Chianglin Ng</li></ul>
+<h2><span class="mw-headline" id="Lua">Lua</span></h2>
+<ul><li><a href="/wiki/Lua" title="Lua">Accessing PostgreSQL Databases Using the Lua Scripting Language</a></li></ul>
+<h2><span class="mw-headline" id="Materialized_Views">Materialized Views</span></h2>
+<p>See <a href="/wiki/Materialized_Views" title="Materialized Views">Materialized Views</a> for more information
+</p>
+<ul><li><a rel="nofollow" class="external text" href="http://jonathangardner.net/PostgreSQL/materialized_views/matviews.html">Implementing Materialized Views in PostgreSQL</a> by Jonathan Gardner</li>
+<li><a rel="nofollow" class="external text" href="http://www.pgcon.org/2008/schedule/events/69.en.html">Materialized Views that Really Work</a> by Dan Chak</li></ul>
+<h2><span class="mw-headline" id="Microsoft_Access_and_.NET">Microsoft Access and .NET</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="http://www.developer.com/open/article.php/631251">Connecting to PostgreSQL from Windows Platforms</a> by Damond Walker</li>
+<li><a rel="nofollow" class="external text" href="http://pgfoundry.org/projects/npgsql/">The npgsql Project</a> - .Net Data Provider for PostgreSQL</li>
+<li><a href="/wiki/Using_Microsoft_.NET_with_the_PostgreSQL_Database_Server_via_ODBC" title="Using Microsoft .NET with the PostgreSQL Database Server via ODBC">Using Microsoft .NET with the PostgreSQL Database Server via ODBC</a> by Matthew Stanfield (2002-04-15)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/37-REST-in-PostgreSQL-Part-2-A-The-REST-Server-service-with-ASP.NET.html">REST in PostgreSQL Part 2 A - The REST Server service with ASP.NET</a> - Postgres OnLine Journal (March 2008)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/24-Using-MS-Access-with-PostgreSQL.html">Using MS Access with PostgreSQL</a>  Postgres OnLine Journal (January/February 2008)</li>
+<li><a rel="nofollow" class="external text" href="http://www.c-sharpcorner.com/UploadFile/thabet084/CrystalReport_PostgreSQL08252009111048AM/CrystalReport_PostgreSQL.aspx?ArticleID=02d7c2d1-2fb6-4b1f-bc0c-79dfda6cc54c">Crystal Report with PostgreSQL using dataset</a>By Mohammed Thabet Zaky (August 2009)</li></ul>
+<h2><span id="PL.2FpgSQL"></span><span class="mw-headline" id="PL/pgSQL">PL/pgSQL</span></h2>
+<ul><li>HOWTO: <a href="/wiki/Return_more_than_one_row_of_data_from_PL/pgSQL_functions" title="Return more than one row of data from PL/pgSQL functions">Return more than one row of data from PL/pgSQL functions</a> by Stephan Szabo</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/16-Trojan-SQL-Function-Hack---A-PL-Lemma-in-Disguise.html">Trojan SQL Function Hack - A PL Lemma in Disguise</a>  Postgres OnLine Journal (January/February 2008) - Trick to using set returning functions in non-constant join (e.g. simulate SQL Server 2005 CROSS APPLY)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgres.cz/index.php/PL/pgSQL_(en)">Introduction to PL/pgSQL</a> by Pavel Stehule</li></ul>
+<h2><span class="mw-headline" id="Python">Python</span></h2>
+<ul><li><a href="/wiki/Using_psycopg2_with_PostgreSQL" title="Using psycopg2 with PostgreSQL">Using psycopg2 with PostgreSQL</a></li></ul>
+<h2><span id="PL.2FPython"></span><span class="mw-headline" id="PL/Python">PL/Python</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/99-Quick-Intro-to-PLPython.html">Quick Intro to PLPython</a>  Postgres OnLine Journal (January 2009)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/100-PLPython-Part-2-Control-Flow-and-Returning-Sets.html">PLPython Part 2: Control Flow and Returning Sets</a>  Postgres OnLine Journal (February 2009)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/101-PLPython-Part-3-Using-custom-classes,-pulling-data-from-PostgreSQL.html">PLPython Part 3: Using custom classes, pulling data from PostgreSQL</a>  Postgres OnLine Journal (February 2009)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/102-PLPython-Part-4-PLPython-meets-aggregates.html">PLPython Part 4: PLPython meets aggregates</a>  Postgres OnLine Journal (February/March 2009)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/107-PLPython-Part-5-PLPython-meets-PostgreSQL-Multi-column-aggregates-and-SVG-plots.html">PLPython Part 5: PLPython meets PostgreSQL Multi-column aggregates and SVG plots</a>  Postgres OnLine Journal (February/March 2009)</li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/106-PL-Python-Cheatsheet-Overview.html">PL Python Cheatsheet</a>  Postgres OnLine Journal (February/March 2009)</li></ul>
+<h2><span id="PL.2FR"></span><span class="mw-headline" id="PL/R">PL/R</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="http://www.joeconway.com/web/guest/pl/r">PL/R Wiki</a></li>
+<li><a rel="nofollow" class="external text" href="http://www.bostongis.com/PrinterFriendly.aspx?content_name=postgresql_plr_tut01">Up and Running with PL/R An Almost Idiot's Guide</a></li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/archives/188-plr_part1.html">Quick Intro to PL/R and R</a> - 2010-11-28 Postgres OnLine Journal</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/archives/189-plr_part2.html">PL/R Part 2: Functions that take arguments and the power of aggregation</a> - 2010-12-10 Postgres OnLine Journal</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/archives/190-plr_part3.html">PL/R Part 3: Sharing Functions across PL/R functions with plr_module</a> - 2010-12-20 Postgres OnLine Journal</li></ul>
+<h2><span class="mw-headline" id="Smalltalk">Smalltalk</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="http://www.io.com/~jimm/projects/squeak_postgresql/">Squeak Smalltalk client by Jim Menard (2005-2006)</a></li></ul>
+<ul><li><a rel="nofollow" class="external text" href="http://www.cincomsmalltalk.com/userblogs/jsavidge/blogView?showComments=true&amp;title=Installing+PostgreSQL+to+use+with+VisualWorks+StORE&amp;entry=3319025226">Installing the PostgreSQL driver and client library from the Store in VisualWorks Smalltalk by Cincom (2006)</a></li></ul>
+<h2><span class="mw-headline" id="Referential_Integrity">Referential Integrity</span></h2>
+<ul><li><a href="/wiki/Compensating_for_Unimplemented_Features_in_PostgreSQL_7.1" title="Compensating for Unimplemented Features in PostgreSQL 7.1">Compensating for Unimplemented Features in PostgreSQL 7.1</a> by John Pagakis and Todd Gauthier (2001-08-21)</li>
+<li><a href="/wiki/Referential_Integrity_Tutorial_%26_Hacking_the_Referential_Integrity_tables" title="Referential Integrity Tutorial &amp; Hacking the Referential Integrity tables">Referential Integrity Tutorial &amp; Hacking the Referential Integrity tables</a> by Joel Burton (2001-09-03)</li>
+<li><a rel="nofollow" class="external text" href="http://www.freebsddiary.org/postgresql-dropping-constraints.php">Removing Foreign Keys</a> by Dan Langille</li></ul>
+<h2><span class="mw-headline" id="Web_development">Web development</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="http://whatcodecraves.com/articles/2008/02/05/setup_rails_with_postgresql/">Setup Rails with PostgreSQL</a></li>
+<li><a rel="nofollow" class="external text" href="http://www.tgds.net/ultra.html">Using Macromedia UltraDev with PostgreSQL, Tomcat and Apache</a> by Tony Grant</li>
+<li><a rel="nofollow" class="external text" href="http://www.holindis.co.uk/PostgreSQLApacheTomcatWin32_v1.1.pdf">Apache 2.0, Tomcat 5.5, WARs &amp; PostgreSQL 8.1 JDBC DataSources on Windows</a> by Chris Drawater (Jan 2006)</li>
+<li>Italian: <a rel="nofollow" class="external text" href="http://cuneo.linux.it/materiale/index.php?txt=pgsql/index">Appunti di PostgreSQL</a> by Giorgio Ponza - GlugCN (2006-03-14)</li></ul>
+<!-- 
+NewPP limit report
+Cached time: 20260408031151
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.037 seconds
+Real time usage: 0.043 seconds
+Preprocessor visited node count: 49/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:255-0!canonical and timestamp 20260408031151 and revision id 34693.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Development_Articles&amp;oldid=34693">https://wiki.postgresql.org/index.php?title=Development_Articles&amp;oldid=34693</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:General_articles_and_guides" title="Category:General articles and guides">General articles and guides</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Development_Articles" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/Talk:Development_Articles" rel="discussion" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Development_Articles">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Development_Articles&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Development_Articles&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Development_Articles" title="Page">Page</a></li><li id="talk-mobile" class="mw-list-item"><a href="/wiki/Talk:Development_Articles" title="Discussion">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Development+Articles" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Development_Articles" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Development_Articles" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Development_Articles&amp;oldid=34693" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Development_Articles&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 17 March 2020, at 15:19.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.037","walltime":"0.043","ppvisitednodes":{"value":49,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260408031151","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":351});});</script>
+</body>
+</html>

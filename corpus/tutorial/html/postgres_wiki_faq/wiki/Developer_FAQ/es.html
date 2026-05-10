@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Developer FAQ/es - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"332dac7e19644a93a3ef4e12","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Developer_FAQ/es","wgTitle":"Developer FAQ/es","wgCurRevisionId":22976,"wgRevisionId":22976,"wgArticleId":330,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["FAQ","Español"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Developer_FAQ/es","wgRelevantArticleId":330,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Developer_FAQ_es rootpage-Developer_FAQ skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Developer FAQ/es</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ><span class="subpages">&lt; <a href="/wiki/Developer_FAQ" title="Developer FAQ">Developer FAQ</a></span></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Cómo_involucrarse_con_el_Proyecto"><span class="tocnumber">1</span> <span class="toctext">Cómo involucrarse con el Proyecto</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#¿_Cómo_me_puedo_involucrar_en_el_desarrollo_de_PostgreSQL_?"><span class="tocnumber">1.1</span> <span class="toctext">¿ Cómo me puedo involucrar en el desarrollo de PostgreSQL&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#¿_Cómo_descargo/actualizo_el_código_fuente_actual_?"><span class="tocnumber">1.2</span> <span class="toctext">¿ Cómo descargo/actualizo el código fuente actual&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#¿_Que_ambiente_de_desarrollo_se_requiere_para_desarrollar_código?"><span class="tocnumber">1.3</span> <span class="toctext">¿ Que ambiente de desarrollo se requiere para desarrollar código?</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#¿_Dónde_puedo_aprender_más_sobre_el_código_?"><span class="tocnumber">1.4</span> <span class="toctext">¿ Dónde puedo aprender más sobre el código&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#¿_Qué_áreas_necesitan_ser_trabajadas_?"><span class="tocnumber">1.5</span> <span class="toctext">¿ Qué áreas necesitan ser trabajadas&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#¿_Cómo_me_puedo_involucrar_en_el_desarrollo_del_sitio_web_de_PostgreSQL_?"><span class="tocnumber">1.6</span> <span class="toctext">¿ Cómo me puedo involucrar en el desarrollo del sitio web de PostgreSQL&#160;?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#Herramientas_de_Desarrollo_y_Ayuda"><span class="tocnumber">2</span> <span class="toctext">Herramientas de Desarrollo y Ayuda</span></a>
+<ul>
+<li class="toclevel-2 tocsection-9"><a href="#¿_Qué_herramientas_se_encuentran_disponibles_para_los_desarrolladores_?"><span class="tocnumber">2.1</span> <span class="toctext">¿ Qué herramientas se encuentran disponibles para los desarrolladores&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#¿_Que_libros_son_buenos_para_los_Desarrolladores_?"><span class="tocnumber">2.2</span> <span class="toctext">¿ Que libros son buenos para los Desarrolladores&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#¿_De_que_se_trata_todo_esto_de_configure_?"><span class="tocnumber">2.3</span> <span class="toctext">¿ De que se trata todo esto de configure&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#¿_Cómo_añado_un_nuevo_port_?"><span class="tocnumber">2.4</span> <span class="toctext">¿ Cómo añado un nuevo port&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#¿_Por_que_no_utilizar_hilos_(threads),_dispositivos_raw,_async-IO_&lt;inserte_aqui_su_carácterística_favorita&gt;_?"><span class="tocnumber">2.5</span> <span class="toctext">¿ Por que no utilizar hilos (threads), dispositivos raw, async-IO &lt;inserte aqui su carácterística favorita&gt;&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#¿_Cómo_son_administradas_las_ramas_del_CVS_?"><span class="tocnumber">2.6</span> <span class="toctext">¿ Cómo son administradas las ramas del CVS&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#¿_Dónde_puedo_obtener_una_copia_de_los_estándares_SQL_?"><span class="tocnumber">2.7</span> <span class="toctext">¿ Dónde puedo obtener una copia de los estándares SQL&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#¿_Dónde_puedo_obtener_asistencia_Técnica_?"><span class="tocnumber">2.8</span> <span class="toctext">¿ Dónde puedo obtener asistencia Técnica&#160;?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-17"><a href="#Proceso_de_Desarrollo"><span class="tocnumber">3</span> <span class="toctext">Proceso de Desarrollo</span></a>
+<ul>
+<li class="toclevel-2 tocsection-18"><a href="#¿_Qué_hago_después_de_seleccionar_algún_artículo_para_trabajar_?"><span class="tocnumber">3.1</span> <span class="toctext">¿ Qué hago después de seleccionar algún artículo para trabajar&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#He_desarrollado_un_parche,_¿_Qué_sigue_?"><span class="tocnumber">3.2</span> <span class="toctext">He desarrollado un parche, ¿ Qué sigue&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#¿_Cómo_es_revisado_un_parche_?"><span class="tocnumber">3.3</span> <span class="toctext">¿ Cómo es revisado un parche&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#¿_Como_realizo_pruebas_de_mis_cambios_?"><span class="tocnumber">3.4</span> <span class="toctext">¿ Como realizo pruebas de mis cambios&#160;?</span></a>
+<ul>
+<li class="toclevel-3 tocsection-22"><a href="#Sistema_de_pruebas_básico"><span class="tocnumber">3.4.1</span> <span class="toctext">Sistema de pruebas básico</span></a></li>
+<li class="toclevel-3 tocsection-23"><a href="#Suite_de_pruebas_de_Regresión"><span class="tocnumber">3.4.2</span> <span class="toctext">Suite de pruebas de Regresión</span></a></li>
+<li class="toclevel-3 tocsection-24"><a href="#Otras_pruebas_en_tiempo_de_ejecución"><span class="tocnumber">3.4.3</span> <span class="toctext">Otras pruebas en tiempo de ejecución</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#Que_hay_de_las_pruebas_unitarias,_análisis_estáticos,_revisipones_de_modelo..._?"><span class="tocnumber">3.4.4</span> <span class="toctext">Que hay de las pruebas unitarias, análisis estáticos, revisipones de modelo...&#160;?</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-26"><a href="#Preguntas_Técnicas"><span class="tocnumber">4</span> <span class="toctext">Preguntas Técnicas</span></a>
+<ul>
+<li class="toclevel-2 tocsection-27"><a href="#¿_Cómo_acceso_de_manera_eficiente_la_información_en_los_catálogos_del_systema_desde_el_código_del_backend_?"><span class="tocnumber">4.1</span> <span class="toctext">¿ Cómo acceso de manera eficiente la información en los catálogos del systema desde el código del backend&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#¿_Por_qué_algunas_veces_los_nombres_de_tablas,_columnas,_tipos,_funciones_o_vistas_son_referidos_como_Name_o_NameData,_y_algunas_veces_como_char_*_?"><span class="tocnumber">4.2</span> <span class="toctext">¿ Por qué algunas veces los nombres de tablas, columnas, tipos, funciones o vistas son referidos como Name o NameData, y algunas veces como char *&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#¿_Por_qué_utilizamos_Node_y_List_para_generar_estructuras_de_datos_?"><span class="tocnumber">4.3</span> <span class="toctext">¿ Por qué utilizamos Node y List para generar estructuras de datos&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#He_agregado_un_campo_a_la_estructura._¿_Qué_más_debo_hacer_?"><span class="tocnumber">4.4</span> <span class="toctext">He agregado un campo a la estructura. ¿ Qué más debo hacer&#160;?</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span id="C.C3.B3mo_involucrarse_con_el_Proyecto"></span><span class="mw-headline" id="Cómo_involucrarse_con_el_Proyecto">Cómo involucrarse con el Proyecto</span></h2>
+<h3><span id=".C2.BF_C.C3.B3mo_me_puedo_involucrar_en_el_desarrollo_de_PostgreSQL_.3F"></span><span class="mw-headline" id="¿_Cómo_me_puedo_involucrar_en_el_desarrollo_de_PostgreSQL_?">¿ Cómo me puedo involucrar en el desarrollo de PostgreSQL&#160;?</span></h3>
+<p>Puede descargar el código y echarle un vistazo. Vea la pregunta siguiente.
+</p><p>Suscríbase y lea <a rel="nofollow" class="external text" href="http://archives.postgresql.or/pgsql-hackers/">lista de correo pgsql-hackers</a> (llamada comúnmente "hackers").  Es ahí donde los principales contribuidores y miembros principales del proyecto discuten el desarrollo.
+</p>
+<h3><span id=".C2.BF_C.C3.B3mo_descargo.2Factualizo_el_c.C3.B3digo_fuente_actual_.3F"></span><span class="mw-headline" id="¿_Cómo_descargo/actualizo_el_código_fuente_actual_?">¿ Cómo descargo/actualizo el código fuente actual&#160;?</span></h3>
+<p>Existen varias maneras de obtener el código fuente. Los desarrolladores ocasionales pueden obtener simplemente el código fuente más receiente desde <a rel="nofollow" class="external free" href="ftp://ftp.postgresql.org/pub/snapshot/">ftp://ftp.postgresql.org/pub/snapshot/</a>.
+</p><p>Los desarrolladores más involucrados pueden tomar ventaja del acceso anónimo a nuestro sistema de administración de código fuente. El código fuente se encuentra almacenado bajo CVS actualmente. Para mayores detalles sobre como obtener el código fuente desde el repositorio CVS vea <a rel="nofollow" class="external free" href="http://developer.postgresql.org/docs/postgres/cvs.html">http://developer.postgresql.org/docs/postgres/cvs.html</a>.
+</p><p>También tenemos un mirror Git del repositorio CVS; vea <a rel="nofollow" class="external free" href="http://git.postgresql.org/?p=postgresql.git">http://git.postgresql.org/?p=postgresql.git</a>
+</p>
+<h3><span id=".C2.BF_Que_ambiente_de_desarrollo_se_requiere_para_desarrollar_c.C3.B3digo.3F"></span><span class="mw-headline" id="¿_Que_ambiente_de_desarrollo_se_requiere_para_desarrollar_código?">¿ Que ambiente de desarrollo se requiere para desarrollar código?</span></h3>
+<p>PostgreSQL se encuentra desarrollado en lenguaje de programación C en su mayor parte. El código fuente esta orientado a las plataformas más populares en Unix y en ambientes Windows (Windows 2000, XP  y posteriores).
+</p><p>La mayoría de los desarrolladores ejecutan un sistema operativo tipo Unix y utilizan herramientas de código abierto como <a rel="nofollow" class="external text" href="http://gcc.gnu.org">GCC</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/make/make.html">GNU Make</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/gdb/gdb.html">GDB</a>, <a rel="nofollow" class="external text" href="http://www.gnu.org/software/autoconf/">Autoconf</a> y demás. Si usted ha contribuido código libre abierto anteriormente, probablemente se encuentre familiarizado con esas herramientas. Los desarrolladores que utilizan herramientas para Windows pueden utilizar <a rel="nofollow" class="external text" href="http://www.mingw.com/">MinGW</a>. Algunos desarrolladores utilizan compiladores de otros distribuidores con resultados variados.
+</p><p>La lista completa de software requerido para generar PostgreSQL se puede encontrar en las <a rel="nofollow" class="external text" href="http://developer.postgresql.org/pgdocs/postgres/install-requirements.html">instrucciones de instalación</a>. 
+</p><p>Los desarrolladores que reconstruyen constantemente el código fuente envían la bandera --enable-depend para configurar. El resultado es que si usted genera una modificación a un archivo de encabezamiento en C, todos los archivos que dependen de ese archivo también son reconstruidos.
+</p><p>El archivo src/Makefile.custom se puede utilizar para establecer variables del ambiente tales como CUSTOM_COPT, que son utilizadas para cada compilación.
+</p>
+<h3><span id=".C2.BF_D.C3.B3nde_puedo_aprender_m.C3.A1s_sobre_el_c.C3.B3digo_.3F"></span><span class="mw-headline" id="¿_Dónde_puedo_aprender_más_sobre_el_código_?">¿ Dónde puedo aprender más sobre el código&#160;?</span></h3>
+<p>Además de la documentación que se encuentra en el mismo código fuente, puede encontrar alginos papeles/presentaciones que discuten el código en <a rel="nofollow" class="external free" href="http://www.postgresql.org/developer">http://www.postgresql.org/developer</a>. Una excelente presentación se puede encontrar en <a rel="nofollow" class="external free" href="http://neilconway.org/talks/hacking/">http://neilconway.org/talks/hacking/</a>
+</p>
+<h3><span id=".C2.BF_Qu.C3.A9_.C3.A1reas_necesitan_ser_trabajadas_.3F"></span><span class="mw-headline" id="¿_Qué_áreas_necesitan_ser_trabajadas_?">¿ Qué áreas necesitan ser trabajadas&#160;?</span></h3>
+<p>Las principales características se encuentran detalladas en la lista de <a href="/wiki/Todo" title="Todo">cosas por hacer</a>
+</p><p>Puede aprender más acerca de esas características consultando los archivos, los estándares SQL y textos recomendados (véa <a href="#Que_libros_son_buenos_para_los_desarrolladores.3F"> Libros para desarrolladores</a>).
+</p>
+<h3><span id=".C2.BF_C.C3.B3mo_me_puedo_involucrar_en_el_desarrollo_del_sitio_web_de_PostgreSQL_.3F"></span><span class="mw-headline" id="¿_Cómo_me_puedo_involucrar_en_el_desarrollo_del_sitio_web_de_PostgreSQL_?">¿ Cómo me puedo involucrar en el desarrollo del sitio web de PostgreSQL&#160;?</span></h3>
+<p>El desarrollo del sitio web de PostgreSQL se discute en <a rel="nofollow" class="external text" href="http://archives.postgresql.org/pgsql-www/">la lista de correo pgsql-www</a>. Existe una página para el proyecto donde se encuentra el código fuente disponible en <a rel="nofollow" class="external free" href="http://pgweb.postgresql.org/">http://pgweb.postgresql.org/</a>.
+</p>
+<h2><span class="mw-headline" id="Herramientas_de_Desarrollo_y_Ayuda">Herramientas de Desarrollo y Ayuda</span></h2>
+<h3><span id=".C2.BF_Qu.C3.A9_herramientas_se_encuentran_disponibles_para_los_desarrolladores_.3F"></span><span class="mw-headline" id="¿_Qué_herramientas_se_encuentran_disponibles_para_los_desarrolladores_?">¿ Qué herramientas se encuentran disponibles para los desarrolladores&#160;?</span></h3>
+<p>Primero, todos los archivos del directorio src/tools están diseñados para los desarrolladores.
+</p>
+<pre>   RELEASE_CHANGES son cambios que se han hecho para cada versión liberada (release)
+   backend         descripción/Diagrama de Flujo de los directorios de backend.
+   ccsym           encuentre defines estandar hechos por su compilador.
+   copyright       arreglos a los anuncios de copyright.
+   
+   entab           convierte espacios en tabulaciones, utilizado por pgindent
+   find_static     encuentra funciones que pueden hechas estáticas
+   find_typedef    localiza typedefs en el código fuente
+   find_badmacros  encuentra macros que utilizan llaves incorrectamente
+   fsync           un escript que provee información sobre el costo de las
+                   llamadas del systema de sincronización del caché
+   make_ctags      genera un archivo 'tags' para vi en cada directorio
+   make_diff       genera archivos *.orig y *.diff del código fuente
+   make_etags      genera archivos 'etags' para emacs
+   make_keywords   genera una comparación entre nuestras palabras clave y el estándar SQL'92
+   make_mkid       genera archivos ID para mkid
+   pgcvslog        se utiliza para generar una lista de cambios para cada versión
+   pginclude       scripts para añadir/eliminar archivos include
+   pgindent        genera la indentación de los archivos de código fuente
+   pgtest          un sistema semi-automático de generación
+   thread          un script para pruebas de hilos (threads)
+</pre>
+<p>En src/include/catalg:
+</p>
+<pre>   unused_oids     un script que busca OIDs sin utilizar para utilizarlos en los catálogos del sistema
+   duplicate_oids  localiza OIDs duplicados en las definiciones de los catálogos del sistema
+</pre>
+<p>Si abre en su navegador de internet el archivo tools/backend/index.html, usted puede ver algunos programas que describen el flujo de datos, los componentes del backend en un diagrama de flujo y una descripción del área de memoria compartida. Puede hacer click en cualquier parte del diagrama de flujo para ver su descripción. Si hace click en el nombre del directorio, será llevado a ese directorio en el código fuente, para navegar en el código fuente que se encuentra actualmente en él. Tambien tenemos varios archivos LEEME (README) en algunos directorios del código fuente para describir la función del módulo. El navegador mostrará esto cuando acceda a cada directorio. El directorio tools/backend tambiens e encuentra contenido en nuestra página web con el título __Como Procesa PostgreSQL una consulta__.
+</p><p>En segundo lugar sería importante que usted cuenta con un editor que pueda manejar etiquetas (tags), para que pueda etiquetar cualquier llamada a una función y ver la definición de la función. La mayoría de los editores soportan esto via archivos de etiquetas (tags o etags).
+</p><p>En tercer lugar, usted necesitará obtener los id-utils desde <a rel="nofollow" class="external free" href="ftp://ftp.gnu.org/gnu/id-utils/">ftp://ftp.gnu.org/gnu/id-utils/</a>
+</p><p>Ejecutando tools/make_mkid, se crea un archivo de símbolos para el código fuente que puede ser rápidamente consultado.
+</p><p>Algunos desarrolladores hacen uso de cscope, este puede ser encontrado en <a rel="nofollow" class="external free" href="http://cscope.sf.net/">http://cscope.sf.net/</a>. Otros utilizan glimpse, que se puede encontrar en <a rel="nofollow" class="external free" href="http://webglimpse.net/">http://webglimpse.net/</a>.
+</p><p>El archivo tools/make_diff contiene herramientas para crear archivos con parches diff que pueden ser aplicados a la distribución. Esto produce archivos diffs para el contexto, que es nuestro formato preferido.
+</p><p>Nuestro estándar es el formato BSD, con cada nivel de código indentado con una tabulación, en donde cada tabulador equivale a cuatro espacios. Usted necesitará configurar su editor o visor de archivos para mostrar las tabulaciones como cuatro estpacios:
+</p>
+<pre>   vi in ~/.exrv:
+           set tabstop=4
+           set shiftwidth=4
+           set noexpandtab
+   more:
+           more -x4
+   less:
+           less -x4
+</pre>
+<p>El directorio tools/editors de los últimos códigos fuente contiene parámetros de ejemplo que pueden ser utilizados con los editores emacs, xemacs y vim que se utilizan para ayudar a mantener los estándares de codificación de PostgreSQL.
+</p><p>pgindent formateará el código especificando banderas (flags) a la utilería de indentación de su sistema operativo. Este artículo describe el valor de un estilo de codificación consistente.
+</p><p>pgindent se ejecuta sobre todos los archivos de código fuente justo antes de cada período de pruebas beta. Formatea automáticamente todos los archivos de código fuente para hacerlos consistentes. Los bloques de comentarios que necesitan saltos de línea específicos deberán ser formateados como bloques de comentarios, en donde el comentario comienza como /*------. Esos comentarios no serán reformatados de manera alguna.
+</p><p>pginclude contiene scripts utilizados para agregar todos los #include necesarios en los archivos include, y eliminar los #inlcude innecesarios.
+</p><p>Cuando se agregan objetos interconstruidos tales como tipo (types) o funciones (functions), usted necesitará asignarles OIDs. Nuestra convención es que todos los OIDs asignados de manera manual tienen valores distintos en un rango de 1-9999. (Funcionaría mecánicamente para estos el ser unicos dentro de catálogos de sistema individuales, pero por claridad requerimos que sean únicos en todo el sistema.) Existe un script llamado unused_oids en src/include/catalog que muestra los OIDs que no se encuentran en uso actualmente. Para asignar un nuevo OID, seleccione uno que se encuentre libre de acuerdo a unused_oids, y para obtener puntos adicionales seleccione uno que se encuentre cerca de objetos que esten relacionados actualmente. Vea también el script duplciate_oids, que le alertará si se ha equivocado.
+</p>
+<h3><span id=".C2.BF_Que_libros_son_buenos_para_los_Desarrolladores_.3F"></span><span class="mw-headline" id="¿_Que_libros_son_buenos_para_los_Desarrolladores_?">¿ Que libros son buenos para los Desarrolladores&#160;?</span></h3>
+<p>Existen cinco libros buenos:
+</p>
+<ul><li>An Introduction to Database Systems, de C.J. Date, Addison, Wesley</li>
+<li>A Guide to the SQL Standard, de C.J. Date, et. al, Addison, Wesley</li>
+<li>Fundamentals of Database Systems, de Elmasri and Navathe</li>
+<li>Transaction Processing, de Jim Gray, Morgan, Kaufmann</li>
+<li>Transactional Information Systems de Gerhard Weikum, Kaufmann</li></ul>
+<h3><span id=".C2.BF_De_que_se_trata_todo_esto_de_configure_.3F"></span><span class="mw-headline" id="¿_De_que_se_trata_todo_esto_de_configure_?">¿ De que se trata todo esto de configure&#160;?</span></h3>
+<p>Los archivos configure y configure.in son parte del paquete autoconf de GNU. La herramienta configure nos permite realizar pruebas de varias de las capacidades del Sistema Operativo, y establecer variables que pueden ser probadas en programas en C y archivos Make (Makefiles). Autoconf se encuentra instalado en el servidor principal de PostgreSQL. Para agregar opciones a configure, edite el archivo configure.in, y luego ejecute autoconf para generar el archivo configure.
+</p><p>Cuando la utilería configure es ejecutada por el usuario, realiza pruebas de varias de las capacidades del Sistema Operativo, almacena estas en los archivos config.status y config.cache, y modifica una serie de archivos *.in. Por ejemplo, si existe un archivo Makefile.in, la herramienta configure genera un archivo Makefile que contiene reemplazos para todos los parámetros @var@ encontrados por la herramienta configure.
+</p><p>Cuando necesite editar archivos, asegúrese de que no pierde tiempo modificando archivos generados por la herramienta configure, Edite el archivo *.in, y vuelva a ejecutar la herramienta configure para recrear el archivo necesario. Si usted ejecuta distclean desde el directorio superior del código fuente, todos los archivos derivados por la herramienta configure son eliminados, asi que usted solo verá el archivo contenido en el código fuente de la distribución.
+</p>
+<h3><span id=".C2.BF_C.C3.B3mo_a.C3.B1ado_un_nuevo_port_.3F"></span><span class="mw-headline" id="¿_Cómo_añado_un_nuevo_port_?">¿ Cómo añado un nuevo port&#160;?</span></h3>
+<p>Existen una gran variedad de lugares que necesitan ser modificados para añadir un nuevo port. Primero, comience en el directorio src/template. Agregue la entrada apropiada para su Sistema Operativo. También, utilice el archivo src/config.guess para agregar su Sistema Operativo a src/template/.similar. No deberá hacer que la versión de su Sistema Operativo concuerde exactamente. Las pruebas de la herramienta configure buscarán por el número exacto de versión de su Sistema Operativo, y en caso de no encontrarlo, buscarán el que coincida sin el número de versión. Edite src/configure.in para añadir su nuevo Sistema Operativo. (Vea la herramienta configure descrita anteriormente.)
+</p><p>Luego revise src/include/port y añada su archivo para el nuevo Sistema Operativo, con los valores apropiados. Con suerte ya existe código de bloqueo en src/include/storage/s_lock.h para su CPU. Tambien se encuentra el directorio src/makefiles para manejos específicos del archivo Makefile. Ahí existe un directorio backend/port si usted necesita archivos especiales para su sistema operativo.
+</p>
+<h3><span id=".C2.BF_Por_que_no_utilizar_hilos_.28threads.29.2C_dispositivos_raw.2C_async-IO_.3Cinserte_aqui_su_car.C3.A1cter.C3.ADstica_favorita.3E_.3F"></span><span class="mw-headline" id="¿_Por_que_no_utilizar_hilos_(threads),_dispositivos_raw,_async-IO_&lt;inserte_aqui_su_carácterística_favorita&gt;_?">¿ Por que no utilizar hilos (threads), dispositivos raw, async-IO &lt;inserte aqui su carácterística favorita&gt;&#160;?</span></h3>
+<p>Siempre existe la tentación de utilizar las características más novedosas de los Sistemas Operativos tan pronto como aparecen. Nosotros resistimos esa tentación.
+</p><p>Primero, soportamos más de 15 Sistemas Operativos, asi que cualquier nueva característica debe estar bien establecida antes de que la consideremos. Segundo, las características más nuevas no proveen mejoras dramáticas. Tercero, usualmente tienen algún inconveniente, como estabilidad reducida o código adicional requerido. Por lo tanto, no nos apresuramos a utilizar nuevas características, en lugar de esto, esperamos a que la característica se establezca, entonces solicitamos pruebas para demostrar que una mejora medible es posible.
+</p><p>Como ejemplo, los hilos (threads) no son utilizados actualmente en el backend debido a que:
+</p>
+<ul><li>Históricamente, los hilos (threads) no eran soportados y contenían muchos errores.</li>
+<li>Un error en un backend puede corromper otros backends.</li>
+<li>Las mejoras en velocidad utilizando hilos (threads) son pequeñas comparas con el tiempo restante para el arranque del backend.</li>
+<li>El código del backend tendría que ser más complejo.</li></ul>
+<p>Asi que, no descnocemos las nuevas características. Simplemente somo cautelosos sobre su adopción. el listado de cosas por hacer (TODO list) contiene vínculos a discusiones que muestran nuestro razonamiento en esas áreas.
+</p>
+<h3><span id=".C2.BF_C.C3.B3mo_son_administradas_las_ramas_del_CVS_.3F"></span><span class="mw-headline" id="¿_Cómo_son_administradas_las_ramas_del_CVS_?">¿ Cómo son administradas las ramas del CVS&#160;?</span></h3>
+<p>Vea <a href="/wiki/CVS_Branch_Management" title="CVS Branch Management">Manejo de Ramas (en inglés)</a>.
+</p>
+<h3><span id=".C2.BF_D.C3.B3nde_puedo_obtener_una_copia_de_los_est.C3.A1ndares_SQL_.3F"></span><span class="mw-headline" id="¿_Dónde_puedo_obtener_una_copia_de_los_estándares_SQL_?">¿ Dónde puedo obtener una copia de los estándares SQL&#160;?</span></h3>
+<p>Se supone que los debe adquirir de <a rel="nofollow" class="external text" href="http://www.iso.ch">ISO</a> o <a rel="nofollow" class="external text" href="http://www.ansi.org">ANSI</a>. Busque por ISO/ANSI 9075. La oferta de ANSI es menos cara, pero el contenido de los documentos de ambas organizaciones es el mismo.
+</p><p>Siendo que comprar una gopia de la guía oficial para el estándar es algo cara, la mayoría de los desarrolladores dependen de varios borradores disponibles en Internet.
+</p><p>Algunos de estos son:
+</p>
+<ul><li>SQL-92 <a rel="nofollow" class="external free" href="http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt">http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt</a></li>
+<li>SQL:1999 <a rel="nofollow" class="external free" href="http://www.cse.iitb.ac.in/dbms/Data/Papers-Other/SQL1999/ansi-iso-9075-2-1999.pdf">http://www.cse.iitb.ac.in/dbms/Data/Papers-Other/SQL1999/ansi-iso-9075-2-1999.pdf</a></li>
+<li>SQL:2003 <a rel="nofollow" class="external free" href="http://www.wiscorp.com/sql_2003_standard.zip">http://www.wiscorp.com/sql_2003_standard.zip</a></li>
+<li>SQL:2008 (preliminar) <a rel="nofollow" class="external free" href="http://www.wiscorp.com/sql200n.zip">http://www.wiscorp.com/sql200n.zip</a></li></ul>
+<p>La documentación de PostgreSQL contiene información sobre PostgreSQL y la <a rel="nofollow" class="external text" href="http://developer.postgresql.org/pgdocs/postgres/features.html">adherencia al estándar SQL</a>.
+</p><p>Algunas páginas web acerca del estándar son:
+</p>
+<ul><li><a rel="nofollow" class="external free" href="http://troels.arvin.dk/db/rdbms/links/#standards">http://troels.arvin.dk/db/rdbms/links/#standards</a></li>
+<li><a rel="nofollow" class="external free" href="http://www.wiscorp.com/SQLStandards.html">http://www.wiscorp.com/SQLStandards.html</a></li>
+<li><a rel="nofollow" class="external free" href="http://www.contrib.andrew.cmu.edu/~shadow/sql.html#syntax">http://www.contrib.andrew.cmu.edu/~shadow/sql.html#syntax</a> (SQL-92)</li>
+<li><a rel="nofollow" class="external free" href="http://dbs.uni-leipzig.de/en/lokal/standards.pdf">http://dbs.uni-leipzig.de/en/lokal/standards.pdf</a> (papel)</li></ul>
+<p>Tenga en cuenta que tener acceso a una copia del estándar SQL no es necesario para volverse un contribuidor valioso al desarrollo de PostgreSQL. Interpretar el estándar es algo difícil y requiere de años de experiencia. Y de cualquier manera la mayoría de las características en PostgreSQL no se encuentran especificadas en el estándar.
+</p>
+<h3><span id=".C2.BF_D.C3.B3nde_puedo_obtener_asistencia_T.C3.A9cnica_.3F"></span><span class="mw-headline" id="¿_Dónde_puedo_obtener_asistencia_Técnica_?">¿ Dónde puedo obtener asistencia Técnica&#160;?</span></h3>
+<p>Muchas de las preguntas técnicas hechos por todos aquellos nuevos en el código fuente pueden ser respondidas en la lista de correo pgsql-hackers - los archivos de la cual se pueden encontrar en <a rel="nofollow" class="external free" href="http://archives.postgresql.org/pgsql-hackers/">http://archives.postgresql.org/pgsql-hackers/</a>.
+</p><p>Si no puede encontrar una discusión en particular o relativa a su pregunta, siéntase libre de colocarla en la lista.
+</p><p>La mayoría de la gente que contribuye también responde preguntas técnicas, incluyendo preguntas acerca del desarrollo de nuevas características, en IRC en irc.freenode.net en el canal #postgresql.
+</p>
+<h2><span class="mw-headline" id="Proceso_de_Desarrollo">Proceso de Desarrollo</span></h2>
+<h3><span id=".C2.BF_Qu.C3.A9_hago_despu.C3.A9s_de_seleccionar_alg.C3.BAn_art.C3.ADculo_para_trabajar_.3F"></span><span class="mw-headline" id="¿_Qué_hago_después_de_seleccionar_algún_artículo_para_trabajar_?">¿ Qué hago después de seleccionar algún artículo para trabajar&#160;?</span></h3>
+<p>Envíe un correo a pgsql-hackers con una propuesta para lo que usted desea hacer (asumiendo que su contribución no es trivial). Trabajar aislado no es recomendable debido a que otros pueden estar trabajando en el mismo artículo, o usted puede comprender incorrectamente el artículo. En el correo, discuta tanto el método de implementación interno que planea utilizar, como cualquier cambio que será visible al usuario (nueva sintaxis, etc). Para parches complejos es importante obtener retroalimentación de la comunidad para su propuesta antes de comenzar a trabajar. Fallar al hacerlo puede significar que su parche sea rechazado. Si su trabajo esta siendo patrocinado por alguna compañía, lea <a rel="nofollow" class="external text" href="http://momjian.us/main/writings/pgsql/company_contributions/">este artículo</a> para tener algunos tips sobre como ser más efectivo.
+</p><p>Un sitio web es mantenido para los parches que están en espera de revisión, <a rel="nofollow" class="external free" href="http://momjian.postgresql.org/cgi-bin/pgpatches">http://momjian.postgresql.org/cgi-bin/pgpatches</a>, y para aquellos que son almacenados para la siguiente versión, <a rel="nofollow" class="external free" href="http://momjian.postgresql.org/cgi-bin/pgpatches_hold">http://momjian.postgresql.org/cgi-bin/pgpatches_hold</a>.
+</p>
+<h3><span id="He_desarrollado_un_parche.2C_.C2.BF_Qu.C3.A9_sigue_.3F"></span><span class="mw-headline" id="He_desarrollado_un_parche,_¿_Qué_sigue_?">He desarrollado un parche, ¿ Qué sigue&#160;?</span></h3>
+<p>Usted va a necesitar enviar el parche a pgsql-patches@postgresql.org. Será revisado por otros contribuyentes del proyecto y entonces será aceptado o devuelto para realizar más trabajo. Para ayudarlo a asegurar que su parche es revisado y enviado a tiempo, por favor intente asegurarse de que su envío cumple con los siguientes puntos:
+</p>
+<ol><li>Asegúrese que su parche es generado contra la versión más reciente del código fuente, que para los desarrolladores es CVS HEAD. Para más acerca de las ramas en PostgreSQL véa <a href="#Como_son_administradas_las_ramas_del_CVS.3F"> como son administradas las ramas</a>.</li>
+<li>Intente generar un parche que sea tan legible como sea posible siguiendo las convenciones de formato. Esto hace facilita las cosas para quien revisa, y no hay razón en tratar de hacer cosas distintas a pgindent. También evite espacios en blanco innecesarios debido a que solo distraerán a quien revisa, y los cambios en formato serán eliminados por la siguiente ejecución de pgindent.</li>
+<li>El parche deberá ser generado en formato diff contextual (diff -c y deberá ser aplicable desde el directorio raíz. Si usted no está familiarizado con esto, puede encontrar informativo el script en src/tools/make_diff/difforig. Los diffs unificados solo son preferibles si los cambios en el archivo son de una sola línea y no dependen de las líneas que los rodean.)</li>
+<li>PostgreSQL se encuentra bajo licencia BSD. Al publicar un parche en las listas de correo de PostgreSQL, usted esta cediendo derechos irrevocables al PosgreSQL Global Development Group para distribuir su parches bajo la licencia BSD.</li>
+<li>Confirme que su parches supere las pruebas de regresión. Si sus cambios son para un port específico, por favor liste los ports en los que lo ha probado.</li>
+<li>Si esta agregando una nueva característica, confirme que esta ha sido perfectamente probada. Intente probar la característica en todos los escenarios posibles.</li>
+<li>Los parches con nuevas características deberán ser acompañados por parches para la documentación. Si necesita ayuda revisando el estándar SQL, vea <a href="#Dónde_puedo_obtener_una_copia_de_los_estándares_SQL.3F"> esta pregunta</a>.</li>
+<li>Provea un resúmen general de la implementación, preferentemente con comentarios en el código. Seguir el estilo para comentarios en código es usualmente una buena forma de hacerlo. También vea <a rel="nofollow" class="external text" href="http://www.ibm.com/developerworks/linux/library/l-clear-code/?ca=dgr-FClnxw01linuxcodetips">este artículo en developerWorks</a>.</li>
+<li>Si se trata de un parche enfocado al rendimiento, por favor provea los resultados que confirmen el beneficio de su parche. Esta bien publicar parches sin esta información, aunque el parche no será aplicado hasta que alguien lo haya probado y encuentre un aumento significativo en el rendimiento.</li></ol>
+<p>Aún si supera todos los puntos anteriores, el parche aún puede ser rechazado por otras razones. Por favor, preparese a escuchar comentarios y hacer modificaciones.
+</p><p>Usted será notificado via email cuando el parche sea aplicado, y su nombre puede aparecer en las notas de la siguiente versión.
+</p>
+<h3><span id=".C2.BF_C.C3.B3mo_es_revisado_un_parche_.3F"></span><span class="mw-headline" id="¿_Cómo_es_revisado_un_parche_?">¿ Cómo es revisado un parche&#160;?</span></h3>
+<p>Quienes revisan los parches revisar varias cosas antes de aplicarlos:
+</p>
+<ul><li>El parche sigue el estándar SQL o la comunidad está de acuerdo con el comportamiento del mismo.</li>
+<li>El estilo se integra correctamente con el del código que lo rodea</li>
+<li>Utiliza correctamente todos los subsistemas de PostgreSQL</li>
+<li>Contiene suficientes comentarios</li>
+<li>Contiene código que funciona en todos los sistemas operativos soportados</li>
+<li>Tiene la documentación adecuada</li>
+<li>Supera las pruebas de regresión, y de ser necesario, añade nuevas pruebas</li>
+<li>Se comporta de la manera esperada, aún bajo circunstancias inusuales</li>
+<li>No contiene riesgos para la estabilidad del sistema</li>
+<li>No complica más el código fuente</li>
+<li>Si esta relacionado con el rendimiento, contiene una mejora medible</li>
+<li>Es de suficiente uso para el usuario promedio de PostgreSQL</li>
+<li>Sigue los procedimientos de codificación estándar de PostgreSQL</li></ul>
+<h3><span id=".C2.BF_Como_realizo_pruebas_de_mis_cambios_.3F"></span><span class="mw-headline" id="¿_Como_realizo_pruebas_de_mis_cambios_?">¿ Como realizo pruebas de mis cambios&#160;?</span></h3>
+<h4><span id="Sistema_de_pruebas_b.C3.A1sico"></span><span class="mw-headline" id="Sistema_de_pruebas_básico">Sistema de pruebas básico</span></h4>
+<p>La manera más sencilla de probar el código es asegurarse de que se construye en base a la última versión del código y que no se generan alertas del compilador.
+</p><p>Se recomienda que se envíe --enable-cassert para relizar la configuración. Esto activará las verificaciones en el fuente las cuales en algunas ocasiones mostrarán errores (bugs) debido a que causan corrupciones de datos o violaciones de segmentos. Esto generalmente hace que la depuración sea más sencilla.
+</p><p>Luego, se pueden realizar las pruebas a través de psql.
+</p>
+<h4><span id="Suite_de_pruebas_de_Regresi.C3.B3n"></span><span class="mw-headline" id="Suite_de_pruebas_de_Regresión">Suite de pruebas de Regresión</span></h4>
+<p>El siguiente paso es probar los cambios contra la suite de pruebas de regresión existente. Para hacer esto, ejecute "make check" en el directorio raíz del código fuente. Si alguna prueba falla, investigue.
+</p><p>Si ha cambiado de manera deliberada alguna conducta existente, este cambio puede causar una falla en la prueba de regresión pero no de regresión actual. Si es así, deberá parchar también la suite de pruebas de regresión.
+</p>
+<h4><span id="Otras_pruebas_en_tiempo_de_ejecuci.C3.B3n"></span><span class="mw-headline" id="Otras_pruebas_en_tiempo_de_ejecución">Otras pruebas en tiempo de ejecución</span></h4>
+<p>Algunos desarrolladores utilizan herramientas tales como valgrind (<a rel="nofollow" class="external free" href="http://valgrind.kde.org">http://valgrind.kde.org</a>) para realizar pruebas de memoria, gprof (que viene con la suite GNU binutils) y oprofile (<a rel="nofollow" class="external free" href="http://oprofile.sourceforge.net/">http://oprofile.sourceforge.net/</a>) para realizar el profiling y algunas otras herramientas relacionadas.
+</p>
+<h4><span id="Que_hay_de_las_pruebas_unitarias.2C_an.C3.A1lisis_est.C3.A1ticos.2C_revisipones_de_modelo..._.3F"></span><span class="mw-headline" id="Que_hay_de_las_pruebas_unitarias,_análisis_estáticos,_revisipones_de_modelo..._?">Que hay de las pruebas unitarias, análisis estáticos, revisipones de modelo...&#160;?</span></h4>
+<p>Han habido algunas discusiones acerca de otros frameworks de pruebas y algunos desarrolladores estan explorando esas ideas.
+</p><p>Tenga en mente que los Makefiles no tienen las dependencias adecuadas para los archivos include. Tiene que realizar un make clean y luego generar otro make. Si está utilizando GCC pude utilizar la opción --enable-depend de configure para hace que el compilador calcule las dependencias de manera automática.
+</p>
+<h2><span id="Preguntas_T.C3.A9cnicas"></span><span class="mw-headline" id="Preguntas_Técnicas">Preguntas Técnicas</span></h2>
+<h3><span id=".C2.BF_C.C3.B3mo_acceso_de_manera_eficiente_la_informaci.C3.B3n_en_los_cat.C3.A1logos_del_systema_desde_el_c.C3.B3digo_del_backend_.3F"></span><span class="mw-headline" id="¿_Cómo_acceso_de_manera_eficiente_la_información_en_los_catálogos_del_systema_desde_el_código_del_backend_?">¿ Cómo acceso de manera eficiente la información en los catálogos del systema desde el código del backend&#160;?</span></h3>
+<p>Primero necesitará localizar las tuplas (registros) en los cuales está interesado. Existen dos maneras de hacer esto. La primera, la función SearchSysCache() y otras relacionadas le permiten hacer consultas a los catálogos del sistema utilizando índices predefinidos en los catálogos. Esta es la manera preferida para acceder a las tablas del sistema, debido a que la primera llamada al caché carga los registros necesarios, y peticiones futuras pueden devolver los resultados sin acceder a las tablas. Una lista de los cachés disponibles se encuentra en src/backend/utils/cache/syscache.c. usr/backend/utils/cache/lsyscache.c contiene funciones específicas para búsquedas por columna en caché.
+</p><p>Los registros devueltos son versiones propiedad del caché de la pila de registros. Por lo tanto, no debe modificar o eliminar la tupla devuelta por SearchSysCache(). Lo que debe hacer es liberarla con ReleaseSysCache() cuando ya no la utilice; esto le informa al caché que puede deshacerse de la tupla si es necesario. Si usted se reusa a llamar ReleaseSysCache(), entonces la entrada del caché permanecerá bloqueada en el caché hasta el final de la transacción, lo que es tolerable durante el desarrollo pero considerado inaceptable para código incluido en una versión.
+</p><p>Si no puede utilizar el caché del sistema, necesitará extraer los datos directamente de la tabla, utilizando el buffer del caché que se encuentra compartido por todos los backends. El backend automáticamente se ocupa de cargar los registros dentro del buffer de caché. Para hacer esto, abra la tala con heap_open(). Puede comenzar el barrido de una tabla con heap_beginscan(), luego utilizar heap_getnext() y continuar mientras HeapTupleIsValid() devuelva verdadero. Entonces debe acer un heap_endscan(). Se pueden asignar llaves al barrido. No se utilizan índices, asi que todos los registros serán comparados a las llaves, y solamente los que sean válidos serán devueltos.
+</p><p>También puede utilizar heap_fetch() para obtener todos los registros por número de bloque/offset. Mientras los barridos bloquean y desbloquean automaticamente los registros del buffer del caché, con heap_fetch(), usted debe enviar un apuntador de buffer y hacer un ReleaseBuffer() cuando haya terminado.
+</p><p>Una vez que cuenta con el registro, puede obtener los datos que son comúnes para todas las tuplas, como son t_self y t_oid, accesando simplemente las entradas de la estructura HeapTuple. Si necesita una columna específica de alguna tabla, deberá tomar el puntero de HeapTuple, y utilizar la macro GETSTRUCT() para acceder el inicio especifico en la tabla para la tupla. Puede hacer una conversión del puntero, por ejemplo a Form_pg_proc si esta accediendo a la tabla pg_proc, o Form_pg_type si está accediendo a pg_type. Entonces puede acceder a los campos de la tupla utilizando la estructura del puntero:
+</p><p>((Form_pg_class) GETSTRUCT(tupla))-&gt;relnatts
+</p><p>Observe sinembargo que esto solamente funcioa para las columnas de ancho fijo y nunca para las nulas, y solamente cuando columnas previas son de ancho fijo y nunca nulas. De otra manera la ubicación de la columna es variable y deberá utilizar heap_getattr() o alguna función relacionada para extraerlo de la tupla.
+</p><p>También evite realizar almacenamientos en campos de estructura para hacer cambios en tuplas vivas. La mejor manera es utilizar heap_modifytuple() y enviar la tupla original, además de los valores que se desea modificar. Esto devuelve una tupla palloc, que se envia a heap_update(). Puede eliminar tuplas enviando el t_self de la tupla a heap_delete(). Puede utilizar también el t_self para heap_update(). Recuerde, las tuplas pueden ser también copias de la caché del sistema, las cuales pueden desaparecer despues de llamar ReleaseSysCache(), o leer directamente desde los buffers del disco, los cuales desaparecen cuando ejecuta heap_getnext(), heap_endscan o ReleaseBuffer(), en el caso de heap_fetch(). O puede ser también una tupla palloc, para la que debe ejecutar pfree() una vez que haya terminado.
+</p>
+<h3><span id=".C2.BF_Por_qu.C3.A9_algunas_veces_los_nombres_de_tablas.2C_columnas.2C_tipos.2C_funciones_o_vistas_son_referidos_como_Name_o_NameData.2C_y_algunas_veces_como_char_.2A_.3F"></span><span class="mw-headline" id="¿_Por_qué_algunas_veces_los_nombres_de_tablas,_columnas,_tipos,_funciones_o_vistas_son_referidos_como_Name_o_NameData,_y_algunas_veces_como_char_*_?">¿ Por qué algunas veces los nombres de tablas, columnas, tipos, funciones o vistas son referidos como Name o NameData, y algunas veces como char *&#160;?</span></h3>
+<p>Los nombres de tablas, columnas, tipos, funciones y vistas son almacenados en las tablas del sistema en columnas de tipo Name, Name un tipo de dato de ancho fijo, con terminación nula de NAMEDATALEN bytes. (El valor por defecto para NAMEDATALEN es de 64 bytes.)
+</p>
+<pre>  typedef struct nameData
+   {
+       char        data[NAMEDATALEN];
+   } NameData;
+   typedef NameData *Name;
+</pre>
+<p>Los nombres de tablas, columnas, tipos, funciones y vistas que vienen dentro del backend via consultas de usuarios son almacenados como cadenas de ancho variable con terminación nula.
+</p><p>Muchas funciones son llamadas con ambos tipos de nombres, por ejemplo heap_open(). Debido a que Name es un tipo con caracter nulo de terminación, es seguro enviarlo a una función que espera un tipo char *, Debido a que existen muchos casos donde los nombres en disco (Name) son comparados contra los nombres proporcionados por los usuarios (char *), existen muchos casos donde Name y char * son utilizados indistintamente.
+</p>
+<h3><span id=".C2.BF_Por_qu.C3.A9_utilizamos_Node_y_List_para_generar_estructuras_de_datos_.3F"></span><span class="mw-headline" id="¿_Por_qué_utilizamos_Node_y_List_para_generar_estructuras_de_datos_?">¿ Por qué utilizamos Node y List para generar estructuras de datos&#160;?</span></h3>
+<p>Hacemos esto debido a que nos permite de manera consistente enviar datos hacia el backend en una forma flexible. Cada nodo contiene una propiedad NodeTag que especifica que tipo de dato se encuentra dentro del Nodo. Las listas son grupos de nodos encadenados como una lista transmitida. El ordenamiento de los elementos en la lista puede o no ser significativo, dependiendo del uso de la lista en particular.
+</p><p>Aquí hay algunos comandos para manipulación de Listas:
+</p>
+<dl><dt>lfirst(i)</dt>
+<dt>lfirst_int(i)</dt>
+<dt>lfirst_oid(i)</dt>
+<dd>devuelve los datos (un puntero, entero o un OID respectivamente) de la celda i en la lista.</dd></dl>
+<dl><dt>lnext(i)</dt>
+<dd>devuelve la siguiente celda en la lista después de i.</dd></dl>
+<dl><dt>foreach(i, list)</dt>
+<dd>hace un ciclo a través de la lista, asignando cada celda de la lista a i.</dd></dl>
+<p>Es importante observar que i es un ListCell *, no los datos en la celda de la Lista. Necesita utilizar una de las variantes de lfirst para obtener los datos de la celda.
+</p><p>Aqui se encuentran algunos trozos de código típicos que hacen un ciclo a través de una Lista que contiene elementos Var * y procesos:
+</p>
+<pre>           List        *list;
+           ListCell    *i;
+           ...
+           foreach(i, list)
+           {
+               Var *var = (Var *) lfirst(i);
+               ...
+               /* procesar var aquí */
+           }
+</pre>
+<dl><dt>lcons(node, list)</dt>
+<dd>agregar un nodo al frente de la lista, o crear una nueva lsita con nodo si la lista es NIL.</dd></dl>
+<dl><dt>lappend(list, node)</dt>
+<dd>agregar un nodo al final de la lista.</dd></dl>
+<dl><dt>list_concat(list1, list2)</dt>
+<dd>Concatenar list2 al final de list1.</dd></dl>
+<dl><dt>list_length(list)</dt>
+<dd>devuelve el largo de la lista.</dd></dl>
+<dl><dt>list_nth(list, i)</dt>
+<dd>devuelve el elemento i de la lista, contando desde cero.</dd></dl>
+<dl><dt>lcons_int, ...</dt>
+<dd>Existen versiones enterasd de estos: lcons_int, lappend_int, etc. Tambien hay versiones para listas de OIDS: lcons_oid, lappend_oid, etc.</dd></dl>
+<p>Puede imprimir facilmente esos nodos dentro de gdb. Primero, para deshabilitar el truncado de la salida al utilizar el comando print en gdb:
+</p><p>(gdb) set print elements 0
+</p><p>En lugar de imprimir los valores en fomrato gdb, puede utilizar los siguientes dos comandos para imprimir la Lista, Nodo y contenido de la estructura en un formato detallado que es más sencillo de interpretar. Las listas se encuentran sin desenrrollar dentro de los nodos, y los nodos son impresos en detalle. La primera instrucción imprime en formato recortado, y la segunda en formato largo:
+</p>
+<pre>(gdb) call print(any_pointer)
+(gdb) call pprint(any_pointer)
+</pre>
+<p>La salida aparece en el archivo de bitácora del servidor, o en la pantalla si esta ejecutando directamente el backend sin el postmaster.
+</p>
+<h3><span id="He_agregado_un_campo_a_la_estructura._.C2.BF_Qu.C3.A9_m.C3.A1s_debo_hacer_.3F"></span><span class="mw-headline" id="He_agregado_un_campo_a_la_estructura._¿_Qué_más_debo_hacer_?">He agregado un campo a la estructura. ¿ Qué más debo hacer&#160;?</span></h3>
+<p>Las estructuras son enviadas a un analizador, reescritor, optimizador y ejecutor que requiere un poco de soporte. La mayoría de las estructuras tienen rutinas de soporte en src/backend/nodes utilizadas para crear, copiar, leer y dar salida a esas estructuras -- en particular, la mayoría de los tipos de nodos necesitan soporte en los archivos copyfuncs.c y equalfuncs.c, y alfunos necesitan soporte en outfuncs.c y posiblemente en readfuncs.c. Asegurese de agregar soporte para su nuevo campo en esos archivos. Localice cualquier otro lugar de la estructura que pueda necesitar código para su nuevo campo -- buscando referencias a los campos existentes de la estructura es una buena manera de hacerlo. mkid es útil para esto. (vea las  <a href="#Que_herramientas_se_encuentran_disponibles_para_los_desarrolladores.3F">herramientas disponibles</a>).
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408165613
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.069 seconds
+Real time usage: 0.080 seconds
+Preprocessor visited node count: 98/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    9.711      1 Template:Languages
+100.00%    9.711      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:330-0!canonical and timestamp 20260408165613 and revision id 22976.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Developer_FAQ/es&amp;oldid=22976">https://wiki.postgresql.org/index.php?title=Developer_FAQ/es&amp;oldid=22976</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:FAQ" title="Category:FAQ">FAQ</a></li><li><a href="/wiki/Category:Espa%C3%B1ol" title="Category:Español">Español</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Developer_FAQ/es" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Developer_FAQ/es&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Developer_FAQ/es">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/es&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/es&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Developer_FAQ/es" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Developer_FAQ/es&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Developer+FAQ%2Fes" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Developer_FAQ/es" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Developer_FAQ/es" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/es&amp;oldid=22976" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Developer_FAQ/es&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 10 August 2014, at 04:40.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.069","walltime":"0.080","ppvisitednodes":{"value":98,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    9.711      1 Template:Languages","100.00%    9.711      1 -total"]},"cachereport":{"timestamp":"20260408165613","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":385});});</script>
+</body>
+</html>

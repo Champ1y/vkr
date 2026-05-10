@@ -143,6 +143,5 @@ class EmbeddingServiceFactory:
             )
 
         raise RuntimeError(
-            f"Неподдерживаемый EMBEDDING_PROVIDER='{settings.embedding_provider}'. "
-            "Допустимо: local. Hashing разрешен только для APP_ENV=test."
+            f"Unsupported EMBEDDING_PROVIDER='{settings.embedding_provider}'. Allowed: local."
         )

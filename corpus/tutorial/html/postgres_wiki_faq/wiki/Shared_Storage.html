@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Shared Storage - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"6d4ecd96d0d479a8f3b2ef27","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Shared_Storage","wgTitle":"Shared Storage","wgCurRevisionId":22689,"wgRevisionId":22689,"wgArticleId":1477,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Clustering"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Shared_Storage","wgRelevantArticleId":1477,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Shared_Storage rootpage-Shared_Storage skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Shared Storage</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Cold_standby_only"><span class="tocnumber">1</span> <span class="toctext">Cold standby only</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#How_to_configure_cold-standby_shared-storage_HA"><span class="tocnumber">2</span> <span class="toctext">How to configure cold-standby shared-storage HA</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Typical_Setup"><span class="tocnumber">3</span> <span class="toctext">Typical Setup</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Credits"><span class="tocnumber">4</span> <span class="toctext">Credits</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Cold_standby_only">Cold standby only</span></h2>
+<p>PostgreSQL (as opposed to various vendor forks of PostgreSQL) <i>does not support multi-master or master-and-read-replica shared storage operation</i>. It can only be used in <i>cold standby failover</i> configurations for shared-storage, and even then it is only safe with robust fencing/STONITH.
+</p><p>Attempts to use PostgreSQL in multi-master shared storage configurations will result in extremely severe data corruption. PostgreSQL's usual protections against multiple postmasters (<tt>postmaster.pid</tt>, shmem locks, etc) won't work in shared storage configurations, so errors in fencing could leave you with major data problems.
+</p><p>If in doubt, you should use replication instead. For "must not lose a transaction" deployments, synchronous replication is almost certainly more appropriate.
+</p>
+<h2><span class="mw-headline" id="How_to_configure_cold-standby_shared-storage_HA">How to configure cold-standby shared-storage HA</span></h2>
+<p>One way to make a highly-available hot/cold PostgreSQL pair is to use shared storage:  a single, highly redundant disk array (usually an expensive SAN, but sometimes a good quality NFS server) that is connected to two servers.  This topic is addressed briefly at both <a rel="nofollow" class="external free" href="http://www.postgresql.org/about/press/faq">http://www.postgresql.org/about/press/faq</a> and <a rel="nofollow" class="external free" href="http://www.enterprisedb.com/products/allfaq.do">http://www.enterprisedb.com/products/allfaq.do</a>
+</p><p>It's straightforward to build a shared storage implementation using PostgreSQL and either one of the proprietary clustering systems or using Linux-HA.
+</p><p>The main things you have to figure out are a) which of the clustering software solutions you're going to use, ranging from the free Linux on to the multiple proprietary options, and b) how you're going to enforce a node that's been demoted from being the master from reconnecting again (what's called fencing).  There's some overlap between those two decisions; not every cluster program supports every node fencing method.
+</p><p>Clustering software appropriate for this approach includes products from Veritas, RedHat, and the Linux HA project.  Sun even mentions PostgreSQL support as a specific strength of their product at <a rel="nofollow" class="external free" href="https://blogs.oracle.com/SC/entry/migrating_from_veritas_cluster_server">https://blogs.oracle.com/SC/entry/migrating_from_veritas_cluster_server</a> 
+</p><p>One hard part is getting a heartbeat between the two servers sharing the SAN that is both sensitive enough to catch failures while not being so paranoid that it fails over needlessly (say, when load spikes on the primary and it slows down). Make sure you test that part out very carefully with any vendor you evaluate. 
+</p><p>As far as the PostgreSQL specifics go, you need a solid way to ensure you've disconnected the now defunct master from the SAN (the classic STONITH or "shoot the other node in the head" problem). All you *should* have to do is start the database again on the backup after doing that. That will come up as a standard crash, run through WAL replay crash recovery, and the result should be no different than had you restarted after a crash on the original node. The thing you cannot let happen is allowing the original master to continue writing to the shared SAN volume once that transition has happened.
+</p><p>The hard part of shared storage failover is always solving the "shoot the other node in the head problem", to keep a down node from coming back once it's no longer the active one. In order to do that well, you really need to lock the now unavailable node from accessing the storage at the hardware level--"fencing"--with disabling its storage port being one way to handle that. Figure out how you're going to do that reliably in a way that's integrated into a proper cluster manager, and there's no reason you can't do this with PostgreSQL.
+</p><p>There's a description of the fencing options for Linux-HA at <a rel="nofollow" class="external free" href="http://www.clusterlabs.org/doc/crm_fencing.html">http://www.clusterlabs.org/doc/crm_fencing.html</a>  The cheap way to solve this problem is to have a UPS that disables the power going to the shot node. Once that's done, you can then safely failover the shared storage to another system. At that point, you can probably even turn back on the power, presuming that the now rebooted system will be able to regain access to the storage during a fresh system start. 
+</p>
+<h2><span class="mw-headline" id="Typical_Setup">Typical Setup</span></h2>
+<p>Here's one user (John Pierce) writing about this style of deployment:
+</p><p>In most of the HA clusters I've seen, the RAID controllers are in the SAN, not in the hosts, and they have their own failover, with shared write cache, also extensive use of ECC so things like double-bit memory errors are detected and treated as a failure. The sorts of high end SANs used in these kinds of systems have 5-9's reliability, through extensive use of redundancy, dual port disks, fully redundant everything, mirrored caches, etc.
+</p><p>Ditto, the servers used in these sorts of clusters have ECC memory, so memory failure should be detected rather than passed on blindly in the form of corrupted data. Server grade CPUs, especially the RISC ones, have extensive ECC internally on their caches, data busses, etc, so any failure there is detected rather than allowed to corrupt data. Failure modes can include things like failing fans (which will be detected, resulting in a server shutdown if too many fail), power supply failure (redundant PSUs, but I've seen the power combining circuitry fail). Any of these sorts of failures will result in a failover without corrupting the data.
+</p><p>And of course, intentional planned failovers to do OS maintenance... you patch the standby system, fail over to it and verify its good, then patch the other system.
+</p><p>We had a large HA system at an overseas site fail over once due to flooding in the primary computer room caused by a sprinkler system failure upstairs. The SAN was mirrored to a SAN in the 2nd DC (fiber inteconnected) and the backup server was also in the second DC across campus, so it all failed over gracefully. This particular system was large Sun hardware and big EMC storage, and it was running Oracle rather than Postgres. We've had several big UPS failures at various sites, too, ditto HVAC, over a 15 year period. 
+</p><p>In my dev-lab tests of some clusters, I used the QLogic 5600 FC switch that connects my motly collection of servers... I used RHCS for one test, it supported the qlogic via telnet... I created two zone sets in the qlogic, one for each state, with the standby host blocked from accessing the LUN, and the cluster manager used telnet to talk to the switch. I ran heartbeats over two separate ethernets (one was the lab LAN segment, the other was a private switch i have all the servers connected to for various tests, and such). The qlogic switch also had another zoneset for all sorts of other servers and storage which wasn't affected by these clustering tests.
+</p><p>I don't like power cycling servers, so I'd prefer not to use power switch based fencing, although I believe my blade box's management unit is supported as a power fencing device.
+</p>
+<h2><span class="mw-headline" id="Credits">Credits</span></h2>
+<p>Past discussions of ways to do this on the PostgreSQL list include:
+</p>
+<ul><li><a rel="nofollow" class="external free" href="http://markmail.org/message/s4gka6dotadefgll">http://markmail.org/message/s4gka6dotadefgll</a></li>
+<li><a rel="nofollow" class="external free" href="http://markmail.org/message/f7gsispb2e56d7k6">http://markmail.org/message/f7gsispb2e56d7k6</a></li>
+<li><a rel="nofollow" class="external free" href="http://markmail.org/message/hpjh4f4z7pxslmpf">http://markmail.org/message/hpjh4f4z7pxslmpf</a></li></ul>
+<p>And several pieces of good advice there have not yet been absorbed into this discussion.
+</p><p>Initial text here came from those discussions on the pgsql-general and pgsql-admin lists, primarily from Greg Smith and John Pierce. Revised by Craig Ringer with more up to date information and a clearer statement about the limitations of shared storage.
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260407202520
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.015 seconds
+Real time usage: 0.019 seconds
+Preprocessor visited node count: 11/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:1477-0!canonical and timestamp 20260407202520 and revision id 22689.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Shared_Storage&amp;oldid=22689">https://wiki.postgresql.org/index.php?title=Shared_Storage&amp;oldid=22689</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:Clustering" title="Category:Clustering">Clustering</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Shared_Storage" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Shared_Storage&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Shared_Storage">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Shared_Storage&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Shared_Storage&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Shared_Storage" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Shared_Storage&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Shared+Storage" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Shared_Storage" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Shared_Storage" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Shared_Storage&amp;oldid=22689" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Shared_Storage&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 21 June 2014, at 08:12.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.015","walltime":"0.019","ppvisitednodes":{"value":11,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260407202520","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":280});});</script>
+</body>
+</html>

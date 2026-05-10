@@ -19,13 +19,19 @@ def test_config_bge_m3_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("EMBEDDING_DIMENSION", raising=False)
     monkeypatch.delenv("EMBEDDING_BATCH_SIZE", raising=False)
     monkeypatch.delenv("EMBEDDING_MAX_SEQ_LENGTH", raising=False)
+    monkeypatch.delenv("EMBEDDING_PROVIDER", raising=False)
+    monkeypatch.delenv("LLM_PROVIDER", raising=False)
+    monkeypatch.delenv("LLM_MODEL", raising=False)
 
     cfg = Settings(_env_file=None)
 
+    assert cfg.embedding_provider == "local"
     assert cfg.embedding_model == "BAAI/bge-m3"
     assert cfg.embedding_dimension == 1024
     assert cfg.embedding_batch_size == 8
     assert cfg.embedding_max_seq_length == 8192
+    assert cfg.llm_provider == "groq"
+    assert cfg.llm_model == "llama-3.1-8b-instant"
 
 
 def test_supplementary_loader_reads_corpus_tutorial_allowlist(tmp_path: Path) -> None:

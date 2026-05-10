@@ -32,8 +32,8 @@ class RerankingService:
         return filtered
 
     @staticmethod
-    def _role_bonus(*, mode: str, intent: str, role: str) -> float:
-        if mode == "tutorial":
+    def _role_bonus(*, answer_mode: str, intent: str, role: str) -> float:
+        if answer_mode == "tutorial":
             base = {
                 "prerequisite": 0.08,
                 "step": 0.10,
@@ -61,8 +61,7 @@ class RerankingService:
         *,
         question: str,
         candidates: list[RetrievedChunk],
-        mode: str,
-        extended_mode: bool,
+        answer_mode: str,
         query_analysis: QueryAnalysis | None = None,
         top_k: int | None = None,
     ) -> list[RankedChunk]:
@@ -95,7 +94,7 @@ class RerankingService:
             lexical_signal = min(candidate.lexical_score / 8.0, 1.0)
 
             corpus_bonus = 0.18 if candidate.corpus_type == CorpusType.OFFICIAL.value else -0.05
-            role_bonus = self._role_bonus(mode=mode, intent=analysis.intent, role=candidate.pedagogical_role)
+            role_bonus = self._role_bonus(answer_mode=answer_mode, intent=analysis.intent, role=candidate.pedagogical_role)
             confusion_penalty = logical_confusion_penalty(
                 text=f"{candidate.title}\n{candidate.section_path}\n{candidate.chunk_text}",
                 analysis=analysis,
@@ -156,9 +155,7 @@ class RerankingService:
         official = self._limit_per_document(official, max_per_document=2)
         supplementary = self._limit_per_document(supplementary, max_per_document=1)
 
-        if mode == "answer":
-            selected = official[:effective_top_k]
-        elif not extended_mode:
+        if answer_mode in {"short", "detailed"}:
             selected = official[:effective_top_k]
         else:
             # Preserve official as primary context; supplementary augments but never replaces.

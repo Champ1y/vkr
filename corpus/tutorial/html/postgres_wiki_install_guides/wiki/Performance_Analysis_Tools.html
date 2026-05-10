@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Performance Analysis Tools - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"e1e83aea940838aa63dfcadb","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Performance_Analysis_Tools","wgTitle":"Performance Analysis Tools","wgCurRevisionId":38454,"wgRevisionId":38454,"wgArticleId":1242,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Administration","Performance"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Performance_Analysis_Tools","wgRelevantArticleId":1242,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Performance_Analysis_Tools rootpage-Performance_Analysis_Tools skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Performance Analysis Tools</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Performance_Analysis_Tools"><span class="tocnumber">1</span> <span class="toctext">Performance Analysis Tools</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#System_level_tools_for_I/O,_CPU_and_memory_usage_investigation"><span class="tocnumber">1.1</span> <span class="toctext">System level tools for I/O, CPU and memory usage investigation</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Unix/Linux_tools"><span class="tocnumber">1.2</span> <span class="toctext">Unix/Linux tools</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#ps"><span class="tocnumber">1.2.1</span> <span class="toctext">ps</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#vmstat"><span class="tocnumber">1.2.2</span> <span class="toctext">vmstat</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#top"><span class="tocnumber">1.2.3</span> <span class="toctext">top</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#free"><span class="tocnumber">1.2.4</span> <span class="toctext">free</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#sar"><span class="tocnumber">1.2.5</span> <span class="toctext">sar</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#gdb"><span class="tocnumber">1.2.6</span> <span class="toctext">gdb</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#Wireshark,_tshark,_and_tcpdump"><span class="tocnumber">1.2.7</span> <span class="toctext">Wireshark, tshark, and tcpdump</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#pktstat"><span class="tocnumber">1.2.8</span> <span class="toctext">pktstat</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-12"><a href="#Linux-only_tools"><span class="tocnumber">1.3</span> <span class="toctext">Linux-only tools</span></a>
+<ul>
+<li class="toclevel-3 tocsection-13"><a href="#atop"><span class="tocnumber">1.3.1</span> <span class="toctext">atop</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#iostat"><span class="tocnumber">1.3.2</span> <span class="toctext">iostat</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#blktrace,_blkparse_and_btrace"><span class="tocnumber">1.3.3</span> <span class="toctext">blktrace, blkparse and btrace</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="#strace"><span class="tocnumber">1.3.4</span> <span class="toctext">strace</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#oprofile"><span class="tocnumber">1.3.5</span> <span class="toctext">oprofile</span></a></li>
+<li class="toclevel-3 tocsection-18"><a href="#alt-sysrq-t"><span class="tocnumber">1.3.6</span> <span class="toctext">alt-sysrq-t</span></a></li>
+<li class="toclevel-3 tocsection-19"><a href="#DTrace"><span class="tocnumber">1.3.7</span> <span class="toctext">DTrace</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-20"><a href="#Windows_tools"><span class="tocnumber">1.4</span> <span class="toctext">Windows tools</span></a>
+<ul>
+<li class="toclevel-3 tocsection-21"><a href="#dbForge_Studio_for_PostgreSQL"><span class="tocnumber">1.4.1</span> <span class="toctext">dbForge Studio for PostgreSQL</span></a></li>
+<li class="toclevel-3 tocsection-22"><a href="#Process_Monitor"><span class="tocnumber">1.4.2</span> <span class="toctext">Process Monitor</span></a></li>
+<li class="toclevel-3 tocsection-23"><a href="#Process_Explorer"><span class="tocnumber">1.4.3</span> <span class="toctext">Process Explorer</span></a></li>
+<li class="toclevel-3 tocsection-24"><a href="#FileMon"><span class="tocnumber">1.4.4</span> <span class="toctext">FileMon</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-25"><a href="#PostgreSQL-centric_performance_tools"><span class="tocnumber">1.5</span> <span class="toctext">PostgreSQL-centric performance tools</span></a>
+<ul>
+<li class="toclevel-3 tocsection-26"><a href="#pgBadger"><span class="tocnumber">1.5.1</span> <span class="toctext">pgBadger</span></a></li>
+<li class="toclevel-3 tocsection-27"><a href="#PoWA"><span class="tocnumber">1.5.2</span> <span class="toctext">PoWA</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-28"><a href="#Web_tools"><span class="tocnumber">1.6</span> <span class="toctext">Web tools</span></a>
+<ul>
+<li class="toclevel-3 tocsection-29"><a href="#Explain_Depesz"><span class="tocnumber">1.6.1</span> <span class="toctext">Explain Depesz</span></a></li>
+<li class="toclevel-3 tocsection-30"><a href="#Postgres_EXPLAIN_Visualiser_(Pev)"><span class="tocnumber">1.6.2</span> <span class="toctext">Postgres EXPLAIN Visualiser (Pev)</span></a></li>
+<li class="toclevel-3 tocsection-31"><a href="#Postgres_EXPLAIN_Visualiser_2_(Pev2)"><span class="tocnumber">1.6.3</span> <span class="toctext">Postgres EXPLAIN Visualiser 2 (Pev2)</span></a></li>
+<li class="toclevel-3 tocsection-32"><a href="#pgMustard"><span class="tocnumber">1.6.4</span> <span class="toctext">pgMustard</span></a></li>
+<li class="toclevel-3 tocsection-33"><a href="#Explain-PostgreSQL"><span class="tocnumber">1.6.5</span> <span class="toctext">Explain-PostgreSQL</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h1><span class="mw-headline" id="Performance_Analysis_Tools">Performance Analysis Tools</span></h1>
+<p>This page is focused on tools for collecting data <i>outside</i> of PostgreSQL, in order to learn more about the system as a whole, about PostgreSQL's use of system resources, about things that may be bottlenecks for PostgreSQL's performance, etc.
+</p><p>Most of the time, the tools PostgreSQL provides internally will be more than adequate for your needs. The most important tool in your toolbox is the SQL <code><a href="/wiki/Using_EXPLAIN" title="Using EXPLAIN">EXPLAIN</a></code> command and its <code>EXPLAIN ANALYZE</code> alternative. The <code>pg_catalog.pg_stat_activity</code> and <code>pg_catalog.pg_locks</code> views are also vital.
+</p><p>You can find a lot of advice about tuning PostgreSQL and the system in the <a href="/wiki/Category:Performance" title="Category:Performance">Performance</a> and categories of the wiki, and in <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/">the PostgreSQL manual</a>. If you're at a loss, see <a href="/wiki/SlowQueryQuestions" class="mw-redirect" title="SlowQueryQuestions">SlowQueryQuestions</a>.
+</p>
+<h2><span id="System_level_tools_for_I.2FO.2C_CPU_and_memory_usage_investigation"></span><span class="mw-headline" id="System_level_tools_for_I/O,_CPU_and_memory_usage_investigation">System level tools for I/O, CPU and memory usage investigation</span></h2>
+<p>Tools like `ps' with the `wchan' format specifier, `vmstat', `top', `iotop', `blktrace' + `blkparse', `btrace', `sar', alt-sysrq-t, etc can help you learn much more about what your system is doing and where things are being delayed.
+</p><p>On supported systems (currently Solaris and FreeBSD), `dtrace' is also a powerful tool. PostgreSQL has DTrace hooks to allow you to investigate its internal workings and performance as well as that of the operating system it is running on.
+</p><p>Windows users will want to look into <a rel="nofollow" class="external text" href="http://technet.microsoft.com/en-us/sysinternals/bb896645.aspx">Process Monitor</a>, <a rel="nofollow" class="external text" href="http://technet.microsoft.com/en-us/sysinternals/bb896653.aspx">Process Explorer</a>, and <a rel="nofollow" class="external text" href="http://technet.microsoft.com/en-us/sysinternals/bb896642.aspx">FileMon</a> from the <a rel="nofollow" class="external text" href="http://technet.microsoft.com/en-us/sysinternals/default.aspx">SysInternals</a> suite.
+</p><p><br />
+</p>
+<h2><span id="Unix.2FLinux_tools"></span><span class="mw-headline" id="Unix/Linux_tools">Unix/Linux tools</span></h2>
+<h3><span class="mw-headline" id="ps">ps</span></h3>
+<p>The "wchan" option is really useful for seeing what a process that's in 'D' state (uninterruptable sleep in kernel system call) is actually doing. eg:
+</p>
+<pre>ps -e -o pid,ppid,wchan:60,cmd | grep post
+</pre>
+<p>You'll need to go digging in the kernel sources, use Google, or nut it out to figure what the value shown in the <code>wchan</code> field means.
+</p>
+<h3><span class="mw-headline" id="vmstat">vmstat</span></h3>
+<p><code>vmstat</code> can give you useful overview information about CPU, disk and memory activity at a system wide level. It's most useful when updating continuously, eg:
+</p>
+<pre>vmstat 1
+</pre>
+<p>or 
+</p>
+<pre>vmstat 60
+</pre>
+<p>(the number is in seconds).
+</p><p>Output looks like:
+</p>
+<pre>$ vmstat 1
+procs -----------memory---------- ---swap-- -----io---- -system-- ----cpu----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa
+ 0  0   4144 242088 707752 2307192    0    0     0    26   71   73  2  1 97  1
+ 0  0   4144 242080 707752 2307220    0    0     0     0  944 1917  2  1 97  0
+ 0  0   4144 241956 707752 2307220    0    0     0    64  772 1579  1  1 98  0
+</pre>
+<h3><span class="mw-headline" id="top">top</span></h3>
+<p>Like vmstat, gives you some system overview info, though isn't as useful for disk information. Quite configurable.
+</p><p>Don't be fooled by the "used" and "free" memory values. The <i>real</i> memory in use is actually (roughly) the value in "used" minus the value in "buffers", since "buffers" includes the kernel's disk cache. The kernel will use most of the free memory for disk cache, but will shrink that cache as required to fit other things into memory. After all, truly free memory is wasted memory that does you no good.
+</p>
+<h3><span class="mw-headline" id="free">free</span></h3>
+<p>Shows free and used memory, system-wide.
+</p>
+<pre>$ free -m
+             total       used       free     shared    buffers     cached
+Mem:          3960       3726        234          0        721       2252
+-/+ buffers/cache:        752       3208
+Swap:         2070          4       2066
+</pre>
+<p>The "free" value beside "-/+ buffers/cache" is the one you should generally consider the "real" amount of free memory in the system. The "-m" flag asks for values in megabytes.
+</p>
+<h3><span class="mw-headline" id="sar">sar</span></h3>
+<p>Process accounting. See the man page.
+</p>
+<h3><span class="mw-headline" id="gdb">gdb</span></h3>
+<p>Why is a debugger listed in performance analysis tools?
+</p><p>Because sometimes, attaching a debugger to a backend, interrupting the backend periodically to get a backtrace, and then trying to figure out what on earth it's up to is a helpful way to track down an issue.
+</p><p>See <a href="/wiki/Generating_a_stack_trace_of_a_PostgreSQL_backend" title="Generating a stack trace of a PostgreSQL backend">Generating a stack trace of a PostgreSQL_backend</a>
+</p>
+<h3><span id="Wireshark.2C_tshark.2C_and_tcpdump"></span><span class="mw-headline" id="Wireshark,_tshark,_and_tcpdump">Wireshark, tshark, and tcpdump</span></h3>
+<p>These tools are for monitoring and analysis of traffic on a network interface. If you can't figure out what's keeping your network interface pegged, they might help you figure out what data is being transmitted/received.
+</p>
+<h3><span class="mw-headline" id="pktstat">pktstat</span></h3>
+<p>A top-like utility for network interfaces. Doesn't, alas, show process IDs or names, but you can figure those out from source and destination port information. Handy for tracking down a backend that's flooding the interface with traffic.
+</p>
+<h2><span class="mw-headline" id="Linux-only_tools">Linux-only tools</span></h2>
+<h3><span class="mw-headline" id="atop">atop</span></h3>
+<p><a rel="nofollow" class="external text" href="https://www.atoptool.nl/">Atop</a> is an ASCII full-screen performance monitor for Linux that is capable of reporting the activity of all processes (even if processes have finished during the interval), daily logging of system and process activity for long-term analysis, highlighting overloaded system resources by using colors, etc. At regular intervals, it shows system-level activity related to the CPU, memory, swap, disks (including LVM) and network layers, and for every process (and thread) it shows e.g. the CPU utilization, memory growth, disk utilization, priority, username, state, and exit code.
+</p>
+<h3><span class="mw-headline" id="iostat">iostat</span></h3>
+<p>Provides summary information about I/O activity and load on block devices in the system. Doesn't provide information about what processes are responsible for the load, but produces short and easily read output in real time. Like vmstat, most usefully used in continuous mode, eg "iostat 1".
+</p><p>See the man page for details.
+</p>
+<h3><span id="blktrace.2C_blkparse_and_btrace"></span><span class="mw-headline" id="blktrace,_blkparse_and_btrace">blktrace, blkparse and btrace</span></h3>
+<p>These are tools to get very low level information about the activity on a given block device, what process(es) are causing that activity, and what they're doing. It produces a huge amount of information, but can be filtered somewhat. It takes a bit of thought to interpret, but can be great for those "what the hell is thrashing my disk" moments.
+</p><p>Because of the bgwriter and wal writer, it's not usually easy to see what PostgreSQL backends are keeping a disk busy with <i>writes</i>. It's still good for tracking down heavy read loads and figuring out what backend (and, thus, query - via the <code>pg_catalog.pg_stat_activity</code>) is responsible.
+</p><p>Output looks like this:
+</p>
+<pre>  9,1    0      246    11.339004193  1383  U   N [postgres] 0
+  9,1    0      247    11.340029833  1383  A   R 118356256 + 96 &lt;- (252,3) 34469792
+  9,1    0      248    11.340030339  1383  Q   R 118356256 + 96 [postgres]
+  9,1    0      249    11.340054022  1383  A   R 118356352 + 128 &lt;- (252,3) 34469888
+  9,1    0      250    11.340054341  1383  Q   R 118356352 + 128 [postgres]
+  9,1    0      251    11.340062014  1383  A   R 118356480 + 32 &lt;- (252,3) 34470016
+  9,1    0      252    11.340062367  1383  Q   R 118356480 + 32 [postgres]
+</pre>
+<p>... plus a handy summary at the end.
+</p>
+<h3><span class="mw-headline" id="strace">strace</span></h3>
+<p><code>strace</code> is a useful tool that can attach to a process and report all the system calls that process makes, including arguments to those system calls. It's great for figuring out what files a process opens, or if it's waiting for something, etc.
+</p><p>Useful interpretation requires some C programming knowledge and some idea about POSIX APIs.
+</p><p>(Note that other systems have similar tools with different names - for example, some BSDs have <code>truss</code>).
+</p>
+<h3><span class="mw-headline" id="oprofile">oprofile</span></h3>
+<p>Probably not useful for general users, but a handy tool if you have something within Pg or a library used by Pg that's running strangely slowly and you don't know why.
+</p><p><a href="/wiki/Profiling_with_OProfile" title="Profiling with OProfile">Profiling with OProfile</a>
+</p>
+<h3><span class="mw-headline" id="alt-sysrq-t">alt-sysrq-t</span></h3>
+<p>The "magic sysrq key". Mainly useful for tracking down processes mysteriously stuck in 'D' state in the kernel, ie hung in a system call, since it will output a stack trace of the kernel stack for all processes in the system. Mostly used when trying to figure out whether Pg is having problems due to a kernel bug, hardware issue, file system bug, etc.
+</p><p>Must be enabled with 'sysctl -w kernel.sysrq=1' before it can be used.
+</p>
+<h3><span class="mw-headline" id="DTrace">DTrace</span></h3>
+<p>See separate <a href="/wiki/DTrace" title="DTrace">DTrace</a> page.
+</p>
+<h2><span class="mw-headline" id="Windows_tools">Windows tools</span></h2>
+<h3><span class="mw-headline" id="dbForge_Studio_for_PostgreSQL"><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/studio/query-profiler.html">dbForge Studio for PostgreSQL</a></span></h3>
+<pre>Query Profiler functionality helps trace, recreate, and troubleshoot problems in PostgreSQL Server. With the tool, you can quickly and easily identify productivity bottlenecks and thus boost your database performance.
+</pre>
+<h3><span class="mw-headline" id="Process_Monitor"><a rel="nofollow" class="external text" href="http://technet.microsoft.com/en-us/sysinternals/bb896645.aspx">Process Monitor</a></span></h3>
+<h3><span class="mw-headline" id="Process_Explorer"><a rel="nofollow" class="external text" href="http://technet.microsoft.com/en-us/sysinternals/bb896653.aspx">Process Explorer</a></span></h3>
+<h3><span class="mw-headline" id="FileMon"><a rel="nofollow" class="external text" href="http://technet.microsoft.com/en-us/sysinternals/bb896642.aspx">FileMon</a></span></h3>
+<h2><span class="mw-headline" id="PostgreSQL-centric_performance_tools">PostgreSQL-centric performance tools</span></h2>
+<h3><span class="mw-headline" id="pgBadger">pgBadger</span></h3>
+<p><a rel="nofollow" class="external text" href="https://pgbadger.darold.net/">pgBadger</a> is a PostgreSQL log analyzer build for speed with fully detailed reports from your PostgreSQL log file.
+</p>
+<h3><span class="mw-headline" id="PoWA">PoWA</span></h3>
+<p><a rel="nofollow" class="external text" href="https://powa.readthedocs.io">PoWA</a> (PostgreSQL Workload Analyzer) is a performance tool for PostgreSQL allowing to collect, aggregate and purge statistics on multiple PostgreSQL instances from various Stats Extensions (<a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/static/pgstatstatements.html">pg_stat_statements</a>,<a rel="nofollow" class="external text" href="https://github.com/powa-team/pg_qualstats">pg_qualstats</a>,<a rel="nofollow" class="external text" href="https://github.com/powa-team/pg_stat_kcache">pg_stat_kcache</a>, <a rel="nofollow" class="external text" href="https://github.com/postgrespro/pg_wait_sampling/">pg_wait_sampling</a>).
+</p><p><br />
+</p>
+<h2><span class="mw-headline" id="Web_tools">Web tools</span></h2>
+<h3><span class="mw-headline" id="Explain_Depesz">Explain Depesz</span></h3>
+<p>Paste your explain analyze plan, and see the output. You can click on column headers to let it know which parameter is the most important for you – exclusive node time, inclusive node time, or rowcount mis-estimate.
+</p><p><a rel="nofollow" class="external free" href="https://explain.depesz.com/">https://explain.depesz.com/</a>
+</p>
+<h3><span id="Postgres_EXPLAIN_Visualiser_.28Pev.29"></span><span class="mw-headline" id="Postgres_EXPLAIN_Visualiser_(Pev)">Postgres EXPLAIN Visualiser (Pev)</span></h3>
+<p>Pev is designed to make Postgres query plans easier to grok. It displays a plan as a tree, with each node representing a step that takes in a row set and produces another. 
+</p><p><a rel="nofollow" class="external free" href="http://tatiyants.com/pev/">http://tatiyants.com/pev/</a>
+</p>
+<h3><span id="Postgres_EXPLAIN_Visualiser_2_.28Pev2.29"></span><span class="mw-headline" id="Postgres_EXPLAIN_Visualiser_2_(Pev2)">Postgres EXPLAIN Visualiser 2 (Pev2)</span></h3>
+<p>This project is a rewrite of the excellent Postgres Explain Visualizer (pev).
+</p><p>The pev project was initially written in early 2016 but seems to be abandoned since then. There was no activity at all for more than 4 years and counting though there are several issues open and relevant pull requests pending.
+</p><p>The current project has several goals:
+</p>
+<ul><li>isolate the plan view component and its dependencies in order to use it in any web app with for example the ability to load a plan without requiring any copy-paste from the user,</li>
+<li>make it work with recent version of JS frameworks,</li>
+<li>upgrade Bootstrap to a more recent version,</li>
+<li>use VueJS just for a matter of taste,</li>
+<li>maintain the project to match upgrades in PostgreSQL.</li></ul>
+<p><a rel="nofollow" class="external free" href="https://explain.dalibo.com/">https://explain.dalibo.com/</a> (GitHub project on <a rel="nofollow" class="external free" href="https://github.com/dalibo/pev2/">https://github.com/dalibo/pev2/</a>)
+</p>
+<h3><span class="mw-headline" id="pgMustard">pgMustard</span></h3>
+<p>pgMustard visualises EXPLAIN output and gives tips on what to do to speed up your query.
+</p><p><a rel="nofollow" class="external free" href="https://www.pgmustard.com/">https://www.pgmustard.com/</a>
+</p>
+<h3><span class="mw-headline" id="Explain-PostgreSQL">Explain-PostgreSQL</span></h3>
+<p>Analyzes EXPLAIN plan from PostgreSQL and related (Greenplum, Citus, TimescaleDB and Amazon RedShift).
+</p><p>Shows plan and node details and visualizations with piechart, flowchart and tilemap, also gives smart recommendations to improve query. Free for personal use.
+</p><p><a rel="nofollow" class="external free" href="https://explain-postgresql.com">https://explain-postgresql.com</a>
+</p><p>Page originally by --<a href="/wiki/User:Ringerc" title="User:Ringerc">Ringerc</a> 07:26, 26 November 2009 (UTC)
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260407212305
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.059 seconds
+Real time usage: 0.072 seconds
+Preprocessor visited node count: 139/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 1328/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   10.063      1 Template:Languages
+100.00%   10.063      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:1242-0!canonical and timestamp 20260407212304 and revision id 38454.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Performance_Analysis_Tools&amp;oldid=38454">https://wiki.postgresql.org/index.php?title=Performance_Analysis_Tools&amp;oldid=38454</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:Administration" title="Category:Administration">Administration</a></li><li><a href="/wiki/Category:Performance" title="Category:Performance">Performance</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Performance_Analysis_Tools" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Performance_Analysis_Tools&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Performance_Analysis_Tools">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Performance_Analysis_Tools&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Performance_Analysis_Tools&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Performance_Analysis_Tools" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Performance_Analysis_Tools&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Performance+Analysis+Tools" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Performance_Analysis_Tools" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Performance_Analysis_Tools" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Performance_Analysis_Tools&amp;oldid=38454" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Performance_Analysis_Tools&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 4 December 2023, at 14:51.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.059","walltime":"0.072","ppvisitednodes":{"value":139,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":1328,"limit":5000000},"timingprofile":["100.00%   10.063      1 Template:Languages","100.00%   10.063      1 -total"]},"cachereport":{"timestamp":"20260407212305","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":311});});</script>
+</body>
+</html>

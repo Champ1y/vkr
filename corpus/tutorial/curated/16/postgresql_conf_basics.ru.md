@@ -20,7 +20,7 @@ official_backing:
   - "https://www.postgresql.org/docs/16/sql-altersystem.html"
 external_reference:
   - "https://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server"
-usage_rule: "Использовать только как вспомогательный учебный слой для tutorial + extended_mode. Фактические утверждения должны подтверждаться official corpus выбранной версии."
+usage_rule: "Использовать только как вспомогательный учебный слой для tutorial. Фактические утверждения должны подтверждаться official corpus выбранной версии."
 ---
 
 # Основы postgresql.conf и ALTER SYSTEM в PostgreSQL 16

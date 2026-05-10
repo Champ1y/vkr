@@ -1,11 +1,10 @@
 # PostgreSQL Version-Aware RAG
 
-Готовый прототип веб-приложения на основе RAG для работы с документацией PostgreSQL с учётом major-версии.
+Готовое веб-приложение на основе RAG для работы с документацией PostgreSQL с учётом major-версии.
 
 Проект реализует:
 - version-aware retrieval по официальной документации PostgreSQL;
-- два режима ответа: `answer` и `tutorial`;
-- `extended_mode` только для `tutorial`;
+- три режима ответа: `short`, `detailed`, `tutorial`;
 - дополнительный учебный корпус (`supplementary`) как вспомогательный слой, не заменяющий official;
 - трассировку источников до чанков;
 - историю запросов с режимом, latency, источниками и score;
@@ -67,7 +66,7 @@ cp .env.example .env
 - `CHUNK_SIZE`, `CHUNK_OVERLAP`
 - `RETRIEVAL_TOP_K`, `RERANK_TOP_K`
 - `EMBEDDING_DIMENSION`, `EMBEDDING_BATCH_SIZE`, `EMBEDDING_MAX_SEQ_LENGTH`
-- `GROQ_API_KEY`, `GROQ_MODEL`, `GROQ_BASE_URL`
+- `LLM_PROVIDER`, `LLM_MODEL`, `GROQ_API_KEY`, `GROQ_BASE_URL`
 - `EMBEDDING_PROVIDER`, `EMBEDDING_MODEL`
 - `SUPPLEMENTARY_DIR`
 - `ADMIN_API_KEY`
@@ -85,13 +84,15 @@ docker compose up --build
 
 Перед запуском generation-части обязательно задайте:
 - `GROQ_API_KEY=<ваш ключ Groq>`
-- `GROQ_MODEL=<доступная chat-модель Groq>`
+- `LLM_PROVIDER=groq`
+- `LLM_MODEL=<доступная chat-модель Groq>`
 
 ### Запуск с Groq
 
 1. Заполните `.env`:
+   - `LLM_PROVIDER=groq`
+   - `LLM_MODEL`
    - `GROQ_API_KEY`
-   - `GROQ_MODEL`
    - `GROQ_BASE_URL=https://api.groq.com/openai/v1`
    - `EMBEDDING_PROVIDER=local`
    - `EMBEDDING_MODEL=BAAI/bge-m3`
@@ -104,12 +105,11 @@ docker compose up --build
 docker compose up --build
 ```
 
-Если видите ошибку `GROQ_API_KEY не задан`:
+Если видите ошибку `Groq API key is not configured. Set GROQ_API_KEY.`:
 1. Откройте `.env` и заполните `GROQ_API_KEY=<ваш_ключ>`.
 2. Перезапустите контейнеры:
 ```bash
-docker compose down
-docker compose up --build
+docker compose up -d --force-recreate backend
 ```
 
 ## Локальный запуск без Docker
@@ -234,8 +234,6 @@ Content-Type: application/json
 - `corpus/tutorial/**/__pycache__/**`
 - `corpus/tutorial/**/*.pyc`
 
-Legacy-путь `data/supplementary` оставлен только для обратной совместимости и не используется по умолчанию.
-
 Индексация supplementary выполняется тем же пайплайном, но хранится как `corpus_type=supplementary`.
 
 ## API
@@ -248,16 +246,15 @@ Request:
 {
   "question": "Как включить логическую репликацию?",
   "pg_version": "16",
-  "mode": "answer",
-  "extended_mode": false
+  "answer_mode": "short"
 }
 ```
 
-Ответ `answer`:
+Ответ `short` / `detailed`:
 
 ```json
 {
-  "mode": "answer",
+  "answer_mode": "short",
   "pg_version": "16",
   "answer": "...",
   "sources": [
@@ -278,9 +275,8 @@ Request:
 
 ```json
 {
-  "mode": "tutorial",
+  "answer_mode": "tutorial",
   "pg_version": "16",
-  "extended_mode": true,
   "tutorial": {
     "short_explanation": "...",
     "prerequisites": ["..."],
@@ -334,15 +330,48 @@ Request:
 
 ## Логика режимов и корпусов
 
-- `answer` → только `official`
-- `tutorial` + `extended_mode=false` → только `official`
-- `tutorial` + `extended_mode=true` → `official + supplementary`
+- `short` → только `official`
+- `detailed` → только `official`
+- `tutorial` → `official + supplementary`
 
 Ограничения:
-- supplementary не допускается в `answer`;
+- supplementary не допускается в `short` и `detailed`;
 - supplementary не заменяет official;
 - version filter обязателен;
 - URL источников берутся из реально найденных документов/чанков.
+
+## Frontend
+
+Frontend находится внутри backend-приложения:
+- шаблоны: `app/web/templates/`
+- статика: `app/web/static/`
+
+Запуск UI:
+
+```bash
+docker compose up -d backend
+```
+
+После запуска:
+- главная страница: `http://localhost:8000/`
+- история запросов: `http://localhost:8000/history`
+
+Проверка health:
+
+```bash
+curl http://localhost:8000/health
+curl http://localhost:8000/health/embeddings
+# совместимый API-маршрут:
+curl http://localhost:8000/api/health/embeddings
+```
+
+Логи backend:
+
+```bash
+docker compose logs --tail=100 backend
+```
+
+Важно: изменения frontend/UI не требуют reindex корпуса и не требуют пересчёта embeddings.
 
 ## Проверка Groq и embeddings
 
@@ -351,10 +380,18 @@ Request:
 Убедитесь, что в `.env` заполнены:
 
 ```bash
+LLM_PROVIDER=groq
+LLM_MODEL=...
 GROQ_API_KEY=...
-GROQ_MODEL=...
 GROQ_BASE_URL=https://api.groq.com/openai/v1
 ```
+
+### Важное разделение
+
+- `EMBEDDING_PROVIDER=local` — это локальный провайдер embeddings для `BAAI/bge-m3` (retrieval).
+- `LLM_PROVIDER=groq` — это генерация финального ответа через Groq API.
+- Нельзя использовать `EMBEDDING_PROVIDER=groq`.
+- Нельзя использовать любые другие значения `EMBEDDING_PROVIDER` в runtime кроме `local`.
 
 ### Проверка embedding-конфига
 
@@ -373,10 +410,10 @@ curl http://localhost:8000/api/health/embeddings
 ```
 
 Покрыто:
-- валидация `mode/version/extended_mode`;
+- валидация `answer_mode/version`;
 - правила выбора корпусов;
-- запрет supplementary в `answer`;
-- возможность supplementary в `tutorial + extended_mode=true`;
+- запрет supplementary в `short`/`detailed`;
+- возможность supplementary в `tutorial`;
 - version guard для retrieval;
 - базовые API тесты.
 

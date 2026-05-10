@@ -122,5 +122,5 @@
       "size_bytes": 19752
     }
   ],
-  "usage_rule": "SQL practice only. Использовать только в tutorial + extended_mode. Не использовать для администрирования, replication, backup, authentication."
+  "usage_rule": "SQL practice only. Использовать только в tutorial. Не использовать для администрирования, replication, backup, authentication."
 }

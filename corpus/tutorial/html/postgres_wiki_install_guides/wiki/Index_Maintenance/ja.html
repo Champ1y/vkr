@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Index Maintenance/ja - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"edcc4ea84808588a2234207d","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Index_Maintenance/ja","wgTitle":"Index Maintenance/ja","wgCurRevisionId":27936,"wgRevisionId":27936,"wgArticleId":3223,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Pages using deprecated source tags","Performance Snippets","Administration","Performance","Japanese"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Index_Maintenance/ja","wgRelevantArticleId":3223,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","ext.pygments":"ready","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=ext.pygments%7Cskins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Index_Maintenance_ja rootpage-Index_Maintenance skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Index Maintenance/ja</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ><span class="subpages">&lt; <a href="/wiki/Index_Maintenance" title="Index Maintenance">Index Maintenance</a></span></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+原文最終更新日：29 October 2014
+</p><p>とある日に、特に十分積極的にVACUUMを使用していない場合に、多分データベース上で<a rel="nofollow" class="external text" href="http://www.postgresql.jp/document/current/html/routine-reindex.html">定常的なインデックスの再作成</a>を使って上手く処理する必要があるでしょう。この領域での特に手軽なコマンドは<a rel="nofollow" class="external text" href="http://www.postgresql.jp/document/current/html/sql-cluster.html">CLUSTER</a>で、クリーンナップの違った種類の手助けとなります。
+</p><p>バージョン8.4以前において<a href="/wiki/VACUUM_FULL" title="VACUUM FULL">VACUUM FULL</a>は使用しないでください。
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#インデックスのまとめ"><span class="tocnumber">1</span> <span class="toctext">インデックスのまとめ</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#インデックスサイズ／使用量の統計情報"><span class="tocnumber">2</span> <span class="toctext">インデックスサイズ／使用量の統計情報</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#インデックスの複製"><span class="tocnumber">3</span> <span class="toctext">インデックスの複製</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#インデックスの肥大化"><span class="tocnumber">4</span> <span class="toctext">インデックスの肥大化</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#check_postgresを基礎にするもの"><span class="tocnumber">4.1</span> <span class="toctext">check_postgresを基礎にするもの</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#新しいクエリ"><span class="tocnumber">4.2</span> <span class="toctext">新しいクエリ</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7"><a href="#使われていないインデックス"><span class="tocnumber">5</span> <span class="toctext">使われていないインデックス</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#参考資料"><span class="tocnumber">6</span> <span class="toctext">参考資料</span></a></li>
+</ul>
+</div>
+
+<h2><span id=".E3.82.A4.E3.83.B3.E3.83.87.E3.83.83.E3.82.AF.E3.82.B9.E3.81.AE.E3.81.BE.E3.81.A8.E3.82.81"></span><span class="mw-headline" id="インデックスのまとめ">インデックスのまとめ</span></h2>
+<p>これは、行数、インデックスの数、そしてそれらのそれぞれのテーブルについてのいくつかの情報を取得するサンプルクエリです。（バージョン8.3でのみ動作します；より古いバージョンで使用している場合は、pg_size_prettyを破棄してください）
+</p>
+<div style="width: 11em; float: right; border: 1px solid #ccc; padding: 1ex 1em;">
+<p><big style="color: #e65600;"><b><a href="/wiki/Category:Performance_Snippets" title="Category:Performance Snippets">Performance Snippets</a></b></big>
+</p>
+<p style="font-weight: bold;">Index summary</p>
+<div style="background: #eee; text-align: center; padding: 2px;">Works with PostgreSQL</div>
+<p>&gt;=8.1
+</p>
+<div style="background: #eee; text-align: center; padding: 2px;">Written in</div>
+<p>SQL
+</p>
+<div style="background: #eee; text-align: center; padding: 2px;">Depends on</div>
+<p>Nothing
+</p>
+</div>
+<div class="mw-highlight mw-highlight-lang-sql mw-content-ltr" dir="ltr"><pre><span></span><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">pg_class</span><span class="p">.</span><span class="n">relname</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_class</span><span class="p">.</span><span class="n">reltuples</span><span class="p">::</span><span class="nb">bigint</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">rows_in_bytes</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pg_class</span><span class="p">.</span><span class="n">reltuples</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">num_rows</span><span class="p">,</span>
+<span class="w">    </span><span class="k">count</span><span class="p">(</span><span class="n">indexname</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">number_of_indexes</span><span class="p">,</span>
+<span class="w">    </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">is_unique</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span>
+<span class="w">       </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;N&#39;</span>
+<span class="w">    </span><span class="k">END</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">UNIQUE</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="k">case</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">number_of_columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">              </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">single_column</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="k">case</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">number_of_columns</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">             </span><span class="k">WHEN</span><span class="w"> </span><span class="n">number_of_columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">             </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">           </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">multi_column</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">pg_namespace</span><span class="w"> </span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">pg_class</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">pg_namespace</span><span class="p">.</span><span class="n">oid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pg_class</span><span class="p">.</span><span class="n">relnamespace</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span>
+<span class="w">       </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">indrelid</span><span class="p">,</span>
+<span class="w">           </span><span class="k">max</span><span class="p">(</span><span class="k">CAST</span><span class="p">(</span><span class="n">indisunique</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">integer</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">is_unique</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_index</span>
+<span class="w">       </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">indrelid</span><span class="p">)</span><span class="w"> </span><span class="n">x</span>
+<span class="w">       </span><span class="k">ON</span><span class="w"> </span><span class="n">pg_class</span><span class="p">.</span><span class="n">oid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">indrelid</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span>
+<span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">relname</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">ctablename</span><span class="p">,</span><span class="w"> </span><span class="n">ipg</span><span class="p">.</span><span class="n">relname</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">indexname</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">indnatts</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">number_of_columns</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_index</span><span class="w"> </span><span class="n">x</span>
+<span class="w">           </span><span class="k">JOIN</span><span class="w"> </span><span class="n">pg_class</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">oid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">indrelid</span>
+<span class="w">           </span><span class="k">JOIN</span><span class="w"> </span><span class="n">pg_class</span><span class="w"> </span><span class="n">ipg</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">ipg</span><span class="p">.</span><span class="n">oid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">indexrelid</span><span class="w">  </span><span class="p">)</span>
+<span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">foo</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">pg_class</span><span class="p">.</span><span class="n">relname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span><span class="p">.</span><span class="n">ctablename</span>
+<span class="k">WHERE</span><span class="w"> </span>
+<span class="w">     </span><span class="n">pg_namespace</span><span class="p">.</span><span class="n">nspname</span><span class="o">=</span><span class="s1">&#39;public&#39;</span>
+<span class="k">AND</span><span class="w">  </span><span class="n">pg_class</span><span class="p">.</span><span class="n">relkind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;r&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">pg_class</span><span class="p">.</span><span class="n">relname</span><span class="p">,</span><span class="w"> </span><span class="n">pg_class</span><span class="p">.</span><span class="n">reltuples</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">is_unique</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+<h2><span id=".E3.82.A4.E3.83.B3.E3.83.87.E3.83.83.E3.82.AF.E3.82.B9.E3.82.B5.E3.82.A4.E3.82.BA.EF.BC.8F.E4.BD.BF.E7.94.A8.E9.87.8F.E3.81.AE.E7.B5.B1.E8.A8.88.E6.83.85.E5.A0.B1"></span><span class="mw-headline" id="インデックスサイズ／使用量の統計情報">インデックスサイズ／使用量の統計情報</span></h2>
+<p>インデックスが走査されたことに沿ったテーブルとインデックスのサイズとどれくらいタプルがフェッチされたを示します。テーブルとインデックス両方のサイズが含まれているもう一つのビューは<a href="/wiki/Disk_Usage" title="Disk Usage">Disk Usage</a>を参照してください。
+</p>
+<div style="width: 11em; float: right; border: 1px solid #ccc; padding: 1ex 1em;">
+<p><big style="color: #e65600;"><b><a href="/wiki/Category:Performance_Snippets" title="Category:Performance Snippets">Performance Snippets</a></b></big>
+</p>
+<p style="font-weight: bold;">Index statistics</p>
+<div style="background: #eee; text-align: center; padding: 2px;">Works with PostgreSQL</div>
+<p>&gt;=8.1
+</p>
+<div style="background: #eee; text-align: center; padding: 2px;">Written in</div>
+<p>SQL
+</p>
+<div style="background: #eee; text-align: center; padding: 2px;">Depends on</div>
+<p>Nothing
+</p>
+</div>
+<div class="mw-highlight mw-highlight-lang-sql mw-content-ltr" dir="ltr"><pre><span></span><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">t</span><span class="p">.</span><span class="n">tablename</span><span class="p">,</span>
+<span class="w">    </span><span class="n">indexname</span><span class="p">,</span>
+<span class="w">    </span><span class="k">c</span><span class="p">.</span><span class="n">reltuples</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">num_rows</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_relation_size</span><span class="p">(</span><span class="n">quote_ident</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">tablename</span><span class="p">)::</span><span class="nb">text</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">table_size</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_relation_size</span><span class="p">(</span><span class="n">quote_ident</span><span class="p">(</span><span class="n">indexrelname</span><span class="p">)::</span><span class="nb">text</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">index_size</span><span class="p">,</span>
+<span class="w">    </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">indisunique</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span>
+<span class="w">       </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;N&#39;</span>
+<span class="w">    </span><span class="k">END</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">unique</span><span class="p">,</span>
+<span class="w">    </span><span class="n">idx_scan</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">number_of_scans</span><span class="p">,</span>
+<span class="w">    </span><span class="n">idx_tup_read</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">tuples_read</span><span class="p">,</span>
+<span class="w">    </span><span class="n">idx_tup_fetch</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">tuples_fetched</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">pg_tables</span><span class="w"> </span><span class="n">t</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">pg_class</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">tablename</span><span class="o">=</span><span class="k">c</span><span class="p">.</span><span class="n">relname</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span>
+<span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">relname</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">ctablename</span><span class="p">,</span><span class="w"> </span><span class="n">ipg</span><span class="p">.</span><span class="n">relname</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">indexname</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">indnatts</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">number_of_columns</span><span class="p">,</span><span class="w"> </span><span class="n">idx_scan</span><span class="p">,</span><span class="w"> </span><span class="n">idx_tup_read</span><span class="p">,</span><span class="w"> </span><span class="n">idx_tup_fetch</span><span class="p">,</span><span class="w"> </span><span class="n">indexrelname</span><span class="p">,</span><span class="w"> </span><span class="n">indisunique</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_index</span><span class="w"> </span><span class="n">x</span>
+<span class="w">           </span><span class="k">JOIN</span><span class="w"> </span><span class="n">pg_class</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">oid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">indrelid</span>
+<span class="w">           </span><span class="k">JOIN</span><span class="w"> </span><span class="n">pg_class</span><span class="w"> </span><span class="n">ipg</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">ipg</span><span class="p">.</span><span class="n">oid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">indexrelid</span>
+<span class="w">           </span><span class="k">JOIN</span><span class="w"> </span><span class="n">pg_stat_all_indexes</span><span class="w"> </span><span class="n">psai</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">indexrelid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">psai</span><span class="p">.</span><span class="n">indexrelid</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="k">as</span><span class="w"> </span><span class="n">foo</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">tablename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span><span class="p">.</span><span class="n">ctablename</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">schemaname</span><span class="o">=</span><span class="s1">&#39;public&#39;</span>
+<span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+<h2><span id=".E3.82.A4.E3.83.B3.E3.83.87.E3.83.83.E3.82.AF.E3.82.B9.E3.81.AE.E8.A4.87.E8.A3.BD"></span><span class="mw-headline" id="インデックスの複製">インデックスの複製</span></h2>
+<p>カラムの同一のセット、演算子クラス、評価式と述語を持った複合インデックスを見つけれられます -- それらを同等にします。<b>普通</b>それらの一つを削除することは安全ですが保証はしません。:)
+</p>
+<div class="mw-highlight mw-highlight-lang-sql mw-content-ltr" dir="ltr"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">pg_size_pretty</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span><span class="n">pg_relation_size</span><span class="p">(</span><span class="n">idx</span><span class="p">))::</span><span class="nb">bigint</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">size</span><span class="p">,</span>
+<span class="w">       </span><span class="p">(</span><span class="n">array_agg</span><span class="p">(</span><span class="n">idx</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">idx1</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">array_agg</span><span class="p">(</span><span class="n">idx</span><span class="p">))[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">idx2</span><span class="p">,</span>
+<span class="w">       </span><span class="p">(</span><span class="n">array_agg</span><span class="p">(</span><span class="n">idx</span><span class="p">))[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">idx3</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">array_agg</span><span class="p">(</span><span class="n">idx</span><span class="p">))[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">idx4</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">indexrelid</span><span class="p">::</span><span class="n">regclass</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">indrelid</span><span class="p">::</span><span class="nb">text</span><span class="w"> </span><span class="o">||</span><span class="n">E</span><span class="s1">&#39;\n&#39;</span><span class="o">||</span><span class="w"> </span><span class="n">indclass</span><span class="p">::</span><span class="nb">text</span><span class="w"> </span><span class="o">||</span><span class="n">E</span><span class="s1">&#39;\n&#39;</span><span class="o">||</span><span class="w"> </span><span class="n">indkey</span><span class="p">::</span><span class="nb">text</span><span class="w"> </span><span class="o">||</span><span class="n">E</span><span class="s1">&#39;\n&#39;</span><span class="o">||</span>
+<span class="w">                                         </span><span class="k">coalesce</span><span class="p">(</span><span class="n">indexprs</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">||</span><span class="n">E</span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="k">coalesce</span><span class="p">(</span><span class="n">indpred</span><span class="p">::</span><span class="nb">text</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">key</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_index</span><span class="p">)</span><span class="w"> </span><span class="n">sub</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="k">HAVING</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">sum</span><span class="p">(</span><span class="n">pg_relation_size</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+</pre></div>
+<h2><span id=".E3.82.A4.E3.83.B3.E3.83.87.E3.83.83.E3.82.AF.E3.82.B9.E3.81.AE.E8.82.A5.E5.A4.A7.E5.8C.96"></span><span class="mw-headline" id="インデックスの肥大化">インデックスの肥大化</span></h2>
+<h3><span id="check_postgres.E3.82.92.E5.9F.BA.E7.A4.8E.E3.81.AB.E3.81.99.E3.82.8B.E3.82.82.E3.81.AE"></span><span class="mw-headline" id="check_postgresを基礎にするもの">check_postgresを基礎にするもの</span></h3>
+<p>REINDEXの一般的なニーズの一つは削除領域がまばらに分布もしくは（バージョン9.0以前の）VACUUM FULLの使用によってインデックスが肥大化し始めるときです。テーブル内の肥大化の量のための予測ツールが<a rel="nofollow" class="external text" href="http://bucardo.org/wiki/Check_postgres">check_postgres</a>に含まれており、ディレクトリを呼び出すもしくは、より大きな監視システムへ組み入れることができます。
+スクリプトはこのコードを基礎としおり、そして／もしくは以下のほかのソースのコンセプトを基礎としています：
+</p>
+<ul><li><a rel="nofollow" class="external text" href="http://pgsql.tapoueh.org/site/html/news/20080131.bloat.html">bloat view</a> (Dimitri Fontaine)（訳注：英語サイト）</li>
+<li><a rel="nofollow" class="external text" href="http://www.pgcon.org/2009/schedule/events/153.en.html">Visualizing Postgres</a> - index_byte_sizes view (Michael Glaesemann, myYearbook)（訳注：英語サイト）</li>
+<li><a rel="nofollow" class="external text" href="http://labs.omniti.com/trac/pgtreats/browser/trunk/tools">OmniTI Tasty Treats for PostgreSQL</a> - shell and Perl pg_bloat_report scripts（訳注：英語サイト）</li></ul>
+<p><br />
+</p>
+<h3><span id=".E6.96.B0.E3.81.97.E3.81.84.E3.82.AF.E3.82.A8.E3.83.AA"></span><span class="mw-headline" id="新しいクエリ">新しいクエリ</span></h3>
+<p>Btreeインデックスためのより良い肥大化の予測のためにあらたなクエリが作成されました。check_postgresクエリとは似ておらず、Bteeインデックスのディスクレイアウトにのみフォーカスしています。
+</p><p>この話題についての<a rel="nofollow" class="external text" href="http://blog.ioguix.net/tag/bloat/">アーティクル（訳注：英語サイト）</a>を参照してください。
+</p><p>監視スクリプトである<a rel="nofollow" class="external text" href="https://github.com/OPMDG/check_pgactivity">check_pgactivity</a>は、この作業を基礎にした監視を含んでいます。
+</p>
+<h2><span id=".E4.BD.BF.E3.82.8F.E3.82.8C.E3.81.A6.E3.81.84.E3.81.AA.E3.81.84.E3.82.A4.E3.83.B3.E3.83.87.E3.83.83.E3.82.AF.E3.82.B9"></span><span class="mw-headline" id="使われていないインデックス">使われていないインデックス</span></h2>
+<p>Since indexes add significant overhead to any table change operation, they should be removed if they are not being used for either queries or constraint enforcement (such as making sure a value is unique).  How to find such indexes:
+</p><p>なんらかのテーブル上の重要なインデックスが追加されてから操作を変更し、クエリもしくは（値がユニークであるといった）制約条件が使用されないようであればそれらのインデックスは消去するべきです。そんなインデックスの探し方は以下が参考になります：
+</p>
+<ul><li><a rel="nofollow" class="external text" href="http://www.xzilla.net/blog/2008/Jul/Index-pruning-techniques.html">インデックスの除去テクニック</a>（訳注：リンク切れしています）</li>
+<li><a rel="nofollow" class="external text" href="http://hype-free.blogspot.com/2008/09/finding-unused-indexes-in-postgresql.html">使われていないインデックスを探す</a>（訳注：英語サイト）</li>
+<li><a rel="nofollow" class="external text" href="http://it.toolbox.com/blogs/database-soup/finding-useless-indexes-28796">使用されないインデックスの探し方</a>（訳注：英語サイト）</li>
+<li><a rel="nofollow" class="external text" href="http://jmorano.moretrix.com/2014/02/postgresql-monitor-unused-indexes/">'使われていないインデックスの監視' by Johnny Morano</a>（訳注：英語サイト）</li></ul>
+<h2><span id=".E5.8F.82.E8.80.83.E8.B3.87.E6.96.99"></span><span class="mw-headline" id="参考資料">参考資料</span></h2>
+<ul><li>インデックス統計情報クエリ<a rel="nofollow" class="external text" href="http://www.baconandtech.com/2009/06/06/book-review-part-i-refactoring-sql-applications-with-bonus-queries/">"SQLアプリケーションのリファクタリング"レビュー</a>（訳注：リンク切れしています）</li></ul>
+<!-- 
+NewPP limit report
+Cached time: 20260408042134
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.093 seconds
+Real time usage: 1.514 seconds
+Preprocessor visited node count: 92/1000000
+Post‐expand include size: 1091/2097152 bytes
+Template argument size: 111/2097152 bytes
+Highest expansion depth: 3/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 21047/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  866.398      1 -total
+  1.11%    9.592      1 Template:Languages
+  0.98%    8.514      2 Template:SnippetInfo
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:3223-0!canonical and timestamp 20260408042132 and revision id 27936.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Index_Maintenance/ja&amp;oldid=27936">https://wiki.postgresql.org/index.php?title=Index_Maintenance/ja&amp;oldid=27936</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/index.php?title=Category:Pages_using_deprecated_source_tags&amp;action=edit&amp;redlink=1" class="new" title="Category:Pages using deprecated source tags (page does not exist)">Pages using deprecated source tags</a></li><li><a href="/wiki/Category:Performance_Snippets" title="Category:Performance Snippets">Performance Snippets</a></li><li><a href="/wiki/Category:Administration" title="Category:Administration">Administration</a></li><li><a href="/wiki/Category:Performance" title="Category:Performance">Performance</a></li><li><a href="/wiki/Category:Japanese" title="Category:Japanese">Japanese</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Index_Maintenance/ja" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Index_Maintenance/ja&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Index_Maintenance/ja">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Index_Maintenance/ja&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Index_Maintenance/ja&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Index_Maintenance/ja" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Index_Maintenance/ja&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Index+Maintenance%2Fja" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Index_Maintenance/ja" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Index_Maintenance/ja" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Index_Maintenance/ja&amp;oldid=27936" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Index_Maintenance/ja&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 2 August 2016, at 13:49.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.093","walltime":"1.514","ppvisitednodes":{"value":92,"limit":1000000},"postexpandincludesize":{"value":1091,"limit":2097152},"templateargumentsize":{"value":111,"limit":2097152},"expansiondepth":{"value":3,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":21047,"limit":5000000},"timingprofile":["100.00%  866.398      1 -total","  1.11%    9.592      1 Template:Languages","  0.98%    8.514      2 Template:SnippetInfo"]},"cachereport":{"timestamp":"20260408042134","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":421});});</script>
+</body>
+</html>

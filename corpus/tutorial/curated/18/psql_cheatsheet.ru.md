@@ -16,7 +16,7 @@ official_backing:
   - "https://www.postgresql.org/docs/18/app-psql.html"
 external_reference:
   - "https://www.crunchydata.com/developers/tutorials"
-usage_rule: "Использовать только как вспомогательный учебный слой для tutorial + extended_mode. Фактические утверждения должны подтверждаться official corpus выбранной версии."
+usage_rule: "Использовать только как вспомогательный учебный слой для tutorial. Фактические утверждения должны подтверждаться official corpus выбранной версии."
 ---
 
 # Краткая шпаргалка по psql для PostgreSQL 18

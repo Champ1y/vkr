@@ -43,11 +43,10 @@ class RankedChunk:
 
 @dataclass(slots=True)
 class AskResult:
-    mode: Literal["answer", "tutorial"]
+    answer_mode: Literal["short", "detailed", "tutorial"]
     pg_version: str
     answer: str | None
     tutorial: TutorialPayload | None
-    extended_mode: bool
     ranked_sources: list[RankedChunk]
 
 

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Getting a stack trace of a running PostgreSQL backend on Linux/BSD - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"6ca8ac80f027dd82d6dd58be","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD","wgTitle":"Getting a stack trace of a running PostgreSQL backend on Linux/BSD","wgCurRevisionId":37582,"wgRevisionId":37582,"wgArticleId":1067,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Pages using deprecated source tags","Operating system"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD","wgRelevantArticleId":1067,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","ext.pygments":"ready","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=ext.pygments%7Cskins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux_BSD rootpage-Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Getting a stack trace of a running PostgreSQL backend on Linux/BSD</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><a href="/wiki/Generating_a_stack_trace_of_a_PostgreSQL_backend" title="Generating a stack trace of a PostgreSQL backend">Up to parent</a>
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Linux_and_BSD"><span class="tocnumber">1</span> <span class="toctext">Linux and BSD</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Installing_External_symbols"><span class="tocnumber">1.1</span> <span class="toctext">Installing External symbols</span></a>
+<ul>
+<li class="toclevel-3 tocsection-3"><a href="#On_Debian"><span class="tocnumber">1.1.1</span> <span class="toctext">On Debian</span></a></li>
+<li class="toclevel-3 tocsection-4"><a href="#On_Ubuntu"><span class="tocnumber">1.1.2</span> <span class="toctext">On Ubuntu</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#On_Fedora"><span class="tocnumber">1.1.3</span> <span class="toctext">On Fedora</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#Other_distros"><span class="tocnumber">1.1.4</span> <span class="toctext">Other distros</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-7"><a href="#Collecting_a_stack_trace"><span class="tocnumber">1.2</span> <span class="toctext">Collecting a stack trace</span></a>
+<ul>
+<li class="toclevel-3 tocsection-8"><a href="#How_to_tell_if_a_stack_trace_is_any_good"><span class="tocnumber">1.2.1</span> <span class="toctext">How to tell if a stack trace is any good</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#Identifying_the_backend_to_connect_to"><span class="tocnumber">1.2.2</span> <span class="toctext">Identifying the backend to connect to</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#Attaching_gdb_to_the_backend"><span class="tocnumber">1.2.3</span> <span class="toctext">Attaching gdb to the backend</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#Getting_the_trace"><span class="tocnumber">1.2.4</span> <span class="toctext">Getting the trace</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#Getting_representative_traces_from_a_running_backend"><span class="tocnumber">1.2.5</span> <span class="toctext">Getting representative traces from a running backend</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#Getting_a_trace_from_the_point_of_an_error_report"><span class="tocnumber">1.2.6</span> <span class="toctext">Getting a trace from the point of an error report</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#Getting_a_trace_from_a_reproducibly_crashing_backend"><span class="tocnumber">1.2.7</span> <span class="toctext">Getting a trace from a reproducibly crashing backend</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#Getting_a_trace_from_a_randomly_crashing_backend"><span class="tocnumber">1.2.8</span> <span class="toctext">Getting a trace from a randomly crashing backend</span></a>
+<ul>
+<li class="toclevel-4 tocsection-16"><a href="#Enabling_core_dumps"><span class="tocnumber">1.2.8.1</span> <span class="toctext">Enabling core dumps</span></a></li>
+<li class="toclevel-4 tocsection-17"><a href="#Debugging_the_core_dump"><span class="tocnumber">1.2.8.2</span> <span class="toctext">Debugging the core dump</span></a></li>
+<li class="toclevel-4 tocsection-18"><a href="#Debugging_the_core_dump_-_example"><span class="tocnumber">1.2.8.3</span> <span class="toctext">Debugging the core dump - example</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-19"><a href="#Tracing_problems_when_creating_a_cluster"><span class="tocnumber">1.3</span> <span class="toctext">Tracing problems when creating a cluster</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-20"><a href="#Dumping_a_page_image_from_within_GDB"><span class="tocnumber">2</span> <span class="toctext">Dumping a page image from within GDB</span></a>
+<ul>
+<li class="toclevel-2 tocsection-21"><a href="#pg_hexedit"><span class="tocnumber">2.1</span> <span class="toctext">pg_hexedit</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#contrib/pageinspect_page_dump"><span class="tocnumber">2.2</span> <span class="toctext">contrib/pageinspect page dump</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-23"><a href="#Starting_Postgres_under_GDB"><span class="tocnumber">3</span> <span class="toctext">Starting Postgres under GDB</span></a></li>
+<li class="toclevel-1 tocsection-24"><a href="#Recording_Postgres_using_rr_Record_and_Replay_Framework"><span class="tocnumber">4</span> <span class="toctext">Recording Postgres using rr Record and Replay Framework</span></a>
+<ul>
+<li class="toclevel-2 tocsection-25"><a href="#Version_compatibility"><span class="tocnumber">4.1</span> <span class="toctext">Version compatibility</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#Postgres_settings"><span class="tocnumber">4.2</span> <span class="toctext">Postgres settings</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#Event_numbers_in_the_log"><span class="tocnumber">4.3</span> <span class="toctext">Event numbers in the log</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#Jumping_back_and_forth_through_a_recording_using_GDB_commands"><span class="tocnumber">4.4</span> <span class="toctext">Jumping back and forth through a recording using GDB commands</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#Watchpoints_and_reverse_execution"><span class="tocnumber">4.5</span> <span class="toctext">Watchpoints and reverse execution</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#Debugging_tap_tests"><span class="tocnumber">4.6</span> <span class="toctext">Debugging tap tests</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#Debugging_race_conditions"><span class="tocnumber">4.7</span> <span class="toctext">Debugging race conditions</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#Packing_a_recording"><span class="tocnumber">4.8</span> <span class="toctext">Packing a recording</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#rr_resources"><span class="tocnumber">4.9</span> <span class="toctext">rr resources</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Linux_and_BSD">Linux and BSD</span></h2>
+<p>Linux and BSD systems generally use the <a rel="nofollow" class="external text" href="http://gcc.gnu.org/">GNU compiler collection</a> and the <a rel="nofollow" class="external text" href="http://www.gnu.org/software/gdb/">GNU Debugger</a> ("gdb"). It's pretty trivial to get a stack trace of a process.
+</p><p>(If you want more than just a stack trace, take a look at the <a href="/wiki/Developer_FAQ" title="Developer FAQ">Developer FAQ</a> which covers interactive debugging).
+</p>
+<h3><span class="mw-headline" id="Installing_External_symbols">Installing External symbols</span></h3>
+<p>(BSD users who installed from ports can skip this)
+</p><p>On many Linux systems, debugging info is separated out from program binaries and stored separately. It's often not installed when you install a package, so if you want to debug the program (say, get a stack trace) you will need to install debug info packages. Unfortunately, the names of these packages vary depending on your distro, as does the procedure for installing them.
+</p><p>Some generic instructions (unrelated to PostgreSQL) are maintained on the GNOME Wiki <a rel="nofollow" class="external text" href="http://live.gnome.org/GettingTraces/DistroSpecificInstructions">here</a>.
+</p>
+<h4><span class="mw-headline" id="On_Debian">On Debian</span></h4>
+<p><a rel="nofollow" class="external free" href="http://wiki.debian.org/HowToGetABacktrace">http://wiki.debian.org/HowToGetABacktrace</a>
+</p><p>Debian Squeeze (6.x) users will also need to install gdb 7.3 from backports, as the gdb shipped in Squeeze doesn't understand the PIE executables used in newer PostgreSQL builds.
+</p>
+<h4><span class="mw-headline" id="On_Ubuntu">On Ubuntu</span></h4>
+<p>First, follow the instructions on the Ubuntu wiki entry <a rel="nofollow" class="external text" href="https://wiki.edubuntu.org/DebuggingProgramCrash">DebuggingProgramCrash</a>. 
+</p><p>Once you've finished enabling the use of debug info packages as described, you will need to use the <code>list-dbgsym-packages.sh</code> script linked to on that wiki article to get a list of debug packages you need. Installing the debug package for postgresql alone is <i>not</i> sufficient. 
+</p><p>After following the instructions on the Ubuntu wiki, download the script to your desktop, open a terminal, and run:<br />
+</p>
+<pre>$ sudo apt-get install $(sudo bash Desktop/list-dbgsym-packages.sh -t -p $(pidof -s postgres))
+</pre>
+<h4><span class="mw-headline" id="On_Fedora">On Fedora</span></h4>
+<p>All Fedora versions: <a rel="nofollow" class="external text" href="https://fedoraproject.org/wiki/StackTraces#debuginfo">FedoraProject.org - StackTraces</a>
+</p>
+<h4><span class="mw-headline" id="Other_distros">Other distros</span></h4>
+<p>In general, you need to install at least the debug symbol packages for the PostgreSQL server and client as well as any common package that may exist, and the debug symbol package for libc. It's a good idea to add debug symbols for the other libraries PostgreSQL uses in case the problem you're having arises in or touches on one of those libraries.
+</p>
+<h3><span class="mw-headline" id="Collecting_a_stack_trace">Collecting a stack trace</span></h3>
+<h4><span class="mw-headline" id="How_to_tell_if_a_stack_trace_is_any_good">How to tell if a stack trace is any good</span></h4>
+<p>Read this section and keep it in mind as you collect information using the instructions below. Making sure the information you collect is actually useful will save you, and everybody else, time and hassle.
+</p><p>It is vitally important to have debugging symbols available to get a useful stack trace. If you do not have the required symbols installed, backtraces will contain lots of entries like this:
+</p>
+<pre>#1  0x00686a3d in&#160;?? ()
+#2  0x00d3d406 in&#160;?? ()
+#3  0x00bf0ba4 in&#160;?? ()
+#4  0x00d3663b in&#160;?? ()
+#5  0x00d39782 in&#160;?? ()
+</pre>
+<p>... which are completely useless for debugging without access to your system (and almost useless with access). If you see results like the above, you need to install debugging symbol packages, or even re-build postgresql with debugging enabled. <b>Do not bother collecting such backtraces, they are not useful.</b>
+</p><p>Sometimes you'll get backtraces that contain just the function name and the executable it's within, not source code file names and line numbers or parameters. Such output will have lines like this:
+</p>
+<pre>#11 0x00d3afbe in PostmasterMain () from /usr/lib/postgresql/8.4/bin/postgres
+</pre>
+<p>This isn't ideal, but is a lot better than nothing. Installing debug information packages should give an even more detailed stack trace with line number and argument information, like this:
+</p>
+<pre>#9  0xb758d97e in PostmasterMain (argc=5, argv=0xb813a0e8) at postmaster.c:1040
+</pre>
+<p>... which is the most useful for tracking down your problem. Note the reference to a source file and line number instead of just an executable name.
+</p>
+<h4><span class="mw-headline" id="Identifying_the_backend_to_connect_to">Identifying the backend to connect to</span></h4>
+<p>You need to know the process ID of the postgresql backend to connect to. If you're interested in a backend that's using lots of CPU it might show up in <code>top</code>. If you have a current connection to the backend you're interested in, use <code>select pg_backend_pid()</code> to get its process ID. Otherwise, the <code>pg_catalog.pg_stat_activity</code> and/or <code>pg_catalog.pg_locks</code> views may be useful in identifying the backend of interest; see the "procpid" column in those views.
+</p>
+<h4><span class="mw-headline" id="Attaching_gdb_to_the_backend">Attaching gdb to the backend</span></h4>
+<p>Once you know the process ID to connect to, run:
+</p>
+<pre>sudo gdb -p pid
+</pre>
+<p>where "pid" is the process ID of the backend. GDB will pause the execution of the process you specified and drop you into interactive mode (the <code>(gdb)</code> prompt) after showing the call the backend is currently running, eg:
+</p>
+<pre>0xb7c73424 in __kernel_vsyscall ()
+(gdb) 
+</pre>
+<p>You'll want to tell gdb to save a log of the session to a file, so at the gdb prompt enter:
+</p>
+<pre>(gdb) set pagination off
+(gdb) set logging file debuglog.txt
+(gdb) set logging on
+</pre>
+<p>gdb is now saving all input and output to a file, <code>debuglog.txt</code>, in the directory in which you started gdb.
+</p><p>At this point execution of the backend is still paused. It can even hold up other backends, so I recommend that you tell it to resume executing normally with the "cont" command:
+</p>
+<pre>(gdb) cont
+Continuing.
+</pre>
+<p>The backend is now running normally, as if gdb wasn't connected to it.
+</p>
+<h4><span class="mw-headline" id="Getting_the_trace">Getting the trace</span></h4>
+<p>OK, with gdb connected you're ready to get a useful stack trace.
+</p><p>In addition to the instructions below, you can find some useful tips about using gdb with postgresql backends on the <a href="/wiki/Developer_FAQ#What_debugging_features_are_available.3F" title="Developer FAQ">Developer FAQ</a>.
+</p>
+<h4><span class="mw-headline" id="Getting_representative_traces_from_a_running_backend">Getting representative traces from a running backend</span></h4>
+<p>If you're concerned with a case that's taking way too long to execute a query, is using too much CPU, or appears to be in an infinite loop, you'll want to <i>repeatedly</i> interrupt its execution, get a stack trace, and let it resume executing. Having a collection of several stack traces helps provide a better idea of where it's spending its time.
+</p><p>You interrupt the backend and get back to the gdb command line with ^C (control-C). Once at the gdb command line, you use the "bt" command to get a backtrace, then the "cont" command to resume normal backend execution.
+</p><p>Once you've collected a few backtraces, detach then exit gdb at the gdb interactive prompt:
+</p>
+<pre>(gdb) detach
+Detaching from program: /usr/lib/postgresql/8.3/bin/postgres, process 12912
+(gdb) quit
+user@host:~$
+</pre>
+<p>An alternative approach is to use the <code>gcore</code> program to save a series of core dumps of the running program without disrupting its execution. Those core dumps may then be examined at your leisure, giving you time to get more than just a backtrace because you're not holding up the backend's execution while you think and type.
+</p>
+<h4><span class="mw-headline" id="Getting_a_trace_from_the_point_of_an_error_report">Getting a trace from the point of an error report</span></h4>
+<p>If you are trying to find out the cause of an unexpected error, the most useful thing to do is to set a breakpoint at <b>errfinish</b> before you let the backend continue:
+</p>
+<pre>(gdb) b errfinish
+Breakpoint 1 at 0x80ced0: file elog.c, line 414.
+(gdb) cont
+Continuing.
+</pre>
+<p>Now, in your connected psql session, run whatever query is needed to provoke the error.  When it happens, the backend will stop execution at <b>errfinish</b>.
+Collect your backtrace with <b>bt</b>, then <b>quit</b> (or, possibly, <b>cont</b> if you want to do it again).
+</p><p>A breakpoint at <b>errfinish</b> will capture generation of not only ERROR reports, but also NOTICE, LOG, and any other message that isn't suppressed by <b>client_min_messages</b>
+or <b>log_min_messages</b>.  You may want to adjust those settings to avoid having to continue through a bunch of unrelated messages.
+</p>
+<h4><span class="mw-headline" id="Getting_a_trace_from_a_reproducibly_crashing_backend">Getting a trace from a reproducibly crashing backend</span></h4>
+<p>GDB will automatically interrupt the execution of a program if it detects a crash. So, once you've attached gdb to the backend you expect to crash, you just let it continue execution as normal and do whatever you need to to make the backend crash.
+</p><p>gdb will drop you into interactive mode as the backend crashes. At the <code>gdb</code> prompt you can enter the <code>bt</code> command to get a stack trace of the crash, then <code>cont</code> to continue execution. When gdb reports the process has exited, use the <code>quit</code> command.
+</p><p>Alternately, you can collect a core file as explained below, but it's probably more hassle than it's worth if you know which backend to attach gdb to before it crashes.
+</p>
+<h4><span class="mw-headline" id="Getting_a_trace_from_a_randomly_crashing_backend">Getting a trace from a randomly crashing backend</span></h4>
+<p>It's a lot harder to get a stack trace from a backend that's crashing when you don't know why it's crashing, what causes a backend to crash, or which backends will crash when. For this, you generally need to enable the generation of core files, which are debuggable dumps of a program's state that are generated by the operating system when the program crashes. 
+</p>
+<h5><span class="mw-headline" id="Enabling_core_dumps">Enabling core dumps</span></h5>
+<p><a rel="nofollow" class="external text" href="http://www.cyberciti.biz/tips/linux-core-dumps.html">This article provides a useful primer on core dumps on Linux</a>.
+</p><p>On a Linux system you can check to see if core file generation is enabled for a process by examining /proc/$pid/limits, where $pid is the process ID of interest. "Max core file size" should be non-zero.
+</p><p>Generally, adding "ulimit -c unlimited" to the top of the PostgreSQL startup script and restarting postgresql is sufficient to enable core dump collection. Make sure you have plenty of free space in your PostgreSQL data directory, because that's where the core dumps will be written and they can be fairly big due to Pg's use of shared memory. It may be useful to <b>temporarily reduce the size of shared_buffers</b> within postgresql.conf. This avoids core dumps that make the system unresponsive for minutes at a time, which can happen when shared_buffers is more than a few gigabytes. Reducing shared_buffers significantly will usually not make the server intolerably slow, since PostgreSQL will make increased use of the filesystem cache.
+</p><p>On a Linux system it's also worth changing the file name format used for core dumps so that core dumps don't overwrite each other. The <code>/proc/sys/kernel/core_pattern</code> file controls this. I suggest <code>core.%p.sig%s.%ts</code>, which will record the process's PID, the signal that killed it, and the timestamp at which the core was generated. See <code>man 5 core</code>. To apply the settings change just run <code>echo core.%p.sig%s.%ts | sudo tee -a /proc/sys/kernel/core_pattern</code>.
+</p><p>You can test whether core dumps are enabled by starting a `psql' session, finding the backend pid for it using the instructions given above, then killing it with "kill -ABRT pidofbackend" (where pidofbackend is the PID of the postgres backend, NOT the pid of psql). You should see a core file appear in your postgresql data directory.
+</p>
+<h5><span class="mw-headline" id="Debugging_the_core_dump">Debugging the core dump</span></h5>
+<p>Once you've enabled core dumps, you need to wait until you see a backend crash. A core dump will be generated by the operating system, and you'll be able to attach gdb to it to collect a stack trace or other information. 
+</p><p>You need to tell gdb what executable file generated the core if you want to get useful backtraces and other debugging information. To do this, just specify the postgres executable path then the core file path when invoking gdb, as shown below. If you do not know the location of the postgres executable, you can get it by examining /proc/$pid/exe for a running postgres instance. For example:
+</p>
+<pre>$ for f in `pgrep postgres`; do ls -l /proc/$f/exe; done
+lrwxrwxrwx 1 postgres postgres 0 2010-04-19 10:30 /proc/10621/exe -&gt; /usr/lib/postgresql/8.4/bin/postgres
+lrwxrwxrwx 1 postgres postgres 0 2010-04-19 10:51 /proc/11052/exe -&gt; /usr/lib/postgresql/8.4/bin/postgres
+lrwxrwxrwx 1 postgres postgres 0 2010-04-19 10:51 /proc/11053/exe -&gt; /usr/lib/postgresql/8.4/bin/postgres
+lrwxrwxrwx 1 postgres postgres 0 2010-04-19 10:51 /proc/11054/exe -&gt; /usr/lib/postgresql/8.4/bin/postgres
+lrwxrwxrwx 1 postgres postgres 0 2010-04-19 10:51 /proc/11055/exe -&gt; /usr/lib/postgresql/8.4/bin/postgres
+</pre>
+<p>... we can see from the above that the postgres executable on my (Ubuntu) system is <code>/usr/lib/postgresql/8.4/bin/postgres</code>.
+</p><p>Once you know the executable path and the core file location, just run gdb with those as arguments, ie <code>gdb -q /path/to/postgres /path/to/core</code>. Now you can debug it as if it was a normal running postgres, as discussed in the sections above.
+</p>
+<h5><span class="mw-headline" id="Debugging_the_core_dump_-_example">Debugging the core dump - example</span></h5>
+<p>For example, having just forced a postgres backend to crash with <code>kill -ABRT</code>, I have a core file named <code>core.10780.sig6.1271644870s</code> in <code>/var/lib/postgresql/8.4/main</code>, which is the data directory on my Ubuntu system. I've used /proc to find out that the executable for postgres on my system is <code>/usr/lib/postgresql/8.4/bin/postgres</code>.
+</p><p>It's now easy to run GDB against it and request a backtrace:
+</p>
+<pre>$ sudo -u postgres gdb -q -c /var/lib/postgresql/8.4/main/core.10780.sig6.1271644870s /usr/lib/postgresql/8.4/bin/postgres
+Core was generated by `postgres: wal writer process                                                  '.
+Program terminated with signal 6, Aborted.
+#0  0x00a65422 in __kernel_vsyscall ()
+(gdb) bt
+#0  0x00a65422 in __kernel_vsyscall ()
+#1  0x00686a3d in ___newselect_nocancel () from /lib/tls/i686/cmov/libc.so.6
+#2  0x00e68d25 in pg_usleep () from /usr/lib/postgresql/8.4/bin/postgres
+#3  0x00d3d406 in WalWriterMain () from /usr/lib/postgresql/8.4/bin/postgres
+#4  0x00bf0ba4 in AuxiliaryProcessMain () from /usr/lib/postgresql/8.4/bin/postgres
+#5  0x00d3663b in&#160;?? () from /usr/lib/postgresql/8.4/bin/postgres
+#6  0x00d39782 in&#160;?? () from /usr/lib/postgresql/8.4/bin/postgres
+#7  &lt;signal handler called&gt;
+#8  0x00a65422 in __kernel_vsyscall ()
+#9  0x00686a3d in ___newselect_nocancel () from /lib/tls/i686/cmov/libc.so.6
+#10 0x00d37bee in&#160;?? () from /usr/lib/postgresql/8.4/bin/postgres
+#11 0x00d3afbe in PostmasterMain () from /usr/lib/postgresql/8.4/bin/postgres
+#12 0x00cdc0dc in main () from /usr/lib/postgresql/8.4/bin/postgres
+</pre>
+<p>This example shows a stack trace that does not include function arguments. There may or may not be function arguments on your system, depending on obscure details largely outside your control, like whether or not Postgres was originally built to omit frame pointers, DWARF version, etc. In general, the situation with getting backtraces on mainstream Linux platforms has improved significantly since this example backtrace was originally added. These days, is often <b>better to use "bt full" instead of "bt"</b>, since this can provide even more information (the values of local/stack variables during the crash). In general, the more information that you can provide for debugging, the better.
+</p><p>If you don't have proper symbols installed, specify the wrong executable to gdb or fail to specify an executable at all, you'll see a <b>useless</b> backtrace like this following one:
+</p>
+<pre>$ sudo -u postgres gdb -q -c /var/lib/postgresql/8.4/main/core.10780.sig6.1271644870s 
+Core was generated by `postgres: wal writer process                                                  '.
+Program terminated with signal 6, Aborted.
+#0  0x00a65422 in __kernel_vsyscall ()
+(gdb) bt
+#0  0x00a65422 in __kernel_vsyscall ()
+#1  0x00686a3d in&#160;?? ()
+#2  0x00d3d406 in&#160;?? ()
+#3  0x00bf0ba4 in&#160;?? ()
+#4  0x00d3663b in&#160;?? ()
+#5  0x00d39782 in&#160;?? ()
+#6  &lt;signal handler called&gt;
+#7  0x00a65422 in __kernel_vsyscall ()
+#8  0x00686a3d in&#160;?? ()
+#9  0x00d3afbe in&#160;?? ()
+#10 0x00cdc0dc in&#160;?? ()
+#11 0x005d7b56 in&#160;?? ()
+#12 0x00b8fad1 in&#160;?? ()
+
+</pre>
+<p>If you get something like that, don't bother sending it in. If you didn't just get the executable path wrong, you'll probably need to install debugging symbols for PostgreSQL (or even re-build PostgreSQL with debugging enabled) and try again.
+</p>
+<h3><span class="mw-headline" id="Tracing_problems_when_creating_a_cluster">Tracing problems when creating a cluster</span></h3>
+<p>If you're running into a crash while trying to create a database cluster using <i>initdb</i>, that may leave behind a core dump that you can analyze with gdb as described above.  This should be the case if there's an assertion failure for example.  You will probably need to give the <i>--no-clean</i> option to <i>initdb</i> to keep it from deleting the new data directory and the core file along with it.
+</p><p>Another technique for finding bootstrap-time bugs is to manually feed the bootstrapping commands into bootstrap mode or single-user mode, with a data directory left over from <i>initdb --no-clean</i>.  This can help if there has been no PANIC that leaves a core dump, but just a FATAL or ERROR, for example.  It's easy to attach GDB to such a backend.
+</p><p>Also, try creating the data directory using from unpatched master, then triggering the crash with the patched backend, rather than initdb.
+</p>
+<h2><span class="mw-headline" id="Dumping_a_page_image_from_within_GDB">Dumping a page image from within GDB</span></h2>
+<p>It is sometimes useful to post a file containing a <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/storage-page-layout.html">raw page image</a> when reporting a problem on a community mailing list. Both tables and indexes consist of 8KiB-sized blocks/pages, which can be thought of as the fundamental unit of data storage. This is particularly likely to be helpful when the integrity of the data is suspect, such as when an assertion fails due to a bug that corrupts data. GDB makes it easy to do this from either an interactive session (though core dumps may have <a rel="nofollow" class="external text" href="https://www.postgresql.org/message-id/20200210195659.vx6slnxmoymp5yyo%40alap3.anarazel.de">issues with dumping shared memory</a>).
+</p><p>Example:
+</p>
+<pre>Breakpoint 1, _bt_split (rel=0x7f555b6f3460, itup_key=0x55d03a745d40, buf=232, cbuf=0, firstright=366, newitemoff=216, newitemsz=16, newitem=0x55d03a745d18, newitemonleft=true) at nbtinsert.c:1205
+1205	{
+(gdb) n
+1215		Buffer		sbuf = InvalidBuffer;
+(gdb)
+1216		Page		spage = NULL;
+(gdb)
+1217		BTPageOpaque sopaque = NULL;
+(gdb)
+1227		int			indnatts = IndexRelationGetNumberOfAttributes(rel);
+(gdb)
+1228		int			indnkeyatts = IndexRelationGetNumberOfKeyAttributes(rel);
+(gdb)
+1231		rbuf = _bt_getbuf(rel, P_NEW, BT_WRITE);
+(gdb)
+1244		origpage = BufferGetPage(buf);
+(gdb)
+1245		leftpage = PageGetTempPage(origpage);
+(gdb)
+1246		rightpage = BufferGetPage(rbuf);
+(gdb)
+1248		origpagenumber = BufferGetBlockNumber(buf);
+(gdb)
+1249		rightpagenumber = BufferGetBlockNumber(rbuf);
+(gdb) dump binary memory /tmp/dump_block.page origpage (origpage + 8192)
+</pre>
+<p>The contents of the page "origpage" are now dumped to the file "/tmp/dump_block.page", which will be precisely 8192 bytes in size. This works wherever the "Page" C type appears (which is actually a typedef defined in bufpage.h -- an unadorned "Page" is actually a char pointer). A "Page" variable is a raw pointer to a page image, typically the authoritative/current page stored in shared_buffers.
+</p>
+<h3><span class="mw-headline" id="pg_hexedit">pg_hexedit</span></h3>
+<p>Note also that the Postgres hex editor tool <a rel="nofollow" class="external text" href="https://github.com/petergeoghegan/pg_hexedit">pg_hexedit</a> can quickly <a rel="nofollow" class="external text" href="https://github.com/petergeoghegan/pg_hexedit#using-pg_hexedit-while-debugging-postgres-with-gdb">visualize page images within GDB</a> with intuitive tags and annotations. It might be easier to use pg_hexedit when it isn't initially clear what page images are of interest, or when multiple images of the page from the same block need to be captured over time, as a test case is run.
+</p>
+<h3><span id="contrib.2Fpageinspect_page_dump"></span><span class="mw-headline" id="contrib/pageinspect_page_dump">contrib/pageinspect page dump</span></h3>
+<p>When it isn't convenient to use GDB, and when it isn't necessary to get a page image that is exactly current at the time of a crash, it is possible to dump an arbitrary page to a file in a more lightweight fashion using <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/pageinspect.html">contrib/pageinspect</a>. For example, the following interactive shell session dumps the current page image in block 42 for the index 'pgbench_pkey':
+</p>
+<pre>$ psql -c "create extension pageinspect"
+CREATE EXTENSION
+$ psql -XAtc "SELECT encode(get_raw_page('pgbench_pkey', 42),'base64')" | base64 -d &gt; dump_block_42.page
+</pre>
+<p>This assumes that it is possible to connect as a superuser using psql, and that the base64 program is in the user's $PATH. The GNU coreutils package generally includes base64, so it will already be available on most Linux installations. Note that it may be necessary to install an operating system package named "postgresql-contrib" or similar before the pageinspect extension will be available to install.
+</p><p>Typically, the easiest way of following this procedure is to become the postgres operating system user first (e.g., through "su postgres").
+</p>
+<h2><span class="mw-headline" id="Starting_Postgres_under_GDB">Starting Postgres under GDB</span></h2>
+<p>Debugging multi-process applications like PostgreSQL has historically been very painful with GDB. Thankfully with recent 7.x releases, this has been improved greatly by "inferiors" (GDB's term for multiple debugged processes).
+</p><p>NB! This is still quite fragile, so don't expect to be able to do this in production.
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span><span class="c1"># Stop server</span>
+pg_ctl<span class="w"> </span>-D<span class="w"> </span>/path/to/data<span class="w"> </span>stop<span class="w"> </span>-m<span class="w"> </span>fast
+<span class="c1"># Launch postgres via gdb</span>
+gdb<span class="w"> </span>--args<span class="w"> </span>postgres<span class="w"> </span>-D<span class="w"> </span>/path/to/data
+</pre></div>
+<p>Now, in the GDB shell, use these commands to set up an environment:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span><span class="c1"># We have scroll bars in the year 2012!</span>
+<span class="nb">set</span><span class="w"> </span>pagination<span class="w"> </span>off
+<span class="c1"># Attach to both parent and child on fork</span>
+<span class="nb">set</span><span class="w"> </span>detach-on-fork<span class="w"> </span>off
+<span class="c1"># Stop/resume all processes</span>
+<span class="nb">set</span><span class="w"> </span>schedule-multiple<span class="w"> </span>on
+
+<span class="c1"># Usually don&#39;t care about these signals</span>
+handle<span class="w"> </span>SIGUSR1<span class="w"> </span>noprint<span class="w"> </span>nostop
+handle<span class="w"> </span>SIGUSR2<span class="w"> </span>noprint<span class="w"> </span>nostop
+
+<span class="c1"># Make GDB&#39;s expression evaluation work with most common Postgres Macros (works with Linux).</span>
+<span class="c1"># Per https://www.postgresql.org/message-id/20130731021434.GE19053@alap2.anarazel.de,</span>
+<span class="c1"># have many Postgres macros work if these are defined (useful for TOAST stuff,</span>
+<span class="c1"># varlena stuff, etc):</span>
+macro<span class="w"> </span>define<span class="w"> </span>__builtin_offsetof<span class="o">(</span>T,<span class="w"> </span>F<span class="o">)</span><span class="w"> </span><span class="o">((</span>int<span class="o">)</span><span class="w"> </span><span class="p">&amp;</span><span class="o">(((</span>T<span class="w"> </span>*<span class="o">)</span><span class="w"> </span><span class="m">0</span><span class="o">)</span>-&gt;F<span class="o">))</span>
+macro<span class="w"> </span>define<span class="w"> </span>__extension__
+
+<span class="c1"># Ugly hack so we don&#39;t break on process exit</span>
+python<span class="w"> </span>gdb.events.exited.connect<span class="o">(</span>lambda<span class="w"> </span>x:<span class="w"> </span><span class="o">[</span>gdb.execute<span class="o">(</span><span class="s1">&#39;inferior 1&#39;</span><span class="o">)</span>,<span class="w"> </span>gdb.post_event<span class="o">(</span>lambda:<span class="w"> </span>gdb.execute<span class="o">(</span><span class="s1">&#39;continue&#39;</span><span class="o">))])</span>
+
+<span class="c1"># Phew! Run it.</span>
+run
+</pre></div>
+<p>To get a list of processes, run <code>info inferior</code>. To switch to another process, run <code>inferior <i>NUM</i></code>.
+</p>
+<h2><span class="mw-headline" id="Recording_Postgres_using_rr_Record_and_Replay_Framework">Recording Postgres using rr Record and Replay Framework</span></h2>
+<p>PostgreSQL 13 can be debugged using <a rel="nofollow" class="external text" href="https://rr-project.org">the rr debugging recorder</a>. This section describes some useful workflows for using rr to debug Postgres. It is primarily written for Postgres hackers, though rr could also be used when reporting a bug.
+</p>
+<h3><span class="mw-headline" id="Version_compatibility">Version compatibility</span></h3>
+<p>Commit <a rel="nofollow" class="external text" href="http://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=fc3f4453a2bc95549682e23600b22e658cb2d6d7">fc3f4453a2bc95549682e23600b22e658cb2d6d7</a> resolved an issue that made it hard to use rr with earlier Postgres versions, so there might be problems on those versions. Also, earlier versions of rr distributed with older/LTS Linux OS versions might not have support for syscalls that are used by Postgres, such as <code>sync_file_range()</code>. All of these issues probably have fairly straightforward workarounds (e.g. you could start Postgres with <code>--wal_writer_flush_after=0 --backend_flush_after=0 --bgwriter_flush_after=0 --checkpoint_flush_after=0</code>).
+</p>
+<h3><span class="mw-headline" id="Postgres_settings">Postgres settings</span></h3>
+<p>A script that records a postgres session using rr might could consist of the following example snippet:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span>rr<span class="w"> </span>record<span class="w"> </span>-M<span class="w"> </span>/code/postgresql/<span class="nv">$BRANCH</span>/install/bin/postgres<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-D<span class="w"> </span>/code/postgresql/<span class="nv">$BRANCH</span>/data<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--log_line_prefix<span class="o">=</span><span class="s2">&quot;%m %p &quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--effective_cache_size<span class="o">=</span>1GB<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--random_page_cost<span class="o">=</span><span class="m">4</span>.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--work_mem<span class="o">=</span>4MB<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--maintenance_work_mem<span class="o">=</span>64MB<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--fsync<span class="o">=</span>off<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--log_statement<span class="o">=</span>all<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--log_min_messages<span class="o">=</span>DEBUG5<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--max_connections<span class="o">=</span><span class="m">50</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--shared_buffers<span class="o">=</span>32MB
+</pre></div>
+<p>Most of the details here are somewhat arbitrary. The general idea is to make log output as verbose as possible, and to keep the amount of memory used by the server low.
+</p><p>It is quite practical to run "make installcheck" against the server when Postgres is run with "rr record", recording the entire execution. This is not much slower than just running the tests against a regular debug build of Postgres. It's still much faster than Valgrind, for example. Replaying the recording seems to be where having a high end machine helps a lot.
+</p>
+<h3><span class="mw-headline" id="Event_numbers_in_the_log">Event numbers in the log</span></h3>
+<p>Once the tests are done, stop Postgres in the usual way (e.g. Ctrl + C). The recording is saved to the <code>$HOME/.local/share/rr/</code> directory on most Linux distros. rr creates a directory for each distinct recording in this parent directory. rr also maintains a symlink (<code>latest-trace</code>) that points to the latest recording directory, which is often used when replaying a recording. Be careful to avoid accidentally leaving too many recordings around. They can be rather large.
+</p><p>The record/Postgres terminal has output that looks like this (when the example "rr record" recipe is used):
+</p>
+<pre>[rr 1786705 1241867]2020-04-04 21:55:05.018 PDT 1786705 DEBUG: CommitTransaction(1) name: unnamed; blockState: STARTED; state: INPROGRESS, xid/subid/cid: 63992/1/2
+[rr 1786705 1241898]2020-04-04 21:55:05.019 PDT 1786705 DEBUG: StartTransaction(1) name: unnamed; blockState: DEFAULT; state: INPROGRESS, xid/subid/cid: 0/1/0
+[rr 1786705 1241902]2020-04-04 21:55:05.019 PDT 1786705 LOG: statement: CREATE TYPE test_type_empty AS ();
+[rr 1786705 1241906]2020-04-04 21:55:05.020 PDT 1786705 DEBUG: CommitTransaction(1) name: unnamed; blockState: STARTED; state: INPROGRESS, xid/subid/cid: 63993/1/1
+[rr 1786705 1241936]2020-04-04 21:55:05.020 PDT 1786705 DEBUG: StartTransaction(1) name: unnamed; blockState: DEFAULT; state: INPROGRESS, xid/subid/cid: 0/1/0
+[rr 1786705 1241940]2020-04-04 21:55:05.020 PDT 1786705 LOG: statement: DROP TYPE test_type_empty;
+[rr 1786705 1241944]2020-04-04 21:55:05.021 PDT 1786705 DEBUG:  drop auto-cascades to composite type test_type_empty
+[rr 1786705 1241948]2020-04-04 21:55:05.021 PDT 1786705 DEBUG:  drop auto-cascades to type test_type_empty[]
+[rr 1786705 1241952]2020-04-04 21:55:05.021 PDT 1786705 DEBUG: MultiXact: setting OldestMember[2] = 9
+[rr 1786705 1241956]2020-04-04 21:55:05.021 PDT 1786705 DEBUG: CommitTransaction(1) name: unnamed; blockState: STARTED; state: INPROGRESS, xid/subid/cid: 63994/1/3
+</pre>
+<p>The part of each log line in square brackets comes from rr (since we used <code>-M</code> when recording) -- the first number is a PID, the second an event number. You probably won't care about the PIDs, though, since the event number alone unambiguously identifies a particular "event" in a particular backend (rr recordings are single threaded, even when there are multiple threads or processes). Suppose you want to get to the <code>CREATE TYPE test_type_empty AS ()</code> query -- you can get to the end of the query by replaying the recording with this option:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span>$<span class="w"> </span>rr<span class="w"> </span>replay<span class="w"> </span>-M<span class="w"> </span>-g<span class="w"> </span><span class="m">1241902</span>
+</pre></div>
+<p>Replaying the recording like this will take you to the point where the Postgres backend prints the log message at the end of executing the example query -- you will get a gdb debug server (rr implements a gdb backend), and interactive gdb session. This isn't precisely the point of execution that will be of interest to you, but it's close enough. You can easily set a breakpoint to the precise function you happen to be interested in, and then <a rel="nofollow" class="external text" href="https://sourceware.org/gdb/current/onlinedocs/gdb/Reverse-Execution.html"><code>reverse-continue</code></a> to get there by going backwards.
+</p><p>You can also find the point where a particular backend starts by using the fork option instead. So for the PID 1786705, that would look like:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span>$<span class="w"> </span>rr<span class="w"> </span>replay<span class="w"> </span>-M<span class="w"> </span>-f<span class="w"> </span><span class="m">1786705</span>
+</pre></div>
+<p>(Don't try to use the similar <code>-p</code> option, since that starts a debug server when the pid has been <code>exec</code>'d.)
+</p><p>Note that saving the output of a recording using standard tools like "tee" seems to have some issues <a rel="nofollow" class="external autonumber" href="https://github.com/mozilla/rr/issues/91">[1]</a>. It may be helpful to get log output (complete with these event numbers) by doing an "autopilot" replay, like this:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span>$<span class="w"> </span>rr<span class="w"> </span>replay<span class="w"> </span>-M<span class="w"> </span>-a<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>rr.log
+</pre></div>
+<p>You now have a log file that can be searched for a good event number, as a starting point.  This may be a practical necessity when running "make installcheck" or a custom test suite, since there might be megabytes of log output. You usually don't need to bother to generate logs in this way, though. It might take a few minutes to do an autopilot replay, since rr will replay everything that was recorded in sub-realtime.
+</p>
+<h3><span class="mw-headline" id="Jumping_back_and_forth_through_a_recording_using_GDB_commands">Jumping back and forth through a recording using GDB commands</span></h3>
+<p>Once you have a rough idea of where and when a bug manifests itself in your rr recording, you'll need to actually debug the issue using gdb. Often the natural approach is to jump back and forth through the recording to track the issue down in whatever backend is known to be misbehaving.
+</p><p>You can check the current event number once connected to gdb using gdb's "when" command, which can be useful when determining which point of execution you've reached relative to the high level output from "make check" (assuming the <code>-M</code> option was used to get event numbers there):
+</p>
+<pre>(rr) when
+Current event: 379377
+</pre>
+<p>Since event numbers are shared by processes/threads, which are alway executed serially during recording, event numbers are a generic way of reasoning about how far along the recording is, <b>within and across processes</b>. We are not limited to attaching our debugger to processes that happen to be Postgres backends.
+</p><p>rr also supports gdb's <code>checkpoint</code>, <code>restart</code> and <code>delete</code> checkpoint commands; see <a rel="nofollow" class="external text" href="https://sourceware.org/gdb/onlinedocs/gdb/Checkpoint_002fRestart.html#Checkpoint_002fRestart">the relevant section of the GDB docs</a>. These are useful because they allow gdb to track interesting points in execution directly, at a finer granularity than "event number"; a new event number is created when there is a syscall, which might be far too coarse a granularity to be useful when actually zeroing in on a problem in one particular backend/process.
+</p>
+<h3><span class="mw-headline" id="Watchpoints_and_reverse_execution">Watchpoints and reverse execution</span></h3>
+<p>Because rr supports reverse debugging, watchpoints are much more useful. Note that you should generally use <code>watch -l expr</code> rather than just using <code>watch expr</code>. Without -l, reverse execution is often very slow or apparently buggy, because gdb will try to reevaluate the expression as the program executes through different scopes.
+</p>
+<h3><span class="mw-headline" id="Debugging_tap_tests">Debugging tap tests</span></h3>
+<p>rr really shines when debugging things like tap tests, where there is complex scaffolding that may run multiple Postgres servers. You can run an entire "rr record make check", without having to worry about how that scaffolding works. Once you have useful PIDs (or event numbers) to work off of, it won't take too long to get an interactive debugging session in the backend of interest. You could get a PID for a backend of interest from the logs that appear in the <code>./tmp_check/log</code> directory once you're done with recording "make check" execution. From there, you can start "rr replay" by passing the relevant PID as the <code>-f</code> argument.
+</p><p>Example replay of a "make check" session:
+</p>
+<pre>$ rr replay -M -f 2247718
+[rr 2246854 304]make -C ../../../src/backend generated-headers
+[rr 2246855 629]make[1]: Entering directory '/code/postgresql/patch/build/src/backend'
+[rr 2246855 631]make -C catalog distprep generated-header-symlinks
+[rr 2246856 984]make[2]: Entering directory '/code/postgresql/patch/build/src/backend/catalog'
+
+*** SNIP -- Remaining "make check" output omitted for brevity ***
+
+--------------------------------------------------
+ ---&gt; Reached target process 2247718 at event 379377.
+--------------------------------------------------
+Reading symbols from /usr/bin/../lib/rr/librrpreload.so...
+Reading symbols from /lib/x86_64-linux-gnu/libpthread.so.0...
+Reading symbols from /usr/lib/debug/.build-id/0b/4031a3ab06ec61be1546960b4d1dad979d15ce.debug...
+
+*** SNIP ***
+
+(No debugging symbols found in /usr/lib/x86_64-linux-gnu/libicudata.so.66)
+Reading symbols from /lib/x86_64-linux-gnu/libnss_files.so.2...
+Reading symbols from /usr/lib/debug//lib/x86_64-linux-gnu/libnss_files-2.31.so...
+0x0000000070000002 in&#160;?? ()
+(rr) bt
+#0  0x0000000070000002 in&#160;?? ()
+#1  0x00007f0d2c25c3b6 in _raw_syscall () at raw_syscall.S:120
+#2  0x00007f0d2c2582ff in traced_raw_syscall (call=call@entry=0x681fffa0) at syscallbuf.c:229
+#3  0x00007f0d2c259978 in sys_fcntl (call=&lt;optimized out&gt;) at syscallbuf.c:1291
+#4  syscall_hook_internal (call=0x681fffa0) at syscallbuf.c:2855
+#5  syscall_hook (call=0x681fffa0) at syscallbuf.c:2987
+#6  0x00007f0d2c2581da in _syscall_hook_trampoline () at syscall_hook.S:282
+#7  0x00007f0d2c25820a in __morestack () at syscall_hook.S:417
+#8  0x00007f0d2c258225 in _syscall_hook_trampoline_48_3d_00_f0_ff_ff () at syscall_hook.S:428
+#9  0x00007f0d2b5a9f15 in arch_fork (ctid=0x7f0d297bee50) at arch-fork.h:49
+#10 __libc_fork () at fork.c:76
+#11 0x00005620ae898e53 in fork_process () at fork_process.c:62
+#12 0x00005620ae8aab39 in BackendStartup (port=0x5620b0c1f600) at postmaster.c:4187
+#13 0x00005620ae8a6d29 in ServerLoop () at postmaster.c:1727
+#14 0x00005620ae8a64c2 in PostmasterMain (argc=4, argv=0x5620b0bf19e0) at postmaster.c:1400
+#15 0x00005620ae7a8247 in main (argc=4, argv=0x5620b0bf19e0) at main.c:210
+</pre>
+<h3><span class="mw-headline" id="Debugging_race_conditions">Debugging race conditions</span></h3>
+<p>rr can be used to <a rel="nofollow" class="external text" href="https://postgr.es/m/CAH2-WznTb6-0fjW4WPzNQh4mFvBH86J7bqZpNqteVUzo8p=6Hg@mail.gmail.com">isolate hard to reproduce race condition bugs</a>. The single threaded nature of rr recording/execution seems to make it harder to reproduce bugs involving concurrent execution. However, using rr's <a rel="nofollow" class="external text" href="https://robert.ocallahan.org/2016/02/introducing-rr-chaos-mode.html">chaos mode</a> option (by using the <code>-h</code> argument with rr record) seems to increase the odds of successfully reproducing a problem. It might still take a few attempts, but you only have to get lucky once.
+</p>
+<h3><span class="mw-headline" id="Packing_a_recording">Packing a recording</span></h3>
+<p>rr pack can be used to save a recording in a fairly stable format -- it copies the needed files into the trace:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span>$<span class="w"> </span>rr<span class="w"> </span>pack
+</pre></div>
+<p>This could be useful if you wanted to save a recording for more than a day or two. Because every single detail of the recording (e.g. pointers, PIDs) is stable, you can treat a recording as a totally self contained thing.
+</p>
+<h3><span class="mw-headline" id="rr_resources">rr resources</span></h3>
+<p><a rel="nofollow" class="external text" href="https://github.com/mozilla/rr/wiki/Usage">Usage - rr wiki</a>
+</p><p><a rel="nofollow" class="external text" href="https://github.com/mozilla/rr/wiki/Debugging-protips">Debugging protips - rr wiki</a>
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408142303
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.084 seconds
+Real time usage: 2.092 seconds
+Preprocessor visited node count: 233/1000000
+Post‐expand include size: 145/2097152 bytes
+Template argument size: 80/2097152 bytes
+Highest expansion depth: 3/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 13721/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    8.298      1 Template:PgCommitURL
+100.00%    8.298      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:1067-0!canonical and timestamp 20260408142301 and revision id 37582.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD&amp;oldid=37582">https://wiki.postgresql.org/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD&amp;oldid=37582</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/index.php?title=Category:Pages_using_deprecated_source_tags&amp;action=edit&amp;redlink=1" class="new" title="Category:Pages using deprecated source tags (page does not exist)">Pages using deprecated source tags</a></li><li><a href="/wiki/Category:Operating_system" title="Category:Operating system">Operating system</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Getting+a+stack+trace+of+a+running+PostgreSQL+backend+on+Linux%2FBSD" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD&amp;oldid=37582" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Linux/BSD&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 19 February 2023, at 00:44.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.084","walltime":"2.092","ppvisitednodes":{"value":233,"limit":1000000},"postexpandincludesize":{"value":145,"limit":2097152},"templateargumentsize":{"value":80,"limit":2097152},"expansiondepth":{"value":3,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":13721,"limit":5000000},"timingprofile":["100.00%    8.298      1 Template:PgCommitURL","100.00%    8.298      1 -total"]},"cachereport":{"timestamp":"20260408142303","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":2460});});</script>
+</body>
+</html>

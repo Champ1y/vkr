@@ -1,7 +1,7 @@
 {
   "source_role": "external_troubleshooting_whitelist",
   "corpus_type": "supplementary",
-  "usage_rule": "Использовать только как низкоприоритетный troubleshooting/FAQ слой в tutorial + extended_mode; facts require official backing.",
+  "usage_rule": "Использовать только как низкоприоритетный troubleshooting/FAQ слой в tutorial; facts require official backing.",
   "kept_pages_count": 25,
   "kept_pages": [
     {

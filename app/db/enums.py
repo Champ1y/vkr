@@ -14,7 +14,8 @@ class AudienceLevel(StrEnum):
 
 
 class ModeType(StrEnum):
-    ANSWER = "answer"
+    SHORT = "short"
+    DETAILED = "detailed"
     TUTORIAL = "tutorial"
 
 

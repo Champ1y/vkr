@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Valgrind - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"b5c2134a5d3c3356c12c9088","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Valgrind","wgTitle":"Valgrind","wgCurRevisionId":43048,"wgRevisionId":43048,"wgArticleId":2012,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Tool"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Valgrind","wgRelevantArticleId":2012,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Valgrind rootpage-Valgrind skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Valgrind</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Valgrind_and_Postgres"><span class="tocnumber">1</span> <span class="toctext">Valgrind and Postgres</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Compiling_Postgres_with_Valgrind_options"><span class="tocnumber">1.1</span> <span class="toctext">Compiling Postgres with Valgrind options</span></a>
+<ul>
+<li class="toclevel-3 tocsection-3"><a href="#Meson"><span class="tocnumber">1.1.1</span> <span class="toctext">Meson</span></a></li>
+<li class="toclevel-3 tocsection-4"><a href="#Autoconf"><span class="tocnumber">1.1.2</span> <span class="toctext">Autoconf</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-5"><a href="#Known_Bugs"><span class="tocnumber">1.2</span> <span class="toctext">Known Bugs</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Using_Valgrind"><span class="tocnumber">1.3</span> <span class="toctext">Using Valgrind</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Additional_suppressions"><span class="tocnumber">1.4</span> <span class="toctext">Additional suppressions</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Troubleshooting"><span class="tocnumber">1.5</span> <span class="toctext">Troubleshooting</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Valgrind_and_Postgres">Valgrind and Postgres</span></h2>
+<p>Postgres supports Valgrind memcheck directly - it is possible to include "client requests" in the memory allocator, providing detection of many additional memory others that would otherwise not be detected in vanilla builds. See src/include/pg_config_manual.h for full details of how to build Postgres with support for Valgrind memcheck instrumentation.
+</p><p>You should normally use MEMORY_CONTEXT_CHECKING with USE_VALGRIND; instrumentation of repalloc() is inferior without it.
+</p>
+<h3><span class="mw-headline" id="Compiling_Postgres_with_Valgrind_options">Compiling Postgres with Valgrind options</span></h3>
+<p>The variable USE_VALGRIND need to be passed to the compiler, this must be done during `configure` or `meson setup` process:
+</p>
+<h4><span class="mw-headline" id="Meson">Meson</span></h4>
+<pre>CPPFLAGS="-DUSE_VALGRIND" meson setup build
+</pre>
+<h4><span class="mw-headline" id="Autoconf">Autoconf</span></h4>
+<pre>CPPFLAGS="-DUSE_VALGRIND" ./configure
+</pre>
+<h3><span class="mw-headline" id="Known_Bugs">Known Bugs</span></h3>
+<p>If you observe core dumps in autovacuum while running under Valgrind on x86_64 hardware, it's probably a known bug in valgrind 3.8.1 and earlier;
+see <a rel="nofollow" class="external free" href="https://bugs.kde.org/show_bug.cgi?id=280114">https://bugs.kde.org/show_bug.cgi?id=280114</a>.  If you're prepared to recompile Valgrind, apply the one-line patch shown there.  Otherwise,
+the simplest answer is to set autovacuum = off in postgresql.conf while using Valgrind.  However, it's not clear that "fix" will hide all instances
+of the issue.
+</p>
+<h3><span class="mw-headline" id="Using_Valgrind">Using Valgrind</span></h3>
+<p>One effective approach to gathering Valgrind memcheck instrumentation while running the regression tests is outlined here.  A binary with debug symbols produces source file line numbers detail.
+</p><p>A Memcheck-hosted postgres can be started like this:
+</p>
+<pre>  valgrind --leak-check=no --gen-suppressions=all \
+    --suppressions=src/tools/valgrind.supp --time-stamp=yes \
+    --error-markers=VALGRINDERROR-BEGIN,VALGRINDERROR-END \
+    --log-file=$HOME/pg-valgrind/%p.log --trace-children=yes \
+    postgres --log_line_prefix="%m %p " \
+    --log_statement=all --shared_buffers=64MB 2&gt;&amp;1 | tee $HOME/pg-valgrind/postmaster.log
+</pre>
+<p>.  Run the regression tests:
+</p>
+<pre>  make installcheck
+</pre>
+<p>If that detected an error, and more details are required for debugging purposes, it is then possible to rerun a smaller test case with "--track-origins=yes --read-var-info=yes" flags also added. That slows things noticeably but gives more specific messaging. For more information, see the Valgrind documentation.
+</p><p>Run individual subsets of the regression tests, to limit the duration of testing:
+</p>
+<pre>  make installcheck-tests TESTS="json combocid"
+</pre>
+<p>Not all tests in the regression tests are capable of being run on their own like this - you may wish to verify that each test passes without Postgres running through Valgrind first. (The file src/test/regress/parallel_schedule should give you some idea of the dependencies that the test of interest may have on other tests).
+</p>
+<h3><span class="mw-headline" id="Additional_suppressions">Additional suppressions</span></h3>
+<p>You may need additional local suppressions.  If you get complaints about wcstombs and related functions, consider this addition:
+</p>
+<pre># wcsrtombs uses some clever optimizations internally, which to valgrind
+# may look like access to uninitialized data. For example AVX2 instructions
+# load data in 256-bit chunks, irrespectedly of wchar length. gconv does
+# somethink similar by loading data in 32bit chunks and then shifting the
+# data internally. Neither of those actually uses the uninitialized part
+# of the buffer, as far as we know.
+#
+# https://www.postgresql.org/message-id/90ac0452-e907-e7a4-b3c8-15bd33780e62@2ndquadrant.com
+
+{
+   wcsnlen_optimized
+   Memcheck:Cond
+   fun:__wcsnlen_avx2
+   fun:wcsrtombs
+   fun:wcstombs
+   fun:wchar2char
+}
+
+{
+   wcsnlen_optimized_addr32
+   Memcheck:Addr32
+   fun:__wcsnlen_avx2
+   fun:wcsrtombs
+   fun:wcstombs
+   fun:wchar2char
+}
+
+{
+   gconv_transform_internal
+   Memcheck:Cond
+   fun:__gconv_transform_internal_utf8
+   fun:wcsrtombs
+   fun:wcstombs
+   fun:wchar2char
+}
+</pre>
+<p>(In my system, this is not enough, because wchar2char seems to be inlined, so I get additional reports about wcstombs being called by functions that call wchar2char. So you might need to remove the last line of each proposed suppression.)
+</p>
+<h3><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h3>
+<p>If you get an error like
+</p>
+<pre>   valgrind: mmap(0x58000000, 2347008) failed in UME with error 22 (Invalid argument).
+   valgrind: this can be caused by executables with very large text, data or bss segments.
+</pre>
+<p>the most likely cuplrit is an attempt to run valgrind under valgrind, likely via a wrapper script. If you're using a wrapper script for pg_regress, for example, make sure you use <tt>which -a</tt> or change the <tt>PATH</tt> to find the <i>next</i> postgres, rather than re-executing your wrapper script.
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408103207
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.017 seconds
+Real time usage: 0.021 seconds
+Preprocessor visited node count: 53/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 1475/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:2012-0!canonical and timestamp 20260408103207 and revision id 43048.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Valgrind&amp;oldid=43048">https://wiki.postgresql.org/index.php?title=Valgrind&amp;oldid=43048</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:Tool" title="Category:Tool">Tool</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Valgrind" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Valgrind&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Valgrind">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Valgrind&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Valgrind&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Valgrind" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Valgrind&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Valgrind" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Valgrind" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Valgrind" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Valgrind&amp;oldid=43048" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Valgrind&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 21 March 2026, at 10:08.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.017","walltime":"0.021","ppvisitednodes":{"value":53,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":1475,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260408103207","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":386});});</script>
+</body>
+</html>

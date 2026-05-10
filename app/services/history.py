@@ -21,7 +21,6 @@ class HistoryService:
                     user_question=row.user_question,
                     pg_version=row.version.major_version if row.version else None,
                     mode=row.mode,
-                    extended_mode=row.extended_mode,
                     answer_text=row.answer_text,
                     tutorial_json=row.tutorial_json,
                     status=row.status,

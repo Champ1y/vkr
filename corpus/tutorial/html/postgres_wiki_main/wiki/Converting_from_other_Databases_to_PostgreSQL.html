@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Converting from other Databases to PostgreSQL - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"b6777506da08d1049d057b70","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Converting_from_other_Databases_to_PostgreSQL","wgTitle":"Converting from other Databases to PostgreSQL","wgCurRevisionId":43127,"wgRevisionId":43127,"wgArticleId":11,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Install","General articles and guides","Migration to PostgreSQL"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Converting_from_other_Databases_to_PostgreSQL","wgRelevantArticleId":11,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Converting_from_other_Databases_to_PostgreSQL rootpage-Converting_from_other_Databases_to_PostgreSQL skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Converting from other Databases to PostgreSQL</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Terminology"><span class="tocnumber">1</span> <span class="toctext">Terminology</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Non-specific"><span class="tocnumber">2</span> <span class="toctext">Non-specific</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Apache_Derby"><span class="tocnumber">3</span> <span class="toctext">Apache Derby</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#DBase_II,_III,_IV+_/_DBF_Format"><span class="tocnumber">4</span> <span class="toctext">DBase II, III, IV+ / DBF Format</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#FileMaker_Pro"><span class="tocnumber">5</span> <span class="toctext">FileMaker Pro</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#IBM_DB2"><span class="tocnumber">6</span> <span class="toctext">IBM DB2</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#InterBase"><span class="tocnumber">7</span> <span class="toctext">InterBase</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Microsoft_Access"><span class="tocnumber">8</span> <span class="toctext">Microsoft Access</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#Microsoft_SQL_Server"><span class="tocnumber">9</span> <span class="toctext">Microsoft SQL Server</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#MongoDB"><span class="tocnumber">10</span> <span class="toctext">MongoDB</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#MySQL"><span class="tocnumber">11</span> <span class="toctext">MySQL</span></a>
+<ul>
+<li class="toclevel-2 tocsection-12"><a href="#Scripts,_programs"><span class="tocnumber">11.1</span> <span class="toctext">Scripts, programs</span></a>
+<ul>
+<li class="toclevel-3 tocsection-13"><a href="#2015"><span class="tocnumber">11.1.1</span> <span class="toctext">2015</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#2014"><span class="tocnumber">11.1.2</span> <span class="toctext">2014</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#2013"><span class="tocnumber">11.1.3</span> <span class="toctext">2013</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="#Previously"><span class="tocnumber">11.1.4</span> <span class="toctext">Previously</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-17"><a href="#Documentation"><span class="tocnumber">11.2</span> <span class="toctext">Documentation</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-18"><a href="#Oracle"><span class="tocnumber">12</span> <span class="toctext">Oracle</span></a>
+<ul>
+<li class="toclevel-2 tocsection-19"><a href="#Utilities,_tools,_scripts_etc."><span class="tocnumber">12.1</span> <span class="toctext">Utilities, tools, scripts etc.</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Documentation,_articles,_presentations_etc."><span class="tocnumber">12.2</span> <span class="toctext">Documentation, articles, presentations etc.</span></a>
+<ul>
+<li class="toclevel-3 tocsection-21"><a href="#PostgreSQL_documentation"><span class="tocnumber">12.2.1</span> <span class="toctext">PostgreSQL documentation</span></a></li>
+<li class="toclevel-3 tocsection-22"><a href="#Articles_and_presentations_(in_reverse_chronological_order)"><span class="tocnumber">12.2.2</span> <span class="toctext">Articles and presentations (in reverse chronological order)</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-23"><a href="#Progress_RDBMS"><span class="tocnumber">13</span> <span class="toctext">Progress RDBMS</span></a>
+<ul>
+<li class="toclevel-2 tocsection-24"><a href="#Utilities,_tools,_scripts_etc._2"><span class="tocnumber">13.1</span> <span class="toctext">Utilities, tools, scripts etc.</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-25"><a href="#Converting_PostgreSQL_Databases_to_other_Databases"><span class="tocnumber">14</span> <span class="toctext">Converting PostgreSQL Databases to other Databases</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Terminology">Terminology</span></h2>
+<ul><li><a href="/index.php?title=Oracle_PostgreSQL_terminology&amp;action=edit&amp;redlink=1" class="new" title="Oracle PostgreSQL terminology (page does not exist)">PostgreSQL Terminology for Oracle DBAs</a></li>
+<li><a href="/wiki/SQL_Server_PostgreSQL_terminology" title="SQL Server PostgreSQL terminology">PostgreSQL Terminology for SQL Server DBAs</a></li>
+<li><a href="/index.php?title=DB2_PostgreSQL_terminology&amp;action=edit&amp;redlink=1" class="new" title="DB2 PostgreSQL terminology (page does not exist)">PostgreSQL Terminology for DB2 DBAs</a></li>
+<li><a href="/wiki/MySQL_PostgreSQL_terminology" title="MySQL PostgreSQL terminology">PostgreSQL Terminology for MySQL DBAs</a></li></ul>
+<h2><span class="mw-headline" id="Non-specific">Non-specific</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="https://www.ispirer.com/products/postgresql-migration#migrate-to-postgresql">Ispirer Toolkit</a> performs automatic migration of any popular RDBMS to PostgreSQL. A free demo of Ispirer Toolkit is available.</li>
+<li><a rel="nofollow" class="external text" href="https://www.convertum.ru/database-migration/postgresql-migration#migrate-to-postgresql">Convertum.ru</a> is a robust tool for automatic migration of more than 25 databases, including migration to PostgreSQL. 30-days trial is available for free.</li>
+<li><a rel="nofollow" class="external text" href="https://movesol.com/en/solutions-offers/database-migration/">Move Solutions ToolKit</a> covers the entire migration cycle, from data analysis to identify incompatible data, DDL generation, multithreaded data migration, SQL embedded and PL/SQL conversion, regression testing and performance optimization. Includes an optimized PostgreSQL Driver for COBOL and a precompiler. <a rel="nofollow" class="external text" href="https://movesol.com/en/rd-and-softwares/stack-m/">see</a></li>
+<li><a rel="nofollow" class="external text" href="https://stream.dbconvert.com/guide/introduction">DBConvert Streams</a> is a versatile software that supports the conversion of various databases, including PostgreSQL, and enables real-time Change Data Capture (CDC) data replication. It provides cloud data integration and streaming capabilities across distributed platforms.</li>
+<li><a rel="nofollow" class="external text" href="https://www.omniloader.com">Omni Loader</a> is a massively parallel and horizontally scalable enterprise-class database migration solution. Easily loads millions of records per second into PostgreSQL.</li>
+<li><a rel="nofollow" class="external text" href="https://soft-builder.com/abstralinx/">AbstraLinx</a> is a metadata management GUI tool for Salesforce with the ability to convert Salesforce schema to PostgreSQL and other databases, such as MySQL, Oracle, SQL Server, Firebird, SQLite, etc.</li>
+<li><a rel="nofollow" class="external text" href="https://www.fullconvert.com">Full Convert</a> is a reliable and easy-to-use database migration and synchronization solution, converting from more than 40 database engines to PostgreSQL and back.</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/dimitri/pgloader">pgloader</a> knows how to load data from MySQL, SQLite, MS SQL Server, dBase files, CSV files and fixed-width data files, and more. Released under The PostgreSQL Licence.</li>
+<li><a rel="nofollow" class="external text" href="https://dbconvert.com/postgresql/">DBConvert PostgreSQL database migration and sync software</a> Database conversion and synchronization between PostgreSQL/ Amazon RDS, MySQL, MS SQL Server, SQL Azure, Oracle, MS Access. PostgreSQL supported up to 13, so not completely up-to-date.</li>
+<li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/studio/postgresql-migration.html">dbForge Studio for PostgreSQL</a> is a feature-rich IDE for database development and management, whose features include comparison and synchronization of database schemas and table data, as well as migration of data to PostgreSQL.</li>
+<li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/edge/">dbForge Edge</a> is a multidatabase solution for DB development, design, management, and administration.  A set of powerful features applies to all the most popular database management systems – PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, and a wide range of cloud services.</li>
+<li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/datacompare/">dbForge Data Compare for PostgreSQL</a> is a tool that helps locate and review table data differences in PostgreSQL databases, create detailed comparison reports, and synchronize the content of source and target databases.</li>
+<li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/schemacompare/">dbForge Schema Compare for PostgreSQL/Redshift</a> is a free solution that helps find and analyze differences in database schemas, generate comprehensive comparison reports, and synchronize schema changes in source and target databases.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/database_migration">Database Workbench (for PostgreSQL)</a> includes a database migration tool from and to various database systems, like MySQL, Firebird, Oracle, SQL Server, InterBase and more. Transfer meta data and data to and from PostgreSQL.</li>
+<li><a rel="nofollow" class="external text" href="https://soft-builder.com/erbuilder-data-modeler/">ERBuilder</a> is a Windows GUI tool that helps to convert from various DBMS schema to PostgreSQL. Supported databases: MySQL, Oracle, SQL Server, Firebird, SQLite, Amazon Redshift, Amazon RDS, Microsoft Azure SQL database.</li>
+<li><a rel="nofollow" class="external text" href="https://www.dbsofts.com/">ESF Database Migration Toolkit</a> Enables you to transfer data across various databases, supporting PostgreSQL, MySQL, Oracle, SQL Server, IBM DB2, Informix, Microsoft Access, Microsoft Excel, dBase, Foxpro, Firbird, SQLite etc. - by Martin Williams</li>
+<li><a rel="nofollow" class="external text" href="http://troels.arvin.dk/db/rdbms/">Comparison of different SQL implementations</a> by Troels Arvin (covers PG 8.4 and MySQL 5.0, so somewhat outdated)</li>
+<li><a href="/wiki/Transactional_DDL_in_PostgreSQL:_A_Competitive_Analysis" title="Transactional DDL in PostgreSQL: A Competitive Analysis">Transactional DDL in PostgreSQL: A Competitive Analysis</a> by Greg Smith</li>
+<li><a rel="nofollow" class="external text" href="http://www.vive.net/products/datapro.htm">dataPro</a> Conversion and database objects transfer tool for PostgreSQL, SQLite, MySQL, Oracle, SQL Server and Microsoft Access. convert tables schema and migrate data from one database type to another. Covers PG7 to PG9, so quite outdated.</li>
+<li><a rel="nofollow" class="external text" href="https://www.datanamic.com/datadiff/">DataDiff CrossDB</a> is a Windows GUI utility to compare and synchronize/transfer data from PostgreSQL to/from Oracle, MSSQL, MS Access or MySQL databases.</li>
+<li><a rel="nofollow" class="external text" href="https://www.sqlmaestro.com/products/postgresql/datawizard/">PostgreSQL Data Wizard</a> is a Windows GUI utility to transfer both schema and data from any ADO-compatible source (like MS Access, MySQL, SQL Server, Oracle, etc) to PostgreSQL.</li>
+<li><a rel="nofollow" class="external text" href="https://metacpan.org/module/SQL::Translator">SQL::Translator</a> is a Perl module for translating table definitions between different software.</li>
+<li><a href="/wiki/Foreign_data_wrappers" title="Foreign data wrappers">Foreign data wrappers</a> may be useful for exporting data from other databases</li>
+<li><a rel="nofollow" class="external text" href="https://www.convert-in.com/pgskit.htm">Postgres Migration Toolkit</a> Software pack to convert Oracle, MySQL, SQL Server and FoxPro to PostgreSQL, and vice versa.</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/ei-grad/sqlacrossover">sqlacrossover</a> SQLAlchemy-based cross-database migration tool</li>
+<li><a rel="nofollow" class="external text" href="https://skyvia.com">Skyvia</a> Web service for cloud data integration for PostgreSQL with Salesforce, Dynamics CRM, SugarCRM,  Zoho CRM, QuickBooks, FreshBooks, ExactTarget, MailChimp, Bigcommerce, MySQL, SQL Server, SQL Azure, Amazon RDS.</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/OmniDB/OmniDB">OmniDB</a> Open source full-featured web tool for database management. Currently supports PostgreSQL only. More RDBMS support coming soon, including the ability of converting databases from any supported RDBMS to PostgreSQL and back.</li>
+<li><a rel="nofollow" class="external text" href="https://www.vlsoftware.net/exportizer/">Exportizer Enterprise</a> Universal data conversion tool for PostgreSQL, Oracle, SQL Server, SQLite, Interbase, Firebird, MySQL, DB2, Informix, SQL Anywhere, Microsoft Access, Microsoft Excel, dBase, CSV. Can export data either from GUI or from command line.</li>
+<li><a rel="nofollow" class="external text" href="https://www.jooq.org/translate/">jOOQ SQL Translator</a> Web service for SQL syntax translation between &gt; 25 RDBMS dialects</li></ul>
+<h2><span class="mw-headline" id="Apache_Derby">Apache Derby</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="https://github.com/billrobertson42/derby2pg">derby2pg</a> Converter program that will convert the tables, data and indexes in a given schema to a script that can be used to populate a PostgreSQL database.</li></ul>
+<h2><span id="DBase_II.2C_III.2C_IV.2B_.2F_DBF_Format"></span><span class="mw-headline" id="DBase_II,_III,_IV+_/_DBF_Format">DBase II, III, IV+ / DBF Format</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="https://www.dbsofts.com/articles/foxpro_to_postgresql/">ESF Database Migration Toolkit</a> How to migrate dBase/Foxpro to PostgreSQL in an easy way.</li>
+<li><a rel="nofollow" class="external text" href="http://www.convert-in.com/dbf2pgs.htm">FoxPro-to-PostgreSQL</a> a program to migrate FoxPro databases to PostgreSQL server. The program does not use ODBC or any other middleware software. Command line support allows to script, automate and schedule the conversion process.</li>
+<li><a rel="nofollow" class="external text" href="https://www.fullconvert.com">Full Convert</a> is a reliable and easy-to-use database migration and synchronization solution, converting from more than 40 database engines to PostgreSQL and back (including dBase, Clipper, Visual FoxPro and other DBF variants).</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/dimitri/pgloader">pgloader</a> by Dimitri Fontaine</li>
+<li><a rel="nofollow" class="external text" href="http://www.tv.com.pl/stepbystep/dbasepsql/">Convert .dbf files into PostgreSQL</a> by Tomasz Judycki</li>
+<li><a href="/wiki/File:26.zip" title="File:26.zip">A Visual Basic utility to convert Dbase III, IV, and V</a> by Dennis Bazan</li>
+<li><a href="/wiki/Porting_data_from_dBASE_IV_to_PostgreSQL" title="Porting data from dBASE IV to PostgreSQL">Porting data from dBASE IV to PostgreSQL</a> by Vijay Deval (2002-09-07)</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/kstrauser/pgdbf">PgDBF&#160;: Simplified and optimized replacement for XBaseToPg</a> by Kirk Strauser</li>
+<li><a rel="nofollow" class="external text" href="https://www.vlsoftware.net/exportizer-pro/">Exportizer Pro</a> Converts data from dBase to PostgreSQL and back.</li></ul>
+<h2><span class="mw-headline" id="FileMaker_Pro">FileMaker Pro</span></h2>
+<ul><li><a href="/wiki/Porting_from_FileMaker_Pro_to_PostgreSQL" title="Porting from FileMaker Pro to PostgreSQL">Porting from FileMaker Pro to PostgreSQL</a> by Michelle Murrain (24th August 2001)</li></ul>
+<h2><span class="mw-headline" id="IBM_DB2">IBM DB2</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="https://www.ispirer.com/products/db2-luw-to-postgresql-migration">Ispirer Toolkit</a> automatically migrates the entire database schema (tables, views, stored procedures, functions, triggers, etc.) and transfers data from DB2 LUW, DB2 AS/400 (iSeries) and DB2 OS/390 (z/OS) to PostgreSQL. A free demo of Ispirer Toolkit is available.</li>
+<li><a rel="nofollow" class="external text" href="https://www.convertum.ru/database-migration/db2-migration">Convertum.ru</a> is a robust tool for automatic migration of more than 25 databases, including migration from DB2 LUW, DB2 iSeries, and DB2 z/OS to PostgreSQL. 30-days trial is available for free.</li>
+<li><a rel="nofollow" class="external text" href="https://movesol.com/en/solutions-offers/database-migration/">Move Solutions ToolKit</a> covers the entire migration cycle, from data analysis to identify incompatible data, DDL generation, multithreaded data migration, SQL embedded and PL/SQL conversion, regression testing and performance optimization. Includes an optimized PostgreSQL Driver for COBOL and a precompiler. <a rel="nofollow" class="external text" href="https://movesol.com/en/rd-and-softwares/stack-m/">see</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.omniloader.com">Omni Loader</a> is a massively parallel and horizontally scalable enterprise-class database migration solution. Easily loads millions of records per second from DB2 LUW, iSeries, z/OS into PostgreSQL on-prem or on the cloud.</li>
+<li><a href="/wiki/File:DB2UDB-to-PG.pdf" title="File:DB2UDB-to-PG.pdf">Migrating from DB2 to PostgreSQL</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.fullconvert.com">Full Convert</a> is a reliable and easy-to-use database migration and synchronization solution, converting from more than 40 database engines to PostgreSQL and back (including DB2 LUW, DB2 iSeries, and DB2 z/OS).</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/dalibo/db2topg/">db2topg</a> Migration tool to convert a DB2 UDB Database into a PostgreSQL database.</li>
+<li><a rel="nofollow" class="external text" href="https://www.vlsoftware.net/exportizer/">Exportizer Enterprise</a> Converts data from DB2 to PostgreSQL and back.</li>
+<li><a rel="nofollow" class="external text" href="https://www.dbsofts.com/articles/db2_to_postgresql/">ESF Database Migration Toolkit</a> How to migrate DB2 to PostgreSQL in an easy way.</li></ul>
+<h2><span class="mw-headline" id="InterBase">InterBase</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="https://www.ispirer.com/products/interbase-to-postgresql-migration">Ispirer Toolkit</a> automatically migrates the entire database schema (tables, views, stored procedures, functions, triggers, etc.) and transfers data from InterBase as well as Firebird to PostgreSQL. A free demo of Ispirer Toolkit is available.</li>
+<li><a rel="nofollow" class="external text" href="https://www.convertum.ru/database-migration/interbase-to-postgresql-migration">Convertum.ru</a> is a robust tool for automatic migration of more than 25 databases, including migration from Interbase to PostgreSQL. 30-days trial is available for free.</li>
+<li><a rel="nofollow" class="external text" href="https://dbconvert.com/firebird/postgresql/">DBConvert migration software</a> that exports data from Interbase/ Firebird to PostgreSQL. DBSync tool enables synchronization between Interbase and Postgres.</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/kstrauser/dbreplicate">DBReplicate - Simplify Interbase-&gt;PostgreSQL conversions</a> by Kirk Strauser</li>
+<li><a rel="nofollow" class="external text" href="https://www.fullconvert.com">Full Convert</a> is a reliable and easy-to-use database migration and synchronization solution, converting from more than 40 database engines to PostgreSQL and back (including Interbase).</li>
+<li><a rel="nofollow" class="external text" href="https://www.vlsoftware.net/exportizer/">Exportizer Enterprise</a> Converts data from Interbase to PostgreSQL and back.</li>
+<li><a rel="nofollow" class="external text" href="https://www.dbsofts.com/articles/firebird_to_postgresql/">ESF Database Migration Toolkit</a> How to migrate Interbase/FireBird to PostgreSQL in an easy way.</li></ul>
+<h2><span class="mw-headline" id="Microsoft_Access">Microsoft Access</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="https://www.dbsofts.com/articles/ms_access_to_postgresql/">ESF Database Migration Toolkit</a> How to migrate MS Access to PostgreSQL in an easy way.</li>
+<li><a rel="nofollow" class="external text" href="https://dbconvert.com/access/postgresql/">Cross-Database conversion and synchronization software</a> Transfer data from Microsoft Access to PostgreSQL and keep them synchronized.</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?url=archives/346-Querying-MS-Access-and-other-ODBC-data-sources-with-OGR_FDW.html">Linking to MS Access tables with ogr_fdw</a> If your PostgreSQL is on windows, you can use ogr_fdw foreign data wrapper, packaged with PostGIS 2.2+ bundle for windows via application stackbuilder. With PostgresQL 9.5, you can use IMPORT FOREIGN SCHEMA to link in all the MS access tables and then cherry pick how you want to restructure.</li>
+<li><a rel="nofollow" class="external text" href="http://docman.sourceforge.net/home_html/projects/sql/exportSQL3.txt">exportSQL</a> - a Microsoft Access module which exports Access Database into MySQL, mSQL and PostgreSQL by Dobrica Pavlinusic. Based on the work of Pedro Freire</li>
+<li><a rel="nofollow" class="external text" href="https://www.fullconvert.com">Full Convert</a> is a reliable and easy-to-use database migration and synchronization solution, converting from more than 40 database engines to PostgreSQL and back (including Access).</li>
+<li><a rel="nofollow" class="external text" href="https://www.vlsoftware.net/exportizer/">Exportizer Enterprise</a> Converts data from MS Access to PostgreSQL and back.</li>
+<li><a rel="nofollow" class="external text" href="http://mdbtools.sourceforge.net/">MDB Tools</a> by Brian Bruns
+<ul><li>A quick way to dump all tables as tsv or csv files</li></ul></li></ul>
+<pre>for TT in $(mdb-tables file.mdb); do
+     mdb-export -Q -d '\t' -D '%Y-%m-%d %H:%M:%S' file.mdb "$TT" &gt; "${TT}.tsv"
+done
+</pre>
+<pre>for TT in $(mdb-tables file.mdb); do
+     mdb-export -D '%Y-%m-%d %H:%M:%S' file.mdb "$TT" &gt; "${TT}.csv"
+done
+</pre>
+<p>If the tablenames have embedded spaces...
+</p>
+<pre>mdb-tables -1 file.mdb| while read TT
+do
+     mdb-export -D '%Y-%m-%d %H:%M:%S' file.mdb "$TT" &gt; "${TT}.csv"
+done
+</pre>
+<p>A shell script that may be useful for converting entire databases:
+</p>
+<pre>#!/bin/sh -e
+
+mdbfn=$1
+schemafn=$2
+fkfn=$3
+datafn=$4
+schema=$5
+
+tf=$(tempfile)
+
+pre=""
+[ -n "${schema}" ] &amp;&amp; pre="\"${schema}\"."
+
+mdb-schema "${mdbfn}" postgres &gt; "${tf}"
+
+# Schema file
+echo "BEGIN;\n" &gt; "${schemafn}"
+
+sp=""
+[ -n "${schema}" ] &amp;&amp; echo "CREATE SCHEMA \"${schema}\";\n" &gt;&gt; "${schemafn}"
+[ -n "${schema}" ] &amp;&amp; sp="SET search_path = \"${schema}\", pg_catalog;\n" 
+
+echo ${sp} &gt;&gt; "${schemafn}"
+
+awk '($0&#160;!~ /^ALTER TABLE.*FOREIGN KEY.*REFERENCES/) {print;}' "${tf}" &gt;&gt; "${schemafn}"
+
+echo "\nEND;" &gt;&gt; "${schemafn}"
+
+# Foreign keys file
+echo "BEGIN;\n" &gt; "${fkfn}"
+echo ${sp} &gt;&gt; "${fkfn}"
+
+awk '($0 ~ /^ALTER TABLE.*FOREIGN KEY.*REFERENCES/) {print;}' "${tf}" &gt;&gt; "${fkfn}"
+
+echo "\nEND;" &gt;&gt; "${fkfn}"
+
+# Data file
+echo "BEGIN;\n" &gt; "${datafn}"
+echo "SET CONSTRAINTS ALL DEFERRED;\n" &gt;&gt; "${datafn}"
+
+mdb-tables -1 "${mdbfn}" | while read TT
+do
+    mdb-export -Q -d '\t' -D '%Y-%m-%d %H:%M:%S' "${mdbfn}" "$TT" &gt; "${tf}"
+
+    awk -v pre="${pre}" -v TT="${TT}" \
+	'(NR==1) {gsub(/\t/,"\",\""); print "COPY " pre "\"" TT "\"(\"" $0 "\") FROM stdin;";}' "${tf}" &gt;&gt; "${datafn}"
+    awk '(NR&gt;1) {gsub(/\t\t/,"\t\\N\t"); gsub(/\t$/,"\t\\N"); gsub(/\t\t/,"\t\\N\t"); print;}' "${tf}" &gt;&gt; "${datafn}"
+
+    echo "\\.\n" &gt;&gt; "${datafn}"
+done
+
+echo "END;" &gt;&gt; "${datafn}"
+
+rm -f "${tf}"
+</pre>
+<p>If this script is saved to the file access2psql.sh and made executable, then it would be used as follows:
+</p>
+<pre>access2psql.sh file.mdb schema.sql foreignkeys.sql data.sql pg_schema_name
+psql -f schema.sql pg_db_name
+psql -f data.sql pg_db_name
+psql -f foreignkeys.sql pg_db_name
+</pre>
+<p>This script won't work properly if there are tab characters in text columns, though the call to mdb-export could be modified to export INSERT statements to fix this.  Also, mdb-schema has trouble representing multi-column foreign keys, so foreignkeys.sql may need some manual editing.
+</p>
+<ul><li><a rel="nofollow" class="external text" href="http://www.olschimke.eu/2012/08/07/importing-microsoft-access-mdb-into-postgresql-on-linux-postgres/">Importing Microsoft Access MDB into PostgreSQL on Linux</a> by Michael Olschimke</li>
+<li><a href="/wiki/Microsoft_Access_to_PostgreSQL_Conversion" title="Microsoft Access to PostgreSQL Conversion">Microsoft Access to PostgreSQL Conversion</a> by Jon Hutchings (2001-07-20)</li>
+<li><a rel="nofollow" class="external text" href="http://pgfoundry.org/projects/access2pgsql/">access2pgsql tool</a> by Mariano Reingart</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/archives/24-Using-MS-Access-with-PostgreSQL.html">Using MS Access as front end and PostgreSQL as back-end database</a> by PostgresOnLine Journal - 2008-01-31</li></ul>
+<h2><span class="mw-headline" id="Microsoft_SQL_Server">Microsoft SQL Server</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="https://www.ispirer.com/products/sql-server-to-postgresql-migration">Ispirer Toolkit</a> automatically migrates the entire database schema (tables, views, stored procedures, functions, triggers, etc.) and transfers data from Microsoft SQL Server to PostgreSQL. A free demo of Ispirer Toolkit is available.</li>
+<li><a rel="nofollow" class="external text" href="https://www.convertum.ru/database-migration/sql-server-to-postgresql-migration">Convertum.ru</a> is a robust tool for automatic migration of more than 25 databases, including migration from SQL Server to PostgreSQL. 30-days trial is available for free.</li>
+<li><a rel="nofollow" class="external text" href="https://movesol.com/en/solutions-offers/database-migration/">Move Solutions ToolKit</a> covers the entire migration cycle, from data analysis to identify incompatible data, DDL generation, multithreaded data migration, SQL embedded and PL/SQL conversion, regression testing and performance optimization. Includes an optimized PostgreSQL Driver for COBOL and a precompiler. <a rel="nofollow" class="external text" href="https://movesol.com/en/rd-and-softwares/stack-m/">see</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.omniloader.com">Omni Loader</a> is a massively parallel and horizontally scalable enterprise-class database migration solution. Easily loads millions of records per second from SQL Server and SQL Azure into PostgreSQL on-prem or on the cloud. Fully supports SQL Server CDC for continuous replication.</li>
+<li><a rel="nofollow" class="external text" href="http://www.convert-in.com/mss2pgs.htm">MSSQL-to-PostgreSQL</a> is a migration utility to convert SQL Server or SQL Azure databases to PostgreSQL. Option to filter data using SELECT-queries, synchronization mode, command line support.</li>
+<li><a rel="nofollow" class="external text" href="https://www.fullconvert.com">Full Convert</a> is a reliable and easy-to-use database migration and synchronization solution, converting from more than 40 database engines to PostgreSQL and back (including SQL Server and SQL Azure).</li>
+<li><a rel="nofollow" class="external text" href="http://dalibo.github.io/sqlserver2pgsql/">sqlserver2pgsql</a> Migration tool to convert a Microsoft SQL Server Database into a PostgreSQL database</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/dimitri/pgloader">pgloader</a> by Dimitri Fontaine</li>
+<li><a rel="nofollow" class="external text" href="https://www.dbsofts.com/articles/mssql_to_postgresql/">ESF Database Migration Toolkit</a> How to migrate Microsoft SQL Server to PostgreSQL in an easy way.</li>
+<li><a rel="nofollow" class="external text" href="https://dbconvert.com/mssql/postgresql/">DBConvert for PostgreSQL and MS SQL Server</a> Conversion and Sync software solutions for cross database migration between PostgreSQL/ Amazon RDS and MS SQL Server/ SQL Azure</li>
+<li><a rel="nofollow" class="external text" href="http://sqlblog.com/blogs/alexander_kuznetsov/archive/tags/PostgreSql/default.aspx">Learning PostgreSQL (Alexander Kuznetsov)</a> - series of blog articles for SQL Server users (2013-10 ~ 2013-11)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/archives/219-SQL-Server-to-PostgreSQL-Converting-table-structure.html">Converting SQL Server Table Structure to PostgreSQL</a> Leo Hsu and Regina Obe (2011-09-03)</li>
+<li><a href="/wiki/File:5.pdf" title="File:5.pdf">Conversion of Microsoft SQL/ASP applications to PostgreSQL</a> by Ethan Townsend (2005-06-23)</li>
+<li><a href="/wiki/Converting_your_data_from_MS_SQL_Server_7_to_PostgreSQL_7.1.x" title="Converting your data from MS SQL Server 7 to PostgreSQL 7.1.x">Converting your data from MS SQL Server 7 to PostgreSQL 7.1.x</a> by Ryan C. Bonham (2002-01-05)</li>
+<li><a href="/wiki/Microsoft_SQL_Server_to_PostgreSQL_Migration_by_Ian_Harding" title="Microsoft SQL Server to PostgreSQL Migration by Ian Harding">Microsoft SQL Server to PostgreSQL Migration by Ian Harding</a> (2001-09-17)</li>
+<li><a rel="nofollow" class="external text" href="http://www.bostongis.com/PrinterFriendly.aspx?content_name=sqlserver2008r2_oracle11gr2_postgis15_compare">Compare SQL Server 2008 R2, Oracle 11G R2, PostgreSQL/PostGIS 1.5 Spatial Features</a> BostonGIS (2010-06-01)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/51-Cross-Compare-of-SQL-Server,-MySQL,-and-PostgreSQL.html">Cross Compare of SQL Server 2005, MySQL 5, and PostgreSQL 8.3</a> by Leo Hsu and Regina Obe (2008-05-13)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/130-Cross-Compare-of-PostgreSQL-8.4,-SQL-Server-2008,-MySQL-5.1.html">Cross Compare of SQL Server 2008, MySQL 5.1, and PostgreSQL 8.4</a> by Leo Hsu and Regina Obe (2009-08-15)</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/archives/179-Universal-Unique-Identifiers-PostgreSQL-SQL-Server-Compare.html">Universal Unique Identifiers PostgreSQL SQL Server Compare</a> Demonstrates how to implement SQL Server NEWID() GUID uniqueidentifier type in PostgreSQL by Leo Hsu and Regina Obe (2010-10-07)</li>
+<li><a rel="nofollow" class="external text" href="https://www.vlsoftware.net/exportizer/">Exportizer Enterprise</a> Converts data from SQL Server to PostgreSQL and back.</li></ul>
+<h2><span class="mw-headline" id="MongoDB">MongoDB</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="https://coefficient.io/postgresql/migrate-mongodb-to-postgresql">Understanding the MongoDB to PostgreSQL Migration</a> (2024-dec)</li>
+<li><a rel="nofollow" class="external text" href="https://www.reddit.com/r/programming/comments/1bq6rfc/the_great_migration_from_mongodb_to_postgresql/">The Great Migration from MongoDB to PostgreSQL (Infiniscale)</a> (2024-mar)</li>
+<li><a rel="nofollow" class="external text" href="https://dev.to/ahmedmohamed/migrating-schema-from-mongodb-to-postgresql-a-practical-example-52lk">Migrating Schema from MongoDB to PostgreSQL: A Practical Example</a> (2023-aug)</li>
+<li><a rel="nofollow" class="external text" href="https://www.instaclustr.com/blog/ferretdb-with-postgresql/#opensource">How to Use MongoDB® Clients and FerretDB® With Instaclustr for PostgreSQL</a> (2023-aug)</li>
+<li><a rel="nofollow" class="external text" href="https://eng.grip.security/migrate-your-mongodb-architecture-to-postgresql-the-working-way">Migrate your MongoDB architecture to PostgreSQL, the working way</a> (2023-jun)</li>
+<li><a rel="nofollow" class="external text" href="https://stackoverflow.com/questions/76407113/aws-dms-source-mongodb-target-postgresql-need-to-extract-info-from-doc-colum">AWS DMS (source MongoDB, target PostgreSQL) need to extract info from _doc column using transformation rule, in document mode</a> (2023-jan)</li>
+<li><a rel="nofollow" class="external text" href="https://www.codeconvert.ai/mongodb-to-postgresql-converter">Online MongoDB to PostgreSQL Converter</a></li></ul>
+<h2><span class="mw-headline" id="MySQL">MySQL</span></h2>
+<h3><span id="Scripts.2C_programs"></span><span class="mw-headline" id="Scripts,_programs">Scripts, programs</span></h3>
+<p><a rel="nofollow" class="external text" href="https://www.ispirer.com/products/mysql-to-postgresql-migration">Ispirer Toolkit</a> automatically migrates the entire database schema (tables, views, stored procedures, functions, triggers, etc.) and transfers data from MySQL to PostgreSQL. A free demo of Ispirer Toolkit is available.
+</p><p><a rel="nofollow" class="external text" href="https://pypi.python.org/pypi/pg_chameleon">pg_chameleon</a> is a python procedure which replicates MySQL into PostgreSQL. The tool can detach the replica for minimal downtime migrations.
+</p><p><a rel="nofollow" class="external text" href="https://www.dbsofts.com/articles/mysql_to_postgresql/">ESF Database Migration Toolkit</a> How to migrate MySQL to PostgreSQL in an easy way.
+</p><p><a rel="nofollow" class="external text" href="https://github.com/dimitri/pgloader">pgloader</a> supports full migration of the database schema and data from a single command line and provides a command language for more complex or specific scenarios. It is still fully supported: please report any bugs on its GitHub page. It appears in the 2013 section here because that's when it has been published first.
+</p><p><br />
+</p>
+<h4><span class="mw-headline" id="2015">2015</span></h4>
+<ul><li><a rel="nofollow" class="external text" href="http://www.convert-in.com/sql2pgs.htm">MySQL-to-PostgreSQL</a> is a program to migrate MySQL databases to PostgreSQL server. Option to filter data using SELECT-queries, synchronization mode, command line support.</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/AnatolyUss/FromMySqlToPostgreSql">FromMySqlToPostgreSql migration tool by Anatoly Khaytovich</a>, provides an accurate migration of table data, indices, PKs, FKs... Makes an extensive use of PostgreSQL COPY protocol.</li></ul>
+<h4><span class="mw-headline" id="2014">2014</span></h4>
+<ul><li><a rel="nofollow" class="external text" href="https://github.com/mihailShumilov/mysql2postgresql">MySQL/PostgreSQL Converter from Mihail Shumilov</a>, written on PHP. Supported big DB</li></ul>
+<h4><span class="mw-headline" id="2013">2013</span></h4>
+<ul><li><a rel="nofollow" class="external text" href="https://github.com/lanyrd/mysql-postgresql-converter">MySQL/PostgreSQL Converter from Lanyrd</a>, based on <a rel="nofollow" class="external text" href="http://lanyrd.com/blog/2012/lanyrds-big-move/">work detailed here</a></li>
+<li><a rel="nofollow" class="external text" href="https://github.com/dimitri/pgloader">pgloader</a>, from Dimitri Fontaine, based on <a rel="nofollow" class="external text" href="http://tapoueh.org/blog/2013/01/28-pgloader-future">work detailed here</a> and <a rel="nofollow" class="external text" href="http://tapoueh.org/blog/2013/11/12-migrating-sakila">Migrating Sakila from MySQL to PostgreSQL</a></li>
+<li><a rel="nofollow" class="external text" href="https://github.com/philipsoutham/py-mysql2pgsql">py-mysql2pgsql</a>, <a rel="nofollow" class="external text" href="https://github.com/mozilla/airmozilla/pull/61/files#diff-30">example use case here</a></li>
+<li><a rel="nofollow" class="external text" href="https://github.com/bdigital/my_etl">MyETL</a>, Tool that works with the <a rel="nofollow" class="external text" href="https://github.com/bdigital/mysql_fdw">MySQL FDW</a></li></ul>
+<h4><span class="mw-headline" id="Previously">Previously</span></h4>
+<ul><li><a rel="nofollow" class="external text" href="https://www.convertum.ru/database-migration/mysql-to-postgresql-migration">Convertum.ru</a> is a robust tool for automatic migration of more than 25 databases, including migration from MySQL to PostgreSQL. 30-days trial is available for free.</li>
+<li><a rel="nofollow" class="external text" href="https://www.fullconvert.com">Full Convert</a> is a reliable and easy-to-use database migration and synchronization solution, converting from more than 40 database engines to PostgreSQL and back (including MySQL and MariaDB).</li>
+<li><a rel="nofollow" class="external text" href="http://www.enterprisedb.com/products/download.do">Free MySQL to Postgres Migration Wizard by EnterpriseDB v1.1</a> by EnterpriseDB Corporation. Available without registration via PostgreSQL installer wizard.</li>
+<li><a rel="nofollow" class="external text" href="http://www.pgsql.com/download/">Conversion tool for migrating from MySQL to PostgreSQL</a> by PostgreSQL Inc.</li>
+<li><a rel="nofollow" class="external text" href="http://en.wikibooks.org/wiki/Converting_MySQL_to_PostgreSQL">Converting MySQL to PostgreSQL</a> - from en.wikibooks.org</li>
+<li><a rel="nofollow" class="external text" href="http://convertdb.com/mysql/postgresql/">Migrate MySQL to PostgreSQL.</a> - Cross database bidirectional synchronization</li>
+<li><a rel="nofollow" class="external text" href="http://www.sourcefiles.org/Databases/Utilities/Conversion/my2pg.pl">my2pg.pl</a> - A Perl script used to convert a MySQL database dump to PostgreSQL-compatible format, by Maxim Rudensky and Valentine Danilchuk</li>
+<li><a rel="nofollow" class="external text" href="http://pgfoundry.org/projects/mysql2pgsql/">mysql2pgsql</a> - A Perl script used to convert MySQL databases dump to a PostgreSQL-compatible format</li>
+<li><a rel="nofollow" class="external text" href="http://mp2p.mikekohn.net/">MySQL PHP to PostgreSQL</a> by Michael Kohn</li>
+<li><a rel="nofollow" class="external text" href="http://www.gab.lc/script_php_my2pg.php">PHP_my2pg</a> PHP script by Gabriel Bordeaux</li>
+<li><a rel="nofollow" class="external text" href="http://tryolabs.com/Blog/2012/02/10/django-migrating-mysql-postgresql/">Migrating from MySQL to Postgresql with Django</a> blogpost by alejandro</li>
+<li><a rel="nofollow" class="external text" href="http://github.com/maxlapshin/mysql2postgres">Migrates MySQL to PostgreSQL</a> Ruby script by Max Lapshin</li></ul>
+<pre> # To install mysql2psql (under ubuntu 11.10): No need to get from github, just:
+ sudo apt-get install ruby gems libmysqlclient-dev libpq-dev
+ gem install mysql pg mysql2psql
+ # To get info about the mysql socket:
+ netstat -l | grep mysql
+ mysql2psql # creates a .yml templae
+ vi mysql2psql.yml # edit the template
+ mysql2psql # connects to mysql database and write into postgres database
+</pre>
+<ul><li><a rel="nofollow" class="external text" href="http://pypi.python.org/pypi/py-mysql2pgsql">py-mysql2pgsql</a> Python script to convert MySQL database to PostgreSQL compatible file or export directly to a PostgreSQL server</li>
+<li><a rel="nofollow" class="external text" href="https://bitbucket.org/iceone/mysql2pgsql/">my2pg.py</a> MySQL to PostgreSQL database conversion (not the same as above)</li>
+<li><a rel="nofollow" class="external text" href="http://phpseclib.sourceforge.net/sql/">SQL Data Definition Language (DDL) Conversion to MySQL, PostgreSQL and MS-SQL</a> by phpBB Group</li>
+<li><a rel="nofollow" class="external text" href="https://www.vlsoftware.net/exportizer/">Exportizer Enterprise</a> Converts data from MySQL (32-bit) to PostgreSQL and back.</li></ul>
+<h3><span class="mw-headline" id="Documentation">Documentation</span></h3>
+<ul><li><a rel="nofollow" class="external text" href="http://www.sitepoint.com/article/site-mysql-postgresql-1">Backend Database Switcheroo Howto Part I</a>  by Nathan Matias</li>
+<li><a rel="nofollow" class="external text" href="http://www.sitepoint.com/article/site-mysql-postgresql-2">Backend Database Switcheroo Howto Part II</a> by Nathan Matias</li>
+<li><a rel="nofollow" class="external text" href="http://www.xach.com/aolserver/mysql-to-postgresql.html">How-To: Migrating from MySQL to PostgreSQL</a> by Zach Beane</li>
+<li><a href="/wiki/Things_to_find_out_about_when_moving_from_MySQL_to_PostgreSQL" title="Things to find out about when moving from MySQL to PostgreSQL">Things to find out about when moving from MySQL to PostgreSQL</a> by Joel Burton (8th April 2001)</li>
+<li><a href="/wiki/Why_PostgreSQL_Instead_of_MySQL:_Comparing_Reliability_and_Speed_in_2007" title="Why PostgreSQL Instead of MySQL: Comparing Reliability and Speed in 2007">Why PostgreSQL Instead of MySQL: Comparing Reliability and Speed in 2007</a> by Greg Smith</li>
+<li><a rel="nofollow" class="external text" href="http://www.postgresonline.com/journal/index.php?/archives/51-Cross-Compare-of-SQL-Server,-MySQL,-and-PostgreSQL.html">Cross Compare of SQL Server, MySQL, and PostgreSQL</a> by Leo Hsu and Regina Obe (2008-05-13)</li>
+<li><a href="/wiki/How_to_make_a_proper_migration_from_MySQL_to_PostgreSQL" title="How to make a proper migration from MySQL to PostgreSQL">How to make a proper migration from MySQL to PostgreSQL</a></li>
+<li><a rel="nofollow" class="external text" href="http://andreas.scherbaum.la/writings/migrate_web_platforms.pdf">Migrating a community platform from Mysql to PostgreSQL</a> by Andreas Scherbaum (Prato, 2007)</li>
+<li><a rel="nofollow" class="external text" href="http://okbob.blogspot.com/2009/08/mysql-functions-for-postgresql.html">MySQL functions for PostgreSQL</a> by Pavel Stěhule</li></ul>
+<h2><span class="mw-headline" id="Oracle">Oracle</span></h2>
+<h3><span id="Utilities.2C_tools.2C_scripts_etc."></span><span class="mw-headline" id="Utilities,_tools,_scripts_etc.">Utilities, tools, scripts etc.</span></h3>
+<ul><li><a rel="nofollow" class="external text" href="https://www.ispirer.com/products/oracle-to-postgresql-migration">Ispirer Toolkit</a> automatically migrates the entire database schema (tables, views, packages, stored procedures, functions, triggers, etc.) and transfers data from Oracle to PostgreSQL. A free demo of Ispirer Toolkit is available.</li>
+<li><a rel="nofollow" class="external text" href="https://www.ispirer.com/data-migration">IDM (Ispirer Data Migrator)</a>, a part of the Ispirer Ecosystem, is an enterprise-grade replication solution designed for streamlined data migration with near-zero downtime and no middleware required.</li>
+<li><a rel="nofollow" class="external text" href="https://www.convertum.ru/database-migration/oracle-to-postgresql-migration">Convertum.ru</a> is a robust tool for automatic migration of more than 25 databases, including migration from Oracle to PostgreSQL. 30-days trial is available for free.</li>
+<li><a rel="nofollow" class="external text" href="https://movesol.com/en/solutions-offers/database-migration/">Move Solutions ToolKit</a> covers the entire migration cycle, from data analysis to identify incompatible data, DDL generation, multithreaded data migration, SQL embedded and PL/SQL conversion, regression testing and performance optimization. Includes an optimized PostgreSQL Driver for COBOL and a precompiler. <a rel="nofollow" class="external text" href="https://movesol.com/en/rd-and-softwares/stack-m/">see</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.omniloader.com">Omni Loader</a> is a massively parallel and horizontally scalable enterprise-class database migration solution. Easily loads millions of records per second from Oracle and Exadata into PostgreSQL on-prem or on the cloud. Fully supports Oracle CDC for continuous replication.</li>
+<li><a rel="nofollow" class="external text" href="https://www.cybertec-postgresql.com/en/products/cybertec-migrator/">CYBERTEC Migrator</a> Enterprise-grade Oracle migration software. GUI driven, high performance, low downtime.</li>
+<li><a rel="nofollow" class="external text" href="https://www.fullconvert.com">Full Convert</a> is a reliable and easy-to-use database migration and synchronization solution, converting from more than 40 database engines to PostgreSQL and back (including Oracle).</li>
+<li><a rel="nofollow" class="external text" href="https://dbconvert.com/oracle/postgresql/">Database migration for Oracle and PostgreSQL</a> Software for cross - database conversion and sync between Oracle and PostgreSQL.</li>
+<li><a rel="nofollow" class="external text" href="http://ora2pg.darold.net/">Ora2Pg - Oracle to PostgreSQL database schema converter</a> by Gilles Darold</li>
+<li><a rel="nofollow" class="external text" href="https://laurenz.github.io/oracle_fdw/">PostgreSQL Foreign Data Wrapper for Oracle (oracle_fdw)</a> - an <a href="/wiki/Fdw" class="mw-redirect" title="Fdw">FDW</a> providing support to access Oracle databases from within PostgreSQL</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/cybertec-postgresql/ora_migrator">ora_migrator</a> Oracle migration toolkit that uses the Oracle foreign data wrapper</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/orafce/orafce">Orafce</a> - implements common Oracle functions in PostgreSQL for compatibility</li>
+<li><a rel="nofollow" class="external text" href="http://www.convert-in.com/ora2pgs.htm">Oracle-to-PostgreSQL</a> - a program to migrate Oracle databases to PostgreSQL server. The program has high performance due to direct connection to data source and destination databases (it does not use ODBC or any other middleware software). Command line support allows to script, automate and schedule the conversion process.</li>
+<li><a rel="nofollow" class="external text" href="http://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_SchemaConversionTool.Installing.html">AWS Schema Conversion Tool</a> - to convert your existing database schema from one database engine to another (free download).</li>
+<li><a rel="nofollow" class="external text" href="https://www.vlsoftware.net/exportizer/">Exportizer Enterprise</a> Converts data from Oracle to PostgreSQL and back.</li>
+<li><a rel="nofollow" class="external text" href="https://www.splendiddata.com/cortex/">Splendid Data - Cortex</a></li></ul>
+<dl><dd>Cortex is the most advanced product on the market for automated migrations of Oracle databases to native PostgreSQL. This prevents vendor lock-in and delivers maximum freedom of deployment on-premise and/or in the Cloud. Because Cortex establishes all necessary dependencies between Data and Code objects and also migrates an average of 80% of the Code objects automatically, it is unique.</dd></dl>
+<ul><li><a rel="nofollow" class="external text" href="https://thriae.io/">thriae.io</a></li></ul>
+<dl><dd>thriae is an online source to source transpiler from Oracle to PostgreSQL. It is easy to use, just paste your code. thriae parses the input and creates a comprehensive model to take account of all available information to create PostgreSQL. Formatting and comments will remain untouched, a qualified report is available.</dd></dl>
+<h3><span id="Documentation.2C_articles.2C_presentations_etc."></span><span class="mw-headline" id="Documentation,_articles,_presentations_etc.">Documentation, articles, presentations etc.</span></h3>
+<h4><span class="mw-headline" id="PostgreSQL_documentation">PostgreSQL documentation</span></h4>
+<ul><li><a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/interactive/plpgsql-porting.html">Porting from Oracle PL/SQL</a></li></ul>
+<h4><span id="Articles_and_presentations_.28in_reverse_chronological_order.29"></span><span class="mw-headline" id="Articles_and_presentations_(in_reverse_chronological_order)">Articles and presentations (in reverse chronological order)</span></h4>
+<ul><li><a rel="nofollow" class="external text" href="https://d1.awsstatic.com/whitepapers/Migration/oracle-database-amazon-aurora-postgresql-migration-playbook-12.4.pdf">Migration Playbook - Oracle Database 19c to Amazon Aurora with PostgreSQL Compatibility (12.4)</a> Comprehensive whitepaper by the Amazon Web Services, Inc. (April 2021)</li>
+<li><a rel="nofollow" class="external text" href="https://www.slideshare.net/EnterpriseDB/stumbling-stones-when-migrating-from-oracle-240433043">Stumbling stones when migrating from Oracle</a> Slides from a presentation by Laurenz Albe (2020-12-22)</li>
+<li><a rel="nofollow" class="external text" href="https://aka.ms/OracletoPGguide">Oracle to Azure Database for PostgreSQL Migration Guide</a> Comprehensive whitepaper by the Microsoft Corporation (2020-11-30)</li>
+<li><a rel="nofollow" class="external text" href="http://tapoueh.org/confs/2013/10/29-pgconfeu-2013">From MySQL to PostgreSQL with pgloader</a> (English) talk at PostgreSQL Conference Europe, Dimitri Fontaine (2013-10-29)</li>
+<li><a rel="nofollow" class="external text" href="http://wiki.cenatic.es/wikiesp/index.php/Procedimiento_de_An%C3%A1lisis_y_Planificaci%C3%B3n_de_Migraci%C3%B3n_de_Oracle_10g_R2_a_PostgreSQL_9.1.3">Analysis and Planning Process for Migration from Oracle 10g R2 to PostgreSQL 9.1.3</a> (Spanish) by the Spanish National Competence Center for the Application of Opensource Technologies <a rel="nofollow" class="external text" href="http://www.cenatic.es">(CENATIC)</a> (2012-06)</li>
+<li><a rel="nofollow" class="external text" href="http://www.bostongis.com/PrinterFriendly.aspx?content_name=sqlserver2008r2_oracle11gr2_postgis15_compare">Compare SQL Server 2008 R2, Oracle 11G R2, PostgreSQL/PostGIS 1.5 Spatial Features</a> BostonGIS (2010-06-01)</li>
+<li><a rel="nofollow" class="external text" href="http://wiki.kandalaya.org/cgi-bin/twiki/view/Main/MigratingOracleToPostgreSQL">Migrating Oracle Databases to PostgreSQL using Xen on Debian GNU/Linux</a> by Raj Mathur (Kandalaya) (2008-12-26)</li>
+<li><a rel="nofollow" class="external text" href="http://www.pgcon.org/2008/schedule/track/Tutorial/62.en.html">Porting Oracle Applications to PostgreSQL</a> by Peter Eisentraut (PGCon 2008)</li>
+<li><a href="/wiki/PostgreSQL_for_Oracle_DBAs" title="PostgreSQL for Oracle DBAs">PostgreSQL for Oracle DBAs</a> by Richard Stephan (2007-06-01)</li>
+<li><a href="/wiki/File:Pg_8.1_J2EE_v1.0.pdf" title="File:Pg 8.1 J2EE v1.0.pdf">Porting JDBC applications from Oracle to PostgreSQL</a> by Chris Drawater (2006-03-24)
+<ul><li><a rel="nofollow" class="external text" href="http://www.holindis.co.uk/">Related documents for J2EE, Tomcat, and Oracle migrations</a> by Chris Drawater (2007-01-15)</li></ul></li>
+<li><a href="/wiki/Interview_with_Mark_Stosberg_(From_Oracle/tcl_to_PostgreSQL/Perl)" title="Interview with Mark Stosberg (From Oracle/tcl to PostgreSQL/Perl)">Interview with Mark Stosberg (From Oracle/tcl to PostgreSQL/Perl)</a> by Robert Treat (2004-10-24)</li>
+<li><a href="/wiki/Oracle_to_Postgres_Conversion" title="Oracle to Postgres Conversion">Oracle to Postgres Conversion</a> by James Shannon, Ben Adida, and Don Baccus</li></ul>
+<h2><span class="mw-headline" id="Progress_RDBMS">Progress RDBMS</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="http://knol.google.com/k/tomasz-judycki/convert-progress-rdbms-to-postgresql/2rifd79ifooa9/4#">Convert Progress RDBMS to PostgreSQL</a> by Tomasz Judycki</li>
+<li><a rel="nofollow" class="external text" href="https://www.spectralcore.com/fullconvert">Full Convert</a> Database migration and synchronization from more than 40 database engines to PostgreSQL and back (including Progress, via its ODBC driver).</li></ul>
+<h3><span id="Utilities.2C_tools.2C_scripts_etc._2"></span><span class="mw-headline" id="Utilities,_tools,_scripts_etc._2">Utilities, tools, scripts etc.</span></h3>
+<ul><li><a rel="nofollow" class="external text" href="https://www.ispirer.com/products/progress-to-postgresql-migration">Ispirer Toolkit</a> automatically migrates the entire database schema and transfers data from Progress to PostgreSQL. A free demo of Ispirer Toolkit is available.</li></ul>
+<h2><span class="mw-headline" id="Converting_PostgreSQL_Databases_to_other_Databases">Converting PostgreSQL Databases to other Databases</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="https://www.ispirer.com/products/postgresql-migration#migrate-from-postgresql">Ispirer Toolkit</a> performs automatic migration of PostgreSQL to any popular RDBMS. A free demo of Ispirer Toolkit is available.</li>
+<li><a rel="nofollow" class="external text" href="https://www.convertum.ru/database-migration/postgresql-migration#migrate-from-postgresql">Convertum.ru</a> is a robust tool for automatic migration of more than 25 databases, including migration from PostgreSQL to other popular databases. 30-days trial is available for free.</li>
+<li><a rel="nofollow" class="external text" href="https://movesol.com/en/solutions-offers/database-migration/">Move Solutions Toolkit</a> covers the entire migration cycle, from data analysis to identify incompatible data, DDL generation, multithreaded data migration, SQL embedded and PL/SQL conversion, regression testing and performance optimization. Includes an optimized PostgreSQL Driver for COBOL and a precompiler.</li>
+<li><a rel="nofollow" class="external text" href="https://www.omniloader.com">Omni Loader</a> is a massively parallel and horizontally scalable enterprise-class database migration solution. It enables rapid migration between 25 databases, on-prem or on the cloud, including data warehouses.</li>
+<li><a rel="nofollow" class="external text" href="http://docman.sourceforge.net/home_html/projects/sql/pgsql2interbase">PostgreSQL to InterBase dump file converter</a> by Dobrica Pavlinusic</li>
+<li><a rel="nofollow" class="external text" href="https://www.devart.com/dbforge/postgresql/studio/postgresql-migration.html">dbForge Studio for PostgreSQL</a> helps to migrate data to various relational DB servers such as Oracle, MySQL, SQL Server, MariaDB.</li>
+<li><a rel="nofollow" class="external text" href="https://www.upscene.com/database_workbench/database_migration">Database Workbench (for PostgreSQL)</a> includes a database migration tool from and to various database systems, like MySQL, Firebird, Oracle, SQL Server, InterBase and more.</li>
+<li><a rel="nofollow" class="external text" href="https://www.fullconvert.com">Full Convert</a> is a reliable and easy-to-use database migration and synchronization solution, converting from more than 40 database engines to PostgreSQL and back</li>
+<li><a rel="nofollow" class="external text" href="https://github.com/OmniDB/OmniDB">OmniDB</a> Open source full-featured web tool for database management. Currently supports PostgreSQL only. More RDBMS support coming soon, including the ability of converting databases from any supported RDBMS to PostgreSQL and back.</li>
+<li><a rel="nofollow" class="external text" href="https://www.vlsoftware.net/exportizer/">Exportizer Enterprise</a> Supports data conversion from PostgreSQL to Oracle, SQL Server, SQLite, Interbase, Firebird, MySQL, DB2, Informix, SQL Anywhere, Microsoft Access, Microsoft Excel, dBase, Paradox, CSV.</li>
+<li><a rel="nofollow" class="external text" href="https://www.dbsofts.com/download/">ESF Database Migration Toolkit</a> A tookit migrate data between various database formats(include PostgreSQL).</li></ul>
+<!-- 
+NewPP limit report
+Cached time: 20260408133816
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.120 seconds
+Real time usage: 0.168 seconds
+Preprocessor visited node count: 96/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:11-0!canonical and timestamp 20260408133815 and revision id 43127.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Converting_from_other_Databases_to_PostgreSQL&amp;oldid=43127">https://wiki.postgresql.org/index.php?title=Converting_from_other_Databases_to_PostgreSQL&amp;oldid=43127</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:Install" title="Category:Install">Install</a></li><li><a href="/wiki/Category:General_articles_and_guides" title="Category:General articles and guides">General articles and guides</a></li><li><a href="/wiki/Category:Migration_to_PostgreSQL" title="Category:Migration to PostgreSQL">Migration to PostgreSQL</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Converting_from_other_Databases_to_PostgreSQL" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/Talk:Converting_from_other_Databases_to_PostgreSQL" rel="discussion" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Converting_from_other_Databases_to_PostgreSQL">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Converting_from_other_Databases_to_PostgreSQL&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Converting_from_other_Databases_to_PostgreSQL&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Converting_from_other_Databases_to_PostgreSQL" title="Page">Page</a></li><li id="talk-mobile" class="mw-list-item"><a href="/wiki/Talk:Converting_from_other_Databases_to_PostgreSQL" title="Discussion">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Converting+from+other+Databases+to+PostgreSQL" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Converting_from_other_Databases_to_PostgreSQL" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Converting_from_other_Databases_to_PostgreSQL" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Converting_from_other_Databases_to_PostgreSQL&amp;oldid=43127" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Converting_from_other_Databases_to_PostgreSQL&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 1 April 2026, at 14:05.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.120","walltime":"0.168","ppvisitednodes":{"value":96,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260408133816","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":537});});</script>
+</body>
+</html>

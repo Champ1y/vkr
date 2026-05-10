@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Conversión de datos a PostgreSQL - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"17ef35a3d755058e01918e26","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Conversión_de_datos_a_PostgreSQL","wgTitle":"Conversión de datos a PostgreSQL","wgCurRevisionId":25673,"wgRevisionId":25673,"wgArticleId":799,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Español"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Conversión_de_datos_a_PostgreSQL","wgRelevantArticleId":799,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Conversión_de_datos_a_PostgreSQL rootpage-Conversión_de_datos_a_PostgreSQL skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Conversión de datos a PostgreSQL</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#DBase_II,_III,_IV+"><span class="tocnumber">1</span> <span class="toctext">DBase II, III, IV+</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#MS_Access"><span class="tocnumber">2</span> <span class="toctext">MS Access</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#Introducción"><span class="tocnumber">2.1</span> <span class="toctext">Introducción</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Paso_1_-_tener_corriendo_en_su_Workstation_MS_Access"><span class="tocnumber">2.2</span> <span class="toctext">Paso 1 - tener corriendo en su Workstation MS Access</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Paso_2_-_tener_corriendo_en_su_Servidor_Linux_PostgreSQL"><span class="tocnumber">2.3</span> <span class="toctext">Paso 2 - tener corriendo en su Servidor Linux PostgreSQL</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Paso_3_-_Testando_su_base_de_datos_utilizando_la_consola_del_servidor."><span class="tocnumber">2.4</span> <span class="toctext">Paso 3 - Testando su base de datos utilizando la consola del servidor.</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Paso_4_-Configuración_de_ODBC"><span class="tocnumber">2.5</span> <span class="toctext">Paso 4 -Configuración de ODBC</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Paso_5_-_Configuración_en_MS_Access."><span class="tocnumber">2.6</span> <span class="toctext">Paso 5 - Configuración en MS Access.</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Limitaciones"><span class="tocnumber">2.7</span> <span class="toctext">Limitaciones</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-10"><a href="#Oracle_para_PostgreSQL"><span class="tocnumber">3</span> <span class="toctext">Oracle para PostgreSQL</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#MySQL"><span class="tocnumber">4</span> <span class="toctext">MySQL</span></a></li>
+</ul>
+</div>
+
+<h2><span id="DBase_II.2C_III.2C_IV.2B"></span><span class="mw-headline" id="DBase_II,_III,_IV+">DBase II, III, IV+</span></h2>
+<ul><li><a rel="nofollow" class="external text" href="http://www.tv.com.pl/stepbystep/dbasepsql/">Convert ficheros .dbf a PostgreSQL</a> by Tomasz Judycki</li></ul>
+<h2><span class="mw-headline" id="MS_Access">MS Access</span></h2>
+<h3><span id="Introducci.C3.B3n"></span><span class="mw-headline" id="Introducción">Introducción</span></h3>
+<p>Estas página es intento de crear una guía rápida de usurario para convertir datos de MS Access a PostgreSQL. Esta basada en la experiencia del autor 
+<a rel="nofollow" class="external text" href="http://wiki.postgresql.org/wiki/Microsoft_Access_to_PostgreSQL_Conversion">Microsoft Access to PostgreSQL Conversion</a> by Jon Hutchings (2001-07-20), no se pretende con este documento sea utilizado como guía de conversión para otras versiones.
+</p>
+<h3><span class="mw-headline" id="Paso_1_-_tener_corriendo_en_su_Workstation_MS_Access">Paso 1 - tener corriendo en su Workstation MS Access</span></h3>
+<p>The first stage in the conversion process is to download the PostgreSQL upsizing tool. This can be obtained from the authors website. I strongly recommend reading the authors documentation and also note the limitations listed below of this tool.
+</p><p>This tool takes the form of an MS Access 97 database.
+</p><p>Once opened, the main screen (frmmain) has a number of options relating to the SQL conversion.
+</p><p>Select the database that you want to convert., analyse it using the Analyse function and amend any parameters you need to change.
+</p><p>It is important to fill out the SQL database name field with the name you wish to give your final postgres database otherwise you will have more work to do later.
+</p><p>Check the Export data option to move the data across - amend the file locations in the Miscellaneous options section if necessary.
+</p><p>Use Create SQL to make the SQL files and then Export SQL. This will place all the files needed in stage 2 in the directory specified on the Miscellaneous tab of the amend Parameters screen within pgupt.
+</p><p>FTP these files to a suitable empty directory on your postgres server.
+</p>
+<h3><span class="mw-headline" id="Paso_2_-_tener_corriendo_en_su_Servidor_Linux_PostgreSQL">Paso 2 - tener corriendo en su Servidor Linux PostgreSQL</span></h3>
+<p>Log into your server and change to the directory where you have uploaded the files
+</p><p>If you did not give the database a name earlier then the following must be performed before proceeding
+</p>
+<pre>   * edit the loadd.sh file (for example joe loadd.sh will open the file in the joe editor). 
+</pre>
+<pre>   * Change all references to "test" in the file to the name which you want to give your database. 
+</pre>
+<pre>   * HINT - Don't include non alphanumeric charaters in your database name (i.e. don't use -_ '?/!"\| etc.) 
+</pre>
+<pre>   * Save and close the file. 
+</pre>
+<pre>   * Open the create_schema.sql file and examine the table structure. Ensure that the fieldnames and data types are correct. 
+</pre>
+<p>Issue the following command to make the loadd.sh executable
+</p><p>chmod u+x loadd.sh
+</p><p>Execute the the loadd.sh script using the following command at your shell prompt.
+</p><p>./loadd.sh 2&gt; output1
+</p><p>This will execute the script and put the errors and output in a file called output1. If everything is working correctly the screen should display a CREATE for each table in the database, if you only see two create statements and you have three tables , then one of the tables has not been converted. In this case examine the log file (output1 in this case), for details. A common cause for this is the naming of tables or fields using SQL reserved words. For a list of these see the Postgresql documentation for your version of postgres.
+</p><p>WARNING: Once you have succesfully converted your database and it is in use you should NOT rerun this script as it will reinitialize your database back to the state in which it was when you converted it. I suggest that when your database is working you remove the execute permissions on the loadd.sh script to prevent accidential execution.
+</p>
+<h3><span class="mw-headline" id="Paso_3_-_Testando_su_base_de_datos_utilizando_la_consola_del_servidor.">Paso 3 - Testando su base de datos utilizando la consola del servidor.</span></h3>
+<p>Once you are happy that the conversion has worked, you can test your database by connecting to it with the Postgresql monitor in the normal way. For example, if you called your database "customerdata" you would use
+</p><p>psql customerdata
+</p><p>at a shell prompt on your linux postgres server to connect (you will probably need other command line options for usernames and passwords etc.). Once connected you should use the \dt command to display a list of tables and compare it with the source database. If these look correct, try some simple queries such as
+</p><p>select * FROM &lt;tablename&gt;&#160;;
+</p><p>This will display (at some speed&#160;!) all the records, but more usefully at the end you will get a record count for that table which you can compare to ensure all the data has been converted correctly.
+</p>
+<h3><span id="Paso_4_-Configuraci.C3.B3n_de_ODBC"></span><span class="mw-headline" id="Paso_4_-Configuración_de_ODBC">Paso 4 -Configuración de ODBC</span></h3>
+<p>If you wish to continue to use Microsoft Access97 to interact with the converted database you will need to set up a suitable ODBC driver and datasource on the client PC(s).
+</p><p>The first stage is to download the PostgreSQL ODBC driver. This can be obtained via the PostgreSQL ODBC website or you can download alternative <a rel="nofollow" class="external text" href="https://www.devart.com/odbc/postgresql/download.html">PostgreSQL ODBC driver</a> from Devart website.
+</p><p>Once installed, use the ODBC control panel on your Windows 9x/NT 4.0/Windows 2000 PC and add a new User DSN or user data source. Select the PostgreSQL driver and fill in the details with the server name, port, database name, username and password, for your postgresql server.
+</p>
+<h3><span id="Paso_5_-_Configuraci.C3.B3n_en_MS_Access."></span><span class="mw-headline" id="Paso_5_-_Configuración_en_MS_Access.">Paso 5 - Configuración en MS Access.</span></h3>
+<p>To create an Microsoft Access based front end to the newly created PostgreSQL database, do the following:
+</p><p>Make a copy of your original Access database.
+</p><p>Open it in Microsoft Access.
+</p><p>Select the Tables tab.
+</p><p>Select New.
+</p><p>Select Link Table.
+</p><p>In the Files of Type list select ODBC Databases.
+</p><p>In the data sources dialogue find the data source you created earlier (on NT 4.0 this will typically be on the Machine Data Sources tab).
+</p><p>Select the tables which you wish to link.
+</p><p>Once linked you are free to remove the old local tables and compact the database.
+</p><p>NOTE - If any field names have changed during conversion (usually due to the use of non-alphabetic characters in the field and table names) then your queries, forms and reports etc. will need updating to reflect this.
+</p>
+<h3><span class="mw-headline" id="Limitaciones">Limitaciones</span></h3>
+<p>En primer lugar, esta script solamente fue testado con Postgres 6.5.3 y Access 97, puede trabajar con otras combinaciones, pero no ha sido testado por el autor.
+</p><p>En segundo lugar, ther are some limitations to this tool, which I have discovered, these are
+</p>
+<pre>  1. The tool expects at least one relationship, so simple single table database conversions will fail.
+  2. The tool assumes you will be using the standard postgesql server port.
+  3. Using this tool it is possible to generate trigger and function names longer than 32 characters which can cause postgresql some problems
+</pre>
+<h2><span class="mw-headline" id="Oracle_para_PostgreSQL">Oracle para PostgreSQL</span></h2>
+<p>Instalar ora2pg
+</p><p>Para la instalación del ora2pg seguir el siguiente paso:
+</p>
+<pre>aptitude install ora2pg
+</pre>
+<p>Importando los datos hacia una Nueva Instalación de Oracle
+</p><p>Importar un (dump) de datos hacia Oracle es un proceso de dos fases&#160;:
+</p>
+<pre>   * Crear usuarios requeridos
+   * Importar los datos 
+</pre>
+<p>Crear usuario
+</p><p>Desde una computadora con un browser y ssh instalados, correr el comando
+</p>
+<pre>ssh -L 9999:localhost:8080 root@192.168.1.101
+</pre>
+<p>Una vez que nos hemos autenticado apuntar el browser a la siguiente dirección
+</p>
+<pre><a rel="nofollow" class="external free" href="http://localhost:9999/apex">http://localhost:9999/apex</a> 
+</pre>
+<p>y debe ver la consola de administración de Oracle. Crea desde ahí los usuarios requerido para Oracle.
+</p><p>Importar los Datos
+</p><p>Para importar los datos hacia Oracle, primero copie el dump EXPDAT.DMP en alguna carpeta de la PC cliente: Ejemplo.-
+</p>
+<pre>scp EXPDAT.DMP root@192.168.1.101:.
+</pre>
+<p>Ahora loguearse como root en la maquina cliente, mueva el dump de oracle para el directorio home del usuario oracle, cambiarse al usuario de oracle y modificar el environment:
+</p>
+<pre>ssh root@192.168.1.101
+mv EXPDAT.DMP ~oracle/
+su - oracle
+export ORACLE_HOME=/usr/lib/oracle/product/10.2.0/server
+export ORACLE_SID=XE
+export PATH=$PATH:$ORACLE_HOME/bin
+</pre>
+<p>Finalmente, corra el comando imp para importar el dump hacia la base de datos:
+</p>
+<pre>imp system/manager FILE=EXPDAT.DMP FULL=Y
+</pre>
+<p>Si alcanza a ver al final el mensaje ``Import terminated successfully without warnings. . Felicitaciones, ya usted tiene la base de datos de Oracle corriendo! Exportando los Datos para PostgreSQL
+</p><p>Ya estamos listos para exportar la base de datos de Oracle. Tenemos que realizar algunas configuraciones y luego podemos importar la base de datos hacia script de Postgres e importalos hacia PostgreSQL.
+</p><p>Vamos a utilizar la herramienta ora2pg, el cual ya habíamos instalado. Necesitamos preparar el archivo de configuración ora2pg antes de utilizarlo, primero copiamos archivo configuración de ejemplo al directorio actual como el usuario oracle:
+</p>
+<pre>su - oracle
+export ORACLE_HOME=/usr/lib/oracle/product/10.2.0/server
+export ORACLE_SID=XE
+export PATH=$PATH:$ORACLE_HOME/bin
+</pre>
+<p>Usted quizás desee poner las 3 sentencias export debajo dentro del .bash_profile del usuario oracle para que las variables queden puestas automáticamente cada vez que se haga 'su'.
+</p>
+<pre>cp /usr/share/doc/ora2pg/examples/ora2pg.conf.gz .
+gunzip ora2pg.conf.gz
+</pre>
+<p>Editar el ora2pg.conf realizar los cambios según la tabla:
+</p>
+<pre>Linea Original: ORACLE_HOME /usr/local/oracle/oracle816 
+Cambiar para: ORACLE_HOME /usr/lib/oracle/product/10.2.0/server 
+Linea Original: ORACLE_DSN dbi:Oracle:host=thedb.mydom.fr;sid=TEST 
+Cambiar para: ORACLE_DSN dbi:Oracle:host=127.0.0.1;sid=XE 
+Linea Original: # EXPORT_SCHEMA 1 
+Cambiar para: EXPORT_SCHEMA 1 
+Linea Original: # SCHEMA APPS 
+Cambiar para: SCHEMA &lt;name of database schema owner that you created earlier in APEX&gt; 
+Linea Original: TYPE TABLE 
+Cambiar para: (see under) 
+</pre>
+<p>Desafortunadamente ora2pg no permite dumping de toda la base de datos de un tiro, por ello debemos de exportar diferentes componentes de la base de datos en múltiples comandos. Los componentes que pueden ser exportados son:
+</p>
+<pre>TABLE 
+PACKAGE 
+COPY (or DATA, but COPY is faster) 
+VIEW 
+GRANT 
+SEQUENCE 
+TRIGGER 
+FUNCTION 
+PROCEDURE 
+TABLESPACE 
+</pre>
+<p>Salve el ora2pg.conf y corra la siguientes script para exportar cada componente nombrado a un fichero llamado &lt;component&gt;.out dentro del directorio actual:
+</p>
+<pre>for i in TABLE PACKAGE COPY VIEW GRANT SEQUENCE TRIGGER FUNCTION PROCEDURE TABLESPACE&#160;;
+do 
+ perl -p -i -e "s/^TYPE\s+.*/TYPE $i/; s/^OUTPUT\s+.*/OUTPUT $i.sql/" ora2pg.conf; 
+ ora2pg ora2pg.conf; 
+done
+</pre>
+<p>Como resultado se obtienen los siguientes archivos dentro del directorio actual, los cuales pueden ser corridos como scripts de PostgreSQL:
+</p>
+<pre>TABLE.sql 
+PACKAGE.sql 
+COPY.sql 
+VIEW.sql 
+GRANT.sql 
+SEQUENCE.sql 
+TRIGGER.sql 
+FUNCTION.sql 
+PROCEDURE.sql 
+TABLESPACE.sql
+</pre>
+<p><br />
+</p>
+<h2><span class="mw-headline" id="MySQL">MySQL</span></h2>
+<p>Utilizar la script "mysql2pgsql.perl" 
+</p><p>A considerar:
+</p>
+<pre>* No se migra estructura de un atributo con comentarios.
+* Los atributos no deben tener caracteres raros Ej.ñ.
+</pre>
+<p>Descargar la scipt y salvar con el mysql2pgsql.perl:
+</p>
+<ul><li><a rel="nofollow" class="external text" href="http://pgfoundry.org/projects/mysql2pgsql/">mysql2pgsql</a> - A Perl script used to convert a MySQL database dump to PostgreSQL-compatible format, by Maxim Rudensky and Valentine Danilchuk</li></ul>
+<p>Pasos para utilizarla:
+</p>
+<ul><li>Sacar el backup de la estructura de base de datos en Mysql.</li></ul>
+<pre> mysqldump --database --table --no-data &gt; mysql_.sql
+</pre>
+<ul><li>Convertir para que PostgreSql lo pueda cargar.</li></ul>
+<pre> perl mysql2pgsql.perl mysql_.sql postgres_.sql --nodrop
+</pre>
+<ul><li><ul><li>La opción --nodrop elimina las eliminaciones de las tablas, si se quiere ver mas opciones --help.</li></ul></li></ul>
+<pre>su postgres
+createdb NombreDB
+psql -f postgres_.sql -u dad NombreDB
+</pre>
+<ul><li><ul><li>Para los datos. Exportar de MySql solo datos con la opción de --complete-insert y -c.</li></ul></li></ul>
+<!-- 
+NewPP limit report
+Cached time: 20260408095547
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.013 seconds
+Real time usage: 0.029 seconds
+Preprocessor visited node count: 32/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:799-0!canonical and timestamp 20260408095547 and revision id 25673.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Conversión_de_datos_a_PostgreSQL&amp;oldid=25673">https://wiki.postgresql.org/index.php?title=Conversión_de_datos_a_PostgreSQL&amp;oldid=25673</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:Espa%C3%B1ol" title="Category:Español">Español</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Conversi%C3%B3n_de_datos_a_PostgreSQL" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Conversi%C3%B3n_de_datos_a_PostgreSQL&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Conversi%C3%B3n_de_datos_a_PostgreSQL">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Conversi%C3%B3n_de_datos_a_PostgreSQL&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Conversi%C3%B3n_de_datos_a_PostgreSQL&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Conversi%C3%B3n_de_datos_a_PostgreSQL" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Conversi%C3%B3n_de_datos_a_PostgreSQL&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Conversi%C3%B3n+de+datos+a+PostgreSQL" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Conversi%C3%B3n_de_datos_a_PostgreSQL" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Conversi%C3%B3n_de_datos_a_PostgreSQL" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Conversi%C3%B3n_de_datos_a_PostgreSQL&amp;oldid=25673" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Conversi%C3%B3n_de_datos_a_PostgreSQL&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 26 August 2015, at 10:33.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.013","walltime":"0.029","ppvisitednodes":{"value":32,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260408095547","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":390});});</script>
+</body>
+</html>

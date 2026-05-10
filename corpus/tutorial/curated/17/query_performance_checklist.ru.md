@@ -21,7 +21,7 @@ official_backing:
   - "https://www.postgresql.org/docs/17/routine-vacuuming.html"
 external_reference:
   - "https://wiki.postgresql.org/wiki/SlowQueryQuestions"
-usage_rule: "Использовать только как вспомогательный учебный слой для tutorial + extended_mode. Фактические утверждения должны подтверждаться official corpus выбранной версии."
+usage_rule: "Использовать только как вспомогательный учебный слой для tutorial. Фактические утверждения должны подтверждаться official corpus выбранной версии."
 ---
 
 # Checklist диагностики медленного запроса в PostgreSQL 17

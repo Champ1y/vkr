@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Committing with Git - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"7105e9821bb0c7973e063dde","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Committing_with_Git","wgTitle":"Committing with Git","wgCurRevisionId":41198,"wgRevisionId":41198,"wgArticleId":1440,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Git"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Committing_with_Git","wgRelevantArticleId":1440,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};
+RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Committing_with_Git rootpage-Committing_with_Git skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Committing with Git</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p>This document is intended for PostgreSQL project <a href="/wiki/Committers" title="Committers">Committers</a>.  Regular project contributors should see the introductions for <a href="/wiki/Submitting_a_Patch" title="Submitting a Patch">Submitting a Patch</a>.  This is not a complete tutorial on using git.  See <a href="/wiki/Working_with_Git" title="Working with Git">Working with Git</a> or the <a rel="nofollow" class="external text" href="http://git-scm.com/documentation">git documentation</a>. Committers may also wish to review the <a href="/wiki/Committing_checklist" title="Committing checklist">Committing checklist</a> page and the <a href="/wiki/Commit_Message_Guidance" title="Commit Message Guidance">Commit Message Guidance</a>.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Common_setup"><span class="tocnumber">1</span> <span class="toctext">Common setup</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Committing_Using_a_Single_Clone"><span class="tocnumber">2</span> <span class="toctext">Committing Using a Single Clone</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Committing_Using_Multiple_Clones"><span class="tocnumber">3</span> <span class="toctext">Committing Using Multiple Clones</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#Independent_Clone_per_Branch"><span class="tocnumber">3.1</span> <span class="toctext">Independent Clone per Branch</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Dependent_Clone_per_Branch,_Pushing_and_Pulling_From_a_Local_Repository"><span class="tocnumber">3.2</span> <span class="toctext">Dependent Clone per Branch, Pushing and Pulling From a Local Repository</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Clone_Locally,_Repoint_Origin"><span class="tocnumber">3.3</span> <span class="toctext">Clone Locally, Repoint Origin</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Dependent_Clone_per_Branch,_Pulling_From_a_Local_Repository_and_Pushing_to_the_Remote_Repository"><span class="tocnumber">3.4</span> <span class="toctext">Dependent Clone per Branch, Pulling From a Local Repository and Pushing to the Remote Repository</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#Committing_Using_a_Single_Clone_and_multiple_workdirs"><span class="tocnumber">4</span> <span class="toctext">Committing Using a Single Clone and multiple workdirs</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#Making_a_new_release_branch_on_origin"><span class="tocnumber">5</span> <span class="toctext">Making a new release branch on origin</span></a></li>
+</ul>
+</div>
+
+<h1><span class="mw-headline" id="Common_setup">Common setup</span></h1>
+<p>1. To connect to the gitmaster repository, you will need to have your PostgreSQL SSH key loaded into your SSH agent, or available somewhere that SSH knows to look for it, such as <tt>~/.ssh/authorized_keys</tt>.
+</p><p>2. Since merge commits may not be pushed, it is a good idea to set up your repository to rebase rather than merging.  Without this, if someone else pushes a commit after you pull and before you push, your local repository will contain a merge commit that you'll need to manually remove before you can push.
+</p>
+<pre>cd postgresql
+git config branch.master.rebase true
+git config branch.autosetuprebase always
+</pre>
+<p>The last of these commands ensures that any subsequent tracking branches that you create will have branch.&lt;name&gt;.rebase configured automatically.
+</p><p>3. Any commits you push must have matching author and committer tags, and your name and email address must match those configured on the server.  So, if you are <tt>Foo Bar &lt;fbar@postgresql.org&gt;</tt>, do:
+</p>
+<pre>git config user.name "Foo Bar"
+git config user.email fbar@postgresql.org
+</pre>
+<p>If you use the same email address for all of the git repositories where you commit, you can (or perhaps already have) configure it globally instead; this will update <tt>~/.gitconfig</tt> rather than the <tt>.git/config</tt> for the current repository:
+</p>
+<pre>git config --global user.name "Foo Bar"
+git config --global user.email foo@bar.net
+</pre>
+<p>4. Always use "git push --dry-run" option before the real thing!
+</p>
+<h1><span class="mw-headline" id="Committing_Using_a_Single_Clone">Committing Using a Single Clone</span></h1>
+<p>1. Clone the master repository.  Note that this is not the same as the public repository; however, changes from the master repository are regularly pushed to the public repository.
+</p>
+<pre>git clone <a rel="nofollow" class="external free" href="ssh://git@gitmaster.postgresql.org/postgresql.git">ssh://git@gitmaster.postgresql.org/postgresql.git</a>
+</pre>
+<p>2. To commit a patch to the master branch (the equivalent of CVS HEAD), you can use any of the normal git commands.  For example, if you've manually modified files or applied a patch from the mailing list that modifies existing files but does not create any new ones, you can just do:
+</p>
+<pre>git commit -a
+</pre>
+<p>If you've added new files, you must <tt>git add</tt> them first.
+</p>
+<pre>git add file1 file2 file3
+git commit -a
+</pre>
+<p>Or, if the changes you want to commit are on a local branch, you can collapse the commits on the branch into a single commit on the tracking branch using:
+</p>
+<pre>git merge --squash branchname
+</pre>
+<p>Make sure to use <tt>--squash</tt>, or you'll end up with a merge commit.
+</p><p>3. To back-patch, you can check out the appropriate branch; a local tracking branch will automatically be created.  For example:
+</p>
+<pre>git checkout REL9_0_STABLE
+...hack, hack...
+git commit -a
+</pre>
+<p>4. Finally, you must push your changes back to the server.
+</p>
+<pre>git push
+</pre>
+<p>This will push changes in all branches you've updated, but only branches that also exist on the remote side will be pushed; thus, you can have local working branches that won't be pushed.  Or, for the avoidance of error, you can configure your repository to push only the current branch:
+</p>
+<pre>git config push.default tracking
+</pre>
+<p>5. To pull down changes others have committed, you can of course use:
+</p>
+<pre>git pull
+</pre>
+<p>If you have unpushed changes to any of the branches that have changed on the server, then (1) git will automatically attempt to rebase the currently checked-out branch (because of the configuration you did in step #2) and (2) each other branch that needs to be rebased will be out-of-sync with the server.  The easiest way to fix this is to just check out the offending branch and re-pull, e.g.
+</p>
+<pre>git checkout REL9_0_STABLE
+git pull
+</pre>
+<p>6. If one of your tracking branches gets messed up somehow (e.g. you accidentally merge into it, or commit something with the wrong author name/tag) and you can't figure out how to fix it, you can just snap it back to the state in which it exists on the master, throwing away your local changes, e.g.
+</p>
+<pre>git checkout master
+git reset --hard origin/master
+</pre>
+<p>Make sure to use the same branch name in both commands.
+</p>
+<h1><span class="mw-headline" id="Committing_Using_Multiple_Clones">Committing Using Multiple Clones</span></h1>
+<p>When applying a patch to many branches, it can become tedious to keep switching branches; it can be nice to be able to see all the different versions side by side.  Furthermore, the PostgreSQL build system isn't smart enough to do the right thing if you switch major releases without cleaning out all the intermediates, so if you do switch branches you'll need to do a complete rebuild each time.  (<tt>git clean -dfx</tt> is a useful way to clean all the cruft out of your repository, but be careful that you don't have any untracked files there that you meant to keep.)
+</p><p>The use <tt>git clone --reference</tt> is not recommended except for short-term, throw-away copies, because a subsequent <tt>git gc</tt> can result in data loss.  Instead, use one of the techniques described below.
+</p>
+<h2><span class="mw-headline" id="Independent_Clone_per_Branch">Independent Clone per Branch</span></h2>
+<p>The simplest way to commit using multiple clones is to create them as described above for a single clone, and keep a different branch checked out in each copy.  You can configure each clone to pull only the branch you care about for that clone.  For example, for the REL9_0_STABLE branch:
+</p>
+<pre>git clone <a rel="nofollow" class="external free" href="ssh://git@gitmaster.postgresql.org/postgresql.git">ssh://git@gitmaster.postgresql.org/postgresql.git</a> REL9_0_STABLE 
+cd REL9_0_STABLE
+git checkout REL9_0_STABLE
+git config branch.REL9_0_STABLE.rebase true
+git config user.name "Foo Bar"
+git config user.email fbar@postgresql.org
+git config remote.origin.fetch '+refs/heads/REL9_0_STABLE:refs/remotes/origin/REL9_0_STABLE'
+git branch -D master
+</pre>
+<p>One disadvantage of this approach is that you will use more disk space: the <tt>.git</tt> directory for each repository, as of this writing, is a bit more than 220MB.  If this is a concern, use one of the methods described below.
+</p>
+<h2><span id="Dependent_Clone_per_Branch.2C_Pushing_and_Pulling_From_a_Local_Repository"></span><span class="mw-headline" id="Dependent_Clone_per_Branch,_Pushing_and_Pulling_From_a_Local_Repository">Dependent Clone per Branch, Pushing and Pulling From a Local Repository</span></h2>
+<p>Git will automatically use hard links when cloning a repository stored on the local machine.  So, you could do this:
+</p>
+<pre>git clone --bare --mirror <a rel="nofollow" class="external free" href="ssh://git@gitmaster.postgresql.org/postgresql.git">ssh://git@gitmaster.postgresql.org/postgresql.git</a>
+git clone postgresql REL9_0_STABLE
+cd REL9_0_STABLE
+git checkout REL9_0_STABLE
+git config branch.REL9_0_STABLE.rebase true
+git config user.name "Foo Bar"
+git config user.email fbar@postgresql.org
+git config remote.origin.fetch '+refs/heads/REL9_0_STABLE:refs/remotes/origin/REL9_0_STABLE'
+git branch -D master
+</pre>
+<p>All of these steps except the first should be repeated for each branch for which you wish to maintain a clone.  (If your user name and/or email are configured globally, you need not configure them again for each new repository.)
+</p><p>With this approach, the REL9_0_STABLE repository will pull from and push to the local postgresql repository, which in turn will pull from and push to the master server.  Thus, you must do this to update (supposing both repositories are in your home directory):
+</p>
+<pre>cd ~/postgresql.git
+git fetch
+cd ~/REL9_0_STABLE
+git pull
+</pre>
+<p>And to push, you must do this:
+</p>
+<pre>cd ~/REL9_0_STABLE
+git push
+cd ~/postgresql.git
+git push
+</pre>
+<p>It would probably be wise to script this, if you plan to do it regularly and with multiple branches.
+</p>
+<h2><span id="Clone_Locally.2C_Repoint_Origin"></span><span class="mw-headline" id="Clone_Locally,_Repoint_Origin">Clone Locally, Repoint Origin</span></h2>
+<p>The solution described in the previous section can be inconvenient, since it requires pushing and pulling each commit twice.  One possible way to avoid this is to create a single clone from the master, then clone it multiple times locally, then repoint the origin server for each such local clone at the master.  The history existing at the time of the initial clone will be shared among all the local clones (using hard links), but any new history fetched after the initial setup will consume separate storage in each local clone.  This still represents a substantial savings in disk space, while avoiding the inconvenience of pushing and pulling twice.
+</p><p>To do this, set up each clone as described in the previous section and then perform the following additional steps:
+</p>
+<pre>git remote set-url origin <a rel="nofollow" class="external free" href="ssh://git@gitmaster.postgresql.org/postgresql.git">ssh://git@gitmaster.postgresql.org/postgresql.git</a>
+git remote update
+git remote prune origin 
+</pre>
+<h2><span id="Dependent_Clone_per_Branch.2C_Pulling_From_a_Local_Repository_and_Pushing_to_the_Remote_Repository"></span><span class="mw-headline" id="Dependent_Clone_per_Branch,_Pulling_From_a_Local_Repository_and_Pushing_to_the_Remote_Repository">Dependent Clone per Branch, Pulling From a Local Repository and Pushing to the Remote Repository</span></h2>
+<p>This method is like the "Dependent Clone per Branch, Pushing and Pulling From a Local Repository" recipe, but instead of pushing back to the local repository you set it up push direct to the remote repository, by doing, in each clone of your local mirror:
+</p>
+<pre> git remote set-url --push origin <a rel="nofollow" class="external free" href="ssh://git@gitmaster.postgresql.org/postgresql.git">ssh://git@gitmaster.postgresql.org/postgresql.git</a>
+</pre>
+<p>This requires a fairly modern version of git.
+</p><p>You can also avoid having to fetch into the mirror and then pull into the clone in separate steps by using a shell alias. Here is a function that works with bash to combine these steps:
+</p>
+<pre> function pgpull () 
+ {
+   pushd /path/to/mirror &gt; /dev/null
+   git fetch
+   popd &gt; /dev/null
+   git pull
+ }
+</pre>
+<h1><span class="mw-headline" id="Committing_Using_a_Single_Clone_and_multiple_workdirs">Committing Using a Single Clone and multiple workdirs</span></h1>
+<p><i>Note: in newer versions of git, the 'git worktree' command reportedly can be used to accomplish this in a more-officially-supported way.</i>
+</p><p>This method is similar to the method with single clone, but you can keep each active branch checked out all the time.
+</p><p>1. Create a directory to hold all the cloned repository and all the workdirs (makes it easier to remember that they're all linked to the same clone).
+</p>
+<pre>mkdir pgsql-git; cd pgsql-git
+</pre>
+<p>2. Clone the master repository.  Note that this is not the same as the public repository; however, changes from the master repository are regularly pushed to the public repository.
+</p>
+<pre>git clone <a rel="nofollow" class="external free" href="ssh://git@gitmaster.postgresql.org/postgresql.git">ssh://git@gitmaster.postgresql.org/postgresql.git</a>
+</pre>
+<p>This creates a directory called "postgresql", and the master branch is automatically checked out into that working directory. The cloned git repository is in "postgresql/.git", which is shared with all the other workdirs we create later.
+</p><p>3. Prevent automatic git garbage collection.
+</p>
+<pre>git --git-dir=postgresql/.git/ config gc.auto 0
+</pre>
+<p>Rationale: With this method, you have multiple checkouts from a single repository, but "git gc" does not know about the other working directories. That is not a problem in general, but if you run "git gc" when you have staged but uncommitted in a workdir other than the master one, those changes can be lost. This is a known limitation with <tt>git-new-workdir</tt>, see <a rel="nofollow" class="external autonumber" href="http://kerneltrap.org/mailarchive/git/2007/10/11/335637">[1]</a>. Make sure you don't run "git gc" when all the back-branch checkouts are not in a clean state, and you should be safe.
+</p><p>4. Create workdirs for all active backbranches. The <tt>git-new-workdir</tt> tool is in git contrib directory, the path in the example below is for Debian:
+</p>
+<pre>sh /usr/share/doc/git/contrib/workdir/git-new-workdir postgresql/.git/ 90stable
+cd 90stable
+git checkout -b REL9_0_STABLE origin/REL9_0_STABLE
+cd ..
+</pre>
+<pre> &lt;repeat for every active back-branch&gt;
+</pre>
+<p>5. You can now work separately on the checkouts as you would on CVS. All the local branches, tracking the corresponding remote branches, are in the repository shared by all workdirs. To commit a patch to any of the branches, you can use any of the normal git commands.  For example, if you've manually modified files or applied a patch from the mailing list that modifies existing files but does not create any new ones, you can just do:
+</p>
+<pre>git commit -a
+</pre>
+<p>If you've added new files, you must <tt>git add</tt> them first.
+</p>
+<pre>git add file1 file2 file3
+git commit -a
+</pre>
+<p>Or, if the changes you want to commit are on a local branch, you can collapse the commits on the branch into a single commit on the tracking branch using:
+</p>
+<pre>git merge --squash branchname
+</pre>
+<p>Make sure to use <tt>--squash</tt>, or you'll end up with a merge commit.
+</p><p>6. Finally, you must push your changes back to the server. This will push changes in *all* branches you've committed to:
+</p>
+<pre>git push --dry-run
+</pre>
+<p>This will show what's being pushed without doing anything yet, Double-check the changes, using "git log" and "git diff" with the commitid ranges printed out. Once your satisfied, push them for real:
+</p>
+<pre>git push
+</pre>
+<p>7. To pull down changes others have committed, you can of course use:
+</p>
+<pre>git pull
+</pre>
+<p>If you have unpushed changes to any of the branches that have changed on the server, then (1) git will automatically attempt to rebase the currently checked-out branch (because of the configuration you did earlier) and (2) each other branch that needs to be rebased will be out-of-sync with the server.  The easiest way to fix this is to just check out the offending branch and re-pull, e.g.
+</p>
+<pre>git checkout REL9_0_STABLE
+git pull
+</pre>
+<p>8. If one of your tracking branches gets messed up somehow (e.g. you accidentally merge into it, or commit something with the wrong author name/tag) and you can't figure out how to fix it, you can just snap it back to the state in which it exists on the master, throwing away your local changes, e.g.
+</p>
+<pre>git checkout master
+git reset --hard origin/master
+</pre>
+<p>Make sure to use the branch name matching the workdir you're in in both commands.
+</p>
+<h1><span class="mw-headline" id="Making_a_new_release_branch_on_origin">Making a new release branch on origin</span></h1>
+<p>To create a new branch in the gitmaster repo starting from the current tip of <i>master</i>, do this:
+</p>
+<pre>git pull           # be sure you have the latest "master"
+git push origin master:refs/heads/"new-branch-name"
+</pre>
+<p>for example
+</p>
+<pre>git push origin master:refs/heads/REL_12_STABLE
+</pre>
+<p>After this, check out the branch locally following whichever of the previous arrangements you are using.
+</p><p>By convention, only release branches should be pushed to the gitmaster repo; don't push experimental or feature branches there.
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260407164333
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.017 seconds
+Real time usage: 0.019 seconds
+Preprocessor visited node count: 32/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:1440-0!canonical and timestamp 20260407164333 and revision id 41198.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Committing_with_Git&amp;oldid=41198">https://wiki.postgresql.org/index.php?title=Committing_with_Git&amp;oldid=41198</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:Git" title="Category:Git">Git</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Committing_with_Git" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Committing_with_Git&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Committing_with_Git">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Committing_with_Git&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Committing_with_Git&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Committing_with_Git" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Committing_with_Git&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Committing+with+Git" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Committing_with_Git" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Committing_with_Git" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Committing_with_Git&amp;oldid=41198" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Committing_with_Git&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 23 May 2025, at 07:39.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.017","walltime":"0.019","ppvisitednodes":{"value":32,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260407164333","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":411});});</script>
+</body>
+</html>

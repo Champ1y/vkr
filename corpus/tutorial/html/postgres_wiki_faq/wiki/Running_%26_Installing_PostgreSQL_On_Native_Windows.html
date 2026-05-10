@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Running &amp; Installing PostgreSQL On Native Windows - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"2c1af85e10513bcfb30e1f26","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Running_\u0026_Installing_PostgreSQL_On_Native_Windows","wgTitle":"Running \u0026 Installing PostgreSQL On Native Windows","wgCurRevisionId":21567,"wgRevisionId":21567,"wgArticleId":327,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["FAQ","Windows"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Running_\u0026_Installing_PostgreSQL_On_Native_Windows","wgRelevantArticleId":327,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Running_Installing_PostgreSQL_On_Native_Windows rootpage-Running_Installing_PostgreSQL_On_Native_Windows skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Running &amp; Installing PostgreSQL On Native Windows</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Supported_Platforms"><span class="tocnumber">1</span> <span class="toctext">Supported Platforms</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#What_versions_of_Windows_does_PostgreSQL_run_on?"><span class="tocnumber">1.1</span> <span class="toctext">What versions of Windows does PostgreSQL run on?</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#What_Windows_platforms_are_NOT_supported?"><span class="tocnumber">1.2</span> <span class="toctext">What Windows platforms are NOT supported?</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#I_heard_that_NT4_and_Windows_2000_are_supported._Is_that_true?"><span class="tocnumber">1.3</span> <span class="toctext">I heard that NT4 and Windows 2000 are supported. Is that true?</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#What_about_Windows_95/98/ME?"><span class="tocnumber">1.4</span> <span class="toctext">What about Windows 95/98/ME?</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Is_there_a_64-bit_build_of_PostgreSQL_for_Windows?"><span class="tocnumber">1.5</span> <span class="toctext">Is there a 64-bit build of PostgreSQL for Windows?</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#What_about_64-bit_ODBC_drivers?"><span class="tocnumber">1.6</span> <span class="toctext">What about 64-bit ODBC drivers?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#Installation"><span class="tocnumber">2</span> <span class="toctext">Installation</span></a>
+<ul>
+<li class="toclevel-2 tocsection-9"><a href="#What_do_I_need_to_install_PostgreSQL_on_Windows?"><span class="tocnumber">2.1</span> <span class="toctext">What do I need to install PostgreSQL on Windows?</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#What_do_I_need_to_compile_PostgreSQL_from_source_code?"><span class="tocnumber">2.2</span> <span class="toctext">What do I need to compile PostgreSQL from source code?</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Why_do_I_need_a_non-administrator_account_to_run_PostgreSQL_under?"><span class="tocnumber">2.3</span> <span class="toctext">Why do I need a non-administrator account to run PostgreSQL under?</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Can_I_install_PostgreSQL_on_a_FAT_partition?"><span class="tocnumber">2.4</span> <span class="toctext">Can I install PostgreSQL on a FAT partition?</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#What_filesystem_permissions_does_PostgreSQL_require?"><span class="tocnumber">2.5</span> <span class="toctext">What filesystem permissions does PostgreSQL require?</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Why_can&#39;t_I_select_Unicode_as_an_encoding?"><span class="tocnumber">2.6</span> <span class="toctext">Why can't I select Unicode as an encoding?</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#I_installed_in_a_non-english_language,_but_all_messages_show_up_in_english!"><span class="tocnumber">2.7</span> <span class="toctext">I installed in a non-english language, but all messages show up in english!</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-16"><a href="#Common_installation_errors"><span class="tocnumber">3</span> <span class="toctext">Common installation errors</span></a>
+<ul>
+<li class="toclevel-2 tocsection-17"><a href="#PostgreSQL_and/or_the_installer_crashes_at_startup,_fails_to_start_or_hangs_on_start"><span class="tocnumber">3.1</span> <span class="toctext">PostgreSQL and/or the installer crashes at startup, fails to start or hangs on start</span></a>
+<ul>
+<li class="toclevel-3 tocsection-18"><a href="#Antivirus_software"><span class="tocnumber">3.1.1</span> <span class="toctext">Antivirus software</span></a>
+<ul>
+<li class="toclevel-4 tocsection-19"><a href="#What_Anti-Virus_software_is_compatible?"><span class="tocnumber">3.1.1.1</span> <span class="toctext">What Anti-Virus software is compatible?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-3 tocsection-20"><a href="#Software_firewalls"><span class="tocnumber">3.1.2</span> <span class="toctext">Software firewalls</span></a></li>
+<li class="toclevel-3 tocsection-21"><a href="#The_installer_exits_with_a_runtime_installation_error?"><span class="tocnumber">3.1.3</span> <span class="toctext">The installer exits with a runtime installation error?</span></a></li>
+<li class="toclevel-3 tocsection-22"><a href="#Trouble_with_passwords_for_the_postgres_user"><span class="tocnumber">3.1.4</span> <span class="toctext">Trouble with passwords for the postgres user</span></a></li>
+<li class="toclevel-3 tocsection-23"><a href="#PATH_environment_variable"><span class="tocnumber">3.1.5</span> <span class="toctext">PATH environment variable</span></a></li>
+<li class="toclevel-3 tocsection-24"><a href="#I&#39;m_getting_permissions_errors_when_installing/running_initdb"><span class="tocnumber">3.1.6</span> <span class="toctext">I'm getting permissions errors when installing/running initdb</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#Check_the_%COMSPEC%_environment_variable"><span class="tocnumber">3.1.7</span> <span class="toctext">Check the %COMSPEC% environment variable</span></a></li>
+<li class="toclevel-3 tocsection-26"><a href="#The_installer_claims_the_specified_account_is_an_administrator,_but_it_isn&#39;t!"><span class="tocnumber">3.1.8</span> <span class="toctext">The installer claims the specified account is an administrator, but it isn't!</span></a></li>
+<li class="toclevel-3 tocsection-27"><a href="#I&#39;m_getting_an_error_message_that_says_PostgreSQL_cannot_be_installed_from_a_Terminal_Services_session"><span class="tocnumber">3.1.9</span> <span class="toctext">I'm getting an error message that says PostgreSQL cannot be installed from a Terminal Services session</span></a></li>
+<li class="toclevel-3 tocsection-28"><a href="#I_get_the_error_&quot;the_user_has_not_been_granted_the_requested_logon_type_at_this_computer&quot;_or_similar"><span class="tocnumber">3.1.10</span> <span class="toctext">I get the error "the user has not been granted the requested logon type at this computer" or similar</span></a></li>
+<li class="toclevel-3 tocsection-29"><a href="#How_do_I_delete_the_service_account_-_it&#39;s_not_listed_under_users!"><span class="tocnumber">3.1.11</span> <span class="toctext">How do I delete the service account - it's not listed under users!</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-30"><a href="#Common_runtime_issues"><span class="tocnumber">4</span> <span class="toctext">Common runtime issues</span></a>
+<ul>
+<li class="toclevel-2 tocsection-31"><a href="#I&#39;m_getting_&quot;dynamic_load_error&quot;_when_installing_a_procedural_language"><span class="tocnumber">4.1</span> <span class="toctext">I'm getting "dynamic load error" when installing a procedural language</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#I&#39;m_seeing_a_lot_of_postgres.exe_processes_even_though_I_only_started_the_server_once"><span class="tocnumber">4.2</span> <span class="toctext">I'm seeing a lot of postgres.exe processes even though I only started the server once</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#How_do_I_set_an_environment_variable?"><span class="tocnumber">4.3</span> <span class="toctext">How do I set an environment variable?</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#I_cannot_run_with_more_than_about_125_connections_at_once,_despite_having_capable_hardware"><span class="tocnumber">4.4</span> <span class="toctext">I cannot run with more than about 125 connections at once, despite having capable hardware</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-35"><a href="#Windows_version-specific_issues"><span class="tocnumber">5</span> <span class="toctext">Windows version-specific issues</span></a>
+<ul>
+<li class="toclevel-2 tocsection-36"><a href="#Can_I_install_a_32-bit_PostgreSQL_on_64-bit_Windows?"><span class="tocnumber">5.1</span> <span class="toctext">Can I install a 32-bit PostgreSQL on 64-bit Windows?</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#Where_is_the_PostgreSQL_ODBC_driver?_I&#39;m_running_32-bit_PostgreSQL_on_64-bit_Windows"><span class="tocnumber">5.2</span> <span class="toctext">Where is the PostgreSQL ODBC driver? I'm running 32-bit PostgreSQL on 64-bit Windows</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#Can_I_use_a_64-bit_ODBC_program_with_a_32-bit_PostgreSQL_server?"><span class="tocnumber">5.3</span> <span class="toctext">Can I use a 64-bit ODBC program with a 32-bit PostgreSQL server?</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Supported_Platforms">Supported Platforms</span></h2>
+<h3><span id="What_versions_of_Windows_does_PostgreSQL_run_on.3F"></span><span class="mw-headline" id="What_versions_of_Windows_does_PostgreSQL_run_on?">What versions of Windows does PostgreSQL run on?</span></h3>
+<p>PostgreSQL is supported on Windows XP and above, at least as of version 9.0. It will run on 32 and 64 bit systems.
+</p><p>Versions of the server are not tested on new operating system versions that are released after a newer major version of the server was released. For example, Windows 7 was released after PostgreSQL 8.4, so PostgreSQL 8.3 will not be supported on it. Similarly, when the upcoming RHEL 6 is released, only PostgreSQL 9.0.x will be supported on it. We aim to support new versions of Windows in the PostgreSQL major version following their release at the latest. 
+</p><p>For information about platforms supported by the One-click installer, please see the installer download page, off the main <a rel="nofollow" class="external text" href="http://www.postgresql.org/download/windows">download page for windows</a>.
+</p><p>For information on non-Windows platforms see the <a href="/wiki/FAQ" title="FAQ">main FAQ</a> and the <a rel="nofollow" class="external text" href="http://www.postgresql.org/download/">main download page</a>.
+</p>
+<h3><span id="What_Windows_platforms_are_NOT_supported.3F"></span><span class="mw-headline" id="What_Windows_platforms_are_NOT_supported?">What Windows platforms are NOT supported?</span></h3>
+<p>The PostgreSQL installers are <i>not</i> tested or supported on:
+</p>
+<ul><li>Windows XP Embedded</li>
+<li>Windows 2000</li>
+<li>Windows NT 4</li>
+<li>Windows NT 3.5.x</li>
+<li>Windows 95/98/ME/3.x</li>
+<li>Windows CE</li>
+<li>Windows Mobile</li></ul>
+<p>These platforms are not supported. Please do not ask the mailing list for help with any of these platforms.
+</p><p>Please read the troubleshooting notes on <a href="/wiki/Troubleshooting_Installation#Installation_fails_on_windows_embedded" title="Troubleshooting Installation">installation on embedded versions of windows</a> for some more information about embedded windows.
+</p>
+<h3><span id="I_heard_that_NT4_and_Windows_2000_are_supported._Is_that_true.3F"></span><span class="mw-headline" id="I_heard_that_NT4_and_Windows_2000_are_supported._Is_that_true?">I heard that NT4 and Windows 2000 are supported. Is that true?</span></h3>
+<p>Although not officially supported, PostgreSQL may run on Windows NT4 and Windows 2000
+with a few minor issues including:
+</p>
+<ul><li>The installer may not work correctly, thus you will need to install PostgreSQL manually from the binary .zip release, or compile it yourself.</li>
+<li>PostgreSQL uses a feature in the NTFS filesystem called 'reparse points' to implement tablespaces. Reparse points are not available in NT4, hence tablespaces cannot be used on NT4.</li>
+<li>There is no 'runas.exe' included in Windows NT4 as standard, making it difficult to start PostgreSQL from an administrative account.</li></ul>
+<p>It should also be noted that very little testing has been done on NT4.
+</p>
+<ul><li>No testing is done on Windows NT 4 or Windows 2000, so newer versions may not work on these platforms.</li></ul>
+<p>Please do not ask for help with these obsolete platforms on the mailing list. Some of the <a rel="nofollow" class="external text" href="http://www.postgresql.org/support/professional_support">professional support</a> companies may be able to assist you, though.
+</p>
+<h3><span id="What_about_Windows_95.2F98.2FME.3F"></span><span class="mw-headline" id="What_about_Windows_95/98/ME?">What about Windows 95/98/ME?</span></h3>
+<p>PostgreSQL requires functionality that is not available on these
+platforms and will not run on them. If you need to run PostgreSQL
+on these platforms, you can look at the 
+<a rel="nofollow" class="external text" href="http://www.postgresql.org/files/documentation/faqs/text/FAQ_CYGWIN">Cygwin</a>
+port, which has basic support for 9x platforms.
+</p>
+<h3><span id="Is_there_a_64-bit_build_of_PostgreSQL_for_Windows.3F"></span><span class="mw-headline" id="Is_there_a_64-bit_build_of_PostgreSQL_for_Windows?">Is there a 64-bit build of PostgreSQL for Windows?</span></h3>
+<p>Yes. A <a href="/wiki/64bit_Windows_port" title="64bit Windows port">64bit Windows port</a> was released for <a href="/wiki/PostgreSQL_9.0" class="mw-redirect" title="PostgreSQL 9.0">PostgreSQL 9.0</a>.
+</p><p>32-bit builds of previous versions of PostgreSQL generally run fine on 64-bit Windows. Though they cannot practically use more than about 1GB of shared_buffers directly, they can still benefit from more than 4GB of memory because the Windows kernel will use that memory to cache disk reads.
+</p>
+<h3><span id="What_about_64-bit_ODBC_drivers.3F"></span><span class="mw-headline" id="What_about_64-bit_ODBC_drivers?">What about 64-bit ODBC drivers?</span></h3>
+<p>At time of writing there was 64-bit support in the <a rel="nofollow" class="external text" href="http://psqlodbc.projects.postgresql.org/">psqlODBC</a> source code, but no official binary releases of 64-bit ODBC drivers. Check the psqlODBC website for details.
+</p>
+<h2><span class="mw-headline" id="Installation">Installation</span></h2>
+<h3><span id="What_do_I_need_to_install_PostgreSQL_on_Windows.3F"></span><span class="mw-headline" id="What_do_I_need_to_install_PostgreSQL_on_Windows?">What do I need to install PostgreSQL on Windows?</span></h3>
+<p>See <a rel="nofollow" class="external text" href="http://www.postgresql.org/download/windows">the PostgreSQL for Windows download page</a> for various ways to download and install PostgreSQL on Windows.
+</p><p>The easiest way to install PostgreSQL on Windows is with the 
+One Click installer package maintained by EnterpriseDB, which you can get from the page linked to above. This will install PostgreSQL along with
+pgAdmin (a graphical administration and management program), a selection of 'contrib' modules to provide additional specialised functionality, and a choice of procedural languages. A program called StackBuilder will be installed to help you download and install any additional components, like ODBC or JDBC drivers, that you may need.
+</p>
+<h3><span id="What_do_I_need_to_compile_PostgreSQL_from_source_code.3F"></span><span class="mw-headline" id="What_do_I_need_to_compile_PostgreSQL_from_source_code?">What do I need to compile PostgreSQL from source code?</span></h3>
+<p>See the <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/install-windows.html">documentation</a>
+for instructions on how to compile PostgreSQL for windows, including details about supported compilers and tools.
+</p>
+<h3><span id="Why_do_I_need_a_non-administrator_account_to_run_PostgreSQL_under.3F"></span><span class="mw-headline" id="Why_do_I_need_a_non-administrator_account_to_run_PostgreSQL_under?">Why do I need a non-administrator account to run PostgreSQL under?</span></h3>
+<p>When a hacker gains entry to a computer using a software bug in a
+package, she gains the permissions of the user account under which the
+service is run. Whilst we do not know of any such bugs in PostgreSQL,
+we enforce the use of a non-administrative service account to minimise
+the possible damage that a hacker could do should they find and utilise
+a bug in PostgreSQL to hack the system.
+</p><p>This has long been common practice in the Unix world, and is starting to
+become standard practice in the Windows world as well as Microsoft and
+other vendors work to improve the security of their systems.
+</p><p>Note, that with the release of PostgreSQL 8.2, it is possible to run under
+a administrative account. PostgreSQL 8.2 and above are able to irrevocably
+give up administrative rights at startup, thus ensuring the rest of the 
+system remains secure in the extremely unlikely event that PostgreSQL
+becomes compromised.
+</p>
+<h3><span id="Can_I_install_PostgreSQL_on_a_FAT_partition.3F"></span><span class="mw-headline" id="Can_I_install_PostgreSQL_on_a_FAT_partition?">Can I install PostgreSQL on a FAT partition?</span></h3>
+<p>Use of PostgreSQL on FAT32 file systems is not supported or tested, because
+FAT32 is a terrible file system on which to run <i>any</i> database.
+</p><p>PostgreSQL's number one priority is the integrity of your data. FAT and
+FAT32 filesystems simply do not offer the reliability or crash-safety required.
+In addition, the lack of security features offered by FAT make it
+impossible to secure the raw data files from unauthorised modification.
+Finally, PostgreSQL utilises a feature called 'reparse points' to
+implement tablespaces. This feature is not available on FAT partitions.
+</p><p>The NTFS file system is a journalled filesystem offering much better
+reliability and crash recovery. In addition, it has a comprehensive
+access control system and offers the reparse point functionality used
+by PostgreSQL.
+</p><p>For this reason, the PostgreSQL installer package will not initialise
+a database cluster on anything but an NTFS partition. The server and
+utilities may be installed on any partition type.
+</p><p>It is recognised however, that in rare cases FAT partitions may be the only choice.
+In such cases, you can simply install PostgreSQL as normal, but without initialising the
+database cluster. When the installation has finished, manually run
+the 'initdb.exe' program on the FAT partition. Security and
+reliability will be compromised however, and any attempts to create
+tablespaces will fail. <b>Do not use PostgreSQL on FAT32 in production</b>.
+</p><p>The most common reason people ask this is when they have a USB key or external hard drive and they want to put a PostgreSQL database on it. Don't do it. You can format USB keys and external hard drives with NTFS, and you <i>should</i> do so if you want to run a database on them. FAT is not crash-safe, and removing a hard drive without using "Safely remove..." in Windows counts as a crash as far as the hard drive is concerned. Corruption is extremely likely. It is <i>very important</i> to reformat a removable drive with NTFS if it is to be used with PostgreSQL to store any data you care about.
+</p>
+<h3><span id="What_filesystem_permissions_does_PostgreSQL_require.3F"></span><span class="mw-headline" id="What_filesystem_permissions_does_PostgreSQL_require?">What filesystem permissions does PostgreSQL require?</span></h3>
+<p>The PostgreSQL service account needs <i>read</i> permissions on
+all directories leading up to the service directory. It needs <i>write</i> permissions <i>only</i>
+on the data directory. Specifically, it should <i>not</i> be granted anything other than <i>read</i>
+permissions on the directories containing binary files. (All directories below the installation
+directory are set by the installer, so unless you change something, there should be no problem with this).
+</p><p>PostgreSQL also needs <i>read</i> permissions on system DLL files like kernel32.dll and user32.dll
+(among others), which is normally granted by default, and on the CMD.EXE binary, which may in some
+scenarios be locked down and need opening.
+</p><p>If you are running PostgreSQL on a multi-user system, you should remove the permissions from all
+non-administrative users from the PostgreSQL directories. No user <i>ever</i> needs permissions on the
+PostgreSQL files - all communication is done through the libpq connection. Direct access to data files 
+can lead to information disclosure or system instability!
+</p>
+<h3><span id="Why_can.27t_I_select_Unicode_as_an_encoding.3F"></span><span class="mw-headline" id="Why_can't_I_select_Unicode_as_an_encoding?">Why can't I select Unicode as an encoding?</span></h3>
+<p>Starting with PostgreSQL 8.1, the UTF-8 unicode encoding is fully supported on Windows. The Unicode ODBC driver supports UTF-16, and the JDBC driver also has full unicode support.
+</p><p>The PostgreSQL server does not support the 2-byte UTF-16 or 4-byte UTF-32 Unicode encodings for internal data storage or on-the-wire communication. Beause UTF-16 is the default encoding on Windows, and what people on Windows usually mean when they say "Unicode", you might expect this to be a problem, but in practice it's fine, as the ODBC and JDBC drivers take care of this. Programs using libpq directly need to be aware of this, but not much else does.
+</p>
+<h3><span id="I_installed_in_a_non-english_language.2C_but_all_messages_show_up_in_english.21"></span><span class="mw-headline" id="I_installed_in_a_non-english_language,_but_all_messages_show_up_in_english!">I installed in a non-english language, but all messages show up in english!</span></h3>
+<p>The language choice made during the installation only selects which language is used by the installer. To
+change the language of the messages of the installed product, make sure you have installed the <i>National language</i>
+support<i> feature. Then edit your postgresql.conf file and change the value of the </i>lc_messages<i> parameter</i>
+to the language you want.
+</p>
+<h2><span class="mw-headline" id="Common_installation_errors">Common installation errors</span></h2>
+<h3><span id="PostgreSQL_and.2For_the_installer_crashes_at_startup.2C_fails_to_start_or_hangs_on_start"></span><span class="mw-headline" id="PostgreSQL_and/or_the_installer_crashes_at_startup,_fails_to_start_or_hangs_on_start">PostgreSQL and/or the installer crashes at startup, fails to start or hangs on start</span></h3>
+<p>By far most common reasons for installation and runtime problems with PostgreSQL on Windows are Windows Scripting Host issues, antivirus software problems and 3rd-party (non-Microsoft) software firewalls. People also sometimes have trouble with the postgres service account password.
+</p><p>The following articles cover these issues. Please read them and follow their instructions before asking for help with installer problems.
+</p>
+<h4><span class="mw-headline" id="Antivirus_software">Antivirus software</span></h4>
+<p>If you have any antivirus software installed, you <b>must</b> exclude the data directories that are to be used by PostgreSQL and <b>must</b> exclude postgresql.exe process. If that still does not help, it may be required to completely uninstall the antivirus software from the machine. 
+</p><p>Antivirus software can interfere with PostgreSQL's operation, because PostgreSQL requires file access commands in Windows to behave exactly as documented by Microsoft, and many antivirus programs contain errors or accidental behavior changes that cause these commands to misbehave subtly. Most programs do not care because they access files in fairly simple ways. Because PostgreSQL is continuously reading from and writing to the same set of files from multiple processes, it tends to trigger programming and design mistakes in antivirus software, particularly problems related to concurrency. Such problems can cause random and unpredictable errors, or even data corruption.
+</p><p>Antivirus software is also likely to dramatically slow down PostgreSQL's operation. For that reason, you should at least exclude postgres.exe and the data directories so the scanner ignores them.
+</p>
+<h5><span id="What_Anti-Virus_software_is_compatible.3F"></span><span class="mw-headline" id="What_Anti-Virus_software_is_compatible?">What Anti-Virus software is compatible?</span></h5>
+<p>The systems used to build the Windows installers all run either Sophos AV or AVG Free Edition, and
+those systems pass a full set of PostgreSQL regression tests running those programs.
+Microsoft Security Essentials is also known to work.
+</p><p>Specific issues have been reported with the <i>nod32</i> antivirus
+product. If you are using this product, add "postmaster.exe" to the list
+of excluded processes (available under advanced options). This has been
+reported to fix the problem.
+</p><p>Specific issues have also been reported with McAfee and Panda anti-virus 
+software and NetLimiter network monitoring software. While some people do have 
+PostgreSQL working with these software packages, there is no specific or even 
+recommend solutions that have not worked in some cases, so the issues would appear
+to be installation specific, sometimes even requiring uninstallation.
+</p>
+<h4><span class="mw-headline" id="Software_firewalls">Software firewalls</span></h4>
+<p>If you have any 3rd-party firewall software installed on your machine, try either disabling it or uninstalling it. There's really no need for 3rd party firewalls on Windows XP and above, as the built-in firewall provided by Microsoft does an excellent job already. Some badly-written 3rd party firewalls do not uninstall correctly, so after uninstallation you might have to <a rel="nofollow" class="external text" href="http://support.microsoft.com/kb/299357">tell Windows to repair its network settings</a>.
+</p><p>If you had a 3rd-party firewall and have now uninstalled it, make sure to turn Windows Firewall back on, as many products turn it off during installation and fail to turn it back on during uninstallation.
+</p>
+<h4><span id="The_installer_exits_with_a_runtime_installation_error.3F"></span><span class="mw-headline" id="The_installer_exits_with_a_runtime_installation_error?">The installer exits with a runtime installation error?</span></h4>
+<p>The installer may exit with an error like: <i>An error occured executing the Microsoft VC++ runtime installer</i>. This can only happen on Windows.
+</p><p>There are two main reasons why this may occur:
+</p><p>1) The Windows Scripting Host is unable to execute VBscripts. This can occur if the scripting host is disabled (which is unusual), or if the installation is broken. A sign of this problem is a message like <i>CScript Error: Can't find script engine "VBScript" for script "C:\...</i>. It can often be resolved by re-registering the VBscript interpreter - click <i>Start</i> -&gt; <i>Run</i> and enter the following and click <i>OK</i>:
+</p>
+<pre>regsvr32 %systemroot%\system32\vbscript.dll
+</pre>
+<p>If that fails, on older versions of Windows you can try <a rel="nofollow" class="external text" href="http://www.microsoft.com/downloads/en/results.aspx?freetext=windows+script+host&amp;displaylang=en&amp;stype=s_basic">updating the scripting host</a>.
+</p><p>Also, make sure that the registry value in HKEY_CLASSES_ROOT\.vbs\(Default) is VBSFile. <a rel="nofollow" class="external autonumber" href="http://igordcard.blogspot.com/2012/03/unable-to-write-inside-temp-environment.html">[1]</a>
+</p><p>2) The installer is unable to properly read and write files to the system <i>TEMP</i> directory. This can occur if the <i>TEMP</i> or <i>TMP</i> environment variables are set to non-standard values, and can be recognised by errors in the logfile indicating that scripts could not be executed or found. To resolve this issue, ensure the <i>TEMP</i> and <i>TMP</i> variables are set to their correct values.
+</p>
+<h4><span class="mw-headline" id="Trouble_with_passwords_for_the_postgres_user">Trouble with passwords for the postgres user</span></h4>
+<p>Dave Page wrote a <a rel="nofollow" class="external text" href="http://pgsnake.blogspot.com/2010/07/postgresql-passwords-and-installers.html">blog post</a> explaining what the different passwords are used for, and how to overcome common problems such as resetting them.
+</p>
+<h4><span class="mw-headline" id="PATH_environment_variable">PATH environment variable</span></h4>
+<p>There is also an issue if you have installed <i>cygwin</i>, and the cygwin\bin directory is present
+in the system PATH variable. There are DLL files in the cygwin directory related to interpreted languages (TCL,
+perl, python) that contain bugs that can cause the installer or the installed version of PostgreSQL to either hang
+or crash. Remove the cygwin\bin directory from your path before running the installer!
+</p><p>Problems have also been observed when the PATH environment variable contains directories containing versions of libssl and/or libintl.
+</p>
+<h4><span id="I.27m_getting_permissions_errors_when_installing.2Frunning_initdb"></span><span class="mw-headline" id="I'm_getting_permissions_errors_when_installing/running_initdb">I'm getting permissions errors when installing/running initdb</span></h4>
+<p>Make sure the PostgreSQL service account has permissions on the directories leading up to the one
+you have installed into. The installer will set permissions on the install directory but not on
+parent directories of it.
+</p><p>You may also see related errors show up as "The database Cluster initialisation failed" during the One Click installer.
+</p><p>Check your install-postgresql log
+but it is usually related to permission errors. The following thread may help,
+</p><p><a rel="nofollow" class="external free" href="http://forums.enterprisedb.com/posts/list/2044.page#7503">http://forums.enterprisedb.com/posts/list/2044.page#7503</a>
+</p><p>Or alternatively, you can fix up the directory permissions and then manually restart the initcluster.vbs script like this for v9,
+</p>
+<pre>cscript //NoLogo "&lt;install_path&gt;/installer/server/initcluster.vbs" "postgres" "postgres" "&lt;password&gt;" "&lt;install_path&gt;" "&lt;data_path&gt;" 5432 "DEFAULT"
+</pre>
+<h4><span id="Check_the_.25COMSPEC.25_environment_variable"></span><span class="mw-headline" id="Check_the_%COMSPEC%_environment_variable">Check the %COMSPEC% environment variable</span></h4>
+<p>Some Windows installations seem to land up with an incorrect %COMSPEC% environment variable that prevents the execution of initdb.
+</p><p>In a command prompt, run:
+</p>
+<pre>echo %COMSPEC%
+</pre>
+<p>You should get something like:
+</p>
+<pre>   C:\Windows\system32\cmd.exe
+</pre>
+<p>(Where C:\Windows is your Windows install location).
+</p><p>If you see something else, check the System control panel, and in the Environment section check for COMSPEC. If its value there is wrong:
+</p>
+<ul><li>Make a system restore point; and</li>
+<li>Back up your computer; then</li>
+<li>Change it in the system environment settings, so it points to the correct location of cmd.exe</li></ul>
+<p>You can test to make sure it's right by:
+</p>
+<ul><li>Opening a new cmd.exe prompt (not re-using one that was already open); and</li>
+<li>Running <code>"%COMSPEC%" /C "echo test ok"</code></li></ul>
+<p>It should print "test ok".
+</p>
+<h4><span id="The_installer_claims_the_specified_account_is_an_administrator.2C_but_it_isn.27t.21"></span><span class="mw-headline" id="The_installer_claims_the_specified_account_is_an_administrator,_but_it_isn't!">The installer claims the specified account is an administrator, but it isn't!</span></h4>
+<p>Most likely, the specified account is an administrator or power user,
+even though you aren't aware of it. The check used by the installer
+specifically checks for membership in the Administrators or
+Power Users group. Work your way backwards using Local Users and Groups -
+open the Administrators group, see who's a member. Then check any
+groups (domain or local) that are a member of the Administrators group,
+and any groups members of that group etc. PostgreSQL checks any level
+of nested groups.
+</p>
+<h4><span id="I.27m_getting_an_error_message_that_says_PostgreSQL_cannot_be_installed_from_a_Terminal_Services_session"></span><span class="mw-headline" id="I'm_getting_an_error_message_that_says_PostgreSQL_cannot_be_installed_from_a_Terminal_Services_session">I'm getting an error message that says PostgreSQL cannot be installed from a Terminal Services session</span></h4>
+<p>This is unfortunately so. The PostgreSQL backend won't run from a TS session, and in order to do initdb the installer
+has to start a standalone backend. Therefore, installation has to be performed from the console. Note that if you are
+using Windows Server 2003, you can get remote access to the actual console and not just an administrative session.
+To do this, start the Remote Desktop Connection by executing <i>mstsc /console</i>, and then connect as usual.
+This will lock the local console of the server and give you control over that session. In this scenario,
+PostgreSQL should install just fine.
+</p>
+<h4><span id="I_get_the_error_.22the_user_has_not_been_granted_the_requested_logon_type_at_this_computer.22_or_similar"></span><span class="mw-headline" id="I_get_the_error_&quot;the_user_has_not_been_granted_the_requested_logon_type_at_this_computer&quot;_or_similar">I get the error "the user has not been granted the requested logon type at this computer" or similar</span></h4>
+<p>Make sure the specified PostgreSQL account has the "Log on as a service"
+and "Log on locally" rights. The "Log on locally" is only required for
+the install part, and can be removed once the installation is completed
+if security policies require it. (Rights are granted and revoked using
+the "Local Security Policy" MMC snapin. "Log on locally" is default,
+and "Log on as a service" will normally be granted automatically by
+the installer).
+</p><p>If you still have this problem, enable auditing (also using
+the "Local Security Policy" snapin) and let us know what other rights
+were required in your setup.
+</p><p>Note that if your computer is a member of a domain, the settings of
+the security policies may be controlled at the domain level using
+Group Policy.
+</p><p><br />
+</p>
+<h4><span id="How_do_I_delete_the_service_account_-_it.27s_not_listed_under_users.21"></span><span class="mw-headline" id="How_do_I_delete_the_service_account_-_it's_not_listed_under_users!">How do I delete the service account - it's not listed under users!</span></h4>
+<p>Windows sometimes hide some accounts from the GUI tools, so they cannot be removed from there. This includes
+the auto-created service account for PostgreSQL (that may be left over from a previous installation). To delete this
+account, use the NET command on the commandline:
+</p>
+<pre>NET USER &lt;username&gt; /DELETE
+</pre>
+<p>Where &lt;username&gt; is the windows login name of the user, for example <i>postgres</i>.
+</p>
+<h2><span class="mw-headline" id="Common_runtime_issues">Common runtime issues</span></h2>
+<h3><span id="I.27m_getting_.22dynamic_load_error.22_when_installing_a_procedural_language"></span><span class="mw-headline" id="I'm_getting_&quot;dynamic_load_error&quot;_when_installing_a_procedural_language">I'm getting "dynamic load error" when installing a procedural language</span></h3>
+<p>Most commonly this means that the actual language DLL for the procedural language is missing. The PostgreSQL
+DLLs only contains the language bindings, and require the language distribution DLLs to be present
+in the system PATH. For a list of the current required DLLs for the different procedural languages,
+please see <a rel="nofollow" class="external text" href="http://pginstaller.projects.postgresql.org">the installation instructions</a>.
+</p><p>To find out exactly which DLL files are missing, you can use the <i>depends</i> tool from Microsoft.
+It is available in the Windows Support Tools, that are on the Windows CD as a separate install. Just run
+<i>depends plpython.dll</i> (for PL/python) to show which imports are missing.
+</p>
+<h3><span id="I.27m_seeing_a_lot_of_postgres.exe_processes_even_though_I_only_started_the_server_once"></span><span class="mw-headline" id="I'm_seeing_a_lot_of_postgres.exe_processes_even_though_I_only_started_the_server_once">I'm seeing a lot of postgres.exe processes even though I only started the server once</span></h3>
+<p>This is normal. PostgreSQL uses a multi-process architecture. In an empty system you will see anything from two to
+five processes. Once clients start to connect, the number of processes will increase.
+</p>
+<h3><span id="How_do_I_set_an_environment_variable.3F"></span><span class="mw-headline" id="How_do_I_set_an_environment_variable?">How do I set an environment variable?</span></h3>
+<p>PostgreSQL uses environment variables for several settings. To change an environment variable in most
+Windows versions, go into Properties for My Computer, then into Advanced. Note that there are two sets of 
+environment variables - one for the system which applies to all users and one for the current user. If you 
+want an environment variable to affect the PostgreSQL service, you must change the system variable. After 
+changing a system variable, you must restart the service.
+</p>
+<h3><span id="I_cannot_run_with_more_than_about_125_connections_at_once.2C_despite_having_capable_hardware"></span><span class="mw-headline" id="I_cannot_run_with_more_than_about_125_connections_at_once,_despite_having_capable_hardware">I cannot run with more than about 125 connections at once, despite having capable hardware</span></h3>
+<p>When running as a service, you may experience failures with more than approximately 125 simultaneous connections. 
+This can happen because some of the libraries that PostgreSQL is dependent on are dependent on user32.dll which allocates
+memory from an area known as the Desktop Heap. The desktop heap is assigned to each logon session, with non-interactive
+sessions typically being assigned 512KB. Each postgres process that runs typically consumes approximately 3.2KB of desktop
+heap, which coupled with other overhead can exhaust the allocated heap at somewhere around 125 connections. This doesn't
+happen when running from the command line (or more precisely, happens with much higher numbers of connections) because the 
+interactive logon session is typically allocated 3MB of Desktop Heap.
+</p><p>You can increase the non-interactive Desktop Heap by modifying the third SharedSection value in the registry as described
+in this <a rel="nofollow" class="external text" href="http://support.microsoft.com/kb/184802">Microsoft Knowledgebase article</a>. Note that this should be done
+with great care as specifying a value that is excessively high may prevent your system from booting.
+</p>
+<h2><span class="mw-headline" id="Windows_version-specific_issues">Windows version-specific issues</span></h2>
+<h4><span id="Can_I_install_a_32-bit_PostgreSQL_on_64-bit_Windows.3F"></span><span class="mw-headline" id="Can_I_install_a_32-bit_PostgreSQL_on_64-bit_Windows?">Can I install a 32-bit PostgreSQL on 64-bit Windows?</span></h4>
+<p>Recent 32-bit versions of PostgreSQL (8.3 and newer) can be installed and used on 64-bit Windows XP and above,
+though they retain the 32-bit limits on maximum process address space (and thus shared memory).
+</p><p>You can connect to the 32-bit postgresql server from 64-bit programs on the computer the server is running on 
+or other computers if a 64-bit libpq or psqlODBC driver is installed where the program is running.
+</p><p>Because 32-bit versions of the PostgreSQL server only install a 32-bit libpq and pgsqlODBC, only 32-bit programs 
+on the computer the server was installed on can use the database unless a 64-bit ODBC driver or libpq
+is installed as an add-on.
+</p>
+<h4><span id="Where_is_the_PostgreSQL_ODBC_driver.3F_I.27m_running_32-bit_PostgreSQL_on_64-bit_Windows"></span><span class="mw-headline" id="Where_is_the_PostgreSQL_ODBC_driver?_I'm_running_32-bit_PostgreSQL_on_64-bit_Windows">Where is the PostgreSQL ODBC driver? I'm running 32-bit PostgreSQL on 64-bit Windows</span></h4>
+<p>You need to use the 32-bit ODBC administrator to set up data sources for 32-bit
+applications using 32-bit drivers.
+</p><p>Unless you've also installed a <a href="#What_about_64-bit_ODBC_drivers?">64-bit version</a> of 
+<a rel="nofollow" class="external text" href="http://psqlodbc.projects.postgresql.org">psqlODBC</a>, a 32-bit install of PostgreSQL will
+only have a 32-bit ODBC driver. The 32-bit ODBC driver may only be used by 32-bit programs,
+and <i>will not show up in the 64-bit ODBC administrator</i>.
+</p><p>This gets confusing because on 64-bit windows <code>c:\windows\system32\odbcad32</code> is the <i>64-bit</i>
+ODBC driver administrator, despite the name. This is a historical artifact of Windows development. 
+Apparently many apps and installers depend on odbcad32.exe having that name and path,
+so Microsoft landed up being stuck with it despite the now-stupid name, which made sense back
+in the 16- to 32-bit transition but makes none now. It's the same reason the
+"system32" directory is still called that on 64-bit Windows. PostgreSQL can't do anything about this.
+</p><p>See: <a rel="nofollow" class="external text" href="http://support.microsoft.com/kb/942976">http://support.microsoft.com/kb/942976</a>
+</p><p>You'll see in that article that the 32-bit ODBC administrator on 64-bit Windows is:
+</p>
+<pre>%systemdrive%\Windows\SysWoW64\odbcad32.exe
+</pre>
+<p>You can launch this from "Start-&gt;Run" using the path above. You will see the PostgreSQL ODBC drivers in the
+32-bit ODBC administrator.
+</p><p>You 'can not' use a 32-bit ODBC driver in a 64-bit application. That means that you'll still only be
+able to use the PostgreSQL ODBC driver with 32-bit applications unless you install a 64-bit ODBC driver
+as well.
+</p>
+<h4><span id="Can_I_use_a_64-bit_ODBC_program_with_a_32-bit_PostgreSQL_server.3F"></span><span class="mw-headline" id="Can_I_use_a_64-bit_ODBC_program_with_a_32-bit_PostgreSQL_server?">Can I use a 64-bit ODBC program with a 32-bit PostgreSQL server?</span></h4>
+<p>Only if you have a 64-bit <a rel="nofollow" class="external autonumber" href="http://psqlodbc.projects.pgfoundry.org/">[2]</a> driver installed. See the installation section.
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260408133815
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.078 seconds
+Real time usage: 0.133 seconds
+Preprocessor visited node count: 139/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 267/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   50.081      1 Template:Languages
+100.00%   50.081      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:327-0!canonical and timestamp 20260408133814 and revision id 21567.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows&amp;oldid=21567">https://wiki.postgresql.org/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows&amp;oldid=21567</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:FAQ" title="Category:FAQ">FAQ</a></li><li><a href="/wiki/Category:Windows" title="Category:Windows">Windows</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Running_%26_Installing_PostgreSQL_On_Native_Windows" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/Talk:Running_%26_Installing_PostgreSQL_On_Native_Windows" rel="discussion" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Running_%26_Installing_PostgreSQL_On_Native_Windows">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Running_%26_Installing_PostgreSQL_On_Native_Windows" title="Page">Page</a></li><li id="talk-mobile" class="mw-list-item"><a href="/wiki/Talk:Running_%26_Installing_PostgreSQL_On_Native_Windows" title="Discussion">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Running+%26+Installing+PostgreSQL+On+Native+Windows" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Running_%26_Installing_PostgreSQL_On_Native_Windows" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Running_%26_Installing_PostgreSQL_On_Native_Windows" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows&amp;oldid=21567" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Running_%26_Installing_PostgreSQL_On_Native_Windows&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 15 December 2013, at 10:44.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.078","walltime":"0.133","ppvisitednodes":{"value":139,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":267,"limit":5000000},"timingprofile":["100.00%   50.081      1 Template:Languages","100.00%   50.081      1 -total"]},"cachereport":{"timestamp":"20260408133815","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":335});});</script>
+</body>
+</html>

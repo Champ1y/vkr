@@ -67,7 +67,6 @@ def test_query_history_persists_sources_and_payload(db_session) -> None:
         version=version,
         question="Как настроить logical replication?",
         mode="tutorial",
-        extended_mode=True,
         answer_text=None,
         tutorial_payload=tutorial_payload,
         status=QueryStatus.SUCCESS.value,
@@ -81,7 +80,6 @@ def test_query_history_persists_sources_and_payload(db_session) -> None:
     row = history[0]
     assert row.user_question == "Как настроить logical replication?"
     assert row.mode == "tutorial"
-    assert row.extended_mode is True
     assert row.status == QueryStatus.SUCCESS.value
     assert row.answer_text is None
     assert row.tutorial_json is not None

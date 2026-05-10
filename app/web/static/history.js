@@ -1,24 +1,35 @@
 /* ============================================
-   PostgreSQL Assistant — History Page Logic
+   PostgreSQL RAG Assistant — History Page Logic
    ============================================ */
 
 const refreshBtn = document.getElementById("refresh-btn");
 const historyList = document.getElementById("history-list");
 
 const MODE_LABELS = {
-  answer: "Краткий ответ",
-  tutorial: "Обучающий режим",
+  short: "Краткий",
+  detailed: "Подробный",
+  tutorial: "Обучающий",
 };
 
 const STATUS_LABELS = {
-  success: "Успешно",
+  success: "Ответ сформирован",
   failed: "Ошибка",
+};
+
+const POLICY_LABELS = {
+  short: "official docs",
+  detailed: "official docs",
+  tutorial: "official + tutorial",
 };
 
 function escapeHtml(value) {
   const div = document.createElement("div");
   div.textContent = value ?? "";
   return div.innerHTML;
+}
+
+function normalizeText(value) {
+  return String(value || "").trim();
 }
 
 function formatDate(isoString) {
@@ -37,18 +48,31 @@ function formatDate(isoString) {
 }
 
 function getPreview(item) {
-  if (item.mode === "answer") {
-    return (item.answer_text || "").trim();
+  if (item.mode === "short" || item.mode === "detailed") {
+    return normalizeText(item.answer_text);
   }
 
   const tutorial = item.tutorial_json || {};
-  const short = (tutorial.short_explanation || "").trim();
+  const short = normalizeText(tutorial.short_explanation);
   if (short) {
     return short;
   }
 
   if (Array.isArray(tutorial.steps) && tutorial.steps.length > 0) {
-    return String(tutorial.steps[0]);
+    const first = tutorial.steps[0];
+    if (typeof first === "string") {
+      return normalizeText(first);
+    }
+    if (first && typeof first === "object") {
+      const title = normalizeText(first.title);
+      const description = normalizeText(first.description);
+      const text = normalizeText(first.text);
+      const sql = normalizeText(first.sql);
+      if (title && description) {
+        return `${title} — ${description}`;
+      }
+      return text || sql || title || description;
+    }
   }
 
   return "";
@@ -57,13 +81,13 @@ function getPreview(item) {
 function sourceItemHtml(source) {
   const title = escapeHtml(source.source_title || "Без названия");
   const sectionPath = escapeHtml(source.section_path || "Раздел не указан");
-  const sourceUrl = source.source_url || "";
+  const sourceUrl = normalizeText(source.source_url);
   const corpus = escapeHtml(source.corpus_type || "unknown");
   const role = escapeHtml(source.source_role || "base");
 
   const urlHtml = sourceUrl.startsWith("http")
-    ? `<a class="source-item-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(sourceUrl)}</a>`
-    : "<span class=\"source-item-link muted\">URL отсутствует</span>";
+    ? `<a class="source-item-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer">Открыть источник</a>`
+    : '<span class="source-item-link muted">URL отсутствует</span>';
 
   const corpusClass = source.corpus_type === "supplementary" ? "badge-source-supplementary" : "badge-source-official";
 
@@ -93,17 +117,12 @@ function renderHistory(items) {
   items.forEach((item) => {
     const modeLabel = MODE_LABELS[item.mode] || item.mode;
     const statusLabel = STATUS_LABELS[item.status] || item.status || "unknown";
-    const statusClass = item.status === "success" ? "badge-success" : "badge-error";
+    const statusClass = item.status === "success" ? "badge-status-complete" : "badge-status-error";
     const versionLabel = item.pg_version ? `PostgreSQL ${item.pg_version}` : "Версия не указана";
 
     const preview = getPreview(item);
-
-    let extendedBadge = '<span class="badge badge-muted">Расширенный режим: недоступен</span>';
-    if (item.mode === "tutorial") {
-      extendedBadge = item.extended_mode
-        ? '<span class="badge badge-warning">Расширенный режим: включён</span>'
-        : '<span class="badge badge-outline">Расширенный режим: выключен</span>';
-    }
+    const policyLabel = POLICY_LABELS[item.mode] || POLICY_LABELS.short;
+    const policyClass = item.mode === "tutorial" ? "badge badge-policy badge-policy-tutorial" : "badge badge-policy";
 
     const sources = Array.isArray(item.sources) ? item.sources : [];
     const sourcesHtml = sources.length
@@ -134,7 +153,7 @@ function renderHistory(items) {
 
       <div class="history-item-flags">
         <span class="badge ${statusClass}">${escapeHtml(statusLabel)}</span>
-        ${extendedBadge}
+        <span class="${policyClass}">${escapeHtml(policyLabel)}</span>
       </div>
 
       ${sourcesHtml}

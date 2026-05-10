@@ -17,7 +17,7 @@ REMOVE_ATTR_PATTERNS = [
     "mw-navigation", "mw-footer", "printfooter", "catlinks", "vector-menu", "sitesub"
 ]
 USAGE_RULE = (
-    "Использовать только как supplementary слой в tutorial + extended_mode. "
+    "Использовать только как supplementary слой в tutorial. "
     "Факты должны подтверждаться official corpus выбранной версии."
 )
 

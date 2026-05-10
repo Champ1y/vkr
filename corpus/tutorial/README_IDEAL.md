@@ -1,6 +1,6 @@
 # Ideal PostgreSQL Tutorial Supplementary Corpus
 
-Готовый supplementary-корпус для `tutorial + extended_mode`.
+Готовый supplementary-корпус для `tutorial`.
 
 ## Структура
 

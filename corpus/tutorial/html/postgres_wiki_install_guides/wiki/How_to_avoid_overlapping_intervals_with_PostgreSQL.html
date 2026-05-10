@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>How to avoid overlapping intervals with PostgreSQL - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"80d37f7251dd52699f98f467","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"How_to_avoid_overlapping_intervals_with_PostgreSQL","wgTitle":"How to avoid overlapping intervals with PostgreSQL","wgCurRevisionId":38286,"wgRevisionId":38286,"wgArticleId":118,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Historical information","Pages with bad code","PL/pgSQL","Administration"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"How_to_avoid_overlapping_intervals_with_PostgreSQL","wgRelevantArticleId":118,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-How_to_avoid_overlapping_intervals_with_PostgreSQL rootpage-How_to_avoid_overlapping_intervals_with_PostgreSQL skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">How to avoid overlapping intervals with PostgreSQL</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><br />
+</p>
+<div class="errorbox">
+   <p>This page contains <strong><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/Category:Historical_information">historical information or deprecated articles</a></strong>.</p>
+</div>
+<p><br />
+</p><p><br />
+</p>
+<div style="border: 2px solid red; border-left: 10px solid red; margin: 1ex 10%; padding: 1ex 1em 1ex 1em;">
+<table>
+<tbody><tr>
+<td>This page contains code or administrative procedures which do not produce correct results due to failure to consider the effects of concurrency. This may be due to unnoticed or unhandled race conditions, incorrect use of locking or similar problems. Be wary of assuming that the code works even if tested, since the race conditions may not be obvious. See the <a href="/wiki/Talk:How_to_avoid_overlapping_intervals_with_PostgreSQL" title="Talk:How to avoid overlapping intervals with PostgreSQL">talk page</a> for further discussion.
+</td></tr></tbody></table>
+</div>
+<p><br />
+<b>Important caveat:</b> This solution provides no protection from concurrent inserts clashing whatsoever. Consider using exclusion constraints, available in PostgreSQL 9.0. If you must emulate them in a prior version, the following PDF file discusses approaches to the problem, and their attendant limitations: <a rel="nofollow" class="external free" href="http://www.pgcon.org/2010/schedule/attachments/136_exclusion_constraints2.pdf">http://www.pgcon.org/2010/schedule/attachments/136_exclusion_constraints2.pdf</a>
+</p><p>by Matteo Nastasi<br />
+16th July 2001
+</p>
+<h2><span class="mw-headline" id="Introduction">Introduction</span></h2>
+<p>When creating a pocket agenda application, it's quite useful to have a mechanism inhibiting intervals overlapping (i.e. first job starting at 10:00, lasting two hours and second job starting at 11:00, lasting two hours).  This article is a possible implementation method for PostgreSQL 6.5 and maybe for PostgreSQL 7.1.&#160;;)
+</p><p>After two sweaty weeks worried about a trigger which did not work, I can finally and proudly explain the problem I had and how I solved it.
+</p><p>I am writing a web based application (Apache, PHP, PostgreSQL) for managing a music hall reservation system and here I faced a problem I'd never thought about.  How to avoid two different reservations overlapping?  In this case a "unique key" constraint is not enough to guarantee reservations will be correctly inserted because the key "oneness" itself cannot guarantee that two reservations are not partially overlapped (you can only see this with a very aimed SELECT).
+</p><p>Possible solutions:
+</p>
+<ol><li>Developing extra dedicated checks in the php code.</li>
+<li>Adding to the reservation table a trigger which inhibits the feared overlapping.</li></ol>
+<p>Since the problem was generally recognized, and since the extra checking structure would have been boring but necessary for safely guaranteeing the right insertion and change, I opted for the latter (b).
+</p>
+<h2><span id="What.27s_a_trigger_anyway.3F"></span><span class="mw-headline" id="What's_a_trigger_anyway?">What's a trigger anyway?</span></h2>
+<p>PostgreSQL allows you to launch a procedure before or after you do an INSERT, UPDATE or DELETE transaction.  This launched procedure is called a trigger.  If you specify to launch it before though, it could fail and force the whole operation to fail.
+What coding languages can this trigger be written with?
+</p><p>PostgreSQL allows you to write the trigger associated procedure in C, SQL, PL/pgSQL, or PL/TCL.  I used PL/pgSQL because I thought it was the quickest way to implement the trigger, but it could also be written in the other languages (being better performing in C (Code is better&#160;;-)).
+</p><p>To have a trigger equipped table in PostgreSQL you must (in order)&#160;:
+</p>
+<ol><li>Create the table</li>
+<li>Create the procedure used by the trigger</li>
+<li>Create the trigger</li></ol>
+<p>Here you have the minimum working example; more documentation can be found at www.postgresql.org in the PL/pgSQL chapter ( for pgsql 6.5 Programmer's Guide, III volume, cap. 42 ).
+</p>
+<h2><span class="mw-headline" id="Creating_the_trigger">Creating the trigger</span></h2>
+<pre>CREATE TABLE tritab (
+    idr int4,
+    nome text,
+    start int4,
+    len int4);
+</pre>
+<p>Here you created the table.  idr is a unique record identifier (you cannot have two records with the same identifier).  start is the starting reservation time.  len is the reservation time.
+</p>
+<pre>CREATE FUNCTION trifun () RETURNS OPAQUE AS '
+DECLARE
+    myrec RECORD;
+BEGIN
+    /* se insert verifica se ci sono record vecchi che si intersecano */
+    /* if insert verifies if there are old intersecting records */
+    IF TG_OP = ''INSERT'' THEN
+        SELECT * INTO myrec FROM tritab WHERE
+            start &lt; (NEW.start + NEW.len) AND
+            (start + len) &gt; NEW.start;
+        IF FOUND THEN
+            RAISE EXCEPTION ''INSERT failed:
+            intersection with record&#160;% at (%,%)'',
+            myrec.idr, myrec.start, myrec.len;
+        END IF;
+    END IF;
+    /* se update come insert con in piu il constraint che l id non sia quello del record modificato */
+    /* if update like insert plus check on id, assuring that it's not the one modified */
+    IF TG_OP = ''UPDATE'' THEN
+        SELECT * INTO myrec FROM tritab WHERE
+            start &lt; (NEW.start + NEW.len) AND
+            (start + len) &gt; NEW.start AND
+            idr &lt;&gt; OLD.idr;
+        IF FOUND THEN
+            RAISE EXCEPTION ''UPDATE failed:
+            intersection with record&#160;% at (%,%)'',
+            myrec.idr, myrec.start, myrec.len;
+        END IF;
+    END IF;
+    RETURN NEW;
+END;
+' LANGUAGE 'plpgsql';
+</pre>
+<p>Here you created the function to be triggered.  I'll promptly give you a private explanation after you have studied that chapter in the PostgreSQL manual.  Some tips&#160;:
+</p>
+<ul><li>TG_OP contains "INSERT" when the trigger is called for inserting and "UPDATE" when it's called for a change.  This distinction was necessary since in the change case the record had to be excluded from the "SELECT" because at procedure call time it's still not modified in the table.</li></ul>
+<ul><li>NEW is a type RECORD macro which contains the new record.</li></ul>
+<ul><li>OLD is a type RECORD macro which contains the old record (in cases where changes are occuring).</li></ul>
+<ul><li>FOUND is a boolean macro which is TRUE if the select has found at least one record.</li></ul>
+<ul><li>RAISE exits the procedure and returns a NULL value (for which the trigger makes the insert or change fail).</li></ul>
+<pre>CREATE TRIGGER tritri BEFORE INSERT OR UPDATE ON tritab
+FOR EACH ROW EXECUTE PROCEDURE trifun();
+</pre>
+<p>This linked the function as a trigger to the table.
+</p><p>Now, when launching sequentially these two example insertions&#160;:
+</p>
+<pre>INSERT INTO tritab ( idr, nome, start, len ) values ( 1, 'one', 10, 2);
+INSERT INTO tritab ( idr, nome, start, len ) values ( 2, 'two', 11, 2);
+</pre>
+<p>the second will fail.
+</p><p><b>Goal!!</b>
+</p><p>Thanks to
+</p><p>DaDoS e NdK di ircnet/#programmazione
+</p><p>Copyright © 2001 Matteo Nastasi (matteo.nastasi@milug.org),
+Translated by Martino Bana (martino.bana@milug.org)
+</p><p>Copy and distribution of this paper is allowed in any way as long as the copyright notice and this notice are present.
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20260407145725
+Cache expiry: 86400
+Reduced expiry: false
+Complications: []
+CPU time usage: 0.028 seconds
+Real time usage: 0.043 seconds
+Preprocessor visited node count: 32/1000000
+Post‐expand include size: 963/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 3/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 1584/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   18.756      1 -total
+ 52.06%    9.765      1 Template:CategoryBox
+ 46.72%    8.763      1 Template:Badcode-concurrency
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:118-0!canonical and timestamp 20260407145725 and revision id 38286.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=How_to_avoid_overlapping_intervals_with_PostgreSQL&amp;oldid=38286">https://wiki.postgresql.org/index.php?title=How_to_avoid_overlapping_intervals_with_PostgreSQL&amp;oldid=38286</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:Historical_information" title="Category:Historical information">Historical information</a></li><li><a href="/wiki/Category:Pages_with_bad_code" title="Category:Pages with bad code">Pages with bad code</a></li><li><a href="/wiki/Category:PL/pgSQL" title="Category:PL/pgSQL">PL/pgSQL</a></li><li><a href="/wiki/Category:Administration" title="Category:Administration">Administration</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/How_to_avoid_overlapping_intervals_with_PostgreSQL" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/Talk:How_to_avoid_overlapping_intervals_with_PostgreSQL" rel="discussion" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/How_to_avoid_overlapping_intervals_with_PostgreSQL">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=How_to_avoid_overlapping_intervals_with_PostgreSQL&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=How_to_avoid_overlapping_intervals_with_PostgreSQL&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/How_to_avoid_overlapping_intervals_with_PostgreSQL" title="Page">Page</a></li><li id="talk-mobile" class="mw-list-item"><a href="/wiki/Talk:How_to_avoid_overlapping_intervals_with_PostgreSQL" title="Discussion">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=How+to+avoid+overlapping+intervals+with+PostgreSQL" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/How_to_avoid_overlapping_intervals_with_PostgreSQL" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/How_to_avoid_overlapping_intervals_with_PostgreSQL" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=How_to_avoid_overlapping_intervals_with_PostgreSQL&amp;oldid=38286" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=How_to_avoid_overlapping_intervals_with_PostgreSQL&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 8 September 2023, at 11:24.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.028","walltime":"0.043","ppvisitednodes":{"value":32,"limit":1000000},"postexpandincludesize":{"value":963,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":3,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":1584,"limit":5000000},"timingprofile":["100.00%   18.756      1 -total"," 52.06%    9.765      1 Template:CategoryBox"," 46.72%    8.763      1 Template:Badcode-concurrency"]},"cachereport":{"timestamp":"20260407145725","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":288});});</script>
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Getting a stack trace of a running PostgreSQL backend on Windows - PostgreSQL wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"7014bf908fa5d3360d8b3499","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows","wgTitle":"Getting a stack trace of a running PostgreSQL backend on Windows","wgCurRevisionId":24387,"wgRevisionId":24387,"wgArticleId":1061,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Windows"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows","wgRelevantArticleId":1061,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]};
+RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.monobook.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.monobook.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=skins.monobook.styles&amp;only=styles&amp;skin=monobook"/>
+<script async="" src="/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=monobook"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=monobook"/>
+<meta name="generator" content="MediaWiki 1.39.17"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="PostgreSQL wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.postgresql.org/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="PostgreSQL wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows rootpage-Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows skin-monobook action-view skin--responsive"><div id="globalWrapper">
+	<div id="column-content">
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="siteNotice"><div id="localNotice"><div class="sitenotice" lang="en" dir="ltr"><p><b><a rel="nofollow" class="external text" href="https://wiki.postgresql.org/wiki/WikiEditing">Want to edit, but don't see an edit button when logged in?  Click here.</a></b>
+</p></div></div></div>
+			<div class="mw-indicators">
+			</div>
+			<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Getting a stack trace of a running PostgreSQL backend on Windows</span></h1>
+			<div id="bodyContent" class="monobook-body">
+				<div id="siteSub">From PostgreSQL wiki</div>
+				<div id="contentSub" ></div>
+				
+				<div id="jump-to-nav"></div><a href="#column-one" class="mw-jump-link">Jump to navigation</a><a href="#searchInput" class="mw-jump-link">Jump to search</a>
+				<!-- start content -->
+				<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p><a href="/wiki/Generating_a_stack_trace_of_a_PostgreSQL_backend" title="Generating a stack trace of a PostgreSQL backend">Up to parent</a>
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Before_you_start"><span class="tocnumber">1</span> <span class="toctext">Before you start</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Methods_for_getting_a_stack_trace"><span class="tocnumber">2</span> <span class="toctext">Methods for getting a stack trace</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Installing_Debugging_Tools_for_Windows_and_Process_Explorer"><span class="tocnumber">3</span> <span class="toctext">Installing Debugging Tools for Windows and Process Explorer</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Configuring_the_symbol_path"><span class="tocnumber">4</span> <span class="toctext">Configuring the symbol path</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#Getting_the_stack_trace"><span class="tocnumber">5</span> <span class="toctext">Getting the stack trace</span></a>
+<ul>
+<li class="toclevel-2 tocsection-6"><a href="#Getting_the_process_ID_of_the_PostgreSQL_backend"><span class="tocnumber">5.1</span> <span class="toctext">Getting the process ID of the PostgreSQL backend</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Debugging_using_Microsoft_Visual_Studio_or_VS_Express"><span class="tocnumber">5.2</span> <span class="toctext">Debugging using Microsoft Visual Studio or VS Express</span></a>
+<ul>
+<li class="toclevel-3 tocsection-8"><a href="#Attaching"><span class="tocnumber">5.2.1</span> <span class="toctext">Attaching</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#Breaking_into_execution"><span class="tocnumber">5.2.2</span> <span class="toctext">Breaking into execution</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#Starting_debugging"><span class="tocnumber">5.2.3</span> <span class="toctext">Starting debugging</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#Debugging_tips"><span class="tocnumber">5.2.4</span> <span class="toctext">Debugging tips</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-12"><a href="#Using_windbg"><span class="tocnumber">5.3</span> <span class="toctext">Using windbg</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Using_crash_dumps_to_debug_random_and_unpredictable_backend_crashes"><span class="tocnumber">5.4</span> <span class="toctext">Using crash dumps to debug random and unpredictable backend crashes</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Debugging_crashes_during_postmaster_start"><span class="tocnumber">5.5</span> <span class="toctext">Debugging crashes during postmaster start</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-15"><a href="#Using_Process_Explorer_to_see_what_running_backends_are_doing"><span class="tocnumber">6</span> <span class="toctext">Using Process Explorer to see what running backends are doing</span></a>
+<ul>
+<li class="toclevel-2 tocsection-16"><a href="#Initial_Process_Explorer_configuration"><span class="tocnumber">6.1</span> <span class="toctext">Initial Process Explorer configuration</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Checking_your_Process_Explorer_setup"><span class="tocnumber">6.2</span> <span class="toctext">Checking your Process Explorer setup</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Getting_a_stack_trace_using_Process_Explorer"><span class="tocnumber">6.3</span> <span class="toctext">Getting a stack trace using Process Explorer</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-19"><a href="#How_to_make_sure_a_stack_trace_is_useful"><span class="tocnumber">7</span> <span class="toctext">How to make sure a stack trace is useful</span></a></li>
+<li class="toclevel-1 tocsection-20"><a href="#No_symbolic_names?_Why?"><span class="tocnumber">8</span> <span class="toctext">No symbolic names? Why?</span></a>
+<ul>
+<li class="toclevel-2 tocsection-21"><a href="#No_symbols_for_the_module"><span class="tocnumber">8.1</span> <span class="toctext">No symbols for the module</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#NT_SYMBOL_PATH_not_set"><span class="tocnumber">8.2</span> <span class="toctext">_NT_SYMBOL_PATH not set</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#Add-in_software_firewall"><span class="tocnumber">8.3</span> <span class="toctext">Add-in software firewall</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Before_you_start">Before you start</span></h2>
+<p>There are a few things you need to be aware of to get a useful stack trace:
+</p>
+<ul><li>To get a useful stack trace, your symbol path must be configured to include the debugging symbol (.pdb) files of the programs you want to debug. See the section on the symbol path below.</li>
+<li>It appears that debugging a 32-bit PostgreSQL on 64-bit windows produces useless results, at least when the 64-bit debugging tools are used.</li></ul>
+<p>For more information, see the section on how to verify that you have a useful stack trace, below.
+</p>
+<h2><span class="mw-headline" id="Methods_for_getting_a_stack_trace">Methods for getting a stack trace</span></h2>
+<p>On Windows there are a few different methods for getting a stack trace of a backend that crashes while doing something, and a few different tools to to it with.
+</p><p><i>Methods</i>:
+</p>
+<ul><li>Get the process ID of a running backend, attach a debugger to it, and trigger a crash;</li>
+<li>Set your debugger up as the post-mortem debugger and trigger a crash; or</li>
+<li>Enable crash dumps, trigger a crash, and debug the resulting crash dump.</li></ul>
+<p>Direct attach is probably easier, but could potentially interfere with production operations. It's also not always possible, particularly when the crashes are random and hard to reproduce. You can't use a crashdump if the process is stuck (100% cpu, or just not responding and not progressing). You have to attach a debugger directly.
+</p><p>Setting up the post-mortem debugger can work well, but it's an intrusive system-wide change. (Use drwatson.exe to revert to the default crash handler afterwards). Not all Visual Studio editions support being used as the post-mortem debugger, and it won't work if PostgreSQL is running as a service in a separate user account.
+</p><p>Crash dumps (minidumps) work well for intermittent, hard to reproduce crashes. You can also use crash dumps if you need to send the debuggable crash dump to somebody else for examination. Unlike direct attach, crash dumps are supported by the free Express editions of Visual Studio. <i>Do not</i> just send a crash dump to someone and assume they can do something with it; you should normally extract and send a stack trace. Only send a crash dump if asked.
+</p><p><br />
+<i>Tools</i>:
+</p>
+<ul><li>Microsoft Visual Studio Professional - supports both crash dumps and direct attach, very easy, but costs $</li>
+<li>Microsoft Visual Studio Express 2010 - supports both crash dumps and direct attach after enabling "Expert Settings"</li>
+<li>Microsoft Visual Studio Express 2012 for Windows Desktop - supports both crash dumps and direct attach, very easy</li>
+<li><code>Process Explorer</code> - only useful for getting the status of a backend without interrupting it, for tracking down apparent infinite loops etc.</li>
+<li><code>windbg</code> from Debugging Tools for Windows - supports both crash dumps and direct attach, somewhat less than user friendly</li></ul>
+<p>If you have Microsoft Visual Studio, use that. It's the easiest and best option. 
+</p><p>If you can't use Visual Studio, use Process Explorer for stack traces of running processes. For all other work, install Visual Studio. windbg is not a tool suitable for normal humans.
+</p>
+<h2><span class="mw-headline" id="Installing_Debugging_Tools_for_Windows_and_Process_Explorer">Installing Debugging Tools for Windows and Process Explorer</span></h2>
+<p>Microsoft Windows does not come with built-in debugging tools. You will need to install the Debugging Tools for Windows. These are <a rel="nofollow" class="external text" href="http://msdn.microsoft.com/en-US/windows/hardware/gg463009/">no longer available as stand-alone packages</a>, you must install them using the <a rel="nofollow" class="external text" href="http://msdn.microsoft.com/en-US/windows/hardware/hh852363">Windows SDK installer</a>. If you like you can disable installation of everything except the debugging tools. See also <a rel="nofollow" class="external text" href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff551063%28v=vs.85%29.aspx">here</a>.
+</p><p>Once you have installed the Debugging Tools for Windows, you'll need to do a little bit of setup so you can get useful stack traces.
+</p><p><b>Note:</b> The instructions below assume your copy of Windows is installed on <code>c:</code> so you may have to adjust them if this is not the case.
+</p><p>You will might also want <a rel="nofollow" class="external text" href="http://technet.microsoft.com/en-us/sysinternals/bb842062.aspx">Process Explorer from the Sysinternal suite</a>. Sysinternals is useful, Process Explorer particularly so. Process Explorer can be used to get stack traces showing a snapshot of the state of a running PostgreSQL process for when you're tracking down apparently "stuck" queries.
+</p>
+<h2><span class="mw-headline" id="Configuring_the_symbol_path">Configuring the symbol path</span></h2>
+<p>First, you need to set the symbol path. First you have to figure out what it is, since it depends on the version of PostgreSQL you've installed, the language of your version of Windows, and where PostgreSQL was installed to. What you need to find is the location of the <code>symbols</code> folder inside the PostgreSQL install directory. If you've used the EnterpriseDB 1-click installer for PostgreSQL 9.4 and you're using an English version of Windows, it'll be:
+</p>
+<pre>C:\Program Files\PostgreSQL\9.4\symbols
+</pre>
+<p>I'll assume that's the case in the following instructions, so adjust the path shown to match your system if required.
+</p><p>To set the symbol path, you'll need to use the System control panel. You can get to this quickly and conveniently with all versions of Windows by holding down the Windows key and pressing the BREAK key (it's often under the Pause key). You can also find it in the Control Panel; you may need to search for "system". If you can't find it, open the Start menu and click "Run" then enter "sysdm.cpl" and press enter.
+</p><p>In the System control panel, click on the Advanced tab and then click "Environment Variables". An "Environment Variables" dialog will appear. In that dialog, under the label "User Variables for &lt;username&gt;" you'll see a list. What you need to do is click the "New" button under that list.
+</p><p>In the dialog that appears, enter the variable name exactly as:
+</p>
+<pre>_NT_SYMBOL_PATH
+</pre>
+<p>Note the leading underscore ("_") and the fact that the variable name is ALL UPPER CASE with UNDERSCORES_BETWEEN_WORDS.
+</p><p>The value is in two parts. The first part depends on where PostgreSQL is installed, as described above. The second part tells debugging tools to use a Microsoft server (the <a rel="nofollow" class="external text" href="http://support.microsoft.com/kb/311503">Symbol Server</a>) to find out about parts of Windows its self.
+</p><p>Set the value like this, changing the path to the PostgreSQL <code>symbols</code> directory to match your PostgreSQL install location and version. If in doubt, look in Program Files and check. If you set it wrong there will be no error, you'll just get <a href="#How_to_make_sure_a_stack_trace_is_useful">useless backtraces</a>.
+</p><p>Example value, adjust to suit your system:
+</p>
+<pre>C:\Program Files\PostgreSQL\9.4\symbols;SRV*c:\localsymbols*http://msdl.microsoft.com/download/symbols;
+</pre>
+<p>If you don't have an active Internet connection you can <a rel="nofollow" class="external text" href="http://www.microsoft.com/whdc/devtools/debugging/symbolpkg.mspx">download the Windows symbol package for your version of Windows</a> and install it, but be aware that this will be a BIG download. You'll then need to adjust the symbol path shown above to point to it.
+</p>
+<h2><span class="mw-headline" id="Getting_the_stack_trace">Getting the stack trace</span></h2>
+<p>Phew. You now have things configured and can actually start collecting information.
+</p><p><b>Important:</b> Don't waste your time generating stack traces that're useless. Please read "<a href="#How_to_make_sure_a_stack_trace_is_useful">How to make sure a stack trace is useful</a>" before spending lots of time collecting information or posting to the mailing list. Your stack trace needs to contain "!SymbolicNames" as well as "+offsets" to be much use.
+</p><p><b>If you are collecting information about a postgresql backend that appears to be in an infinite loop or using too much CPU, you will need to take more than one stack trace.</b> You should try to get quite a few over a short period of time so that developers can tell where it's spending its time. One stack trace alone doesn't really tell you a lot about what it's doing overall.
+</p>
+<h3><span class="mw-headline" id="Getting_the_process_ID_of_the_PostgreSQL_backend">Getting the process ID of the PostgreSQL backend</span></h3>
+<p>Identifying the process ID of the PostgreSQL process you're interested in isn't always easy. If you have an active connection to the backend you want to look at, you can run <code>select pg_backend_pid();</code> to get it's process ID. Sometimes it's obvious - it's the one using constantly high amounts of CPU as shown in Process Explorer, for example. At other times, though, you'll need to use psql or PgAdmin III to look in the <code>pg_catalog.pg_stat_activity</code> or <code>pg_catalog.pg_locks</code> tables/views to find out the process id ("pid" or "procpid") of the process you're interested in.
+</p><p><a href="/wiki/File:Getpid.png" class="image" title="Get Process ID"><img alt="Get Process ID" src="/images/4/4e/Getpid.png" decoding="async" width="267" height="76" /></a>
+</p>
+<h3><span class="mw-headline" id="Debugging_using_Microsoft_Visual_Studio_or_VS_Express">Debugging using Microsoft Visual Studio or VS Express</span></h3>
+<p>Windbg is free, quick and easy to install, supports remote debugging, and a <i>real pain to use</i>. You'll want something much nicer to use if you're trying to do more than just get a stack trace - and for some problems, you will indeed need more than a stack trace to know what's going wrong. If you intend to step through the execution of PostgreSQL's code and examine the value of variables, using Microsoft Visual C++ will make it a lot easier.
+</p><p>Microsoft Visual C++ has a <i>much</i> nicer debugger that I highly recommend using in favour of windbg.exe - if you have it available. 
+</p><p>The free Visual Studio 2008 Express Edition can be used for many debugging tasks; it lacks remote debugging support and just-in-time postmortem debugging (which the full, paid edition has) but otherwise does a very good job as a user-friendly debugger.
+</p><p><a rel="nofollow" class="external text" href="http://www.microsoft.com/visualstudio/eng/products/visual-studio-2010-express">Visual Studio Express 2010</a> hides, by default, key features like the ability to attach to already-running processes.  Select Tools -&gt; Settings -&gt; Expert Settings to make that and other features visible in the usual menus.  <a rel="nofollow" class="external text" href="http://www.microsoft.com/visualstudio/eng/products/visual-studio-express-for-windows-desktop">Visual Studio Express 2012 for Windows Desktop</a> does not require such a configuration change.
+</p>
+<h4><span class="mw-headline" id="Attaching">Attaching</span></h4>
+<p>Once you've installed and configured VC++, launch it and use "Attach to Process" in the Tools menu to connect to the PostgreSQL backend you want. Make sure "show processes from all users" is checked, select the <code>postgres.exe</code> process you want to debug, and click "Attach". You'll get a security warning, which you should read and understand before accepting.
+</p><p><a href="/wiki/File:1attach.png" class="image" title="Attaching VC++ 2008 to a process"><img alt="Attaching VC++ 2008 to a process" src="/images/f/f9/1attach.png" decoding="async" width="728" height="517" /></a>
+</p><p>VC++ will load symbols for PostgreSQL, which may take a few minutes if you haven't used VC++ to debug PostgreSQL before (it'll have to fetch them from the symbol server). Once VC++ finishes loading symbols, execution of the Pg backend will resume and your database system will be working normally.
+</p>
+<h4><span class="mw-headline" id="Breaking_into_execution">Breaking into execution</span></h4>
+<p>You can now break into the execution of the postgres.exe backend with the break button on the toolbar. It looks like a pause button. If you're debugging a runaway backend, you'll want to break into its execution now. Alternately, if you're debugging a crash, you should trigger the crash now.
+</p><p>If VC++ detects a crash it'll display a dialog like this to give you the chance to break into the process's execution:
+</p><p><a href="/wiki/File:8crash.png" class="image" title="VC++ crash notice"><img alt="VC++ crash notice" src="/images/c/c2/8crash.png" decoding="async" width="444" height="204" /></a>
+</p><p>If you break into a process's execution while it's running in the kernel you'll see a dialog like this:
+</p><p><a href="/wiki/File:2b_deadlockwarning.png" class="image" title="Kernel or deadlock warning"><img alt="Kernel or deadlock warning" src="/images/0/09/2b_deadlockwarning.png" decoding="async" width="612" height="126" /></a>
+</p><p>... which is common for PostgreSQL since it'll often be waiting for network or disk activity. You can generally ignore it.
+</p>
+<h4><span class="mw-headline" id="Starting_debugging">Starting debugging</span></h4>
+<p>You'll get a dialog telling you that "there is no source code available for your current location". Click OK. Now, on the bottom right (by default) you'll see a set of tabs named "call stack", "breakpoints", and "output". Click on "call stack".
+</p><p><a href="/wiki/File:3stack.png" class="image" title="Debug without source"><img alt="Debug without source" src="/images/b/b2/3stack.png" decoding="async" width="1049" height="800" /></a>
+</p><p>You can see the stack of function calls that were in progress in Pg's main thread at the time you interrupted postgresql. (If you want or need to change threads, use the "threads" tab on the bottom left - double click on the thread of interest to debug it - though you usually want the main thread which is active by default).
+</p><p>In the call stack you can double-click on an entry to see where in the executable the function call arose. If you don't have source code, it'll offer to show you a disassembly, but you have source code for PostgreSQL so you can do better than that. (If you don't have source code for Pg, download and extract the sources for your version now. If you can't open the .tar.gz file, install [www.7-zip.org/|7-zip]). Double-click on the topmost line in the stack trace that starts with "postgres.exe" and a dialog will appear asking for a .c file:
+</p><p><a href="/wiki/File:4findsrc.png" class="image" title="Find source dialog"><img alt="Find source dialog" src="/images/e/ef/4findsrc.png" decoding="async" width="562" height="451" /></a>
+</p><p>It'll note the original location of the file at the top of the dialog. In my case, it wants <code>socket.c</code> from <code>src\backend\port\win32\socket.c</code>, so I find the postgresql sources (on my machine: <code>c:\developer\postgresql-8.4.0</code>) and from there open <code>src</code>, then <code>backend</code>, then <code>port</code> then <code>win32</code>. Visual studio notices "win32.c" within the directory and opens it automatically. From now on, during this debugging session VS should find all other postgresql source files too.
+</p><p><a href="/wiki/File:5withsource.png" class="image" title="VC++ debug with source"><img alt="VC++ debug with source" src="/images/3/33/5withsource.png" decoding="async" width="1049" height="800" /></a>
+</p>
+<h4><span class="mw-headline" id="Debugging_tips">Debugging tips</span></h4>
+<p><i>The Visual Studio debugger is far too capable to fully describe here. I'll just give a few hints - and suggest that you use the documentation.</i>
+</p><p>Now that you have sources displayed, you can step through the code line-by-line, run until the end of functions, step into functions, and otherwise control the execution of the PostgreSQL process in detail using the buttons on the toolbar. You can also examine local variables at the stack frame you're on using the "locals" tab on the left, set breakpoints in functions using the "breakpoints" tab on the right, etc.
+</p><p><a href="/wiki/File:6breakpoint.png" class="image" title="Adding a breakpoint"><img alt="Adding a breakpoint" src="/images/3/30/6breakpoint.png" decoding="async" width="1049" height="800" /></a>
+</p><p>For example, if I wanted to pause execution the next time PostgreSQL tried to receive data from the network I might set a breakpoint on the <code>pgwin32_recv</code> function and resume execution:
+</p><p><a href="/wiki/File:7breakpoint_dialog.png" class="image" title="Adding a breakpoint dialog"><img alt="Adding a breakpoint dialog" src="/images/1/1b/7breakpoint_dialog.png" decoding="async" width="501" height="232" /></a>
+</p><p>If I then issue a query on the backend I'm debugging, Visual Studio will shortly break back into the debugger at the start of the <code>pgwin32_recv</code> function. I can now step through the function's execution to see what functions are called, what values variables take, etc. I can add and remove breakpoints by clicking in the margin on the left of the source file display. 
+</p><p><b>Note that you must be careful not to change the values of any variables or cause execution to skip lines using the "set next statement" option. If you're not careful you could crash the server or possibly severely corrupt your database.</b>
+</p>
+<h3><span class="mw-headline" id="Using_windbg">Using windbg</span></h3>
+<p><a href="/wiki/Using_windbg.exe_to_debug_PostgreSQL" title="Using windbg.exe to debug PostgreSQL">Using windbg.exe to debug PostgreSQL</a>
+</p>
+<h3><span class="mw-headline" id="Using_crash_dumps_to_debug_random_and_unpredictable_backend_crashes">Using crash dumps to debug random and unpredictable backend crashes</span></h3>
+<p>If the crashes appear to be random and you don't know how to trigger them, it's hard to connect a debugger to the problem <code>postgres.exe</code> before it crashes.
+</p><p>Setting your debugger as the JIT (just-in-time) or post-mortem debugger won't help you, because PostgreSQL generally runs as a service under a different user account that cannot interact with the desktop. You could always <code>initdb</code> a new cluster under your normal user account and use <code>pg_ctl</code> to start the postmaster with that cluster manually, so you can JIT debug under your own user account where Pg can interact with the desktop. This isn't suitable for production use, though, and you might not be able to reproduce the problem that way.
+</p><p>In PostgreSQL 9.0 and above there is a <a rel="nofollow" class="external text" href="http://git.postgresql.org/gitweb/?p=postgresql.git;a=blob;f=src/backend/port/win32/crashdump.c;h=7550fa6f26b82d6fc41f5f68afb35ec44d25d00b;hb=HEAD">crash dump hander</a> included in PostgreSQL. To use it:
+</p>
+<ul><li>Create a directory named <code>crashdumps</code> (all lower case) in the PostgreSQL data directory (as shown by <code>SHOW data_directory;</code> in <code>psql</code>)</li>
+<li>Give the PostgreSQL user (<code>postgres</code> by default) "full control" of it in the security tab of the folder properties</li>
+<li>Run the problem code. You don't need to restart Pg or change any settings.</li>
+<li>When a backend crashes, a Windows minidump should be created in the <code>crashdumps</code> directory.</li></ul>
+<p>You can debug this file with Microsoft Visual Studio or with windbg, using much the same procedures you use when attaching to a process ID as explained above. Unfortunately the more recent Express editions of Visual Studio do not have the ability to debug minidumps.
+</p><p>Minidumps can also be sent to somebody else to debug. For this to work you must tell the other person the *exact* PostgreSQL version you are using, because the debug symbols vary from minor release to minor release. You can't debug a 9.1.0 minidump with debug symbols taken from a 9.1.1 install. It's often easiest to just send them the <code>.pdb</code> files from your install alongside the minidump.
+</p>
+<h3><span class="mw-headline" id="Debugging_crashes_during_postmaster_start">Debugging crashes during postmaster start</span></h3>
+<p><a rel="nofollow" class="external text" href="http://www.debuginfo.com/articles/debugstartup.html">This article discusses debugging of crashes during service startup</a>.
+</p>
+<h2><span class="mw-headline" id="Using_Process_Explorer_to_see_what_running_backends_are_doing">Using Process Explorer to see what running backends are doing</span></h2>
+<p>Process Explorer is only useful for getting stack traces from running backends. It is not useful for debugging crashes.
+</p><p>If you intend to use Process Explorer to get a basic stack trace of a running (non-crashed) backend, you need to apply some settings first. You can skip this section if you're going to use Visual Studio (recommended if you have it) or <code>windbg</code> from Debugging Tools for Windows.
+</p>
+<h3><span class="mw-headline" id="Initial_Process_Explorer_configuration">Initial Process Explorer configuration</span></h3>
+<p>Open Process Exploer from the start menu, use "procexp.exe" in the Start-&gt;Run dialog. Read and accept the license agreement if prompted.
+</p><p>Now, in the "options" menu choose "configure symbols". First, note the "symbols path" entry, which should be the same as the value you entered for _NT_SYMBOL_PATH in the System control panel. If it isn't, you've made a mistake setting up the environment variable for the symbol path in the System control panel.
+</p><p>There is another entry in the "configure symbols" dialog labelled "dbghelp.dll path". If this begins with "c:\windows" you'll need to change it to the alternative provided by the Debugging Tools for Windows. The exact location varies depending on your debugging tools version. Use the "..." button, type <code>%ProgramFiles%</code> into the "file name" field and press enter. Now find the debugging tools for windows folder, open it, and find dbghelp.dll. Double click on it. The dbghelp.dll path should've changed to something like:
+</p>
+<pre>C:\Program Files\Debugging Tools for Windows (x86)\dbghelp.dll
+</pre>
+<p>You can now click "OK".
+</p>
+<h3><span class="mw-headline" id="Checking_your_Process_Explorer_setup">Checking your Process Explorer setup</span></h3>
+<p>You should now be able to look at the stack trace of a commonplace process that's pre-installed on Windows systems. I suggest starting Notepad (start-&gt;run-&gt;notepad.exe), then launching Process Explorer, double-clicking on "notepad.exe" in the process list, switching to the "threads" tab, and double-clicking on the only entry in the list shown there. The displayed stack trace should look like this (on Windows XP SP3 at least):
+</p>
+<pre>ntkrnlpa.exe!KiSwapThread+0x46
+ntkrnlpa.exe!KeWaitForSingleObject+0x1c2
+win32k.sys!xxxSleepThread+0x192
+win32k.sys!xxxRealInternalGetMessage+0x418
+win32k.sys!NtUserGetMessage+0x27
+ntkrnlpa.exe!KiFastCallEntry+0xf8
+ntdll.dll!KiFastSystemCallRet
+USER32.dll!NtUserGetMessage+0xc
+notepad.exe!WinMain+0xe5
+notepad.exe!WinMainCRTStartup+0x174
+kernel32.dll!BaseProcessStart+0x23
+</pre>
+<p>If it looks like this instead (lots of lines with just "modulename+offset" not "modulename!symbolname+offset"):
+</p>
+<pre>ntkrnlpa.exe+0x6a822
+ntkrnlpa.exe!ZwYieldExecution+0x1938
+ntkrnlpa.exe!ZwYieldExecution+0x19a4
+win32k.sys+0x2f35
+win32k.sys+0x1b0d
+win32k.sys!EngQueryPerformanceCounter+0x5af
+ntkrnlpa.exe!KeReleaseInStackQueuedSpinLockFromDpcLevel+0xb14
+ntdll.dll!KiFastSystemCallRet
+notepad.exe+0x2a1b
+notepad.exe+0x7511
+kernel32.dll!RegisterWaitForInputIdle+0x49
+</pre>
+<p>... then your symbol path is set up wrong or there's something interfering with access to the symbol server. See <a href="#No_symbolic_names?_Why?">#No symbolic names? Why?</a>.
+</p><p>You might also see a backtrace like this:
+</p>
+<pre>
+
+00000000`0013e6b8 00000000`73d5282c wow64cpu!CpupSyscallStub+0x9
+00000000`0013e6c0 00000000`73dcd07e wow64cpu!WaitForMultipleObjects32+0x32
+00000000`0013e780 00000000`73dcc549 wow64!RunCpuSimulation+0xa
+00000000`0013e7d0 00000000`779884c8 wow64!Wow64LdrpInitialize+0x429
+00000000`0013ed20 00000000`77987623 ntdll!LdrpInitializeProcess+0x17e2
+00000000`0013f220 00000000`7797308e ntdll!&#160;??&#160;::FNODOBFM::`string'+0x2bea0
+00000000`0013f290 00000000`00000000 ntdll!LdrInitializeThunk+0xe
+</pre>
+<p>with lines about <i>wow64</i>. This backtrace is useless for debugging. You're debugging a 32-bit binary on 64-bit windows with 64-bit debugging tools. You might be able to get a useful trace by installing and using the 32-bit debugging tools, but I haven't verified that.
+</p>
+<h3><span class="mw-headline" id="Getting_a_stack_trace_using_Process_Explorer">Getting a stack trace using Process Explorer</span></h3>
+<p>Launch Process Explorer from the Start menu, or by running "procexp.exe".
+</p><p>You'll need to find the <code>postgres.exe</code> instance you're interested in. It might be one showing consistently high CPU usage, but if not, see the instructions above for finding it by process ID.
+</p><p>Once you know which <code>postgres.exe</code> backend you want to examine, double-click on it in the list in Process Explorer. In the dialog that appears open the "Thread" tab. You'll now see a list of threads. In most cases you're interested in the first thread in the list. Select it by clicking on it and click the "stack" button. After a short delay a list will appear in a new dialog, looking something like this:
+</p>
+<pre>ntkrnlpa.exe!KiSwapContext+0x2f
+ntkrnlpa.exe!KiSwapThread+0x8a
+ntkrnlpa.exe!KeWaitForSingleObject+0x1c2
+ntkrnlpa.exe!KiSuspendThread+0x18
+ntkrnlpa.exe!KiDeliverApc+0x124
+ntkrnlpa.exe!KiSwapThread+0xa8
+ntkrnlpa.exe!KeWaitForMultipleObjects+0x284
+ntkrnlpa.exe!NtWaitForMultipleObjects+0x297
+ntkrnlpa.exe!KiFastCallEntry+0xfc
+ntdll.dll!KiFastSystemCallRet
+ntdll.dll!ZwWaitForMultipleObjects+0xc
+kernel32.dll!WaitForMultipleObjectsEx+0x12c
+postgres.exe!pgwin32_waitforsinglesocket+0x1f0
+postgres.exe!pgwin32_recv+0x90
+postgres.exe!secure_read+0x17d
+postgres.exe!pq_recvbuf+0x71
+postgres.exe!pq_getbyte+0x15
+postgres.exe!SocketBackend+0x6
+postgres.exe!PostgresMain+0xbe8
+postgres.exe!BackendRun+0x204
+postgres.exe!SubPostmasterMain+0x224
+postgres.exe!main+0x177
+postgres.exe!__tmainCRTStartup+0x10f
+kernel32.dll!BaseProcessStart+0x23
+</pre>
+<p>See how there's different text after the exclamation mark on each line? If that's not the case, your symbol path is probably set up wrong, and Process Explorer can't figure out what the program is doing. Without the text after the exclamation marks the stack trace is mostly useless, so you'll need to collect that information.
+</p><p>You need to copy the whole list. Click on the first entry, hold down the shift key, and press the "end" key (or scroll to the bottom and click the bottom entry), then click the "copy" button.
+</p><p>You can now paste the stack trace into your email program to send it to the PostgreSQL mailing list. By its self it is not useful, so you MUST provide the usual debugging information too - your OS version, PostgreSQL version, what's going wrong, what you're doing when it goes wrong, etc etc. See <a href="/wiki/Guide_to_reporting_problems" title="Guide to reporting problems">Guide to reporting problems</a>.
+</p>
+<h2><span class="mw-headline" id="How_to_make_sure_a_stack_trace_is_useful">How to make sure a stack trace is useful</span></h2>
+<p>A stack trace isn't always trustworthy or useful. This is particularly the case on Windows, where programs generally contain no debugging information and proper stack traces can't reliably be created without it.
+</p><p>If you're going to post a stack trace as part of a bug report or request for help, it's <i>really</i> important that it contains symbolic information about the call path, like the example posted above. If, instead, it contains just module names and numeric offsets within the modules, it doesn't tell the reader anything useful unless they know <i>exactly</i> what versions of the modules you have. Even then, it's difficult and cumbersome to read. So, make sure your stack trace contains lines showing <code><i>modulename</i>!<i><b>SymbolicName</b></i>+<i>offset</i></code>, like this:
+</p>
+<pre>ntkrnlpa.exe!KiSwapThread+0x8a
+</pre>
+<p>not just <code><i>modulename</i>+<i>offset</i> this:
+</code></p><code><pre>ntkrnlpa.exe+0x8dafe
+</pre></code><code><p>Take this trace, for example. 
+</p></code><code><pre>ntkrnlpa.exe+0x8dafe
+ntkrnlpa.exe+0x29a82
+ntkrnlpa.exe+0x33198
+hal.dll+0x6199
+hal.dll+0x63d9
+hal.dll+0x6577
+hal.dll+0x3902
+postgres.exe!process_implied_equality+0x18d50e
+</pre></code><code><p>The C function <code>process_implied_equality(...)</code> from <code>backend/optimizer/plan/initsplan.c</code> is deep in the query planner, and is (according to the comments) "currently used only when an EquivalenceClass is found to contain pseudoconstants". It's not going to be calling into <code>hal.dll</code> - not, at least, without a fairly long call chain between it and <code>hal.dll</code>. So we can't trust that <code>postgres.exe</code> was even in the <code>process_implied_equality</code> function when it called into hal.dll and if it was we don't have any idea how it got there. The call trace is basically useless.
+</p><p>Compare it to the example stack trace shown earlier in the article, where we can clearly see that PostgreSQL has called <code>WaitForMultipleObjectsEx</code> (to wait until data is delivered to a socket) via its win32 wrapper layer from the pg_getbyte function ... and so on.
+</p></code><code><pre>...
+kernel32.dll!WaitForMultipleObjectsEx+0x12c
+postgres.exe!pgwin32_waitforsinglesocket+0x1f0
+postgres.exe!pgwin32_recv+0x90
+postgres.exe!secure_read+0x17d
+postgres.exe!pq_recvbuf+0x71
+postgres.exe!pq_getbyte+0x15
+postgres.exe!SocketBackend+0x6
+postgres.exe!PostgresMain+0xbe8
+...
+</pre></code><code><p><br />
+</p></code><code><h2><span id="No_symbolic_names.3F_Why.3F"></span><span class="mw-headline" id="No_symbolic_names?_Why?">No symbolic names? Why?</span></h2></code><code><p>Your stack traces aren't showing <i>!SymbolicNames</i>, and you don't know why. Here are a few possibilities.
+</p></code><code><h3><span class="mw-headline" id="No_symbols_for_the_module">No symbols for the module</span></h3></code><code><p>You might simply not have any way to get symbols for the module you're debugging. If you're finding that most of the stack trace (at least the parts in the system DLLs and NT kernel) have symbolic names shown, but other parts don't, it's quite likely you just have no debugging information (pdb files) for those parts.
+</p><p>This shouldn't be the case for PostgreSQL if you've set up the symbol path to point to the symbols for your version of PostgreSQL as well as the Microsoft Symbol Server, though.
+</p></code><code><h3><span class="mw-headline" id="NT_SYMBOL_PATH_not_set">_NT_SYMBOL_PATH not set</span></h3></code><code><p>Are you sure you set the _NT_SYMBOL_PATH environment variable?
+</p><p>In the Start menu choose Run, then enter "cmd" and press enter.
+</p><p>In the resulting window, type in exactly:
+</p></code><code><pre>set | findstr symbol
+</pre></code><code><p>You should get the following result, allowing for differences in PostgreSQL versions, drive letters, etc:
+</p></code><code><pre>_NT_SYMBOL_PATH=c:\program files\postgresql\8.4\symbols;SRV*c:\localsymbols*http://msdl.microsoft.com/download/symbols;
+</pre></code><code><p>Note that <code>_NT_SYMBOL_PATH</code> is in capitals, with underscores between words and a leading underscore.
+</p><p>The same string should show up in Process Explorer, in Configure Symbols under the Options menu.
+</p></code><code><h3><span class="mw-headline" id="Add-in_software_firewall">Add-in software firewall</span></h3></code><code><p>Do you have an add-in software firewall installed? The firewall built in to Windows will not cause problems as it only affects listening sockets and incoming connections, but 3rd party firewalls often block outbound connections too. This may prevent access to the symbol server from working.
+</p><p>Make sure your software firewall allows access to <code>msdl.microsoft.com</code> on port 80 (http), and/or add exemptions for <code>procexp.exe</code> and <code>windbg.exe</code>.
+</p></code><code><hr /></code><code><p>Initially written by Craig Ringer --<a href="/wiki/User:Ringerc" title="User:Ringerc">Ringerc</a> 10:06, 29 July 2009 (UTC)<br />
+Sections on remote debugging, software firewall, troubleshooting bad stack traces, identifying a useful stack trace, and debugging with Visual Studio added --<a href="/wiki/User:Ringerc" title="User:Ringerc">Ringerc</a> 06:25, 22 August 2009 (UTC)<br />
+</p></code>
+<!-- 
+NewPP limit report
+Cached time: 20260407211051
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.062 seconds
+Real time usage: 0.089 seconds
+Preprocessor visited node count: 153/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 3068/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mediawiki-:pcache:idhash:1061-0!canonical and timestamp 20260407211051 and revision id 24387.
+ -->
+</div>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://wiki.postgresql.org/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows&amp;oldid=24387">https://wiki.postgresql.org/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows&amp;oldid=24387</a>"</div></div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:Windows" title="Category:Windows">Windows</a></li></ul></div></div>
+				<!-- end content -->
+				<div class="visualClear"></div>
+			</div>
+		</div>
+		<div class="visualClear"></div>
+	</div>
+	<div id="column-one" >
+		<h2>Navigation menu</h2>
+		<div role="navigation" class="portlet" id="p-cactions" aria-labelledby="p-cactions-label">
+			<h3 id="p-cactions-label" >Page actions</h3>
+			<div class="pBody">
+				<ul >
+				<li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows" title="View the content page [c]" accesskey="c">Page</a></li><li id="ca-talk" class="new mw-list-item"><a href="/index.php?title=Talk:Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t">Discussion</a></li><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows">Read</a></li><li id="ca-viewsource" class="mw-list-item"><a href="/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li><li id="ca-history" class="mw-list-item"><a href="/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				
+				</ul>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-cactions-mobile"
+	id="p-cactions-mobile" aria-labelledby="p-cactions-mobile-label">
+	<h3 id="p-cactions-mobile-label" >Page actions</h3>
+	<div class="pBody">
+		<ul ><li id="main-mobile" class="selected mw-list-item"><a href="/wiki/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows" title="Page">Page</a></li><li id="talk-mobile" class="new mw-list-item"><a href="/index.php?title=Talk:Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows&amp;action=edit&amp;redlink=1" title=" (page does not exist)">Discussion</a></li><li id="ca-more" class="mw-list-item"><a href="#p-cactions">More</a></li><li id="ca-tools" class="mw-list-item"><a href="#p-tb" title="Tools">Tools</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="navigation" class="portlet" id="p-personal" aria-labelledby="p-personal-label">
+			<h3 id="p-personal-label" >Personal tools</h3>
+			<div class="pBody">
+				<ul >
+				<li id="pt-login" class="mw-list-item"><a href="/index.php?title=Special:UserLogin&amp;returnto=Getting+a+stack+trace+of+a+running+PostgreSQL+backend+on+Windows" title="You must log in to edit any pages on this site. [o]" accesskey="o">Log in</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="portlet" id="p-logo" role="banner">
+			<a href="/wiki/Main_Page" class="mw-wiki-logo"></a>
+		</div>
+		<div id="sidebar">
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-navigation"
+	id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label" >Navigation</h3>
+	<div class="pBody">
+		<ul ><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-help" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li></ul>
+		
+	</div>
+</div>
+
+		<div role="search" class="portlet" id="p-search">
+			<h3 id="p-search-label" ><label for="searchInput">Search</label></h3>
+			<div class="pBody" id="searchBody">
+				<form action="/index.php" id="searchform"><input type="hidden" value="Special:Search" name="title"><input type="search" name="search" placeholder="Search PostgreSQL wiki" aria-label="Search PostgreSQL wiki" autocapitalize="sentences" title="Search PostgreSQL wiki [f]" accesskey="f" id="searchInput"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" class="searchButton" id="searchButton"/> <input type="submit" name="fulltext" value="Search" title="Search the pages for this text" class="searchButton mw-fallbackSearchButton" id="mw-searchButton"/></form>
+			</div>
+		</div>
+		
+<div role="navigation" class="portlet mw-portlet mw-portlet-tb"
+	id="p-tb" aria-labelledby="p-tb-label">
+	<h3 id="p-tb-label" >Tools</h3>
+	<div class="pBody">
+		<ul ><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink" class="mw-list-item"><a href="/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows&amp;oldid=24387" title="Permanent link to this revision of this page">Permanent link</a></li><li id="t-info" class="mw-list-item"><a href="/index.php?title=Getting_a_stack_trace_of_a_running_PostgreSQL_backend_on_Windows&amp;action=info" title="More information about this page">Page information</a></li></ul>
+		
+	</div>
+</div>
+
+		
+		</div>
+		<a href="#sidebar" title="Jump to navigation"
+			class="menu-toggle" id="sidebar-toggle"></a>
+		<a href="#p-personal" title="user tools"
+			class="menu-toggle" id="p-personal-toggle"></a>
+		<a href="#globalWrapper" title="back to top"
+			class="menu-toggle" id="globalWrapper-toggle"></a>
+	</div>
+	<!-- end of the left (by default at least) column -->
+	<div class="visualClear"></div>
+	<div id="footer" class="mw-footer" role="contentinfo"
+		>
+		<div id="f-poweredbyico" class="footer-icons">
+			<a href="https://www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a>
+		</div>
+		<ul id="f-list">
+			<li id="lastmod"> This page was last edited on 17 March 2015, at 13:48.</li>
+			<li id="privacy"><a href="/wiki/PostgreSQL_wiki:Privacy_policy">Privacy policy</a></li><li id="about"><a href="/wiki/PostgreSQL_wiki:About">About PostgreSQL wiki</a></li><li id="disclaimer"><a href="/wiki/PostgreSQL_wiki:General_disclaimer">Disclaimers</a></li>
+		</ul>
+	</div>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.062","walltime":"0.089","ppvisitednodes":{"value":153,"limit":1000000},"postexpandincludesize":{"value":0,"limit":2097152},"templateargumentsize":{"value":0,"limit":2097152},"expansiondepth":{"value":2,"limit":100},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":3068,"limit":5000000},"timingprofile":["100.00%    0.000      1 -total"]},"cachereport":{"timestamp":"20260407211051","ttl":86400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":263});});</script>
+</body>
+</html>

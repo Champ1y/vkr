@@ -42,9 +42,13 @@ class Settings(BaseSettings):
     embedding_max_seq_length: int = Field(default=8192, alias="EMBEDDING_MAX_SEQ_LENGTH")
     hash_embedding_seed: str = Field(default="postgres-rag", alias="HASH_EMBEDDING_SEED")
 
-    # --- Groq generation (single provider) ---
+    # --- LLM generation (Groq runtime provider) ---
+    llm_provider: str = Field(default="groq", alias="LLM_PROVIDER")
+    llm_model: str = Field(
+        default="llama-3.1-8b-instant",
+        alias="LLM_MODEL",
+    )
     groq_api_key: str = Field(default="", alias="GROQ_API_KEY")
-    groq_model: str = Field(default="", alias="GROQ_MODEL")
     groq_base_url: str = Field(default="https://api.groq.com/openai/v1", alias="GROQ_BASE_URL")
 
     # --- Embedding provider ---

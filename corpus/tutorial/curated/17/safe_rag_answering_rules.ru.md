@@ -18,7 +18,7 @@ official_backing:
   - "https://www.postgresql.org/docs/17/release.html"
 external_reference:
   []
-usage_rule: "Использовать только как вспомогательный учебный слой для tutorial + extended_mode. Фактические утверждения должны подтверждаться official corpus выбранной версии."
+usage_rule: "Использовать только как вспомогательный учебный слой для tutorial. Фактические утверждения должны подтверждаться official corpus выбранной версии."
 ---
 
 # Правила безопасной генерации ответов в tutorial-режиме PostgreSQL 17
@@ -29,7 +29,7 @@ usage_rule: "Использовать только как вспомогател
 
 ## Когда использовать
 
-- нужно определить policy поведения для режимов `answer`, `tutorial`, `tutorial+extended`;
+- нужно определить policy поведения для режимов `short`, `detailed`, `tutorial`;
 - требуется формальный version guard по ветке PostgreSQL 17;
 - система отвечает на вопросы про backup, security, replication, production config;
 - нужно описать fallback, если official evidence недостаточен;
@@ -46,7 +46,7 @@ Version guard — обязательный фильтр: для вопросов
 ## Предварительные условия
 
 - в индексе документов хранится метадата `pg_version`, `corpus_type`, `source_role`, `topic`;
-- роутер режимов знает policy для `answer`, `tutorial`, `tutorial+extended`;
+- роутер режимов знает policy для `short`, `detailed`, `tutorial`;
 - retriever умеет version-aware фильтрацию;
 - генератор может понижать уверенность и отдавать fallback при слабой доказательной базе;
 - есть шаблоны ответа для high-risk тем с обязательными предупреждениями.
@@ -54,13 +54,13 @@ Version guard — обязательный фильтр: для вопросов
 ## Минимальный рабочий пример
 
 ```text
-mode=answer
+mode=short
   allowed_corpus_type = official
 
-mode=tutorial, extended_mode=false
+mode=detailed
   allowed_corpus_type = official
 
-mode=tutorial, extended_mode=true
+mode=tutorial
   allowed_corpus_type = official + supplementary
 ```
 
@@ -78,11 +78,11 @@ evidence_guard:
 
 ## Пошаговый алгоритм
 
-1. Определи режим запроса: `answer`, `tutorial`, `tutorial+extended`.
+1. Определи режим запроса: `short`, `detailed`, `tutorial`.
 2. Примени policy по разрешённым типам корпуса для выбранного режима.
 3. Включи version guard и отфильтруй контент под PostgreSQL 17.
 4. Сначала собери official evidence для ключевых фактов.
-5. Если `extended_mode=true`, добавь supplementary как объяснение и практический контекст.
+5. Если выбран `tutorial`, используй supplementary как объяснение и практический контекст.
 6. Запусти evidence guard: проверь, что фактические claims имеют official backing.
 7. Для high-risk тем добавь предупреждения и консервативный тон (без рискованных "универсальных" советов).
 8. Если official evidence слабый или противоречивый, отдай fallback: уточнение, ограниченный ответ или безопасный отказ от уверенного утверждения.

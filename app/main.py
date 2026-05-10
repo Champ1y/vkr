@@ -14,7 +14,8 @@ from app.core.config import settings
 from app.core.logging import configure_logging, get_logger
 from app.db.session import SessionLocal
 from app.repositories.versions import VersionRepository
-from app.schemas.common import HealthOut
+from app.schemas.common import EmbeddingsHealthOut, HealthOut
+from app.api.routes.health import embeddings_health
 
 configure_logging()
 logger = get_logger(__name__)
@@ -36,9 +37,10 @@ async def lifespan(_app: FastAPI):
     settings.normalized_docs_path.mkdir(parents=True, exist_ok=True)
     seed_versions()
     logger.info(
-        "Generation configuration: groq_base_url=%s groq_model=%s embedding_provider=%s embedding_model=%s dim=%s",
+        "Generation configuration: llm_provider=%s groq_base_url=%s llm_model=%s embedding_provider=%s embedding_model=%s dim=%s",
+        settings.llm_provider,
         settings.groq_base_url,
-        settings.groq_model or "<unset>",
+        settings.llm_model or "<unset>",
         settings.embedding_provider,
         settings.embedding_model,
         settings.embedding_dimension,
@@ -65,11 +67,24 @@ def health() -> HealthOut:
     return HealthOut(status="ok", timestamp=datetime.now(timezone.utc))
 
 
+@app.get("/health/embeddings", response_model=EmbeddingsHealthOut)
+def health_embeddings() -> EmbeddingsHealthOut:
+    return embeddings_health()
+
+
 @app.get("/", response_class=HTMLResponse)
 def index_page(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "app_name": "Помощник по PostgreSQL"})
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request, "app_name": "PostgreSQL RAG Assistant"},
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 @app.get("/history", response_class=HTMLResponse)
 def history_page(request: Request):
-    return templates.TemplateResponse("history.html", {"request": request, "app_name": "Помощник по PostgreSQL"})
+    return templates.TemplateResponse(
+        "history.html",
+        {"request": request, "app_name": "PostgreSQL RAG Assistant"},
+        headers={"Cache-Control": "no-store"},
+    )

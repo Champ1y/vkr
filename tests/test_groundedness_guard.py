@@ -54,7 +54,7 @@ def test_evidence_guard_rejects_weak_logical_replication_context() -> None:
         )
     ]
 
-    ok = AskOrchestrationService._has_sufficient_evidence(ranked=ranked, analysis=analysis, mode="answer")
+    ok = AskOrchestrationService._has_sufficient_evidence(ranked=ranked, analysis=analysis, answer_mode="short")
     assert ok is False
 
 
@@ -73,5 +73,5 @@ def test_evidence_guard_accepts_strong_official_context() -> None:
         )
     ]
 
-    ok = AskOrchestrationService._has_sufficient_evidence(ranked=ranked, analysis=analysis, mode="answer")
+    ok = AskOrchestrationService._has_sufficient_evidence(ranked=ranked, analysis=analysis, answer_mode="short")
     assert ok is True
