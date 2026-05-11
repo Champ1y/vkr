@@ -3,6 +3,10 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+.cache/
+.claude/
+.codex
+hf_cache/
 data/raw_docs/
 data/normalized_docs/
 *.log
